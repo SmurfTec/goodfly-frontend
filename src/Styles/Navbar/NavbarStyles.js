@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff',
     // color: '#B033fa',
     paddingInline: 60,
+    boxShadow: 'none',
   },
   grow: {
     flexGrow: 1,
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: '1',
       '& span': {
         color: '#4D4D4D',
+        cursor: 'pointer',
       },
     },
   },
@@ -70,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
       '& span': {
         color: '#4D4D4D',
+        cursor: 'pointer',
       },
     },
   },
