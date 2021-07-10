@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +12,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import InfoIcon from '@material-ui/icons/Info';
 import logo from 'Assets/airplane.svg';
 import useStyles from 'Styles/Navbar/NavbarStyles';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 // import { ThemeContext } from 'Contexts/ThemeContext';
 // import DarkModeToggle from 'react-dark-mode-toggle';
@@ -143,7 +143,11 @@ const Navbar = ({ history }) => {
             onClick={() => history.push('/')}
           >
             GOODFLY
-            <img src={logo} style={{ width: 40, height: 50 }} />
+            <img
+              src={logo}
+              style={{ width: 40, height: 50 }}
+              alt='logo'
+            />
           </Typography>
 
           <div

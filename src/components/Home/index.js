@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from 'Styles/Home/HomeStyles';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const Index = () => {
   const classes = useStyles();
