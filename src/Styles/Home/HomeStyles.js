@@ -1,17 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   nav: {
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // flexWrap: 'no-wrap',
-    // overflowX: 'scroll',
-    // maxWidth: 1000,
-    // '& span': {
-    //   minWidth: 'fit-content',
-    // },
     display: 'flex',
     overflowX: 'auto',
     alignItems: 'center',
@@ -31,6 +22,15 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
       },
     },
+  },
+  MainGrid: {},
+  LeftGridItem: {
+    border: '1px solid #ccc',
+    paddingInline: 20,
+  },
+  RightGridItem: {
+    paddingInline: 20,
+    border: '1px solid #ccc',
   },
 }));
 

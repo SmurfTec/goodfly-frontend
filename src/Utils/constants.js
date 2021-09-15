@@ -1,4 +1,18 @@
+import { toast } from 'react-toastify';
+
+// * Development URLs
 const API_BASE_URL = `http://localhost:5000/api`;
+
+// * Production URLs
+// const API_BASE_URL = `https://travel-api.herokuapp.com/api`;
+
+const handleCatch = (err) => {
+  console.log('**********');
+  console.log(`err`, err);
+  let errMsg = 'Something Went Wrong';
+  if (err.message) errMsg = err.message;
+  toast.error(errMsg);
+};
 
 const makeReq = (
   endpoint,
@@ -40,4 +54,4 @@ const makeReq = (
   );
 };
 
-export { API_BASE_URL, makeReq };
+export { API_BASE_URL, makeReq, handleCatch };

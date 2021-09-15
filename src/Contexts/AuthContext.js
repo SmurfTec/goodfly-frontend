@@ -24,7 +24,6 @@ export const AuthProvider = withRouter(({ children, history }) => {
     try {
       const res = await makeReq(`/users/me`, {}, 'GET');
       console.log(`res`, res);
-      localStorage.setItem('user', JSON.stringify(res.user));
 
       setUser(res.user);
     } catch (err) {
@@ -41,7 +40,6 @@ export const AuthProvider = withRouter(({ children, history }) => {
     console.log(`us`, us);
 
     window.localStorage.setItem('jwt', tk);
-    window.localStorage.setItem('user', us);
 
     setTimeout(() => {
       setToken(tk);

@@ -9,35 +9,32 @@ import Logout from 'Pages/Logout';
 import Navbar from 'Pages/Navbar';
 import Footer from 'Pages/Footer';
 
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import img from 'Assets/img/loader2.gif';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#46B9F6',
-    },
-    dark: '#4D4D4D',
-    // secondary: {
-    //   main: green[500],
-    // },
-  },
-});
+import ThemeConfig from '../theme';
 
 const App = () => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
 
   return (
     <div className='App'>
-      <ThemeProvider theme={theme}>
+      <ThemeConfig>
+        {' '}
         {token ? (
-          <>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/logout' component={Logout} />
-            <Redirect to='/' />
-          </>
+          user ? (
+            <>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/logout' component={Logout} />
+              <Redirect to='/' />
+            </>
+          ) : (
+            <img src={img} alt='loader' />
+          )
         ) : (
           <>
+            {/* Only For Test purposes*/}
             <Route component={Navbar} />
+
             <Switch>
               {/* <Route
               exact
@@ -55,13 +52,16 @@ const App = () => {
               path='/confirmMail/:token'
               component={ConfirmMail}
             /> */}
+
+              {/* Only for Testing ,  */}
               <Route exact path='/' component={Home} />
+
               <Redirect to='/' />
             </Switch>
             <Route component={Footer} />
           </>
         )}
-      </ThemeProvider>
+      </ThemeConfig>{' '}
     </div>
   );
 };
