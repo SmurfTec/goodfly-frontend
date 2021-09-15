@@ -10,7 +10,6 @@ import Navbar from 'Pages/Navbar';
 import Footer from 'Pages/Footer';
 
 import img from 'Assets/img/loader2.gif';
-
 import ThemeConfig from '../theme';
 
 const App = () => {
