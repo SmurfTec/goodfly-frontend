@@ -16,8 +16,9 @@ import { Box } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 // import { ThemeContext } from 'Contexts/ThemeContext';
 // import DarkModeToggle from 'react-dark-mode-toggle';
+import Navbar from './Navbar';
 
-const Navbar = ({ history }) => {
+const Header = ({ history }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -239,7 +240,8 @@ const Navbar = ({ history }) => {
       {renderMenu}
 
       <Box paddingTop={'64px'}> </Box>
+      <Navbar />
     </div>
   );
 };
-export default withRouter(Navbar);
+export default withRouter(Header);

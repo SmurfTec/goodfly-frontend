@@ -6,12 +6,13 @@ import { AuthContext } from 'Contexts/AuthContext';
 
 import Home from 'components/Home/index';
 import Logout from 'Pages/Logout';
-import Navbar from 'Pages/Navbar';
+import Header from 'components/common/Header';
 import Footer from 'Pages/Footer';
 
 import img from 'Assets/img/loader2.gif';
 
 import ThemeConfig from '../theme';
+import TourRouter from 'Routers/TourRouter';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const App = () => {
         ) : (
           <>
             {/* Only For Test purposes*/}
-            <Route component={Navbar} />
+            <Route component={Header} />
 
             <Switch>
               {/* <Route
@@ -55,6 +56,7 @@ const App = () => {
 
               {/* Only for Testing ,  */}
               <Route exact path='/' component={Home} />
+              <Route path='/tours' component={TourRouter} />
 
               <Redirect to='/' />
             </Switch>
