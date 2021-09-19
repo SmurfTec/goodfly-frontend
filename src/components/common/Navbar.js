@@ -78,13 +78,13 @@ const Navbar = () => {
         <NavLink to='/tours/create'> Create Trip</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/ethical'> Store</NavLink>
+        <NavLink to='/store'> Store</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/ethical'> Blog</NavLink>
+        <NavLink to='/blog'> Blog</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/ethical'> Contact Us</NavLink>
+        <NavLink to='/contact-us'> Contact Us</NavLink>
       </Typography>
     </nav>
   );
