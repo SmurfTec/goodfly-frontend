@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { Carousel } from 'react-responsive-carousel';
-
 // MUI
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -12,9 +10,6 @@ import {
   Tabs,
   Tab,
 } from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import EuroIcon from '@material-ui/icons/Euro';
 // --- //
 
 // Assets
@@ -27,7 +22,6 @@ import stageImg1 from 'Assets/img/stage1.png';
 import stageImg2 from 'Assets/img/stage12.png';
 import stageImg3 from 'Assets/img/stage2.png';
 import stageImg4 from 'Assets/img/stage23.png';
-import StagesTab from './StagesTab';
 // ------------------------------
 
 const TabPanel = (props) => {
