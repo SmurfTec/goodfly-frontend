@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
 
 import Home from 'components/Home/index';
+import FlashSale from 'components/FlashSale';
 import Logout from 'Pages/Logout';
 import Navbar from 'Pages/Navbar';
 import Footer from 'Pages/Footer';
@@ -13,29 +14,29 @@ import img from 'Assets/img/loader2.gif';
 import ThemeConfig from '../theme';
 
 const App = () => {
-  const { token, user } = useContext(AuthContext);
+   const { token, user } = useContext(AuthContext);
 
-  return (
-    <div className='App'>
-      <ThemeConfig>
-        {' '}
-        {token ? (
-          user ? (
-            <>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/logout' component={Logout} />
-              <Redirect to='/' />
-            </>
-          ) : (
-            <img src={img} alt='loader' />
-          )
-        ) : (
-          <>
-            {/* Only For Test purposes*/}
-            <Route component={Navbar} />
+   return (
+      <div className='App'>
+         <ThemeConfig>
+            {' '}
+            {token ? (
+               user ? (
+                  <>
+                     <Route exact path='/' component={Home} />
+                     <Route exact path='/logout' component={Logout} />
+                     <Redirect to='/' />
+                  </>
+               ) : (
+                  <img src={img} alt='loader' />
+               )
+            ) : (
+               <>
+                  {/* Only For Test purposes*/}
+                  <Route component={Navbar} />
 
-            <Switch>
-              {/* <Route
+                  <Switch>
+                     {/* <Route
               exact
               path='/account'
               component={RegistrationMain}
@@ -52,17 +53,22 @@ const App = () => {
               component={ConfirmMail}
             /> */}
 
-              {/* Only for Testing ,  */}
-              <Route exact path='/' component={Home} />
+                     {/* Only for Testing ,  */}
+                     <Route exact path='/' component={Home} />
+                     <Route
+                        exact
+                        path='/flashSale'
+                        component={FlashSale}
+                     />
 
-              <Redirect to='/' />
-            </Switch>
-            <Route component={Footer} />
-          </>
-        )}
-      </ThemeConfig>{' '}
-    </div>
-  );
+                     <Redirect to='/' />
+                  </Switch>
+                  <Route component={Footer} />
+               </>
+            )}
+         </ThemeConfig>{' '}
+      </div>
+   );
 };
 
 export default App;
