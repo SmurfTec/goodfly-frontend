@@ -6,10 +6,14 @@ export const styles = makeStyles((theme) => ({
       maxWidth: 250,
       backgroundColor: '#46b9f6',
       position: 'absolute',
-      right: 70,
+      right: 20,
       bottom: '-60px',
       borderRadius: 10,
       textAlign: 'center',
+
+      [theme.breakpoints.down('sm')]: {
+         display: 'none',
+      },
    },
    title: {
       border: '1px solid #fff',

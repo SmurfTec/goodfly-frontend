@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 import { makeStyles } from '@material-ui/styles';
+import { withRouter } from 'react-router';
 
 const styles = makeStyles((theme) => ({
    card: {
@@ -31,12 +32,26 @@ const styles = makeStyles((theme) => ({
       flex: 'none',
    },
 }));
-function FlashCard(props) {
+const FlashCard = (props) => {
    const classes = styles();
-   const { title, noOfJourneys, service, desc, price, image } = props;
+   const {
+      _id,
+      title,
+      noOfJourneys,
+      service,
+      desc,
+      price,
+      image,
+      history,
+   } = props;
+
+   const handleClick = () => {
+      history.push(`/flashsale/${_id}`);
+   };
+
    return (
       <Card className={classes.card}>
-         <CardActionArea>
+         <CardActionArea onClick={handleClick}>
             <CardMedia
                className={classes.cardMedia}
                image={image}
@@ -68,6 +83,5 @@ function FlashCard(props) {
          </CardActionArea>
       </Card>
    );
-}
-
-export default FlashCard;
+};
+export default withRouter(FlashCard);

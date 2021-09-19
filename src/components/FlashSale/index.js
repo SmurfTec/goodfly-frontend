@@ -1,10 +1,12 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FlashCard from './FlashCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
@@ -16,6 +18,7 @@ import Advisor from './Adivsor';
 const cards = [
    {
       title: 'Dubai',
+      _id: '1',
       desc: 'The Dubai that no one sees',
       service: 'The GOODFLY guide on site will welcome you ...',
       noofJourneys: '2 jours',
@@ -24,6 +27,8 @@ const cards = [
    },
    {
       title: 'Dubai',
+      _id: '2',
+
       desc: 'The Dubai that no one sees',
       service: 'The GOODFLY guide on site will welcome you ...',
       noofJourneys: '2 jours',
@@ -33,6 +38,8 @@ const cards = [
 
    {
       title: 'Dubai',
+      _id: '3',
+
       desc: 'The Dubai that no one sees',
       service: 'The GOODFLY guide on site will welcome you ...',
       noofJourneys: '2 jours',
@@ -41,6 +48,7 @@ const cards = [
    },
    {
       title: 'Dubai',
+      _id: '4',
       desc: 'The Dubai that no one sees',
       service: 'The GOODFLY guide on site will welcome you ...',
       noofJourneys: '2 jours',
@@ -51,7 +59,7 @@ const cards = [
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
-export default function Album() {
+const FlashSale = ({ history }) => {
    const classes = styles();
 
    //? Filter Menu State
@@ -96,18 +104,13 @@ export default function Album() {
                   </Container>
 
                   <section className={classes.filter}>
-                     <TuneIcon />
-                     <Typography variant='subtitle1'>
-                        Select a filter
-                     </Typography>
-                     <IconButton
-                        aria-label='more'
-                        aria-controls='long-menu'
-                        aria-haspopup='true'
+                     <Button
+                        variant='outlined'
+                        startIcon={<TuneIcon />}
                         onClick={filterMenuOpen}
                      >
-                        <ArrowDownIcon />
-                     </IconButton>
+                        Select a filter
+                     </Button>
                      <Menu
                         id='long-menu'
                         anchorEl={anchorEl}
@@ -117,7 +120,7 @@ export default function Album() {
                      >
                         {options.map((option, index) => (
                            <MenuItem
-                              key={`${option}_${index}`}
+                              key={option}
                               data-filter={option}
                               onClick={filterSelected}
                            >
@@ -132,7 +135,7 @@ export default function Album() {
                {/* Upper GridView */}
                <Grid container spacing={4}>
                   {cards.map((card) => (
-                     <Grid item key={card} xs={12} sm={6} md={4}>
+                     <Grid item key={card._id} xs={12} sm={6} md={4}>
                         <FlashCard {...card} />
                      </Grid>
                   ))}
@@ -146,7 +149,7 @@ export default function Album() {
                {/* Lower GridView */}
                <Grid container spacing={4}>
                   {cards.map((card) => (
-                     <Grid item key={card} xs={12} sm={6} md={4}>
+                     <Grid item key={card._id} xs={12} sm={6} md={4}>
                         <FlashCard {...card} />
                      </Grid>
                   ))}
@@ -155,4 +158,5 @@ export default function Album() {
          </main>
       </React.Fragment>
    );
-}
+};
+export default withRouter(FlashSale);

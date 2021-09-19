@@ -9,11 +9,7 @@ export const styles = makeStyles((theme) => ({
    },
    heroContent: {
       backgroundColor: theme.palette.background.paper,
-      padding: theme.spacing(8, 0, 6),
-   },
-   cardGrid: {
-      paddingTop: theme.spacing(8),
-      paddingBottom: theme.spacing(8),
+      padding: theme.spacing(3, 0, 6),
    },
    mainFeaturedPost: {
       position: 'relative',
@@ -24,8 +20,11 @@ export const styles = makeStyles((theme) => ({
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
-      minHeight: 230,
+      minHeight: 280,
       borderRadius: 15,
+      [theme.breakpoints.down('sm')]: {
+         minHeight: 200,
+      },
    },
    overlay: {
       position: 'absolute',
