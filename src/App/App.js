@@ -7,7 +7,7 @@ import { AuthContext } from 'Contexts/AuthContext';
 import Home from 'components/Home/index';
 import Logout from 'Pages/Logout';
 import Header from 'components/common/Header';
-import Footer from 'Pages/Footer';
+import Footer from 'components/common/Footer';
 
 import img from 'Assets/img/loader2.gif';
 
