@@ -1,198 +1,191 @@
-import React, { useState, useEffect, useContext } from 'react';
-
-// MUI
-import { makeStyles } from '@material-ui/styles';
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
-// --- //
-
-// Assets
-import img1 from 'Assets/img/ethical.png';
-import img2 from 'Assets/img/desert.jpg';
-import img3 from 'Assets/img/malaysia.jpg';
-import img4 from 'Assets/img/maldives.jpg';
-
-import stageImg1 from 'Assets/img/stage1.png';
-import stageImg2 from 'Assets/img/stage12.png';
-import stageImg3 from 'Assets/img/stage2.png';
-import stageImg4 from 'Assets/img/stage23.png';
-// ------------------------------
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
-
-const stages = [
+import React from 'react';
+import { withRouter } from 'react-router';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import TripCard from './TripCard';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
+import { styles } from 'Styles/FlashSale/FlashSaleStyles';
+import TuneIcon from '@material-ui/icons/Tune';
+import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import Advisor from './Adivsor';
+import { useTheme } from '@material-ui/styles';
+const cards = [
   {
-    _id: '12312',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [stageImg1],
+    title: 'Dubai',
+    _id: '1',
+    desc: 'The Dubai that no one sees',
+    service: 'The GOODFLY guide on site will welcome you ...',
+    noofJourneys: '2 jours',
+    price: '> $200',
+    image:
+      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
+    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
+    boardType: 'Half Board',
+    country: 'Pakistan',
   },
   {
-    _id: '12122',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [stageImg1, stageImg2, stageImg3, stageImg3, stageImg3],
+    title: 'Dubai',
+    _id: '2',
+
+    desc: 'The Dubai that no one sees',
+    service: 'The GOODFLY guide on site will welcome you ...',
+    noofJourneys: '2 jours',
+    price: '> $200',
+    image:
+      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
+    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
+    boardType: 'Half Board',
+    country: 'Malaysia',
+  },
+
+  {
+    title: 'Dubai',
+    _id: '3',
+
+    desc: 'The Dubai that no one sees',
+    service: 'The GOODFLY guide on site will welcome you ...',
+    noofJourneys: '2 jours',
+    price: '> $200',
+    image:
+      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
+    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
+    boardType: 'Half Board',
+    country: 'Indonesia',
   },
   {
-    _id: '121dasdad2',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [
-      stageImg3,
-      stageImg4,
-      // stageImg3,
-      // stageImg4,
-      // stageImg3,
-      // stageImg4,
-    ],
+    title: 'Dubai',
+    _id: '4',
+    desc: 'The Dubai that no one sees',
+    service: 'The GOODFLY guide on site will welcome you ...',
+    noofJourneys: '2 jours',
+    price: '> $2000',
+    image:
+      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
+    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
+    boardType: 'Half Board',
+    country: 'Turkeu',
   },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  Carousel: {
-    '& img': {
-      height: 300,
-      objectFit: 'cover',
-    },
-  },
-  Grid1: {
-    width: '95%',
-    margin: '3rem auto',
-  },
-  TourDetails: {
-    backgroundColor: '#fafafa',
-    minHeight: 292,
-    textAlign: 'left',
-    position: 'relative',
-    // [theme.breakpoints.down('sm')]: {
-    //   marginBottom: 100,
-    // },
-  },
+const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
-  TourDescription: {
-    display: 'flex',
-  },
+const EthicalHome = ({ location }) => {
+  const theme = useTheme();
+  const styleProps = {
+    location,
+    theme,
+  };
 
-  RightGrid: {
-    backgroundColor: '#46b9f6',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    color: '#fff',
-    borderRadius: 10,
-    height: 170,
-  },
+  const classes = styles(styleProps);
 
-  Stages: {
-    backgroundColor: '#fafafa',
-    color: '#333333',
-  },
+  //? Filter Menu State
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
-  Tabs: {
-    '& .MuiTab-root': {
-      backgroundColor: '#e6e6e6',
-      color: '#808080',
-    },
-    '& .Mui-selected': {
-      backgroundColor: '#fafafa',
-      color: '#333333',
-    },
-  },
-  InActiveTab: {
-    // backgroundColor: '#fafafa',
-    // color: '#333333',
-  },
-  ActiveTab: {
-    // backgroundColor: '#e6e6e6',
-    // color: '#808080',
-  },
-}));
+  //? Closing filter menu
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-const Index = () => {
-  const classes = useStyles();
+  // ? Filter Menu open
+  const filterMenuOpen = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
 
-  return <div>Ethical Page Here</div>;
+  //? Filter Item selected
+  const filterSelected = (e) => {
+    //? Got the selected filter value, uncomment below line
+    //   const { filter } = e.currentTarget.dataset;
+    //   console.log(filter);
+
+    setAnchorEl(null);
+  };
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+
+      <main className={classes.root}>
+        {/* Hero unit */}
+        <Container className={classes.cardGrid} maxWidth='lg'>
+          <div className={classes.heroContent}>
+            <Container className={classes.mainFeaturedPost}>
+              <section className={classes.title}>
+                <Typography variant='h3'>
+                  Ethical Travel
+                  <FlashOnIcon sx={{ marginLeft: 2 }} />
+                </Typography>
+              </section>
+              <Advisor />
+            </Container>
+
+            <section className={classes.filter}>
+              <Button
+                variant='outlined'
+                startIcon={<TuneIcon />}
+                onClick={filterMenuOpen}
+              >
+                Select a filter
+              </Button>
+              <Menu
+                id='long-menu'
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+              >
+                {options.map((option, index) => (
+                  <MenuItem
+                    key={option}
+                    data-filter={option}
+                    onClick={filterSelected}
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </section>
+          </div>
+          {/* End hero unit */}
+          <Typography variant='h5' color='textSecondary' align='left'>
+            Do you have a few days ahead of you? Découvrez les ventes
+          </Typography>
+          <Typography
+            variant='h5'
+            color='textSecondary'
+            align='left'
+            style={{
+              marginBottom: '2rem',
+            }}
+          >
+            Flash GOODFLY : les plans dernière minute à prix cassés.
+          </Typography>
+          {/* Upper GridView */}
+          <Grid container spacing={4}>
+            {cards.map((card) => (
+              <Grid item key={card._id} xs={12} sm={6} md={4}>
+                <TripCard {...card} />
+              </Grid>
+            ))}
+          </Grid>
+
+          {/* Space Container */}
+          <div className={classes.spaceSection}>
+            <Typography variant='h5'>PUB SPACE</Typography>
+          </div>
+        </Container>
+      </main>
+    </React.Fragment>
+  );
 };
-
-export default Index;
+export default withRouter(EthicalHome);

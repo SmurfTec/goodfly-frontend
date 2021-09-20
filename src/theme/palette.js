@@ -95,6 +95,7 @@ const palette = {
   text: {
     primary: GREY[800],
     secondary: '#333333',
+    secondary: '#666666',
     // secondary: GREY[600],
     disabled: GREY[500],
   },
