@@ -28,6 +28,7 @@ const styles = makeStyles((theme) => ({
   cardMedia: {
     height: '100%',
     paddingTop: '100%',
+    opacity: 0.7,
   },
   cardContent: {
     flexGrow: 1,
