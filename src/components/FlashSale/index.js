@@ -12,8 +12,7 @@ import FlashCard from './FlashCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import Advisor from './Adivsor';
+import Advisor from '../common/Adivsor';
 
 const cards = [
    {

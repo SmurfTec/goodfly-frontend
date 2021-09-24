@@ -8,8 +8,9 @@ import Home from 'components/Home/index';
 import Logout from 'Pages/Logout';
 import Header from 'components/common/Header';
 import FlashSale from 'components/FlashSale';
-import Footer from 'Pages/Footer';
-
+import Destinations from 'components/Destinations';
+import Footer from 'components/common/Footer';
+import CreateTrip from 'components/AddTrip';
 import img from 'Assets/img/loader2.gif';
 
 import ThemeConfig from '../theme';
@@ -61,6 +62,17 @@ const App = () => {
                         exact
                         path='/flashsale'
                         component={FlashSale}
+                     />
+
+                     <Route
+                        exact
+                        path='/destinations'
+                        component={Destinations}
+                     />
+                     <Route
+                        exact
+                        path='/createtrip'
+                        component={CreateTrip}
                      />
 
                      {/* <Route path='/tours' component={TourRouter} /> */}
