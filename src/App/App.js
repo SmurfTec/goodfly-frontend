@@ -13,6 +13,7 @@ import img from 'Assets/img/loader2.gif';
 
 import ThemeConfig from '../theme';
 import TourRouter from 'Routers/TourRouter';
+import AuthRouter from 'Routers/AuthRouter';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -24,8 +25,14 @@ const App = () => {
         {token ? (
           user ? (
             <>
+              <Route component={Header} />
+
               <Route exact path='/' component={Home} />
+              <Route path='/tours' component={TourRouter} />
+
               <Route exact path='/logout' component={Logout} />
+              <Route component={Footer} />
+
               <Redirect to='/' />
             </>
           ) : (
@@ -33,10 +40,9 @@ const App = () => {
           )
         ) : (
           <>
-            {/* Only For Test purposes*/}
-            <Route component={Header} />
-
             <Switch>
+              <Route path='/auth' component={AuthRouter} />
+
               {/* <Route
               exact
               path='/account'
@@ -54,13 +60,8 @@ const App = () => {
               component={ConfirmMail}
             /> */}
 
-              {/* Only for Testing ,  */}
-              <Route exact path='/' component={Home} />
-              <Route path='/tours' component={TourRouter} />
-
-              <Redirect to='/' />
+              <Redirect to='/auth/login' />
             </Switch>
-            <Route component={Footer} />
           </>
         )}
       </ThemeConfig>{' '}

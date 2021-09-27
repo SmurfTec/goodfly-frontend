@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
 // * Development URLs
-const API_BASE_URL = `http://localhost:5000/api`;
+const API_BASE_URL = `http://localhost:7000/api`;
 
 // * Production URLs
 // const API_BASE_URL = `https://travel-api.herokuapp.com/api`;
