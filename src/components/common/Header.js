@@ -10,7 +10,7 @@ import ReactCountryFlag from 'react-country-flag';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import InfoIcon from '@material-ui/icons/Info';
-import logo from 'Assets/airplane.svg';
+import logo from 'Assets/img/airplane.svg';
 import useStyles from 'Styles/Navbar/NavbarStyles';
 import { Box } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';

@@ -54,7 +54,7 @@ const Navbar = () => {
         <NavLink to='/tours/circuits'> Excursions & Circuits</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='tours/destinations'> Destinations</NavLink>
+        <NavLink to='/tours/destinations'> Destinations</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/ticketing'> Ticketing</NavLink>

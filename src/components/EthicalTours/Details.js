@@ -30,7 +30,7 @@ import stageImg1 from 'Assets/img/stage1.png';
 import stageImg2 from 'Assets/img/stage12.png';
 import stageImg3 from 'Assets/img/stage2.png';
 import stageImg4 from 'Assets/img/stage23.png';
-import StagesTab from './StagesTab';
+import StagesTab from '../EthicalTours/StagesTab';
 
 import userImg from 'Assets/img/user1.png';
 
