@@ -9,6 +9,8 @@ import Destinations from 'components/Destinations';
 import DestinationsDetails from 'components/Destinations/Details';
 import FlashSale from 'components/FlashSale';
 import FlashSaleDetails from 'components/FlashSale/Details';
+import SpirutialTours from 'components/Spiritual';
+import SpirutialToursDetails from 'components/Spiritual/Details';
 // *  --------------------- * //
 
 const TourRouter = ({ match }) => {
@@ -46,6 +48,18 @@ const TourRouter = ({ match }) => {
         exact
         path={match.url + '/flash-sales/:id'}
         component={FlashSaleDetails}
+      />
+
+      {/* Spirutial Journeys */}
+      <Route
+        exact
+        path={match.url + '/spiritual'}
+        component={SpirutialTours}
+      />
+      <Route
+        exact
+        path={match.url + '/spiritual/:id'}
+        component={SpirutialToursDetails}
       />
 
       {/* <Route path={match.url + '/spiritual'} component={SpiritualTours} />

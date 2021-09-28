@@ -39,13 +39,10 @@ const Login = () => {
       setState(initialState);
       signInUser(res.data.token, res.data.user);
     } catch (err) {
-      console.log(
-        `err.response.data.message`,
-        err.response.data.message
-      );
-      toast.error(
-        err.response.data.message || 'Something went wrong'
-      );
+      let errMsg = 'Something went wrong';
+      if (err?.response?.data) errMsg = err.response.data.message;
+      else errMsg = err.message;
+      toast.error(errMsg);
     }
   };
 
