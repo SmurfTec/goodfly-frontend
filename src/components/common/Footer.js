@@ -55,10 +55,9 @@ const Footer = () => {
                         <Typography
                            variant='subtitle2'
                            className={classes.subContent}
+                           key={a.item}
                         >
-                           <Link key={a.item} to={a.url}>
-                              {a.item}
-                           </Link>
+                           <Link to={a.url}>{a.item}</Link>
                         </Typography>
                      ))}
                      <section className={classes.icons}>
@@ -100,10 +99,9 @@ const Footer = () => {
                      <Typography
                         variant='subtitle2'
                         className={classes.subContent}
+                        key={a.item}
                      >
-                        <Link key={a.item} to={a.url}>
-                           {a.item}
-                        </Link>
+                        <Link to={a.url}>{a.item}</Link>
                      </Typography>
                   ))}
                </Grid>
@@ -119,10 +117,9 @@ const Footer = () => {
                      <Typography
                         variant='subtitle2'
                         className={classes.subContent}
+                        key={a.item}
                      >
-                        <Link key={a.item} to={a.url}>
-                           {a.item}
-                        </Link>
+                        <Link to={a.url}>{a.item}</Link>
                      </Typography>
                   ))}
 
@@ -174,6 +171,7 @@ const Footer = () => {
                   </Typography>
                   {quickAccess.map((a) => (
                      <Typography
+                        key={a.item}
                         variant='subtitle2'
                         className={classes.subContent}
                         sx={{ display: 'flex', alignItems: 'center' }}
@@ -181,9 +179,7 @@ const Footer = () => {
                         <ArrowIcon size='small' />
                         {'  '}
 
-                        <Link key={a.item} to={a.url}>
-                           {a.item}
-                        </Link>
+                        <Link to={a.url}>{a.item}</Link>
                      </Typography>
                   ))}
                </Grid>
