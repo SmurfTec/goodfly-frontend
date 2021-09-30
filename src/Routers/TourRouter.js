@@ -11,11 +11,19 @@ import FlashSale from 'components/FlashSale';
 import FlashSaleDetails from 'components/FlashSale/Details';
 import SpirutialTours from 'components/Spiritual';
 import SpirutialToursDetails from 'components/Spiritual/Details';
+import CreateTrip from 'components/CreateTrip';
 // *  --------------------- * //
 
 const TourRouter = ({ match }) => {
   return (
     <Switch>
+      {/* Create A Trip */}
+      <Route
+        exact
+        path={match.url + '/create'}
+        component={CreateTrip}
+      />
+
       {/* Ethical Tours */}
       <Route
         exact

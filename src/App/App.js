@@ -21,44 +21,33 @@ const App = () => {
   return (
     <div className='App'>
       <ThemeConfig>
-        {' '}
         {token ? (
           user ? (
             <>
               <Route component={Header} />
+              <Switch>
+                <Route path='/tours' component={TourRouter} />
+                <Route exact path='/' component={Home} />
 
-              <Route exact path='/' component={Home} />
-              <Route path='/tours' component={TourRouter} />
+                <Route exact path='/logout' component={Logout} />
 
-              <Route exact path='/logout' component={Logout} />
+                <Redirect from='*' to='/' />
+              </Switch>
               <Route component={Footer} />
-
-              <Redirect to='/' />
             </>
           ) : (
-            <img src={img} alt='loader' />
+            <img
+              style={{
+                margin: 'auto ',
+              }}
+              src={img}
+              alt='loader'
+            />
           )
         ) : (
           <>
             <Switch>
               <Route path='/auth' component={AuthRouter} />
-
-              {/* <Route
-              exact
-              path='/account'
-              component={RegistrationMain}
-            />
-            <Route exact path='/forgot' component={Forgot} />
-            <Route
-              exact
-              path='/reset/:resetToken'
-              component={ResetPass}
-            />
-            <Route
-              exact
-              path='/confirmMail/:token'
-              component={ConfirmMail}
-            /> */}
 
               <Redirect to='/auth/login' />
             </Switch>
