@@ -13,7 +13,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import logo from 'Assets/img/airplane.svg';
 import useStyles from 'Styles/Navbar/NavbarStyles';
 import { Box } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 // import { ThemeContext } from 'Contexts/ThemeContext';
 // import DarkModeToggle from 'react-dark-mode-toggle';
 import Navbar from './Navbar';
@@ -84,17 +84,19 @@ const Header = ({ history }) => {
         />
       </MenuItem>
       <MenuItem>
-        <Typography
-          variant='p'
-          color='primary.dark'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <PersonIcon />
-          Contact
-        </Typography>
+        <Link Link to='/profile'>
+          <Typography
+            variant='p'
+            color='primary.dark'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <PersonIcon />
+            Profile
+          </Typography>
+        </Link>
       </MenuItem>
       <MenuItem>
         <Typography
@@ -185,17 +187,19 @@ const Header = ({ history }) => {
                 aria-label='United States'
                 svg
               />
-              <Typography
-                variant='p'
-                color='primary.dark'
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <PersonIcon />
-                Contact
-              </Typography>
+              <Link to='/profile'>
+                <Typography
+                  variant='p'
+                  color='primary.dark'
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <PersonIcon />
+                  Profile
+                </Typography>
+              </Link>
               <Typography
                 variant='p'
                 color='primary.dark'

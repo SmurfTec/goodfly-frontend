@@ -15,6 +15,8 @@ import ThemeConfig from '../theme';
 import TourRouter from 'Routers/TourRouter';
 import AuthRouter from 'Routers/AuthRouter';
 
+import Profile from 'components/Profile';
+
 const App = () => {
   const { token, user } = useContext(AuthContext);
 
@@ -27,6 +29,7 @@ const App = () => {
               <Route component={Header} />
               <Switch>
                 <Route path='/tours' component={TourRouter} />
+                <Route exact path='/profile' component={Profile} />
                 <Route exact path='/' component={Home} />
 
                 <Route exact path='/logout' component={Logout} />
