@@ -21,21 +21,21 @@ const App = () => {
   return (
     <div className='App'>
       <ThemeConfig>
-        {token ? (
-          user ? (
-            <>
-              <Route component={Header} />
-              <Switch>
-                <Route path='/tours' component={TourRouter} />
-                <Route exact path='/' component={Home} />
+        {/* {token ? (
+          user ? ( */}
+        <>
+          <Route component={Header} />
+          <Switch>
+            <Route path='/tours' component={TourRouter} />
+            <Route exact path='/' component={Home} />
 
-                <Route exact path='/logout' component={Logout} />
+            <Route exact path='/logout' component={Logout} />
 
-                <Redirect from='*' to='/' />
-              </Switch>
-              <Route component={Footer} />
-            </>
-          ) : (
+            <Redirect from='*' to='/' />
+          </Switch>
+          <Route component={Footer} />
+        </>
+        {/* ) : (
             <img
               style={{
                 margin: 'auto ',
@@ -52,7 +52,7 @@ const App = () => {
               <Redirect to='/auth/login' />
             </Switch>
           </>
-        )}
+        )} */}
       </ThemeConfig>{' '}
     </div>
   );
