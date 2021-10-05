@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
+import Box from '@material-ui/core/Box';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,61 +12,27 @@ import FlashCard from './FlashCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Advisor from './Adivsor';
 
 import { useTheme } from '@material-ui/styles';
-
-const cards = [
-  {
-    title: 'Dubai',
-    _id: '1',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    title: 'Dubai',
-    _id: '2',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-  },
-
-  {
-    title: 'Dubai',
-    _id: '3',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    title: 'Dubai',
-    _id: '4',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $2000',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-  },
-];
+import { ToursContext } from 'Contexts/ToursContext';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const FlashSale = ({ location }) => {
   const theme = useTheme();
+
+  const { tours } = useContext(ToursContext);
+  const [flashSales, setFlashSales] = useState();
+
+  useEffect(() => {
+    if (!tours || !tours.length === 0) {
+      setFlashSales([]);
+      return;
+    }
+
+    setFlashSales(tours.filter((el) => el.sale));
+  }, [tours]);
 
   const classes = styles({ location: location, theme: theme });
 
@@ -87,8 +53,56 @@ const FlashSale = ({ location }) => {
   //? Filter Item selected
   const filterSelected = (e) => {
     //? Got the selected filter value, uncomment below line
-    //   const { filter } = e.currentTarget.dataset;
-    //   console.log(filter);
+    const { filter } = e.currentTarget.dataset;
+    console.log(filter);
+    switch (filter.toLowerCase()) {
+      case 'price': {
+        setFlashSales((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
+          return sortedTours;
+        });
+        break;
+      }
+      case 'duration': {
+        setFlashSales((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.duration > b.duration ? -1 : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      case 'date': {
+        setFlashSales((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            new Date(a.startingDate) > new Date(b.startingDate)
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      default: {
+        setFlashSales((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.reviews.length > 0 &&
+            a.reviews?.reduce((x, y) => 0 + y.rating) * 1 >
+              b.reviews.length >
+              0 &&
+            b.reviews?.reduce((x, y) => 0 + y.rating) * 1
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+    }
 
     setAnchorEl(null);
   };
@@ -154,26 +168,29 @@ const FlashSale = ({ location }) => {
           </Typography>
           {/* Upper GridView */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card._id} xs={12} sm={6} md={4}>
-                <FlashCard {...card} />
-              </Grid>
-            ))}
+            {flashSales ? (
+              flashSales.length > 0 ? (
+                flashSales.map((tour) => (
+                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                    <FlashCard {...tour} />
+                  </Grid>
+                ))
+              ) : (
+                <Box mt={5}>
+                  <Typography variant='h4'>
+                    No Flash Sales Available Now !
+                  </Typography>
+                </Box>
+              )
+            ) : (
+              <div className='loader'></div>
+            )}
           </Grid>
 
           {/* Space Container */}
           <div className={classes.spaceSection}>
             <Typography variant='h5'>PUB SPACE</Typography>
           </div>
-
-          {/* Lower GridView */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card._id} xs={12} sm={6} md={4}>
-                <FlashCard {...card} />
-              </Grid>
-            ))}
-          </Grid>
         </Container>
       </main>
     </React.Fragment>

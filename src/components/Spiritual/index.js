@@ -64,8 +64,56 @@ const SpiritualHome = ({ location }) => {
   //? Filter Item selected
   const filterSelected = (e) => {
     //? Got the selected filter value, uncomment below line
-    //   const { filter } = e.currentTarget.dataset;
-    //   console.log(filter);
+    const { filter } = e.currentTarget.dataset;
+    console.log(filter);
+    switch (filter.toLowerCase()) {
+      case 'price': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
+          return sortedTours;
+        });
+        break;
+      }
+      case 'duration': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.duration > b.duration ? -1 : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      case 'date': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            new Date(a.startingDate) > new Date(b.startingDate)
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      default: {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.reviews.length > 0 &&
+            a.reviews?.reduce((x, y) => 0 + y.rating) * 1 >
+              b.reviews.length >
+              0 &&
+            b.reviews?.reduce((x, y) => 0 + y.rating) * 1
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+    }
 
     setAnchorEl(null);
   };

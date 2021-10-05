@@ -34,16 +34,8 @@ const styles = makeStyles((theme) => ({
 }));
 const FlashCard = (props) => {
   const classes = styles();
-  const {
-    _id,
-    title,
-    noOfJourneys,
-    service,
-    desc,
-    price,
-    image,
-    history,
-  } = props;
+  const { _id, title, service, description, price, image, history } =
+    props;
 
   const handleClick = () => {
     history.push(`/tours/flash-sales/${_id}`);
@@ -61,10 +53,10 @@ const FlashCard = (props) => {
           <section className={classes.content}>
             <section>
               <Typography variant='h5' component='h2'>
-                {title}
+                {title.toUpperCase()}
               </Typography>
               <Typography variant='subtitle1' gutterBottom>
-                {desc}
+                {description}
               </Typography>
               <Typography variant='subtitle2'>{service}</Typography>
             </section>
