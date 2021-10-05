@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       minHeight: 180,
     },
+    cursor: 'pointer',
   },
   title: {
     position: 'absolute',

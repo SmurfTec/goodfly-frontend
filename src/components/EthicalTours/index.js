@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -14,78 +14,28 @@ import TuneIcon from '@material-ui/icons/Tune';
 import Advisor from './Adivsor';
 import { useTheme } from '@material-ui/styles';
 import { ToursContext } from 'Contexts/ToursContext';
-const cards = [
-  {
-    title: 'Dubai',
-    _id: '1',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Pakistan',
-  },
-  {
-    title: 'Dubai',
-    _id: '2',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Malaysia',
-  },
-
-  {
-    title: 'Dubai',
-    _id: '3',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Indonesia',
-  },
-  {
-    title: 'Dubai',
-    _id: '4',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $2000',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Turkeu',
-  },
-];
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const EthicalHome = ({ location }) => {
   const { tours } = useContext(ToursContext);
 
+  const [ethicalTours, setEthicalTours] = useState();
+
   const theme = useTheme();
   const styleProps = {
     location,
     theme,
   };
+
+  useEffect(() => {
+    if (!tours || !tours.length === 0) {
+      setEthicalTours([]);
+      return;
+    }
+
+    setEthicalTours(tours.filter((el) => el.category === 'ethical'));
+  }, [tours]);
 
   const classes = styles(styleProps);
 
@@ -173,9 +123,9 @@ const EthicalHome = ({ location }) => {
           </Typography>
           {/* Upper GridView */}
           <Grid container spacing={4}>
-            {tours ? (
-              tours.length > 0 ? (
-                tours.map((tour) => (
+            {ethicalTours ? (
+              ethicalTours.length > 0 ? (
+                ethicalTours.map((tour) => (
                   <Grid item key={tour._id} xs={12} sm={6} md={4}>
                     <TripCard {...tour} />
                   </Grid>

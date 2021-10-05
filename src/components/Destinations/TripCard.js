@@ -107,23 +107,26 @@ const TripCard = (props) => {
           image={image}
           title={title}
         />
+
         <div className={classes.cardoverlay}>
           {/* this text should overlay the image */}
           <Typography variant='h4' component='h2'>
-            {country}
+            {title.toUpperCase()}
           </Typography>
           <Typography variant='subtitle2' gutterBottom>
             Starting From {price}
           </Typography>
 
           <Typography variant='subtitle2' style={{ minWidth: 190 }}>
-            {`from ${startingDate.toLocaleDateString()} to 
-           ${endingDate.toLocaleDateString()}
+            {`from ${new Date(startingDate).toLocaleDateString()} to 
+           ${new Date(endingDate).toLocaleDateString()}
             `}
           </Typography>
           <Typography variant='subtitle2' gutterBottom>
             {Math.ceil(
-              Math.abs(endingDate - startingDate) /
+              Math.abs(
+                new Date(endingDate) - new Date(startingDate)
+              ) /
                 1000 /
                 60 /
                 60 /
@@ -131,16 +134,6 @@ const TripCard = (props) => {
             )}
             {' Days '} {boardType}
           </Typography>
-          <Button
-            variant='contained'
-            style={{
-              color: '#000',
-              backgroundColor: '#fff',
-              width: 200,
-            }}
-          >
-            Discover
-          </Button>
         </div>
 
         <div className={classes.favIcon} onClick={handleFavorite}>
