@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,9 +11,9 @@ import TripCard from './TripCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Advisor from './Adivsor';
 import { useTheme } from '@material-ui/styles';
+import { ToursContext } from 'Contexts/ToursContext';
 const cards = [
   {
     title: 'Dubai',
@@ -80,6 +79,8 @@ const cards = [
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const EthicalHome = ({ location }) => {
+  const { tours } = useContext(ToursContext);
+
   const theme = useTheme();
   const styleProps = {
     location,
@@ -172,11 +173,19 @@ const EthicalHome = ({ location }) => {
           </Typography>
           {/* Upper GridView */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card._id} xs={12} sm={6} md={4}>
-                <TripCard {...card} />
-              </Grid>
-            ))}
+            {tours ? (
+              tours.length > 0 ? (
+                tours.map((tour) => (
+                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                    <TripCard {...tour} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography variant='h4'>No Tours Yet !</Typography>
+              )
+            ) : (
+              <div className='loader'></div>
+            )}
           </Grid>
 
           {/* Space Container */}

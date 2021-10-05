@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 
 // * Tours --------------------- * //
 import EthicalTours from 'components/EthicalTours';
-import EthicalToursDetails from 'components/FlashSale/Details';
+import EthicalToursDetails from 'components/EthicalTours/Details';
 import Destinations from 'components/Destinations';
 import DestinationsDetails from 'components/Destinations/Details';
 import FlashSale from 'components/FlashSale';
