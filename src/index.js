@@ -15,22 +15,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 
 import { AuthProvider } from 'Contexts/AuthContext';
+import { ToursProvider } from 'Contexts/ToursContext';
 
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
-      <ToastContainer
-        position='top-right'
-        autoClose={4000}
-        hideProgressBar
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <App />
+      <ToursProvider>
+        <ToastContainer
+          position='top-right'
+          autoClose={4000}
+          hideProgressBar
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <App />
+      </ToursProvider>
     </AuthProvider>
   </BrowserRouter>,
   document.getElementById('root')

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 // --------- MUI ----------- //
 import {
@@ -11,6 +11,7 @@ import {
   FormLabel,
   Container,
   TextField,
+  Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -19,7 +20,9 @@ import {
   Instagram,
   Twitter,
   LinkedIn,
+  Save,
 } from '@material-ui/icons';
+import { AuthContext } from 'Contexts/AuthContext';
 // ------------------------ //
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PersonalInfo = ({ user }) => {
+const PersonalInfo = () => {
   const classes = useStyles();
+
+  const { user, updateMe } = useContext(AuthContext);
 
   const [state, setState] = useState({
     civility: '',
@@ -62,8 +67,16 @@ const PersonalInfo = ({ user }) => {
     snapChatProfile: '',
   });
 
+  useEffect(() => {
+    setState({ ...user });
+  }, [user]);
+
   const handleChange = (e) => {
     setState((st) => ({ ...st, [e.target.name]: e.target.value }));
+  };
+
+  const handleSave = () => {
+    updateMe({ ...state });
   };
 
   return (
@@ -389,6 +402,17 @@ const PersonalInfo = ({ user }) => {
           />
         ))}
       </Box>
+      <Button
+        startIcon={<Save />}
+        variant='contained'
+        color='primary'
+        style={{
+          marginTop: '5rem',
+        }}
+        onClick={handleSave}
+      >
+        Save
+      </Button>
     </Container>
   );
 };

@@ -36,7 +36,7 @@ import {
   clientCivility,
   numberCode,
 } from './DumyData';
-import { CustomSelect } from './CustomFormComp';
+import { CustomSelect } from 'components/FormControls';
 
 function AddTrip() {
   const classes = useStyles();
@@ -48,7 +48,6 @@ function AddTrip() {
   } = useForm();
 
   const methods = useForm();
-
   const submitFormData = (data) => {
     console.log('Form Data :', data);
   };
@@ -77,17 +76,7 @@ function AddTrip() {
           throughout your trip ...
         </Typography>
       </Box>
-      <Paper
-        elevation={0}
-        className={classes.paper}
-        // sx={{
-        //    backgroundColor: '#f2f2f2',
-        //    px: 15,
-        //    py: 7,
-        //    mt: 7,
-        //    fontStyle: 'italic',
-        // }}
-      >
+      <Paper elevation={0} className={classes.paper}>
         <Typography variant='subtitle1'>
           Describe to us as precisely as possible the trip you would
           like:
@@ -499,7 +488,7 @@ function AddTrip() {
                             label='Other'
                           />
                         </Grid>
-                        <Grid item xs={8} sm={8}>
+                        <Grid item xs={12} sm={8}>
                           <input
                             className={classes.textInput}
                             placeholder='(specify)'
@@ -694,7 +683,7 @@ function AddTrip() {
                 />
               </Grid>
 
-              <Grid item sm={12} sx={{ mt: 6 }}>
+              <Grid item xs={12} sm={12} sx={{ mt: 6 }}>
                 <hr />
               </Grid>
 
@@ -958,7 +947,6 @@ function AddTrip() {
               </Grid>
               <Grid item xs={12} sm={12} sx={{ mt: 3 }}>
                 <FormControlLabel
-                  //    value={option.id}
                   control={<Checkbox />}
                   label='I would like to receive the GOODFLY newsletter'
                   {...register('subscribe')}

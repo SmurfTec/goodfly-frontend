@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { withRouter } from 'react-router-dom';
 
-import { handleCatch, makeReq } from 'Utils/constants';
+import { handleCatch, makeReq } from 'utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
 
 // MUI
@@ -186,7 +186,7 @@ const reviews = [
   },
 ];
 
-const TourDetails = ({ match }) => {
+const TourDetails = ({ match, history }) => {
   const classes = useStyles();
   const { id } = match.params;
 
@@ -200,17 +200,20 @@ const TourDetails = ({ match }) => {
     setReviewValue(e.target.value);
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res = await makeReq(`/tours/${id}`);
-  //       console.log(`res`, res);
-  //       setTour(res.data.tour);
-  //     } catch (err) {
-  //       handleCatch(err);
-  //     }
-  //   })();
-  // }, [id]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const resData = await makeReq(`/trips/${id}`);
+        console.log(`resData`, resData);
+        setTour(resData.trip);
+      } catch (err) {
+        setTimeout(() => {
+          history.push('/tours/spiritual');
+        }, 1500);
+        handleCatch(err);
+      }
+    })();
+  }, [id]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -245,7 +248,7 @@ const TourDetails = ({ match }) => {
                 color='textSecondary'
                 align='left'
               >
-                Indonesia
+                {tour.country.toUpperCase()}
               </Typography>
               <Box display='flex' alignItems='center'>
                 <Typography
@@ -254,7 +257,7 @@ const TourDetails = ({ match }) => {
                   color='textSecondary'
                   marginRight={2}
                 >
-                  April 5 to 29, 2020
+                  {new Date(tour.startingDate).toDateString()}
                 </Typography>
                 <Rating
                   size='small'
@@ -276,9 +279,7 @@ const TourDetails = ({ match }) => {
                   }}
                   variant='p'
                 >
-                  Ut mi turpis, sagittis quis eleifend non, faucibus
-                  eget velit. Proin ullamcorper pulvinar velit, vitae
-                  egestas mauris mattis in. Nam dapibus facilisis.
+                  {tour.description}
                 </Typography>
                 <Box>
                   <Typography
@@ -294,9 +295,9 @@ const TourDetails = ({ match }) => {
                       textAlign: 'left',
                     }}
                   >
-                    <li>Formalités administratives</li>
-                    <li>Transferts internes</li>
-                    <li>Guide</li>
+                    {tour.services?.map((service) => (
+                      <li key={service}>{service}</li>
+                    ))}
                   </ul>
                 </Box>
               </Box>
@@ -342,7 +343,7 @@ const TourDetails = ({ match }) => {
                 }}
                 endIcon={<EuroIcon />}
               >
-                1233
+                {tour.price}
               </Button>
             </Box>
           </Grid>

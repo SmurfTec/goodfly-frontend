@@ -56,7 +56,7 @@ const App = () => {
             </Switch>
           </>
         )}
-      </ThemeConfig>{' '}
+      </ThemeConfig>
     </div>
   );
 };

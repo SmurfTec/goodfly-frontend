@@ -33,6 +33,7 @@ export default makeStyles((theme) => ({
     color: '#fff',
     borderRadius: 10,
     height: 170,
+    textAlign: 'center',
   },
 
   Stages: {

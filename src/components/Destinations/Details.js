@@ -1,79 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Banner from 'components/common/Banner';
 import img from 'Assets/img/destinations1.jpg';
 import { withRouter } from 'react-router-dom';
 
-import { Typography, Container, Grid } from '@material-ui/core';
+import { Typography, Container, Grid, Box } from '@material-ui/core';
 import TripCard from './TripCard';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { ToursContext } from 'Contexts/ToursContext';
+import { toast } from 'react-toastify';
 
-const cards = [
-  {
-    title: 'Dubai',
-    _id: '1',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Pakistan',
-  },
-  {
-    title: 'Dubai',
-    _id: '2',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Malaysia',
-  },
-
-  {
-    title: 'Dubai',
-    _id: '3',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Indonesia',
-  },
-  {
-    title: 'Dubai',
-    _id: '4',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $2000',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Turkeu',
-  },
+const allowedNames = [
+  'asia',
+  'europe',
+  'africa',
+  'oceania',
+  'america',
+  'polar lands',
 ];
 
 const Details = ({ match, history }) => {
+  const { tours } = useContext(ToursContext);
+
+  const [regionalTours, setRegionalTours] = useState();
   const { name } = match.params;
 
-  useEffect(() => {}, [name]);
+  useEffect(() => {
+    if (!allowedNames.includes(name.toLowerCase())) {
+      toast.error('Invalid Region');
+      setTimeout(() => {
+        history.push('/tours/destinations');
+      }, 1500);
+      return;
+    }
+    if (!tours || !tours.length === 0) {
+      setRegionalTours([]);
+      return;
+    }
+
+    setRegionalTours(
+      tours.filter((el) => el.region === name.toLowerCase())
+    );
+  }, [name, tours]);
+
+  const handleClickBack = () => {
+    history.goBack();
+  };
 
   return (
     <Container>
@@ -82,16 +54,37 @@ const Details = ({ match, history }) => {
         bannerTitle='Destinations'
         align='center'
       />
-      <Typography variant='h3' color='text.secondary' style={{}}>
-        <ChevronLeftIcon />
-        {name}
+      <Typography
+        variant='h3'
+        color='text.secondary'
+        style={{
+          marginBottom: '5rem',
+        }}
+      >
+        <ChevronLeftIcon
+          style={{ cursor: 'pointer' }}
+          onClick={handleClickBack}
+        />
+        {name.toUpperCase()}
       </Typography>
       <Grid container spacing={4}>
-        {cards.map((card) => (
-          <Grid item key={card._id} xs={12} sm={6} md={4}>
-            <TripCard {...card} />
-          </Grid>
-        ))}
+        {regionalTours ? (
+          regionalTours.length > 0 ? (
+            regionalTours.map((tour) => (
+              <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                <TripCard {...tour} />
+              </Grid>
+            ))
+          ) : (
+            <Box mt={10}>
+              <Typography variant='h4'>
+                No Tours for this Region !
+              </Typography>
+            </Box>
+          )
+        ) : (
+          <div className='loader'></div>
+        )}
       </Grid>
     </Container>
   );

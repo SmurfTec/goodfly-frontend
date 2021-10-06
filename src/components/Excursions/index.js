@@ -1,40 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import FlashCard from './FlashCard';
+import TripCard from './TripCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
 import Advisor from './Adivsor';
-
 import { useTheme } from '@material-ui/styles';
 import { ToursContext } from 'Contexts/ToursContext';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
-const FlashSale = ({ location }) => {
-  const theme = useTheme();
-
+const ExcursionaHome = ({ location }) => {
   const { tours } = useContext(ToursContext);
-  const [flashSales, setFlashSales] = useState();
+
+  const [excursionTours, setExcursionTours] = useState();
+
+  const theme = useTheme();
+  const styleProps = {
+    location,
+    theme,
+  };
 
   useEffect(() => {
     if (!tours || !tours.length === 0) {
-      setFlashSales([]);
+      setExcursionTours([]);
       return;
     }
 
-    setFlashSales(tours.filter((el) => el.sale));
+    setExcursionTours(
+      tours.filter((el) => el.category === 'excursions')
+    );
   }, [tours]);
 
-  const classes = styles({ location: location, theme: theme });
+  const classes = styles(styleProps);
 
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -55,9 +60,10 @@ const FlashSale = ({ location }) => {
     //? Got the selected filter value, uncomment below line
     const { filter } = e.currentTarget.dataset;
     console.log(filter);
+
     switch (filter.toLowerCase()) {
       case 'price': {
-        setFlashSales((st) => {
+        setExcursionTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
           return sortedTours;
@@ -65,7 +71,7 @@ const FlashSale = ({ location }) => {
         break;
       }
       case 'duration': {
-        setFlashSales((st) => {
+        setExcursionTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
             a.duration > b.duration ? -1 : 1
@@ -75,7 +81,7 @@ const FlashSale = ({ location }) => {
         break;
       }
       case 'date': {
-        setFlashSales((st) => {
+        setExcursionTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
             new Date(a.startingDate) > new Date(b.startingDate)
@@ -87,7 +93,7 @@ const FlashSale = ({ location }) => {
         break;
       }
       default: {
-        setFlashSales((st) => {
+        setExcursionTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
             a.reviews.length > 0 &&
@@ -118,7 +124,7 @@ const FlashSale = ({ location }) => {
             <Container className={classes.mainFeaturedPost}>
               <section className={classes.title}>
                 <Typography variant='h3'>
-                  FLASH SALE
+                  Excursions and Circuits
                   <FlashOnIcon sx={{ marginLeft: 2 }} />
                 </Typography>
               </section>
@@ -168,19 +174,15 @@ const FlashSale = ({ location }) => {
           </Typography>
           {/* Upper GridView */}
           <Grid container spacing={4}>
-            {flashSales ? (
-              flashSales.length > 0 ? (
-                flashSales.map((tour) => (
+            {excursionTours ? (
+              excursionTours.length > 0 ? (
+                excursionTours.map((tour) => (
                   <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                    <FlashCard {...tour} />
+                    <TripCard {...tour} />
                   </Grid>
                 ))
               ) : (
-                <Box mt={5}>
-                  <Typography variant='h4'>
-                    No Flash Sales Available Now !
-                  </Typography>
-                </Box>
+                <Typography variant='h4'>No Tours Yet !</Typography>
               )
             ) : (
               <div className='loader'></div>
@@ -196,4 +198,4 @@ const FlashSale = ({ location }) => {
     </React.Fragment>
   );
 };
-export default withRouter(FlashSale);
+export default withRouter(ExcursionaHome);

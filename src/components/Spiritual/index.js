@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -17,81 +17,30 @@ import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Advisor from './Adivsor';
 import { useTheme } from '@material-ui/styles';
 import Banner from 'components/common/Banner';
-const cards = [
-  {
-    title: 'Dubai',
-    _id: '1',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Pakistan',
-    ratings: Math.random() * 5,
-  },
-  {
-    title: 'Dubai',
-    _id: '2',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Malaysia',
-    ratings: Math.random() * 5,
-  },
-
-  {
-    title: 'Dubai',
-    _id: '3',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Indonesia',
-    ratings: Math.random() * 5,
-  },
-  {
-    title: 'Dubai',
-    _id: '4',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $2000',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Turkeu',
-    ratings: Math.random() * 5,
-  },
-];
+import { ToursContext } from 'Contexts/ToursContext';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
-const EthicalHome = ({ location }) => {
+const SpiritualHome = ({ location }) => {
+  const { tours } = useContext(ToursContext);
+  const [spiritualTours, setSpiritualTours] = useState();
   const [currentTab, setCurrentTab] = useState(1);
   const theme = useTheme();
   const styleProps = {
     location,
     theme,
   };
+
+  useEffect(() => {
+    if (!tours || !tours.length === 0) {
+      setSpiritualTours([]);
+      return;
+    }
+
+    setSpiritualTours(
+      tours.filter((el) => el.category === 'spiritual')
+    );
+  }, [tours]);
 
   const classes = styles(styleProps);
   const handleTab = (st) => {
@@ -115,8 +64,56 @@ const EthicalHome = ({ location }) => {
   //? Filter Item selected
   const filterSelected = (e) => {
     //? Got the selected filter value, uncomment below line
-    //   const { filter } = e.currentTarget.dataset;
-    //   console.log(filter);
+    const { filter } = e.currentTarget.dataset;
+    console.log(filter);
+    switch (filter.toLowerCase()) {
+      case 'price': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
+          return sortedTours;
+        });
+        break;
+      }
+      case 'duration': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.duration > b.duration ? -1 : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      case 'date': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            new Date(a.startingDate) > new Date(b.startingDate)
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      default: {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.reviews.length > 0 &&
+            a.reviews?.reduce((x, y) => 0 + y.rating) * 1 >
+              b.reviews.length >
+              0 &&
+            b.reviews?.reduce((x, y) => 0 + y.rating) * 1
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+    }
 
     setAnchorEl(null);
   };
@@ -226,11 +223,21 @@ const EthicalHome = ({ location }) => {
           </Typography>
           {/* Upper GridView */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card._id} xs={12} sm={6} md={4}>
-                <TripCard {...card} />
-              </Grid>
-            ))}
+            {spiritualTours ? (
+              spiritualTours.length > 0 ? (
+                spiritualTours.map((card) => (
+                  <Grid item key={card._id} xs={12} sm={6} md={4}>
+                    <TripCard {...card} />
+                  </Grid>
+                ))
+              ) : (
+                <Box mt={5}>
+                  <Typography variant='h4'>No Tours Yet !</Typography>
+                </Box>
+              )
+            ) : (
+              <div className='loader'></div>
+            )}
           </Grid>
 
           {/* Space Container */}
@@ -242,4 +249,4 @@ const EthicalHome = ({ location }) => {
     </React.Fragment>
   );
 };
-export default withRouter(EthicalHome);
+export default withRouter(SpiritualHome);
