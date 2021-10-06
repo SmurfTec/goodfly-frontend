@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import useStyles from 'Styles/Home/HomeStyles';
 // import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -9,12 +9,12 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
-
+import { toast } from 'react-toastify';
 import FeaturedCard from './FeaturedCard';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Partner1 from 'Assets/img/partner1.png';
 import Card from 'components/common/Carousel/CaourselCard';
-
+import { makeReq, handleCatch } from 'utils/constants';
 import Tabs from './Tabs';
 
 const products = [
@@ -46,6 +46,23 @@ const products = [
 
 const Index = () => {
   const classes = useStyles();
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubscribe = async () => {
+    try {
+      await makeReq(`/trips/subscribe`, { body: { email } }, 'POST');
+      setEmail('');
+
+      toast.success('Subscribed Successfully');
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -175,16 +192,23 @@ const Index = () => {
                   className={classes.textInput}
                   type='text'
                   placeholder='Enter your e-mail address here'
+                  value={email}
+                  onChange={handleEmailChange}
                 />
               </Grid>
               <Grid item xs sm={3}>
-                <Button variant='contained' fullWidth>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  onClick={handleSubscribe}
+                >
                   Send
                 </Button>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={0} sm={1}></Grid>
+
           <Grid item xs={12} sm={5} className={classes.addressBox}>
             <Typography variant='h6' color='text.primary'>
               Locate us
