@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { makeReq } from 'utils/constants';
+import { toast } from 'react-toastify';
+import { makeReq, handleCatch } from 'utils/constants';
 
 export const AuthContext = React.createContext();
 
@@ -59,6 +60,21 @@ export const AuthProvider = withRouter(({ children, history }) => {
     // }, 1000);
   };
 
+  const updateMe = async (profile) => {
+    try {
+      const resData = await makeReq(
+        `/users/me`,
+        { body: { ...profile } },
+        'PATCH'
+      );
+      console.log(`resData`, resData);
+      toast.success('Profile Updated Successfully !');
+      setUser(resData.user);
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -68,6 +84,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
         user,
         setUser,
         signInUser,
+        updateMe,
       }}
     >
       {children}
