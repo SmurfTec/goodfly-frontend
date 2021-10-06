@@ -91,5 +91,3 @@ export const AuthProvider = withRouter(({ children, history }) => {
     </AuthContext.Provider>
   );
 });
-
-export default withRouter(AuthProvider);

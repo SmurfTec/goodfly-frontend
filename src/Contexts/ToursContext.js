@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext';
 export const ToursContext = React.createContext();
 
 export const ToursProvider = withRouter(({ children, history }) => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const [tours, setTours] = useState();
 
@@ -26,8 +26,38 @@ export const ToursProvider = withRouter(({ children, history }) => {
     })();
   }, [user]);
 
+  const favouriteTrip = async (id) => {
+    try {
+      const resData = await makeReq(
+        `/trips/${id}/addToFavourites`,
+        {},
+        'PATCH'
+      );
+      console.log(`resData`, resData);
+      setUser(resData.user);
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
+  const unFavouriteTrip = async (id) => {
+    try {
+      const resData = await makeReq(
+        `/trips/${id}/removeFromFavourites`,
+        {},
+        'PATCH'
+      );
+      console.log(`resData`, resData);
+      setUser(resData.user);
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
   return (
-    <ToursContext.Provider value={{ tours }}>
+    <ToursContext.Provider
+      value={{ tours, favouriteTrip, unFavouriteTrip }}
+    >
       {children}
     </ToursContext.Provider>
   );
