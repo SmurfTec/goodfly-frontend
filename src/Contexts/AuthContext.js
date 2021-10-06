@@ -5,6 +5,7 @@ import { makeReq, handleCatch } from 'utils/constants';
 
 export const AuthContext = React.createContext();
 
+
 export const AuthProvider = withRouter(({ children, history }) => {
   let tokenLocal;
 
