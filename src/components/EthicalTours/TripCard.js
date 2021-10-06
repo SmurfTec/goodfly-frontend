@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -12,6 +12,8 @@ import FavoriteIconOutlined from '@material-ui/icons/FavoriteBorder';
 
 import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'react-router';
+import { ToursContext } from 'Contexts/ToursContext';
+import { AuthContext } from 'Contexts/AuthContext';
 
 const styles = makeStyles((theme) => ({
   card: {
@@ -57,6 +59,8 @@ const styles = makeStyles((theme) => ({
 }));
 const TripCard = (props) => {
   const classes = styles();
+  const { favouriteTrip, unFavouriteTrip } = useContext(ToursContext);
+  const { user } = useContext(AuthContext);
 
   const {
     _id,
@@ -75,25 +79,28 @@ const TripCard = (props) => {
   const handleFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    favouriteTrip(_id);
   };
 
-  const isFavorite = () => {
-    //   TODO - Add Logic
+  const handleUnFavorite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-    return Math.random() < 0.5 ? (
-      <FavoriteIconFilled
-        style={{
-          color: '#fff',
-        }}
-      />
-    ) : (
-      <FavoriteIconOutlined
-        style={{
-          color: '#fff',
-        }}
-      />
-    );
+    unFavouriteTrip(_id);
   };
+
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  useEffect(() => {
+    if (!user.favourities || user.favourities.length === 0) {
+      setIsFavourite(false);
+      return;
+    }
+    if (user.favourities.includes(_id)) setIsFavourite(true);
+    else setIsFavourite(false);
+  }, [user]);
+
   const handleClick = () => {
     history.push(`/tours/ethical/${_id}`);
   };
@@ -135,7 +142,21 @@ const TripCard = (props) => {
         </div>
 
         <div className={classes.favIcon} onClick={handleFavorite}>
-          {isFavorite()}
+          {isFavourite ? (
+            <FavoriteIconFilled
+              style={{
+                color: '#fff',
+              }}
+              onClick={handleUnFavorite}
+            />
+          ) : (
+            <FavoriteIconOutlined
+              style={{
+                color: '#fff',
+              }}
+              onClick={handleFavorite}
+            />
+          )}
         </div>
       </CardActionArea>
     </Card>
