@@ -51,7 +51,10 @@ const Navbar = () => {
         <NavLink to='/tours/spiritual'> Spiritual Trips</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/circuits'> Excursions & Circuits</NavLink>
+        <NavLink to='/tours/excursions'>
+          {' '}
+          Excursions & Circuits
+        </NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/tours/destinations'> Destinations</NavLink>
