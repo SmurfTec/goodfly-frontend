@@ -14,6 +14,7 @@ import img from 'Assets/img/loader2.gif';
 import ThemeConfig from '../theme';
 import TourRouter from 'Routers/TourRouter';
 import AuthRouter from 'Routers/AuthRouter';
+import ClientBlog from 'components/Blog';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const App = () => {
           <Switch>
             <Route path='/tours' component={TourRouter} />
             <Route exact path='/' component={Home} />
+            <Route exact path='/blogs' component={ClientBlog} />
 
             <Route exact path='/logout' component={Logout} />
 

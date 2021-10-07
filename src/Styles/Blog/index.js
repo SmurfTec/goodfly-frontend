@@ -1,0 +1,49 @@
+import { makeStyles } from '@material-ui/styles';
+export const styles = makeStyles((theme) => ({
+  card: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
+    boxShadow: 'none',
+  },
+  title: {
+    position: 'absolute',
+    padding: theme.spacing(2),
+    bottom: 0,
+    left: 10,
+    color: '#fff',
+    userSelect: 'none',
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bottom: '0',
+    // background:
+    //   'linear-gradient(0deg, rgba(0,0,40,1) 0%, rgba(255,255,255,0) 100%)',
+    background:
+      'linear-gradient(0deg, rgba(0,0,40,1) 0%, rgba(0,0,40,0.5522584033613445) 20%, rgba(255,255,255,0) 100%)',
+  },
+  cardDate: {
+    position: 'absolute',
+    backgroundColor: '#fff',
+    display: 'inline-block',
+    paddingBlock: theme.spacing(1),
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    marginLeft: 1,
+  },
+  puclicationCard: {
+    boxShadow: 'none',
+    backgroundColor: '#E6E6E6',
+    height: 250,
+    marginBlock: theme.spacing(8),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}));
