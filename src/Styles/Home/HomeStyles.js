@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 import PromoImage from 'Assets/img/PromoImg.jpg';
+import HajjImage from 'Assets/kaaba.jpg';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
@@ -47,18 +48,24 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: 525,
     },
   },
-  travelPromo: {
+
+  promoBigImg: {
     width: '100%',
-    height: 500,
     display: 'flex',
     alignItems: 'center',
-    marginTop: theme.spacing(7),
-    backgroundImage: `url(${PromoImage})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     fontStyle: 'italic',
   },
+
+  travelPromo: {
+    height: 500,
+    marginTop: theme.spacing(7),
+    marginBottom: theme.spacing(5),
+    backgroundImage: `url(${PromoImage})`,
+  },
+
   promoContent: {
     marginLeft: theme.spacing(4),
     '& h2': {
@@ -69,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 auto',
     },
   },
-  promoDesc: {
+  travelPromoDesc: {
     width: 380,
     borderRadius: 6,
     padding: theme.spacing(2),
@@ -81,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   newsLetterSubs: {
+    height: '100%',
     padding: theme.spacing(3, 3),
     backgroundColor: '#4d4d4d',
     color: '#fff',
@@ -135,6 +143,30 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiPaper-root': {
       boxShadow: 'rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px',
     },
+  },
+  hajjOmraPromo: {
+    position: 'relative',
+    minHeight: 420,
+    backgroundImage: `url(${HajjImage})`,
+    overflow: 'auto',
+  },
+  hajjOmraPromoDesc: {
+    width: 310,
+    color: '#fff',
+    position: 'absolute',
+    right: '0',
+    height: '100%',
+    padding: theme.spacing(2),
+    backgroundColor: 'rgba(0,0,0, 0.7)',
+
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      padding: theme.spacing(6),
+    },
+  },
+
+  media: {
+    height: 140,
   },
 }));
 

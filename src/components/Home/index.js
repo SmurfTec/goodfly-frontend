@@ -8,14 +8,20 @@ import {
   Button,
   Typography,
   Box,
+  Paper,
 } from '@material-ui/core';
 
 import FeaturedCard from './FeaturedCard';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
-import Partner1 from 'Assets/img/partner1.png';
 import Card from 'components/common/Carousel/CaourselCard';
-
+import FlashPromos from './FlashPromos';
 import Tabs from './Tabs';
+import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
+import VoyageCard from './VoyageCard';
+import MalaysiaImg from 'Assets/img/malaysiaVoyage.jpg';
+import AlAqsaMosqueImg from 'Assets/img/alaqsamosque.jpg';
+import TailorMadeTripImg from 'Assets/img/tailormadeTrips.jpg';
+import TravelMapImg from 'Assets/img/travelmap.png';
 
 const products = [
   {
@@ -90,7 +96,7 @@ const Index = () => {
 
         <Typography
           variant='h3'
-          sx={{ mt: 6, mb: 3 }}
+          sx={{ mt: 9, mb: 4, fontStyle: 'italic' }}
           align='center'
           color='text.secondary'
         >
@@ -109,12 +115,14 @@ const Index = () => {
           ))}
         </CarouselLayout>
       </Container>
-      <section className={classes.travelPromo}>
+      <section
+        className={`${classes.promoBigImg} ${classes.travelPromo}`}
+      >
         <div className={classes.promoContent}>
           <Typography variant='h2'>
             Travel made to measure !
           </Typography>
-          <div className={classes.promoDesc}>
+          <div className={classes.travelPromoDesc}>
             <Typography variant='subtitle1'>
               The heart of our know-how is to be at your disposal to
               imagine and design the trip of your dreams according to
@@ -138,69 +146,183 @@ const Index = () => {
         </div>
       </section>
 
-      {/* // ! Div to be replaced by mentioned components */}
-      <div
-        style={{
-          width: '100%',
-          height: '100px',
-          marginBlock: 20,
-          backgroundColor: '#ddd',
-          paddingTop: 20,
-        }}
-      >
-        <Typography variant='h5' align='center'>
-          Flash Items list, Hajj Package and Voyage types <br />( All
-          these to be placed here)
-        </Typography>
-      </div>
-
-      {/* // ! end */}
+      <Container sx={{ my: 12 }}>
+        <Grid container spacing={2} sx={{ mt: 10 }}>
+          <Grid item xs={12} sm={5} sx={{ position: 'relative' }}>
+            <FlashPromos />
+          </Grid>
+          <Grid item xs={12} sm={7}>
+            <>
+              <Typography
+                variant='h3'
+                sx={{
+                  fontStyle: 'italic',
+                  mb: 3,
+                }}
+                align='center'
+                color='text.secondary'
+              >
+                Now is the time to book!
+              </Typography>
+              <Paper
+                className={`${classes.promoBigImg} ${classes.hajjOmraPromo}`}
+              >
+                <div className={classes.hajjOmraPromoDesc}>
+                  <Typography
+                    variant='h3'
+                    align='center'
+                    sx={{ mb: 2 }}
+                  >
+                    Hajj 2021
+                  </Typography>
+                  <Typography variant='subtitle1'>
+                    Discover all of our offers for the 2021
+                    pilgrimage.
+                    <br />
+                    The GOODFLY team offers you several scholarships.
+                    formulas that will suit all Pilgrims are looked
+                    after by a staff that meets your expectations.
+                    <br />
+                    Explanations and clarifications of each religious
+                    rites. Visits of scholars and Departures possible
+                    from all over France.
+                  </Typography>
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      mt: 1,
+                    }}
+                  >
+                    <Button
+                      variant='outlined'
+                      startIcon={<ArrowIcon size='small' />}
+                      sx={{
+                        backgroundColor: '#000',
+                        color: '#FFF',
+                        mt: 2,
+                        fontStyle: 'italic',
+                        boxShadow:
+                          'rgba(255, 255, 255, 1) 0px 0px 8px',
+                        border: 'none',
+                      }}
+                    >
+                      see the offers
+                    </Button>
+                  </Box>
+                </div>
+              </Paper>
+            </>
+          </Grid>
+        </Grid>
+      </Container>
 
       <Container sx={{ mt: 6 }}>
-        <Grid container spacing={2}>
-          <Grid
-            item
-            xs={12}
-            sm={5}
-            className={classes.newsLetterSubs}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'end',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            variant='h1'
+            sx={{ fontFamily: 'Book Antiqua', color: '#FB4B49' }}
+            color='text.secondary'
           >
-            <Typography variant='h6'>
-              Receive the best offers{' '}
-              <span>via the newsletter GOODFLY</span>
-            </Typography>
+            3
+          </Typography>
+          <pre> </pre>
+          <Typography
+            variant='h3'
+            sx={{ mb: 1, fontStyle: 'italic' }}
+            color='text.secondary'
+          >
+            types of trips to discover with GOODFLY!
+          </Typography>
+        </Box>
 
-            <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
-              <Grid item xs={8} sm={7}>
-                <input
-                  className={classes.textInput}
-                  type='text'
-                  placeholder='Enter your e-mail address here'
-                />
-              </Grid>
-              <Grid item xs sm={3}>
-                <Button variant='contained' fullWidth>
-                  Send
-                </Button>
-              </Grid>
-            </Grid>
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={4}>
+            <VoyageCard image={MalaysiaImg} title='Organized trips' />
           </Grid>
-          <Grid item xs={0} sm={1}></Grid>
-          <Grid item xs={12} sm={5} className={classes.addressBox}>
-            <Typography variant='h6' color='text.primary'>
-              Locate us
-            </Typography>
-            <Typography
-              variant='subtitle2'
-              sx={{ mt: 1 }}
-              color='text.primary'
-            >
-              GOODFLY Les Mureaux
-            </Typography>
-            <Typography variant='body2' color='text.primary'>
-              60 Maurice Bellonte Street <br /> 78130 LES MUREAUX{' '}
-              <br /> contact@goodfly.fr <br />
-              01 00 00 00 00
-            </Typography>
+          <Grid item xs={12} sm={4}>
+            <VoyageCard
+              image={AlAqsaMosqueImg}
+              title='Ethical travels'
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <VoyageCard
+              image={TailorMadeTripImg}
+              title='Tailor-made trips'
+            />
+          </Grid>
+        </Grid>
+      </Container>
+
+      <Container sx={{ mt: 10 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Box className={classes.newsLetterSubs}>
+              <Typography variant='h6'>
+                Receive the best offers{' '}
+                <span>via the newsletter GOODFLY</span>
+              </Typography>
+              <Grid
+                container
+                sx={{ mt: 1, justifyContent: 'center' }}
+              >
+                <Grid item xs={8} sm={7}>
+                  <input
+                    className={classes.textInput}
+                    type='text'
+                    placeholder='Enter your e-mail address here'
+                  />
+                </Grid>
+                <Grid item xs sm={3}>
+                  <Button variant='contained' fullWidth>
+                    Send
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box className={classes.addressBox}>
+              <Box sx={{ display: 'flex' }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant='h6' color='text.primary'>
+                    Locate us
+                  </Typography>
+                  <Typography
+                    variant='subtitle2'
+                    sx={{ mt: 1 }}
+                    color='text.primary'
+                  >
+                    GOODFLY Les Mureaux
+                  </Typography>
+                  <Typography variant='body2' color='text.primary'>
+                    60 Maurice Bellonte Street <br /> 78130 LES
+                    MUREAUX <br /> contact@goodfly.fr <br />
+                    01 00 00 00 00
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <img
+                    src={TravelMapImg}
+                    alt='GoodFly Travels Location'
+                    width='150px'
+                    height='100px'
+                  />
+                </Box>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
       </Container>

@@ -7,10 +7,20 @@ import {
   Radio,
   TextField,
   Typography,
+  Checkbox,
 } from '@material-ui/core';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
 import { useStyles } from 'Styles/Form/FormStyles';
+
+const colourStyles = {
+  option: (styles) => {
+    return {
+      ...styles,
+      color: '#000',
+    };
+  },
+};
 
 export const CustomSelect = ({
   name,
@@ -37,6 +47,7 @@ export const CustomSelect = ({
               isSearchable={false}
               placeholder={placeholder}
               options={options}
+              styles={colourStyles}
             />
           )}
           control={control}
@@ -76,15 +87,17 @@ export const CustomTextField = (props) => {
 };
 
 export const CustomDatePicker = (props) => {
-  const { errors, label, name, errorMessage, register } = props;
+  const { errors, label, name, errorMessage, register, type } = props;
+  const classes = useStyles();
+
   return (
     <FormControl fullWidth error={Boolean(errors?.[name])}>
       <Typography variant='body2' sx={{ mb: 1 }}>
         {label}
       </Typography>
       <input
-        type='date'
-        className={useStyles().textInput}
+        type={type}
+        className={classes.textInput}
         {...register(name, {
           required: true,
         })}
