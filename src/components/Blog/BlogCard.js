@@ -3,16 +3,15 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { styles } from 'Styles/Blog';
 import { Box } from '@material-ui/system';
 
-const BlogCard = ({ tag, date, image, title }) => {
+const BlogCard = ({ id, tag, date, image, title, handleClick }) => {
   const classes = styles();
 
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick} data-blogid={id}>
         <CardMedia
           sx={{ height: 330, position: 'relative' }}
           image={image}

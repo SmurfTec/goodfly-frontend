@@ -20,8 +20,6 @@ export const styles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     bottom: '0',
-    // background:
-    //   'linear-gradient(0deg, rgba(0,0,40,1) 0%, rgba(255,255,255,0) 100%)',
     background:
       'linear-gradient(0deg, rgba(0,0,40,1) 0%, rgba(0,0,40,0.5522584033613445) 20%, rgba(255,255,255,0) 100%)',
   },
@@ -45,5 +43,47 @@ export const styles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bannerImg: {
+    position: 'relative',
+    height: 350,
+    marginTop: theme.spacing(7),
+    marginBottom: theme.spacing(5),
+    display: 'flex',
+    alignItems: 'center',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    fontStyle: 'italic',
+  },
+  bannerContent: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    zIndex: 9,
+  },
+  blogBannerDate: {
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    display: 'inline-block',
+    padding: theme.spacing(1, 4),
+  },
+  bannerOverlay: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  textArea: {
+    resize: 'vertical',
+  },
+  carouselCard: {
+    display: 'block',
+    padding: 10,
+    height: '100%',
+    '& .MuiPaper-root': {
+      boxShadow: 'rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px',
+    },
   },
 }));

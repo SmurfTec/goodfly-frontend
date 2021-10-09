@@ -15,6 +15,7 @@ import ThemeConfig from '../theme';
 import TourRouter from 'Routers/TourRouter';
 import AuthRouter from 'Routers/AuthRouter';
 import ClientBlog from 'components/Blog';
+import BlogDetails from 'components/Blog/BlogDetails';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -30,6 +31,11 @@ const App = () => {
             <Route path='/tours' component={TourRouter} />
             <Route exact path='/' component={Home} />
             <Route exact path='/blogs' component={ClientBlog} />
+            <Route
+              exact
+              path='/blogs/:blogId'
+              component={BlogDetails}
+            />
 
             <Route exact path='/logout' component={Logout} />
 
