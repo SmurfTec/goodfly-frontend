@@ -60,6 +60,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                 </Grid>
                 <Grid item xs={12} sm={7} sx={{ mt: 1 }}>
                   <CustomDatePicker
+                    type='date'
                     label='Date Of Birth'
                     name={`dateOfBirth-${i + 1}`}
                     errors={errors}

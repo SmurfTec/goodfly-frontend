@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff',
     fontSize: 15,
     fontWeight: 300,
+    marginBottom: 0,
     // color: '#8D8D8D',
     color: theme.palette.grey[700],
     WebkitTransition: 'all 0.3s ease',
