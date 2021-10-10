@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Card,
@@ -18,59 +18,27 @@ import JakartaImg from 'Assets/img/jakarta.jpg';
 import MalaysianBeachesImg from 'Assets/img/malaysiaBeaches.jpg';
 import TravelBagImg from 'Assets/img/travelBag.jpg';
 
-import { styles } from 'Styles/Blog';
-
-export const data = [
-  {
-    id: 34234523453452,
-    image: LoyaltyImg,
-    tag: 'News',
-    date: '12 March 2021',
-    title: 'Something new, with the loyalty card!',
-    content:
-      'To put down economic hardships. For the feasibility, the bow or the time range, the lion is the financing of the free, it needs time itself but not the vehicle. Curabitur at enim at lacus porta viverra. Curabitur sed auctor leo. The mass of the bow, the element of the sauce layer and, the layer of the chemical lakes. Even any mass agency, from the entrance to the airport. Now great now, as the author of the football players, the Bureau of Performance.',
-  },
-  {
-    id: 34234523453454,
-    image: SkingImg,
-    tag: 'Trendy activity',
-    date: '12 May 2021',
-    title: 'Skiing in France',
-    content:
-      'To put down economic hardships. For the feasibility, the bow or the time range, the lion is the financing of the free, it needs time itself but not the vehicle. Curabitur at enim at lacus porta viverra. Curabitur sed auctor leo. The mass of the bow, the element of the sauce layer and, the layer of the chemical lakes. Even any mass agency, from the entrance to the airport. Now great now, as the author of the football players, the Bureau of Performance.',
-  },
-  {
-    id: 34234523453456,
-    image: JakartaImg,
-    tag: 'Meet',
-    date: '12 May 2021',
-    title: 'Presentation of the GOODFLY guide in Indonesia',
-    content:
-      'To put down economic hardships. For the feasibility, the bow or the time range, the lion is the financing of the free, it needs time itself but not the vehicle. Curabitur at enim at lacus porta viverra. Curabitur sed auctor leo. The mass of the bow, the element of the sauce layer and, the layer of the chemical lakes. Even any mass agency, from the entrance to the airport. Now great now, as the author of the football players, the Bureau of Performance.',
-  },
-  {
-    id: 34234523453458,
-    image: MalaysianBeachesImg,
-    tag: 'Discovery',
-    date: '12 May 2021',
-    title: 'Top 10 Best Beaches in Malaysia',
-    content:
-      'To put down economic hardships. For the feasibility, the bow or the time range, the lion is the financing of the free, it needs time itself but not the vehicle. Curabitur at enim at lacus porta viverra. Curabitur sed auctor leo. The mass of the bow, the element of the sauce layer and, the layer of the chemical lakes. Even any mass agency, from the entrance to the airport. Now great now, as the author of the football players, the Bureau of Performance.',
-  },
-  {
-    id: 34234523453459,
-    image: TravelBagImg,
-    tag: 'Youtube',
-    date: '12 May 2021',
-    title: 'New video online on the Youtube channel!',
-    content:
-      'To put down economic hardships. For the feasibility, the bow or the time range, the lion is the financing of the free, it needs time itself but not the vehicle. Curabitur at enim at lacus porta viverra. Curabitur sed auctor leo. The mass of the bow, the element of the sauce layer and, the layer of the chemical lakes. Even any mass agency, from the entrance to the airport. Now great now, as the author of the football players, the Bureau of Performance.',
-  },
-];
+import styles from 'Styles/Blog';
+import { makeReq, handleCatch } from 'utils/constants';
 
 const ClientBlog = () => {
   const classes = styles();
   const history = useHistory();
+
+  const [blogs, setBlogs] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resData = await makeReq(`/blogs`);
+        console.log(`resData`, resData);
+        setBlogs(resData.blogs);
+      } catch (err) {
+        handleCatch(err);
+        setBlogs([]);
+      }
+    })();
+  }, []);
 
   const blogClick = (e) => {
     const { blogid } = e.currentTarget.dataset;
@@ -99,18 +67,26 @@ const ClientBlog = () => {
       <Container sx={{ mt: 13 }}>
         <Box>
           <Grid container spacing={3}>
-            {data.map((e, i) => (
-              <Grid key={e.id} item xs={12} sm={i === 3 ? 8 : 4}>
-                <BlogCard
-                  id={e.id}
-                  image={e.image}
-                  tag={e.tag}
-                  date={e.date}
-                  title={e.title}
-                  handleClick={blogClick}
-                />
-              </Grid>
-            ))}
+            {blogs ? (
+              blogs.length > 0 ? (
+                blogs.map((blog, i) => (
+                  <Grid
+                    key={blog._id}
+                    item
+                    xs={12}
+                    sm={i === 3 ? 8 : 4}
+                  >
+                    <BlogCard blog={blog} handleClick={blogClick} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography variant='h5'>
+                  No Blogs Available
+                </Typography>
+              )
+            ) : (
+              <div className='loader'></div>
+            )}
           </Grid>
         </Box>
         <Card className={classes.puclicationCard}>
@@ -118,22 +94,6 @@ const ClientBlog = () => {
             ESPACE PUB
           </Typography>
         </Card>
-        <Box sx={{ mb: 15 }}>
-          <Grid container spacing={3}>
-            {data.map((e, i) => (
-              <Grid key={e.id} item xs={12} sm={i === 3 ? 8 : 4}>
-                <BlogCard
-                  id={e.id}
-                  image={e.image}
-                  tag={e.tag}
-                  date={e.date}
-                  title={e.title}
-                  handleClick={blogClick}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
       </Container>
     </>
   );

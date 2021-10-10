@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
-export const styles = makeStyles((theme) => ({
+
+const useStyles = makeStyles((theme) => ({
   card: {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 8,
@@ -87,3 +88,5 @@ export const styles = makeStyles((theme) => ({
     },
   },
 }));
+
+export default useStyles;

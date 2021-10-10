@@ -2,6 +2,7 @@ import { Paper, Avatar, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/system';
+
 const styles = makeStyles((theme) => ({
   root: {
     border: '2px solid #CCCC',
@@ -26,7 +27,8 @@ const styles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 }));
-const Comment = () => {
+
+const Comment = ({ comment }) => {
   const classes = styles();
   return (
     <Paper
@@ -38,7 +40,7 @@ const Comment = () => {
           <Box className={classes.avatarBox}>
             <Avatar
               alt='Remy Sharp'
-              src='/static/images/avatar/1.jpg'
+              src={comment.user.photo}
               className={classes.large}
             />
             <Typography
@@ -54,7 +56,7 @@ const Comment = () => {
           <Box className={classes.gridDate}>
             <Box />
             <Typography variant='body1' color='text.secondary'>
-              1 November 2021
+              {new Date(comment.createdAt).toDateString()}
             </Typography>
           </Box>
         </Grid>
@@ -64,9 +66,7 @@ const Comment = () => {
             color='text.primary'
             sx={{ mt: 3 }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Aliquam quis tortor fermentum, fringilla dolor vel,
-            sollicitudin augue.
+            {comment.text}
           </Typography>
         </Grid>
       </Grid>

@@ -72,7 +72,7 @@ const Navbar = () => {
         <NavLink to='/transport'> Transport / Logictics</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
-        <NavLink to='/blog'> Blog</NavLink>
+        <NavLink to='/blogs'> Blog</NavLink>
       </Typography>
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/promos'> Promos</NavLink>

@@ -3,23 +3,26 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { styles } from 'Styles/Blog';
+import styles from 'Styles/Blog';
 import { Box } from '@material-ui/system';
 
-const BlogCard = ({ id, tag, date, image, title, handleClick }) => {
+const BlogCard = ({ blog, handleClick }) => {
   const classes = styles();
+  const { _id, tag, createdAt, images, title } = blog;
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={handleClick} data-blogid={id}>
+      <CardActionArea onClick={handleClick} data-blogid={_id}>
         <CardMedia
           sx={{ height: 330, position: 'relative' }}
-          image={image}
+          image={images[0]}
           title={title}
         >
           <span className={classes.overlay} />
           <Box className={classes.cardDate}>
-            <Typography variant='subtitle2'>{date}</Typography>
+            <Typography variant='subtitle2'>
+              {new Date(createdAt).toDateString()}
+            </Typography>
           </Box>
           <Typography
             variant='h5'

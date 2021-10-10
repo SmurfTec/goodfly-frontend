@@ -295,10 +295,16 @@ const Index = () => {
                     className={classes.textInput}
                     type='text'
                     placeholder='Enter your e-mail address here'
+                    value={email}
+                    onChange={handleEmailChange}
                   />
                 </Grid>
                 <Grid item xs sm={3}>
-                  <Button variant='contained' fullWidth>
+                  <Button
+                    variant='contained'
+                    fullWidth
+                    onClick={handleSubscribe}
+                  >
                     Send
                   </Button>
                 </Grid>

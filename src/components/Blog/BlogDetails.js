@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box } from '@material-ui/system';
+
 import {
   Typography,
   Container,
@@ -10,176 +11,234 @@ import {
   FormControl,
   FormHelperText,
 } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import { data } from './';
+import { withRouter } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Comment from './Comment';
-import { useStyles } from 'Styles/CreateTrip/FormStyles';
+import { useStyles as styles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import BlogCard from './BlogCard';
-import { styles } from 'Styles/Blog';
+import useStyles from 'Styles/Blog';
+import { handleCatch, makeReq } from 'utils/constants';
 
-const BlogDetails = () => {
-  const classes = styles();
-  const [blog, setBlog] = useState(null);
-  let { blogId } = useParams();
-  const history = useHistory();
+const BlogDetails = ({ match, history }) => {
+  const classes = useStyles();
+  const formClasses = styles();
+
+  const [blog, setBlog] = useState();
+  const [blogs, setBlogs] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resData = await makeReq(`/blogs`);
+        console.log(`resData`, resData);
+        setBlogs(resData.blogs);
+      } catch (err) {
+        handleCatch(err);
+        setBlogs([]);
+      }
+    })();
+  }, []);
+
+  const { id } = match.params;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resData = await makeReq(`/blogs/${id}`);
+        console.log(`resData`, resData);
+        setBlog(resData.blog);
+        window.scrollTo(0, 0);
+      } catch (err) {
+        handleCatch(err);
+        setTimeout(() => {
+          history.push('/blogs');
+        }, 1500);
+      }
+    })();
+  }, [id]);
 
   const {
     handleSubmit,
     formState: { errors },
     register,
+    reset,
   } = useForm();
 
-  const submitFormData = (data) => {
+  const submitFormData = async (data) => {
     console.log('Form Data :', data);
+
+    try {
+      const resData = await makeReq(
+        `/blogs/${id}/comment`,
+        {
+          body: { text: data.commentTextArea },
+        },
+        'POST'
+      );
+      const newComment = resData.comment;
+
+      setBlog((st) => ({
+        ...st,
+        comments: [...st.comments, newComment],
+      }));
+
+      reset();
+    } catch (err) {}
   };
 
   const blogClick = (e) => {
-    const { blogid } = e.currentTarget.dataset;
-    history.push(`/blogs/${blogid}`);
+    const { id } = e.currentTarget.dataset;
+    history.push(`/blogs/${id}`);
   };
 
-  useEffect(() => {
-    const getblog = data.filter((b) => b.id.toString() === blogId);
-    setBlog(...getblog);
-    window.scrollTo(0, 0);
-  }, [blogId]);
   return (
     <>
-      {console.log(errors)}
-      <Box sx={{ mt: 3 }}>
-        <Box
-          className={classes.bannerImg}
-          sx={{
-            backgroundImage: `url(${blog?.image})`,
-          }}
-        >
-          <Box className={classes.bannerOverlay} />
-          <Box className={classes.bannerContent}>
-            <Box className={classes.blogBannerDate}>
-              <Typography variant='subtitle2'>
-                {blog?.date}
-              </Typography>
-            </Box>
-            <Box sx={{ maxWidth: 620, margin: '0 auto' }}>
-              <Typography
-                variant='h2'
-                sx={{ color: '#fff ', mt: 2, fontStyle: 'normal' }}
-              >
-                {blog?.title}
-              </Typography>
-            </Box>
-            <Box sx={{ mt: 1 }}>
-              <Typography variant='h5' sx={{ color: '#fff' }}>
-                {blog?.tag}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Container sx={{ mt: 8 }}>
-        <Typography variant='subtitle2' color='text.secondary'>
-          {blog?.content}
-        </Typography>
-
-        <Paper
-          elevation={0}
-          sx={{ backgroundColor: '#fafafa', p: 4, mt: 8 }}
-        >
-          <Typography
-            variant='subtitle1'
-            color='text.primary'
-            align='center'
-          >
-            Comments (3)
-          </Typography>
-          <Typography
-            variant='subtitle1'
-            color='text.secondary'
-            sx={{ mt: 3 }}
-          >
-            3 comments for this article
-          </Typography>
-          <Box sx={{ mt: 4 }}>
-            <Comment />
-            <Comment />
-            <Comment />
-            <br />
-            <Divider sx={{ mt: 1 }} />
-          </Box>
-
-          <Box sx={{ mt: 6 }}>
-            <Typography variant='subtitle2'>Add a comment</Typography>
-            <Typography variant='subtitle1' sx={{ mt: 4 }}>
-              Your comment
-            </Typography>
-            <form
-              id='formComment'
-              onSubmit={handleSubmit((data) => submitFormData)}
+      {blog ? (
+        <>
+          <Box sx={{ mt: 3 }}>
+            <Box
+              className={classes.bannerImg}
+              sx={{
+                backgroundImage: `url(${blog?.images[0]})`,
+              }}
             >
-              <Paper elevation={3} sx={{ px: 2, py: 3, mt: 1 }}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.commentTextArea)}
-                >
-                  <textarea
-                    rows='15'
-                    className={`${useStyles().textInput} ${
-                      classes.textArea
-                    }`}
-                    {...register('commentTextArea', {
-                      required: 'Write your comment to submit',
-                    })}
-                    placeholder='Write something about the blog post...'
-                  />
-                  {errors?.commentTextArea?.type === 'required' && (
-                    <FormHelperText>
-                      {errors?.commentTextArea?.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Paper>
-              <Button
-                sx={{ mt: 4, minWidth: 150 }}
-                type='submit'
-                variant='contained'
-                form='formComment'
-                color='primary'
-              >
-                SEND
-              </Button>
-            </form>
+              <Box className={classes.bannerOverlay} />
+              <Box className={classes.bannerContent}>
+                <Box className={classes.blogBannerDate}>
+                  <Typography variant='subtitle2'>
+                    {new Date(blog?.createdAt).toDateString()}
+                  </Typography>
+                </Box>
+                <Box sx={{ maxWidth: 620, margin: '0 auto' }}>
+                  <Typography
+                    variant='h2'
+                    sx={{
+                      color: '#fff ',
+                      mt: 2,
+                      fontStyle: 'normal',
+                    }}
+                  >
+                    {blog?.title}
+                  </Typography>
+                </Box>
+                <Box sx={{ mt: 1 }}>
+                  <Typography variant='h5' sx={{ color: '#fff' }}>
+                    {blog?.tag}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
           </Box>
-        </Paper>
+          <Container sx={{ mt: 8 }}>
+            <Typography variant='subtitle2' color='text.secondary'>
+              {blog?.text}
+            </Typography>
 
-        <Box sx={{ mt: 17 }}>
-          <Typography
-            variant='h4'
-            fullWidth
-            align='center'
-            sx={{ my: 6 }}
-          >
-            Latest Articles Online
-          </Typography>
-          <CarouselLayout>
-            {data.map((blog) => (
-              <div key={blog.id} className={classes.carouselCard}>
-                <BlogCard
-                  id={blog.id}
-                  image={blog.image}
-                  tag={blog.tag}
-                  date={blog.date}
-                  title={blog.title}
-                  handleClick={blogClick}
-                />
-              </div>
-            ))}
-          </CarouselLayout>
-        </Box>
-      </Container>
+            <Paper
+              elevation={0}
+              sx={{ backgroundColor: '#fafafa', p: 4, mt: 8 }}
+            >
+              <Typography
+                variant='subtitle1'
+                color='text.primary'
+                align='center'
+              >
+                Comments {blog.comments.length}
+              </Typography>
+              <Typography
+                variant='subtitle1'
+                color='text.secondary'
+                sx={{ mt: 3 }}
+              >
+                {blog.comments.length} comments for this article
+              </Typography>
+              <Box sx={{ mt: 4 }}>
+                {blog.comments.map((comment) => (
+                  <Comment key={comment._id} comment={comment} />
+                ))}
+                <br />
+                <Divider sx={{ mt: 1 }} />
+              </Box>
+
+              <Box sx={{ mt: 6 }}>
+                <Typography variant='subtitle2'>
+                  Add a comment
+                </Typography>
+                <Typography variant='subtitle1' sx={{ mt: 4 }}>
+                  Your comment
+                </Typography>
+                <form
+                  id='formComment'
+                  onSubmit={handleSubmit((data) =>
+                    submitFormData(data)
+                  )}
+                >
+                  <Paper elevation={3} sx={{ px: 2, py: 3, mt: 1 }}>
+                    <FormControl
+                      fullWidth
+                      error={Boolean(errors.commentTextArea)}
+                    >
+                      <textarea
+                        rows='15'
+                        className={`${formClasses.textInput} ${classes.textArea}`}
+                        {...register('commentTextArea', {
+                          required: 'Write your comment to submit',
+                        })}
+                        placeholder='Write something about the blog post...'
+                      />
+                      {errors?.commentTextArea?.type ===
+                        'required' && (
+                        <FormHelperText>
+                          {errors?.commentTextArea?.message}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Paper>
+                  <Button
+                    sx={{ mt: 4, minWidth: 150 }}
+                    type='submit'
+                    variant='contained'
+                    form='formComment'
+                    color='primary'
+                  >
+                    SEND
+                  </Button>
+                </form>
+              </Box>
+            </Paper>
+
+            <Box sx={{ mt: 17 }}>
+              <Typography
+                variant='h4'
+                fullWidth
+                align='center'
+                sx={{ my: 6 }}
+              >
+                Latest Articles Online
+              </Typography>
+              <CarouselLayout>
+                {blogs ? (
+                  blogs.map((blog) => (
+                    <div
+                      key={blog._id}
+                      className={classes.carouselCard}
+                    >
+                      <BlogCard blog={blog} handleClick={blogClick} />
+                    </div>
+                  ))
+                ) : (
+                  <div className='loader'></div>
+                )}
+              </CarouselLayout>
+            </Box>
+          </Container>
+        </>
+      ) : (
+        <div className='loader'></div>
+      )}
     </>
   );
 };
 
-export default BlogDetails;
+export default withRouter(BlogDetails);
