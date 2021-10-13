@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
   Checkbox,
+  Rating,
 } from '@material-ui/core';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
@@ -166,6 +167,21 @@ export const CustomRadioGroup = ({ name, control, options }) => {
         >
           {generateRadioOptions()}
         </RadioGroup>
+      )}
+    />
+  );
+};
+
+export const CustomRating = (props) => {
+  const { control, name, options } = props;
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={options[0]}
+      render={({ field: { onChange, value } }) => (
+        <Rating value={value} onChange={onChange} size='large' />
       )}
     />
   );

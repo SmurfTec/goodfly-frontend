@@ -16,6 +16,7 @@ import TourRouter from 'Routers/TourRouter';
 import AuthRouter from 'Routers/AuthRouter';
 import ClientBlog from 'components/Blog';
 import BlogDetails from 'components/Blog/BlogDetails';
+import Products from 'components/ClientStore';
 
 import Profile from 'components/Profile';
 
@@ -33,12 +34,16 @@ const App = () => {
                 <Route path='/tours' component={TourRouter} />
                 <Route exact path='/profile' component={Profile} />
                 <Route exact path='/' component={Home} />
-
                 <Route exact path='/blogs' component={ClientBlog} />
                 <Route
                   exact
                   path='/blogs/:id'
                   component={BlogDetails}
+                />
+                <Route
+                  exact
+                  path='/products/:id'
+                  component={Products}
                 />
                 <Route exact path='/logout' component={Logout} />
                 <Redirect from='*' to='/' />

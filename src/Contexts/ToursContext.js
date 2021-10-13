@@ -16,7 +16,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/trips`);
-        console.log(`resData`, resData);
+        // console.log(`resData`, resData);
 
         setTours(resData.trips);
       } catch (err) {
@@ -33,7 +33,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
         {},
         'PATCH'
       );
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       setUser(resData.user);
     } catch (err) {
       handleCatch(err);
@@ -47,7 +47,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
         {},
         'PATCH'
       );
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       setUser(resData.user);
     } catch (err) {
       handleCatch(err);

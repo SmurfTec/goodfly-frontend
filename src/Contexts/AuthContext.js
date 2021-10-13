@@ -5,7 +5,6 @@ import { makeReq, handleCatch } from 'utils/constants';
 
 export const AuthContext = React.createContext();
 
-
 export const AuthProvider = withRouter(({ children, history }) => {
   let tokenLocal;
 
@@ -25,7 +24,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
   const getMe = async () => {
     try {
       const res = await makeReq(`/users/me`, {}, 'GET');
-      console.log(`res`, res);
+      // console.log(`res`, res);
 
       setUser(res.user);
     } catch (err) {
@@ -38,8 +37,8 @@ export const AuthProvider = withRouter(({ children, history }) => {
   };
 
   const signInUser = (tk, us) => {
-    console.log(`tk`, tk);
-    console.log(`us`, us);
+    // console.log(`tk`, tk);
+    // console.log(`us`, us);
 
     window.localStorage.setItem('jwt', tk);
 
@@ -68,7 +67,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
         { body: { ...profile } },
         'PATCH'
       );
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       toast.success('Profile Updated Successfully !');
       setUser(resData.user);
     } catch (err) {
