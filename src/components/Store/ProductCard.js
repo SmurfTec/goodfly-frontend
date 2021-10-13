@@ -1,88 +1,57 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import styles from 'Styles/Blog';
 
-import { makeStyles } from '@material-ui/styles';
-import { withRouter } from 'react-router';
-
-const styles = makeStyles((theme) => ({
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#f2f2f2',
-    borderRadius: 'unset',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  amountContent: {
-    flex: 'none',
-  },
-}));
-
-const ProductCard = ({ product, history }) => {
+const ProductCard = (props) => {
   const classes = styles();
-  const {
-    _id,
-    name,
-    description,
-    price,
-    category,
-    rating,
-    images,
-    region,
-  } = product;
-
-  const handleClick = () => {
-    history.push(`/store/${_id}`);
-  };
+  const { handleClick, product } = props;
+  const { images, price, _id, name, category } = product;
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={handleClick}>
+      <CardActionArea onClick={handleClick} data-productId={_id}>
         <CardMedia
-          className={classes.cardMedia}
+          sx={{ height: 250, position: 'relative' }}
           image={images[0]}
           title={name}
         />
-        <CardContent className={classes.cardContent}>
-          <section className={classes.content}>
-            <Typography
-              variant='h5'
-              color='textSecondary'
-              component='h2'
-            >
-              {name.toUpperCase()}
-            </Typography>
-            <Typography variant='h4' gutterBottom>
-              {price}
-            </Typography>
-            <Typography
-              variant='h6'
-              color='textSecondary'
-              fontWeight='bold'
-            >
-              {region}
-            </Typography>
-          </section>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexWrap: 'nowrap',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '& h3,h4,h5,h6': {
+              textTransform: 'capitalize',
+            },
+          }}
+        >
+          <Typography
+            gutterBottom
+            variant='h5'
+            color='text.secondary'
+          >
+            {name}
+          </Typography>
+          <Typography
+            gutterBottom
+            variant='subtitle1'
+            sx={{ fontWeight: 900 }}
+          >
+            {price}€
+          </Typography>
+          <Typography variant='subtitle1' color='text.secondary'>
+            {category}
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>
   );
 };
-export default withRouter(ProductCard);
+
+export default ProductCard;

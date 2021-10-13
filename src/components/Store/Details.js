@@ -26,7 +26,7 @@ import { CustomRating } from 'components/FormControls';
 import { useForm } from 'react-hook-form';
 import { useStyles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
-import ProductCard from './ProductCard2';
+import ProductCard from './ProductCard';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -425,16 +425,28 @@ const ClientStore = ({ match }) => {
           )} */}
 
           <div className={classes.carouselCard}>
-            <ProductCard {...product} handleClick={productClick} />
+            <ProductCard
+              product={product}
+              handleClick={productClick}
+            />
           </div>
           <div className={classes.carouselCard}>
-            <ProductCard {...product} handleClick={productClick} />
+            <ProductCard
+              product={product}
+              handleClick={productClick}
+            />
           </div>
           <div className={classes.carouselCard}>
-            <ProductCard {...product} handleClick={productClick} />
+            <ProductCard
+              product={product}
+              handleClick={productClick}
+            />
           </div>
           <div className={classes.carouselCard}>
-            <ProductCard {...product} handleClick={productClick} />
+            <ProductCard
+              product={product}
+              handleClick={productClick}
+            />
           </div>
         </CarouselLayout>
       </Box>
