@@ -26,7 +26,7 @@ import { CustomRating } from 'components/FormControls';
 import { useForm } from 'react-hook-form';
 import { useStyles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
-import ProductCard from './ProductCard';
+import ProductCard from './ProductCard2';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -356,12 +356,20 @@ const ClientStore = ({ match }) => {
                   control={control}
                   options={[1, 2, 3, 4, 5]}
                 />
-
                 <Typography variant='h5' sx={{ mt: 4, mb: 1 }}>
                   Your Opinion
                 </Typography>
-
-                <Paper elevation={3} sx={{ px: 2, py: 3, mt: 1 }}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    px: 2,
+                    py: 3,
+                    mt: 1,
+                    '& textarea': {
+                      resize: 'vertical',
+                    },
+                  }}
+                >
                   <FormControl
                     fullWidth
                     error={Boolean(errors.opinionTextArea)}
