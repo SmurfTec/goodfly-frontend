@@ -31,7 +31,7 @@ const ClientBlog = () => {
     (async () => {
       try {
         const resData = await makeReq(`/blogs`);
-        console.log(`resData`, resData);
+        // console.log(`resData`, resData);
         setBlogs(resData.blogs);
       } catch (err) {
         handleCatch(err);

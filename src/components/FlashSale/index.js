@@ -54,7 +54,7 @@ const FlashSale = ({ location }) => {
   const filterSelected = (e) => {
     //? Got the selected filter value, uncomment below line
     const { filter } = e.currentTarget.dataset;
-    console.log(filter);
+    // console.log(filter);
     switch (filter.toLowerCase()) {
       case 'price': {
         setFlashSales((st) => {

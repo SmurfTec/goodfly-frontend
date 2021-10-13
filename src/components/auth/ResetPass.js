@@ -39,15 +39,15 @@ const ResetPassword = ({ history, match }) => {
           passwordConfirm: state.passwordConfirm,
         }
       );
-      console.log(`res`, res);
+      // console.log(`res`, res);
       toast.success('Reset Password Success !');
       setState(initialState);
       history.push('/login');
     } catch (err) {
-      console.log(
-        `err.response.data.message`,
-        err.response.data.message
-      );
+      // console.log(
+      //   `err.response.data.message`,
+      //   err.response.data.message
+      // );
       toast.error(
         err.response.data.message || 'Something went wrong'
       );

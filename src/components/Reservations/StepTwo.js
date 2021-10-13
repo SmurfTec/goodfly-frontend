@@ -17,7 +17,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
   } = useForm();
 
   const watchAllFields = watch();
-  console.log('All Fields :', watchAllFields?.['emailRadio-1']);
+  // console.log('All Fields :', watchAllFields?.['emailRadio-1']);
 
   return (
     <form id='formTravellers' onSubmit={handleSubmit(travellersForm)}>

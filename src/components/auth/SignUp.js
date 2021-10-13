@@ -34,15 +34,15 @@ const SignUp = () => {
         ...state,
         role: 'visitor',
       });
-      console.log(`res`, res);
+      // console.log(`res`, res);
       toast.success('SignUp Success');
       toast.success(`Activation Send to your email ${state.email}`);
       // setState(initialState)
     } catch (err) {
-      console.log(
-        `err.response.data.message`,
-        err.response.data.message
-      );
+      // console.log(
+      //   `err.response.data.message`,
+      //   err.response.data.message
+      // );
       toast.error(
         err.response.data.message || 'Something went wrong'
       );

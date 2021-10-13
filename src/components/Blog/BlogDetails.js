@@ -31,7 +31,7 @@ const BlogDetails = ({ match, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/blogs`);
-        console.log(`resData`, resData);
+        // console.log(`resData`, resData);
         setBlogs(resData.blogs);
       } catch (err) {
         handleCatch(err);
@@ -46,7 +46,7 @@ const BlogDetails = ({ match, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/blogs/${id}`);
-        console.log(`resData`, resData);
+        // console.log(`resData`, resData);
         setBlog(resData.blog);
         window.scrollTo(0, 0);
       } catch (err) {
@@ -66,7 +66,7 @@ const BlogDetails = ({ match, history }) => {
   } = useForm();
 
   const submitFormData = async (data) => {
-    console.log('Form Data :', data);
+    // console.log('Form Data :', data);
 
     try {
       const resData = await makeReq(

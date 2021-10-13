@@ -41,7 +41,7 @@ const TabItem = () => {
   };
 
   const flightForm = (data) => {
-    console.log('Flight Data :', data);
+    // console.log('Flight Data :', data);
   };
 
   return (

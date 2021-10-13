@@ -49,7 +49,7 @@ function AddTrip() {
 
   const methods = useForm();
   const submitFormData = (data) => {
-    console.log('Form Data :', data);
+    // console.log('Form Data :', data);
   };
 
   return (

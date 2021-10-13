@@ -34,7 +34,7 @@ const Login = () => {
         email: state.email,
         password: state.password,
       });
-      console.log(`res`, res);
+      // console.log(`res`, res);
       toast.success('Login Success');
       setState(initialState);
       signInUser(res.data.token, res.data.user);

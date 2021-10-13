@@ -204,7 +204,7 @@ const TourDetails = ({ match, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/trips/${id}`);
-        console.log(`resData`, resData);
+        // console.log(`resData`, resData);
         setTour(resData.trip);
       } catch (err) {
         handleCatch(err);

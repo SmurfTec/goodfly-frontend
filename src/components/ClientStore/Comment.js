@@ -1,10 +1,22 @@
-import { Paper, Avatar, Grid, Typography } from '@material-ui/core';
+import {
+  Paper,
+  Avatar,
+  Grid,
+  Typography,
+  Rating,
+} from '@material-ui/core';
 import React from 'react';
 import { Box } from '@material-ui/system';
 import styles from 'Styles/Comment';
+import { CustomRating } from 'components/FormControls';
+import { useForm } from 'react-hook-form';
 
-const Comment = ({ comment }) => {
+const Comment = (props) => {
   const classes = styles();
+  console.log(props);
+  const { userName, userImage, createdAt, description, rating } =
+    props;
+
   return (
     <Paper
       elevation={0}
@@ -15,7 +27,7 @@ const Comment = ({ comment }) => {
           <Box className={classes.avatarBox}>
             <Avatar
               alt='Remy Sharp'
-              src={comment.user.photo}
+              src={userImage}
               className={classes.large}
             />
             <Typography
@@ -23,16 +35,30 @@ const Comment = ({ comment }) => {
               color='text.secondary'
               sx={{ mt: 1 }}
             >
-              NewDesign
+              {userName}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={9}>
-          <Box className={classes.gridDate}>
-            <Box />
+          <Box
+            sx={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              justifyContent: 'end',
+            }}
+          >
+            <Rating size='small' value={rating * 1 || 5} readOnly />
+            <Box sx={{ mt: 1 }} />
             <Typography variant='body1' color='text.secondary'>
-              {new Date(comment.createdAt).toDateString()}
+              {new Date(createdAt).toDateString()}
             </Typography>
+            {/* <CustomRating
+              name='commentRating'
+              control={control}
+              options={[0, 1, 2, 3, 4, 5]}
+            /> */}
           </Box>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -41,7 +67,7 @@ const Comment = ({ comment }) => {
             color='text.primary'
             sx={{ mt: 3 }}
           >
-            {comment.text}
+            {description}
           </Typography>
         </Grid>
       </Grid>

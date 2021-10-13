@@ -42,7 +42,7 @@ const TripCard = (props) => {
   } = props;
 
   const handleClick = () => {
-    console.log(`_id`, _id);
+    // console.log(`_id`, _id);
     history.push(`/tours/spiritual/${_id}`);
   };
 

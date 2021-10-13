@@ -32,7 +32,7 @@ const Login = () => {
           email: state.email,
         }
       );
-      console.log(`res`, res);
+      // console.log(`res`, res);
       toast.success(
         `Reset Password Link Send to your email ${state.email}`
       );

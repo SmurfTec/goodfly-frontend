@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
 
 const handleCatch = (err) => {
-  console.log('**********');
-  console.log(`err`, err);
+  // console.log('**********');
+  // console.log(`err`, err);
   let errMsg = 'Something Went Wrong';
   if (err.message) errMsg = err.message;
   toast.error(errMsg);
@@ -23,7 +23,7 @@ const makeReq = (
   const headers = { 'Content-Type': 'application/json' };
 
   if (token) {
-    console.log(`token`, token);
+    // console.log(`token`, token);
     headers.Authorization = `Bearer ${token}`;
   }
 
@@ -40,11 +40,11 @@ const makeReq = (
     config.body = JSON.stringify(body);
   }
 
-  console.log(`body`, body);
+  // console.log(`body`, body);
   return fetch(`${API_BASE_URL}${endpoint}`, config).then(
     async (res) => {
       const data = await res.json();
-      console.log(`data`, data);
+      // console.log(`data`, data);
       if (res.ok) {
         return data;
       } else {
