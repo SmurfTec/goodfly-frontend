@@ -16,6 +16,8 @@ import TourRouter from 'Routers/TourRouter';
 import AuthRouter from 'Routers/AuthRouter';
 import ClientBlog from 'components/Blog';
 import BlogDetails from 'components/Blog/BlogDetails';
+import Store from 'components/Store';
+import StoreDetails from 'components/Store/StoreDetails';
 
 import Profile from 'components/Profile';
 
@@ -33,6 +35,13 @@ const App = () => {
                 <Route path='/tours' component={TourRouter} />
                 <Route exact path='/profile' component={Profile} />
                 <Route exact path='/' component={Home} />
+
+                <Route exact path='/store' component={Store} />
+                <Route
+                  exact
+                  path='/store/:id'
+                  component={StoreDetails}
+                />
 
                 <Route exact path='/blogs' component={ClientBlog} />
                 <Route

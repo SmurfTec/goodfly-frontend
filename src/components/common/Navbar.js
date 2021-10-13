@@ -83,9 +83,7 @@ const Navbar = () => {
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/store'> Store</NavLink>
       </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/blog'> Blog</NavLink>
-      </Typography>
+
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/contact-us'> Contact Us</NavLink>
       </Typography>
