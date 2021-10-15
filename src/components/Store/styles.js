@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/styles';
-import flashImg from 'Assets/img/flash-sale.png';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {

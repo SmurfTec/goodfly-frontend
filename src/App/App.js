@@ -17,6 +17,7 @@ import AuthRouter from 'Routers/AuthRouter';
 import ClientBlog from 'components/Blog';
 import BlogDetails from 'components/Blog/BlogDetails';
 import Store from 'components/Store';
+import ContactUs from 'components/contact-us';
 import StoreDetails from 'components/Store/Details';
 
 import Profile from 'components/Profile';
@@ -48,6 +49,11 @@ const App = () => {
                   component={BlogDetails}
                 />
 
+                <Route
+                  exact
+                  path='/contact-us'
+                  component={ContactUs}
+                />
                 <Route exact path='/logout' component={Logout} />
                 <Redirect from='*' to='/' />
               </Switch>

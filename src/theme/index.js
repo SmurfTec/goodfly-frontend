@@ -11,6 +11,7 @@ import {
 import shape from './shape';
 import palette from './palette';
 import typography from './typography';
+import breakpoints from './breakpoints';
 import GlobalStyles from './globalStyles';
 import componentsOverride from './overrides';
 import shadows, { customShadows } from './shadows';
@@ -29,6 +30,7 @@ export default function ThemeConfig({ children }) {
       typography,
       shadows,
       customShadows,
+      breakpoints,
     }),
     []
   );
