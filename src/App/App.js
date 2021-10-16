@@ -18,6 +18,7 @@ import ClientBlog from 'components/Blog';
 import BlogDetails from 'components/Blog/BlogDetails';
 import Store from 'components/Store';
 import StoreDetails from 'components/Store/Details';
+import Checkout from 'components/Store/Checkout';
 
 import Profile from 'components/Profile';
 
@@ -36,6 +37,11 @@ const App = () => {
                 <Route exact path='/profile' component={Profile} />
                 <Route exact path='/' component={Home} />
                 <Route exact path='/store' component={Store} />
+                <Route
+                  exact
+                  path='/store/checkout'
+                  component={Checkout}
+                />
                 <Route
                   exact
                   path='/store/:id'

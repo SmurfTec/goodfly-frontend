@@ -27,6 +27,7 @@ import { useForm } from 'react-hook-form';
 import { useStyles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import ProductCard from './ProductCard';
+import StoreSubNav from './StoreSubNav';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -146,22 +147,7 @@ const ClientStore = ({ match }) => {
 
   return (
     <Container sx={{ mt: 5 }} className={classes.root}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography
-          variant='h4'
-          color='primary'
-          sx={{ fontWeight: 900 }}
-        >
-          GOODFLY
-        </Typography>
-        <Typography
-          variant='h4'
-          color='primary'
-          sx={{ fontStyle: 'italic', fontWeight: 300 }}
-        >
-          STORE
-        </Typography>
-      </Box>
+      <StoreSubNav />
 
       {/* //! BreadCrumbs */}
 
