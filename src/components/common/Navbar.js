@@ -7,12 +7,17 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles((theme) => ({
   nav: {
     display: 'flex',
-    overflowX: 'auto',
+    overflowX: 'hidden',
     alignItems: 'center',
 
     maxWidth: 1250,
     margin: '1rem auto',
-
+    minHeight: 50,
+    paddingBlock: 10,
+    cursor: 'pointer',
+    '&:hover': {
+      overflowX: 'auto',
+    },
     '& span': {
       flex: '0 0 auto',
       padding: '8px 10px',
