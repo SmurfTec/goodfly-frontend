@@ -28,6 +28,7 @@ import { useStyles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import ProductCard from './ProductCard';
 import StoreSubNav from './StoreSubNav';
+import { handleCatch, makeReq } from 'Utils/constants';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -92,6 +93,7 @@ function TabPanel(props) {
 const ClientStore = ({ match }) => {
   const classes = styles();
   const formClasses = useStyles();
+  const { id } = match.params;
   const {
     handleSubmit,
     formState: { errors },
@@ -99,24 +101,40 @@ const ClientStore = ({ match }) => {
     register,
     reset,
   } = useForm();
-  const [product, setProduct] = useState({
-    images: [{ url: LoyaltyImg }],
-    price: 200,
-    countInStock: 10,
-    reviews: [],
-    rating: 0,
-    numReviews: 0,
-    _id: '615a1ab8957a8e342485d89b',
-    name: 'jeans',
-    category: 'men',
-    description: ' pants for men ',
-    __v: 0,
-  });
+  const [product, setProduct] = useState();
+  const [relatedProjects, setRelatedProjects] = useState();
 
   const [noOfItem, setNoOfItem] = useState(1);
   const [quantity, setQuantity] = useState(10);
 
   const [tabValue, setTabValue] = React.useState(1);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resData = await makeReq(`/products/${id}`);
+        setProduct(resData.product);
+      } catch (err) {
+        setProduct(404);
+        handleCatch(err);
+      }
+    })();
+  }, [id]);
+
+  useEffect(() => {
+    if (!product) return;
+
+    (async () => {
+      try {
+        const resData = await makeReq(
+          `/products?category=${product.category}`
+        );
+        setRelatedProjects(resData.products);
+      } catch (err) {
+        handleCatch(err);
+      }
+    })();
+  }, [product]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -152,139 +170,136 @@ const ClientStore = ({ match }) => {
       {/* //! BreadCrumbs */}
 
       <Box sx={{ mt: 6 }}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
-                  <Card sx={{ boxShadow: 'none', borderRadius: 1 }}>
-                    <CardMedia
-                      sx={{ height: 400, position: 'relative' }}
-                      image={LoyaltyImg}
-                    />
-                  </Card>
+        {product ? (
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6}>
+              <Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12}>
+                    <Card sx={{ boxShadow: 'none', borderRadius: 1 }}>
+                      <CardMedia
+                        sx={{
+                          height: 400,
+                          position: 'relative',
+                          backgroundSize: 'contain',
+                        }}
+                        image={product.images[0]}
+                      />
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Box>
+                      <Grid container spacing={2}>
+                        {product.images.slice(1, 4).map((image) => (
+                          <Grid item xs={6} sm={3}>
+                            <Card
+                              sx={{
+                                boxShadow: 'none',
+                                borderRadius: 1,
+                              }}
+                            >
+                              <CardMedia
+                                sx={{
+                                  height: 100,
+                                  position: 'relative',
+                                }}
+                                image={image}
+                              />
+                            </Card>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Box>
-                    <Grid container spacing={2}>
-                      <Grid item xs={6} sm={3}>
-                        <Card
-                          sx={{ boxShadow: 'none', borderRadius: 1 }}
-                        >
-                          <CardMedia
-                            sx={{ height: 100, position: 'relative' }}
-                            image={LoyaltyImg}
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
-                        <Card
-                          sx={{ boxShadow: 'none', borderRadius: 1 }}
-                        >
-                          <CardMedia
-                            sx={{ height: 100, position: 'relative' }}
-                            image={LoyaltyImg}
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
-                        <Card
-                          sx={{ boxShadow: 'none', borderRadius: 1 }}
-                        >
-                          <CardMedia
-                            sx={{ height: 100, position: 'relative' }}
-                            image={LoyaltyImg}
-                          />
-                        </Card>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
-                        <Card
-                          sx={{ boxShadow: 'none', borderRadius: 1 }}
-                        >
-                          <CardMedia
-                            sx={{ height: 100, position: 'relative' }}
-                            image={LoyaltyImg}
-                          />
-                        </Card>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{ userSelect: 'none' }}>
-            <Typography variant='h3'>{product.name}</Typography>
-            <Typography
-              variant='h4'
-              color='text.secondary'
-              sx={{ mt: 1 }}
-            >
-              {product.price}
-            </Typography>
-            <Typography variant='h5' sx={{ mt: 1 }}>
-              {product.description}
-            </Typography>
-            <Typography variant='body1' sx={{ mt: 3 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Aliquam quis tortor fermentum, fringilla dolor vel,
-              sollicitudin augue. Ut interdum, nisi in bibendum
-              faucibus, purus nibh scelerisque turpis, condimentum
-              vehicula est ex quis ante.
-            </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6} sx={{ userSelect: 'none' }}>
+              {product ? (
+                product === 404 ? (
+                  <div>404</div>
+                ) : (
+                  <div>
+                    <Typography variant='h3'>
+                      {product.name}
+                    </Typography>
+                    <Typography
+                      variant='h4'
+                      color='text.secondary'
+                      sx={{ mt: 1 }}
+                    >
+                      {product.price}
+                    </Typography>
+                    <Typography variant='h5' sx={{ mt: 1 }}>
+                      Origin : {product.region}
+                    </Typography>
+                    <Typography variant='body1' sx={{ mt: 3 }}>
+                      {product.description.slice(0, 238)}
+                    </Typography>
 
-            {/* <Typography variant='subtitle1' sx={{ mt: 3 }}>
-              Quantity
-            </Typography>
-            <Select
-              id='quantity'
-              value={quantity}
-              label='Quantity'
-              onChange={changeQuantity}
-              sx={{ minWidth: 250, mt: 1 }}
-            >
-              <MenuItem value={10}>250g</MenuItem>
-              <MenuItem value={20}>300g</MenuItem>
-              <MenuItem value={30}>500g</MenuItem>
-            </Select> */}
-
-            <Box
-              sx={{
-                mt: 5,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 2,
-                width: '100%',
-              }}
-            >
-              <IconButton
-                sx={{ border: '1px solid #9f9f9f' }}
-                color='primary'
-                disabled={noOfItem <= 1}
-                onClick={decreaseNoOfItems}
-              >
-                <RemoveRounded />
-              </IconButton>
-              <Typography variant='h4' sx={{ userSelect: 'none' }}>
-                {noOfItem}
+                    {/* <Typography variant='subtitle1' sx={{ mt: 3 }}>
+                Quantity
               </Typography>
-              <IconButton
-                sx={{ border: '1px solid #9f9f9f' }}
-                color='primary'
-                onClick={increaseNoOfItems}
+              <Select
+                id='quantity'
+                value={quantity}
+                label='Quantity'
+                onChange={changeQuantity}
+                sx={{ minWidth: 250, mt: 1 }}
               >
-                <Addrounded />
-              </IconButton>
-            </Box>
-            <Button
-              variant='contained'
-              color='primary'
-              sx={{ mt: 3 }}
-            >
-              ADD TO CART
-            </Button>
+                <MenuItem value={10}>250g</MenuItem>
+                <MenuItem value={20}>300g</MenuItem>
+                <MenuItem value={30}>500g</MenuItem>
+              </Select> */}
+
+                    <Box
+                      sx={{
+                        mt: 5,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        width: '100%',
+                      }}
+                    >
+                      <IconButton
+                        sx={{ border: '1px solid #9f9f9f' }}
+                        color='primary'
+                        disabled={noOfItem <= 1}
+                        onClick={decreaseNoOfItems}
+                      >
+                        <RemoveRounded />
+                      </IconButton>
+                      <Typography
+                        variant='h4'
+                        sx={{ userSelect: 'none' }}
+                      >
+                        {noOfItem}
+                      </Typography>
+                      <IconButton
+                        sx={{ border: '1px solid #9f9f9f' }}
+                        color='primary'
+                        onClick={increaseNoOfItems}
+                      >
+                        <Addrounded />
+                      </IconButton>
+                    </Box>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      sx={{ mt: 3 }}
+                    >
+                      ADD TO CART
+                    </Button>
+                  </div>
+                )
+              ) : (
+                <div className='loader'></div>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <div className='loader'></div>
+        )}
       </Box>
       <Box sx={{ mt: 13 }}>
         <Tabs
@@ -310,18 +325,27 @@ const ClientStore = ({ match }) => {
           />
         </Tabs>
         <TabPanel value={tabValue} index={0} dir='x'>
-          Description
+          {product?.description}
           {/* <StagesTab stages={stages ? stages : []} /> */}
         </TabPanel>
         <TabPanel value={tabValue} index={1} dir='x-reverse'>
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6}>
-              <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
-                {product.reviews.length} reviews for this product
-              </Typography>
-              <CommentsTab {...Comments} />
-              <CommentsTab {...Comments} />
-              <CommentsTab {...Comments} />
+              {product ? (
+                <>
+                  <Typography
+                    variant='subtitle1'
+                    sx={{ mt: 5, mb: 8 }}
+                  >
+                    {product.reviews.length} reviews for this product
+                  </Typography>
+                  {product.reviews.map((review) => (
+                    <CommentsTab {...review} />
+                  ))}
+                </>
+              ) : (
+                <div className='loader'></div>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant='subtitle1' sx={{ mt: 5, mb: 3 }}>
@@ -410,30 +434,19 @@ const ClientStore = ({ match }) => {
             <div className='loader'></div>
           )} */}
 
-          <div className={classes.carouselCard}>
-            <ProductCard
-              product={product}
-              handleClick={productClick}
-            />
-          </div>
-          <div className={classes.carouselCard}>
-            <ProductCard
-              product={product}
-              handleClick={productClick}
-            />
-          </div>
-          <div className={classes.carouselCard}>
-            <ProductCard
-              product={product}
-              handleClick={productClick}
-            />
-          </div>
-          <div className={classes.carouselCard}>
-            <ProductCard
-              product={product}
-              handleClick={productClick}
-            />
-          </div>
+          {relatedProjects ? (
+            <div className={classes.carouselCard}>
+              {relatedProjects.map((product) => (
+                <ProductCard
+                  product={product}
+                  handleClick={productClick}
+                  key={product._id}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className='loader'></div>
+          )}
         </CarouselLayout>
       </Box>
     </Container>

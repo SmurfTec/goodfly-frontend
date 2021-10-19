@@ -45,7 +45,7 @@ const App = () => {
                 />
                 <Route
                   exact
-                  path='/store/:id'
+                  path='/store/product/:id'
                   component={StoreDetails}
                 />
                 <Route exact path='/blogs' component={ClientBlog} />

@@ -27,7 +27,8 @@ import ProductCard from './ProductCard';
 const Index = () => {
   const classes = useStyles();
   const [products, setProducts] = useState();
-  const [productFilter, setProductFilter] = useState([0, 1000]);
+  const [filteredProducts, setFilteredProducts] = useState();
+  const [priceFilter, setPriceFilter] = useState([0, 1000]);
 
   const [productSort, setProductSort] = useState(1);
   const [productCategory, setProductCategory] = useState(1);
@@ -41,7 +42,7 @@ const Index = () => {
   };
 
   const handlePriceFilterChange = (event, newValue) => {
-    setProductFilter(newValue);
+    setPriceFilter(newValue);
   };
 
   useEffect(() => {
@@ -56,7 +57,39 @@ const Index = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
   const valuetext = (value) => `${value} $`;
+
+  const applyFilter = () => {
+    // * Make Temp products
+    let newProducts = products;
+
+    // * Filter by Category
+    if (productCategory !== 'all')
+      newProducts = newProducts.filter(
+        (product) => product.category === productCategory
+      );
+
+    console.log(`newProducts 1`, newProducts);
+
+    // * Filter Price by Value
+    newProducts = newProducts.filter(
+      (product) =>
+        product.price >= priceFilter[0] &&
+        product.price <= priceFilter[1]
+    );
+
+    // * Sort Price
+    newProducts = newProducts.sort((a, b) =>
+      a.price >= b.price ? productSort : -productSort
+    );
+
+    console.log(`newProducts`, newProducts);
+    setFilteredProducts(newProducts);
+  };
 
   return (
     <div>
@@ -88,7 +121,7 @@ const Index = () => {
                 Filter by Price
               </Typography>
               <Slider
-                value={productFilter}
+                value={priceFilter}
                 onChange={handlePriceFilterChange}
                 valueLabelDisplay='auto'
                 aria-labelledby='range-slider'
@@ -106,9 +139,13 @@ const Index = () => {
                 justifyContent='space-between'
               >
                 <Typography variant='h5' color='textSecondary'>
-                  {`${productFilter[0]}$ - ${productFilter[1]} $`}
+                  {`${priceFilter[0]}$ - ${priceFilter[1]} $`}
                 </Typography>
-                <Button variant='outlined' className={classes.Input}>
+                <Button
+                  variant='outlined'
+                  className={classes.Input}
+                  onClick={applyFilter}
+                >
                   FILTER
                 </Button>
               </Box>
@@ -131,7 +168,7 @@ const Index = () => {
                     label='Ascending'
                   />
                   <FormControlLabel
-                    value={0}
+                    value={-1}
                     control={<Radio />}
                     label='Descending'
                   />
@@ -150,6 +187,11 @@ const Index = () => {
                   value={productCategory}
                   onChange={handlePriceCategory}
                 >
+                  <FormControlLabel
+                    value='all'
+                    control={<Radio />}
+                    label='All'
+                  />
                   <FormControlLabel
                     value='Miscellaneous accessories'
                     control={<Radio />}
@@ -277,7 +319,7 @@ const Index = () => {
           <Grid item xs={1} sm={1}></Grid>
           <Grid item xs={6} sm={8}>
             <Grid container spacing={4}>
-              {products?.map((product) => (
+              {filteredProducts?.map((product) => (
                 <Grid item xs={12} sm={4} key={product._id}>
                   <ProductCard product={product} />
                 </Grid>

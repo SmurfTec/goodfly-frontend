@@ -5,15 +5,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styles from 'Styles/Blog';
+import { withRouter } from 'react-router-dom';
 
-const ProductCard = (props) => {
+const ProductCard = ({ product, history }) => {
   const classes = styles();
-  const { handleClick, product } = props;
   const { images, price, _id, name, category } = product;
+
+  const handleClick = () => {
+    history.push(`/store/product/${_id}`);
+  };
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={handleClick} data-productId={_id}>
+      <CardActionArea onClick={handleClick}>
         <CardMedia
           sx={{ height: 250, position: 'relative' }}
           image={images[0]}
@@ -54,4 +58,4 @@ const ProductCard = (props) => {
   );
 };
 
-export default ProductCard;
+export default withRouter(ProductCard);
