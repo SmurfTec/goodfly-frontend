@@ -8,7 +8,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { API_BASE_URL } from 'utils/constants';
+import { API_BASE_URL } from 'Utils/constants';
 
 const ResetPassword = ({ history, match }) => {
   const classes = useStyles();

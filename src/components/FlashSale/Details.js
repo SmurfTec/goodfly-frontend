@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { withRouter } from 'react-router-dom';
 
-import { handleCatch, makeReq } from 'utils/constants';
+import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
 
 // MUI

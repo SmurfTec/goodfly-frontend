@@ -20,7 +20,7 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import Products from './StoreProducts';
 
 import useStyles from './styles';
-import { handleCatch, makeReq } from 'utils/constants';
+import { handleCatch, makeReq } from 'Utils/constants';
 import StoreProducts from './StoreProducts';
 import ProductCard from './ProductCard';
 

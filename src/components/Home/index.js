@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import FeaturedCard from './FeaturedCard';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Card from 'components/common/Carousel/CaourselCard';
-import { makeReq, handleCatch } from 'utils/constants';
+import { makeReq, handleCatch } from 'Utils/constants';
 import FlashPromos from './FlashPromos';
 import Tabs from './Tabs';
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';

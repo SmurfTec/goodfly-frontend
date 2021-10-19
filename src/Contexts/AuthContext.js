@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { toast } from 'react-toastify';
-import { makeReq, handleCatch } from 'utils/constants';
+import { makeReq, handleCatch } from 'Utils/constants';
 
 export const AuthContext = React.createContext();
 
