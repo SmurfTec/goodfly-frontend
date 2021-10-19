@@ -1,12 +1,13 @@
 import { Container, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
-import React, { useState } from 'react';
-import Step1 from './Step1';
+import React, { useContext, useState } from 'react';
+import Cart from './Cart';
 import Step2 from './Step2';
 import StoreNav from '../StoreSubNav';
 import Back from '@material-ui/icons/ArrowBackIos';
 
 import { makeStyles } from '@material-ui/styles';
+import { StoreContext } from 'Contexts/StoreContext';
 
 const useStyles = makeStyles((theme) => ({
   backButton: {
@@ -35,15 +36,29 @@ function getSteps() {
 
 const Checkout = () => {
   const classes = useStyles();
+  const {
+    cart,
+    increaseQuantity,
+    decreaseQuantity,
+    removeItemFromCart,
+  } = useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
   const getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:
-        return <Step1 validateStep1={validateStep1} />;
+        return (
+          <Cart
+            validateStep1={validateStep1}
+            cart={cart}
+            increaseQuantity={increaseQuantity}
+            decreaseQuantity={decreaseQuantity}
+            removeItemFromCart={removeItemFromCart}
+          />
+        );
       case 1:
-        return <Step2 validateStep2={validateStep2} />;
+        return <Step2 validateStep2={validateStep2} cart={cart} />;
       case 2:
         return '';
       default:

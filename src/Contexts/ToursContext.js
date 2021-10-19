@@ -56,6 +56,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
 
   return (
     <ToursContext.Provider
+      displayName='Tour Context'
       value={{ tours, favouriteTrip, unFavouriteTrip }}
     >
       {children}

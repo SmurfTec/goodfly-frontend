@@ -13,31 +13,22 @@ import Addrounded from '@material-ui/icons/AddRounded';
 import RemoveRounded from '@material-ui/icons/RemoveRounded';
 
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
-function ShoppingCartItem({ product }) {
+function ShoppingCartItem({
+  product,
+  increaseQuantity,
+  decreaseQuantity,
+  removeItemFromCart,
+}) {
   const classes = styles();
-  const { images, price, _id, name, category } = product;
-  const [quantity, setQuantity] = useState(1);
+  const { images, price, _id, name, category, quantity } = product;
+  const [productQuantify, setProductQuantity] = useState(1);
   const [subtotal, setSubtotal] = useState(price);
-
-  const increaseQuantity = () => {
-    setQuantity((st) => st + 1);
-    setSubtotal(subtotal + price);
-  };
-  const decreaseQuantity = () => {
-    setQuantity((st) => st - 1);
-    setSubtotal(subtotal - price);
-  };
-
-  const removeFromBasket = (e) => {
-    const { productid } = e.currentTarget.dataset;
-    // Remove item from basket
-  };
 
   return (
     <div className={classes.item}>
       <IconButton
         sx={{ mx: 1 }}
-        onClick={removeFromBasket}
+        onClick={removeItemFromCart.bind(this, _id)}
         size='small'
         data-productid={_id}
       >
@@ -67,7 +58,7 @@ function ShoppingCartItem({ product }) {
           sx={{ border: '1px solid #9f9f9f' }}
           color='primary'
           disabled={quantity <= 1}
-          onClick={decreaseQuantity}
+          onClick={decreaseQuantity.bind(this, _id)}
           size='small'
         >
           <RemoveRounded fontSize='small' />
@@ -82,7 +73,8 @@ function ShoppingCartItem({ product }) {
         <IconButton
           sx={{ border: '1px solid #9f9f9f' }}
           color='primary'
-          onClick={increaseQuantity}
+          disabled={quantity >= 10}
+          onClick={increaseQuantity.bind(this, _id)}
           size='small'
         >
           <Addrounded fontSize='small' />

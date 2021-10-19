@@ -23,10 +23,12 @@ import useStyles from './styles';
 import { handleCatch, makeReq } from 'Utils/constants';
 import StoreProducts from './StoreProducts';
 import ProductCard from './ProductCard';
+import { StoreContext } from 'Contexts/StoreContext';
 
 const Index = () => {
   const classes = useStyles();
-  const [products, setProducts] = useState();
+  const { products } = useContext(StoreContext);
+
   const [filteredProducts, setFilteredProducts] = useState();
   const [priceFilter, setPriceFilter] = useState([0, 1000]);
 
@@ -44,18 +46,6 @@ const Index = () => {
   const handlePriceFilterChange = (event, newValue) => {
     setPriceFilter(newValue);
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const resData = await makeReq(`/products`);
-        console.log(`resData`, resData);
-        setProducts(resData.products);
-      } catch (err) {
-        handleCatch(err);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -330,7 +320,7 @@ const Index = () => {
         <Box marginTop={15}></Box>
         <Grid container spacing={4}>
           {products?.slice(0, 4).map((product) => (
-            <Grid item xs={6} sm={4} key={product._id}>
+            <Grid item xs={6} sm={3} key={product._id}>
               <ProductCard product={product} />
             </Grid>
           ))}

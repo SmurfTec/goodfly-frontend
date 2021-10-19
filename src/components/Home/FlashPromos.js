@@ -105,7 +105,7 @@ const FlashPromos = () => {
       <Paper elevation={0} className={classes.paper}>
         <Grid container spacing={2}>
           {flashData.map((data, i) => (
-            <>
+            <React.Fragment key={i}>
               <Grid item xs={3} sm={3}>
                 <Card className={classes.card}>
                   <Typography
@@ -148,7 +148,7 @@ const FlashPromos = () => {
                   </Typography>
                 </Card>
               </Grid>
-            </>
+            </React.Fragment>
           ))}
         </Grid>
       </Paper>

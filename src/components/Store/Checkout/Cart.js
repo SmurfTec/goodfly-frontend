@@ -12,36 +12,13 @@ import LoyaltyImg from 'Assets/img/loyaltyCard.jpg';
 import { styles } from 'Styles/Cart/CartItemStyles';
 import TotalBill from './TotalBill';
 
-const products = [
-  {
-    images: [{ url: LoyaltyImg }],
-    price: 200,
-    countInStock: 10,
-    reviews: [],
-    rating: 0,
-    numReviews: 0,
-    _id: '615a1ab8957a8e342485d89b',
-    name: 'jeans',
-    category: 'men',
-    description: ' pants for men ',
-    __v: 0,
-  },
-  {
-    images: [{ url: LoyaltyImg }],
-    price: 200,
-    countInStock: 10,
-    reviews: [],
-    rating: 0,
-    numReviews: 0,
-    _id: '615a1ab8957a8e342485d89b',
-    name: 'Dawn Bread By pakistan - Big Pack',
-    category: 'men',
-    description: ' pants for men ',
-    __v: 0,
-  },
-];
-
-const Step1 = ({ validateStep1 }) => {
+const Cart = ({
+  validateStep1,
+  cart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeItemFromCart,
+}) => {
   const classes = styles();
   return (
     <>
@@ -91,14 +68,26 @@ const Step1 = ({ validateStep1 }) => {
                 Sub-total
               </Typography>
             </Box>
-            {products.map((product, i) => {
-              return (
-                <>
-                  <CartItem key={product.id} product={product} />
-                  {i < products.length - 1 && <Divider />}
-                </>
-              );
-            })}
+            {cart ? (
+              cart.map((product, i) => {
+                return (
+                  <>
+                    <CartItem
+                      key={product.id}
+                      product={product}
+                      increaseQuantity={increaseQuantity}
+                      decreaseQuantity={decreaseQuantity}
+                      removeItemFromCart={removeItemFromCart}
+                    />
+                    {i < cart.length - 1 && <Divider />}
+                  </>
+                );
+              })
+            ) : (
+              <Typography variant='h5'>
+                You Have to Products on the cart
+              </Typography>
+            )}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5}>
@@ -109,4 +98,4 @@ const Step1 = ({ validateStep1 }) => {
   );
 };
 
-export default Step1;
+export default Cart;

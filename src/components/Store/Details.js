@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import {
   Container,
@@ -29,6 +29,7 @@ import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import ProductCard from './ProductCard';
 import StoreSubNav from './StoreSubNav';
 import { handleCatch, makeReq } from 'Utils/constants';
+import { StoreContext } from 'Contexts/StoreContext';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -53,15 +54,6 @@ const styles = makeStyles((theme) => ({
     },
   },
 }));
-
-const Comments = {
-  userName: 'Ahmed',
-  userImage: userImg,
-  createdAt: '12-10-2011',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis tortor augue. Ut interdum, nisi in bibendum faucibus, purus nibh scelerisque turpis fermentum, fringilla dolor vel, sollicitudin ',
-  rating: '3',
-};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -93,6 +85,8 @@ function TabPanel(props) {
 const ClientStore = ({ match }) => {
   const classes = styles();
   const formClasses = useStyles();
+  const { addItemToCart } = useContext(StoreContext);
+
   const { id } = match.params;
   const {
     handleSubmit,
@@ -129,12 +123,19 @@ const ClientStore = ({ match }) => {
         const resData = await makeReq(
           `/products?category=${product.category}`
         );
-        setRelatedProjects(resData.products);
+
+        setRelatedProjects(
+          resData.products.filter((p) => p._id !== id)
+        );
       } catch (err) {
         handleCatch(err);
       }
     })();
   }, [product]);
+
+  const handleAddToCart = () => {
+    addItemToCart(product, noOfItem);
+  };
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -279,6 +280,7 @@ const ClientStore = ({ match }) => {
                         sx={{ border: '1px solid #9f9f9f' }}
                         color='primary'
                         onClick={increaseNoOfItems}
+                        disabled={noOfItem >= 10}
                       >
                         <Addrounded />
                       </IconButton>
@@ -287,6 +289,7 @@ const ClientStore = ({ match }) => {
                       variant='contained'
                       color='primary'
                       sx={{ mt: 3 }}
+                      onClick={handleAddToCart}
                     >
                       ADD TO CART
                     </Button>
@@ -437,11 +440,7 @@ const ClientStore = ({ match }) => {
           {relatedProjects ? (
             <div className={classes.carouselCard}>
               {relatedProjects.map((product) => (
-                <ProductCard
-                  product={product}
-                  handleClick={productClick}
-                  key={product._id}
-                />
+                <ProductCard product={product} key={product._id} />
               ))}
             </div>
           ) : (

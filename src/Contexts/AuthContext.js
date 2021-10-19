@@ -77,6 +77,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
 
   return (
     <AuthContext.Provider
+      displayName='Auth Context'
       value={{
         token,
         setToken,

@@ -114,7 +114,7 @@ const addressContent = (control, isAddressDiff, formProps) => {
   );
 };
 
-const Step2 = ({ validateStep2 }) => {
+const Step2 = ({ validateStep2, cart }) => {
   const { handleSubmit, control, watch, register, errors } =
     useForm();
   const [dialog, setDialog] = React.useState(false);
@@ -257,7 +257,7 @@ const Step2 = ({ validateStep2 }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5} sx={{ mt: -9 }}>
-          <TotalBill formName='formDelivery' />
+          <TotalBill formName='formDelivery' cart={cart} />
         </Grid>
       </Grid>
 

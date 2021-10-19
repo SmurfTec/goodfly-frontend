@@ -40,7 +40,7 @@ const App = () => {
                 <Route exact path='/store' component={Store} />
                 <Route
                   exact
-                  path='/store/checkout'
+                  path='/store/cart'
                   component={Checkout}
                 />
                 <Route

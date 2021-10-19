@@ -7,10 +7,7 @@ import {
   Divider,
 } from '@material-ui/core';
 
-const TotalBill = (props) => {
-  const validateForm = props?.validateForm;
-  const formName = props?.formName;
-
+const TotalBill = ({ validateForm, formName, cart }) => {
   return (
     <>
       <Typography variant='h4' sx={{ mt: 8 }}>
