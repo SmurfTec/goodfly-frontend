@@ -21,7 +21,6 @@ import {
   CustomRadioGroup,
   CustomInputField,
 } from 'components/FormControls';
-import { isMethod } from '@babel/types';
 import TotalBill from './TotalBill';
 
 const deliveryMethods = [
