@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-const UseLocalStorage = (key) => {
-  let initialState;
+const UseLocalStorage = (key, initialState) => {
+  let localStorageState;
+
   try {
-    initialState = JSON.parse(window.localStorage.getItem(key));
+    localStorageState = JSON.parse(window.localStorage.getItem(key));
+    if (!localStorageState) localStorageState = initialState;
   } catch (err) {
-    initialState = null;
+    localStorageState = initialState;
   }
 
-  const [state, setState] = useState(initialState);
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(state));
-  }, [state]);
+  const [state, setState] = useState(localStorageState);
 
   const resetState = () => {
-    setState(null);
+    setState(initialState);
     window.localStorage.removeItem(key);
   };
 

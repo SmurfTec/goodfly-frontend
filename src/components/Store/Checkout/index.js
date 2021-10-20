@@ -3,6 +3,7 @@ import { Box } from '@material-ui/system';
 import React, { useContext, useState } from 'react';
 import Cart from './Cart';
 import Step2 from './Step2';
+import Step3 from './Step3';
 import StoreNav from '../StoreSubNav';
 import Back from '@material-ui/icons/ArrowBackIos';
 
@@ -50,7 +51,7 @@ const Checkout = () => {
       case 0:
         return (
           <Cart
-            validateStep1={validateStep1}
+            validateStep={validateStep1}
             cart={cart}
             increaseQuantity={increaseQuantity}
             decreaseQuantity={decreaseQuantity}
@@ -58,9 +59,10 @@ const Checkout = () => {
           />
         );
       case 1:
-        return <Step2 validateStep2={validateStep2} cart={cart} />;
+        return <Step2 validateStep={validateStep2} cart={cart} />;
       case 2:
-        return '';
+        return <Step3 validateStep={validateStep3} cart={cart} />;
+
       default:
         return 'Unknown stepIndex';
     }
@@ -71,6 +73,10 @@ const Checkout = () => {
     handleNext();
   };
   const validateStep2 = (data) => {
+    console.log('validated step 2', data);
+    handleNext();
+  };
+  const validateStep3 = (data) => {
     console.log('validated step 2', data);
     handleNext();
   };

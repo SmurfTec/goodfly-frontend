@@ -46,8 +46,9 @@ const StagesTab = ({ stages }) => {
               >
                 {stage.images
                   .slice(1, stage.images.length)
-                  .map((el) => (
+                  .map((el, idx) => (
                     <img
+                      key={idx}
                       src={el}
                       style={{ marginBottom: 10, width: 88 }}
                     />

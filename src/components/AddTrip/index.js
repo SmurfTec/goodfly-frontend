@@ -483,12 +483,13 @@ function AddTrip() {
                   render={({ field }) => (
                     <RadioGroup {...field} aria-label='tripTheme' row>
                       <Grid container spacing={1}>
-                        {tripTheme.map((theme) => (
+                        {tripTheme.map((theme, idx) => (
                           <Grid item xs={12} sm={6} key={theme.value}>
                             <FormControlLabel
                               value={theme.value}
                               control={<Radio />}
                               label={theme.label}
+                              key={idx}
                             />
                           </Grid>
                         ))}

@@ -33,18 +33,10 @@ export const styles = makeStyles((theme) => ({
 
   quantity: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     // flexWrap: 'wrap',
     textAlign: 'center',
     alignItems: 'center',
-
-    [theme.breakpoints.between('sm', 'md')]: {
-      flexDirection: 'row',
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'row',
-    },
   },
 
   totalPrice: {

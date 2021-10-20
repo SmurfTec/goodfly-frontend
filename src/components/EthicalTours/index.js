@@ -146,7 +146,7 @@ const EthicalHome = ({ location }) => {
               >
                 {options.map((option, index) => (
                   <MenuItem
-                    key={option}
+                    key={index}
                     data-filter={option}
                     onClick={filterSelected}
                   >

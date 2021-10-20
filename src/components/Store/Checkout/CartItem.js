@@ -20,9 +20,8 @@ function ShoppingCartItem({
   removeItemFromCart,
 }) {
   const classes = styles();
-  const { images, price, _id, name, category, quantity } = product;
-  const [productQuantify, setProductQuantity] = useState(1);
-  const [subtotal, setSubtotal] = useState(price);
+  const { images, price, _id, name, category, quantity, subTotal } =
+    product;
 
   return (
     <div className={classes.item}>
@@ -95,7 +94,7 @@ function ShoppingCartItem({
         className={classes.totalPrice}
         align='right'
       >
-        {subtotal}€
+        {subTotal}€
       </Typography>
     </div>
   );

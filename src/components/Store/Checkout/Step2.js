@@ -114,7 +114,7 @@ const addressContent = (control, isAddressDiff, formProps) => {
   );
 };
 
-const Step2 = ({ validateStep2, cart }) => {
+const Step2 = ({ validateStep, cart }) => {
   const { handleSubmit, control, watch, register, errors } =
     useForm();
   const [dialog, setDialog] = React.useState(false);
@@ -141,7 +141,7 @@ const Step2 = ({ validateStep2, cart }) => {
   };
 
   const travellersForm = (data) => {
-    validateStep2(data);
+    validateStep(data);
   };
   return (
     <>
@@ -172,12 +172,8 @@ const Step2 = ({ validateStep2, cart }) => {
                   <RadioGroup {...field} row>
                     {deliveryMethods.map((singleOption, i) => {
                       return (
-                        <>
-                          <Grid
-                            container
-                            spacing={2}
-                            key={singleOption.value}
-                          >
+                        <React.Fragment key={singleOption.value}>
+                          <Grid container spacing={2}>
                             <Grid item xs={12} sm={4}>
                               <Box
                                 sx={{
@@ -247,7 +243,7 @@ const Step2 = ({ validateStep2, cart }) => {
                           {i < deliveryMethods.length - 1 && (
                             <Divider sx={{ my: 3, width: '100%' }} />
                           )}
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   </RadioGroup>
@@ -262,7 +258,7 @@ const Step2 = ({ validateStep2, cart }) => {
       </Grid>
 
       <Dialog
-        fullWidth='true'
+        fullWidth
         maxWidth='md'
         // maxWidth='sm'
         open={dialog}

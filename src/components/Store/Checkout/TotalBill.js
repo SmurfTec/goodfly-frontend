@@ -37,7 +37,7 @@ const TotalBill = ({ validateForm, formName, cart }) => {
               Subtotal
             </Typography>
             <Typography variant='h4' color='textSecondary'>
-              75,00€
+              {cart.subTotal}
             </Typography>
           </Box>
           <Divider sx={{ my: 3, mx: -3 }} />
@@ -53,7 +53,7 @@ const TotalBill = ({ validateForm, formName, cart }) => {
               Total
             </Typography>
             <Typography variant='h4' color='textSecondary'>
-              75,00€
+              {cart.total}
             </Typography>
           </Box>
         </Box>

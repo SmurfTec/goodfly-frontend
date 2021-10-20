@@ -13,7 +13,7 @@ import { styles } from 'Styles/Cart/CartItemStyles';
 import TotalBill from './TotalBill';
 
 const Cart = ({
-  validateStep1,
+  validateStep,
   cart,
   increaseQuantity,
   decreaseQuantity,
@@ -41,35 +41,39 @@ const Cart = ({
                 columnGap: 1,
               }}
             >
-              <Typography
-                variant='subtitle1'
-                className={classes.descriptionHeader}
-              >
-                Product
-              </Typography>
-              <Typography
-                variant='subtitle1'
-                className={classes.quantityHeader}
-              >
-                Quantity
-              </Typography>
-              <Typography
-                variant='subtitle1'
-                align='right'
-                className={classes.priceHeader}
-              >
-                Price
-              </Typography>
-              <Typography
-                variant='subtitle1'
-                align='right'
-                className={classes.priceHeader}
-              >
-                Sub-total
-              </Typography>
+              {cart.orderItems.length > 0 && (
+                <>
+                  <Typography
+                    variant='subtitle1'
+                    className={classes.descriptionHeader}
+                  >
+                    Product
+                  </Typography>
+                  <Typography
+                    variant='subtitle1'
+                    className={classes.quantityHeader}
+                  >
+                    Quantity
+                  </Typography>
+                  <Typography
+                    variant='subtitle1'
+                    align='right'
+                    className={classes.priceHeader}
+                  >
+                    Price
+                  </Typography>
+                  <Typography
+                    variant='subtitle1'
+                    align='right'
+                    className={classes.priceHeader}
+                  >
+                    Sub-total
+                  </Typography>
+                </>
+              )}
             </Box>
-            {cart ? (
-              cart.map((product, i) => {
+            {cart.orderItems.length > 0 ? (
+              cart.orderItems.map((product, i) => {
                 return (
                   <>
                     <CartItem
@@ -85,13 +89,13 @@ const Cart = ({
               })
             ) : (
               <Typography variant='h5'>
-                You Have to Products on the cart
+                You Have NO Products on the cart
               </Typography>
             )}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5}>
-          <TotalBill validateForm={validateStep1} />
+          <TotalBill validateForm={validateStep} cart={cart} />
         </Grid>
       </Grid>
     </>
