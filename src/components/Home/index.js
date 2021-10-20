@@ -72,7 +72,7 @@ const Index = () => {
 
   return (
     <>
-      <Container>
+      <Container sx={{ my: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} className={classes.LeftGridItem}>
             <Grid container spacing={2}>

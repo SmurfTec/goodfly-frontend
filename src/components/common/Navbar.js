@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Typography } from '@material-ui/core';
+import { Typography, Box, Container } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 
@@ -30,9 +30,23 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: 'Avenir Next Condensed Demi Bold',
       fontSize: 15,
       fontWeight: 'bold',
-      fontStyle: 'normal',
-      letterSpacing: 'normal',
-      lineHeight: 'normal',
+
+      [theme.breakpoints.down('sm')]: {
+        // display: 'flex',
+        // flexDirection: 'column',
+        // alignItems: 'center',
+        // position: 'absolute',
+        // right: '0',
+        // top: 20,
+        // backgroundColor: theme.palette.primary,
+        display: 'none',
+      },
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+      position: 'relative',
+      height: 30,
     },
   },
 }));
