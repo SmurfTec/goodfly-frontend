@@ -3,84 +3,84 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
-   root: {},
-   Appbar: {
-      // backgroundColor: '#1462aa',
-      backgroundColor: '#fff',
-      // color: '#B033fa',
+  Appbar: {
+    // backgroundColor: '#1462aa',
+    backgroundColor: '#fff',
+    // color: '#B033fa',
+    boxShadow: 'none',
+    paddingBlock: 5,
+
+    [theme.breakpoints.up('sm')]: {
       paddingInline: 60,
-      boxShadow: 'none',
-   },
-   grow: {
-      flexGrow: 1,
-   },
-   menuButton: {
-      marginRight: theme.spacing(2),
-   },
-   title: {
-      display: 'none',
-      cursor: 'pointer',
+    },
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    display: 'none',
+    cursor: 'pointer',
 
-      [theme.breakpoints.up('sm')]: {
-         display: 'block',
-      },
-   },
-   NavItem: {
+    [theme.breakpoints.up('sm')]: {
       display: 'block',
-      color: '#000',
-      cursor: 'pointer',
-      fontWeight: 700,
-      textDecoration: 'none',
-      fontSize: 17,
+    },
+  },
+  NavItem: {
+    display: 'block',
+    color: '#000',
+    cursor: 'pointer',
+    fontWeight: 700,
+    textDecoration: 'none',
+    fontSize: 17,
+    '&:hover': {
+      // borderBottom: '2px solid #B033fa',
+      color: 'deepskyblue',
+      transition: '0.3s',
+    },
+  },
+  darkBtn: {
+    overflow: 'unset !important',
+    '&button': {},
+  },
+  RegisterBtn: {
+    '&.MuiButton-contained': {
+      backgroundColor: 'rgb(6, 198, 255)',
+      borderRadius: 20,
+      color: '#fff',
+      transition: '0.6s',
       '&:hover': {
-         // borderBottom: '2px solid #B033fa',
-         color: 'deepskyblue',
-         transition: '0.3s',
+        backgroundColor: '#03a0d7',
       },
-   },
-   darkBtn: {
-      overflow: 'unset !important',
-      '&button': {},
-   },
-   RegisterBtn: {
-      '&.MuiButton-contained': {
-         backgroundColor: 'rgb(6, 198, 255)',
-         borderRadius: 20,
-         color: '#fff',
-         transition: '0.6s',
-         '&:hover': {
-            backgroundColor: '#03a0d7',
-         },
-      },
-   },
+    },
+  },
 
-   sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-         display: 'flex',
-         justifyContent: 'flex-end',
-         flexGrow: '1',
-         '& span': {
-            color: '#4D4D4D',
-            cursor: 'pointer',
-         },
-      },
-   },
-
-   sectionMobile: {
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
       display: 'flex',
-      marginLeft: 'auto',
-      [theme.breakpoints.up('sm')]: {
-         display: 'none',
-         '& span': {
-            color: '#4D4D4D',
-            cursor: 'pointer',
-         },
+      justifyContent: 'flex-end',
+      '& span': {
+        color: '#4D4D4D',
+        cursor: 'pointer',
       },
-   },
-   MobileMenu: {
-      height: 500,
-   },
+    },
+  },
+
+  sectionMobile: {
+    display: 'none',
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+  MobileMenu: {
+    height: 500,
+  },
 }));
 
 export default useStyles;
