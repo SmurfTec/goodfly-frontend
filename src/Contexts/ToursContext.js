@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router';
-import { handleCatch, makeReq } from 'utils/constants';
+import { handleCatch, makeReq } from 'Utils/constants';
 import { AuthContext } from './AuthContext';
 
 export const ToursContext = React.createContext();

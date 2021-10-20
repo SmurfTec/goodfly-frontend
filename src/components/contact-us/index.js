@@ -30,7 +30,7 @@ import {
   youtubeSvg,
 } from 'Assets/svg';
 
-import { makeReq, handleCatch } from 'utils/constants';
+import { makeReq, handleCatch } from 'Utils/constants';
 import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({

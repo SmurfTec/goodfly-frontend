@@ -18,7 +18,7 @@ import { useStyles as styles } from 'Styles/CreateTrip/FormStyles';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import BlogCard from './BlogCard';
 import useStyles from 'Styles/Blog';
-import { handleCatch, makeReq } from 'utils/constants';
+import { handleCatch, makeReq } from 'Utils/constants';
 
 const BlogDetails = ({ match, history }) => {
   const classes = useStyles();

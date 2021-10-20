@@ -19,7 +19,7 @@ import MalaysianBeachesImg from 'Assets/img/malaysiaBeaches.jpg';
 import TravelBagImg from 'Assets/img/travelBag.jpg';
 
 import styles from 'Styles/Blog';
-import { makeReq, handleCatch } from 'utils/constants';
+import { makeReq, handleCatch } from 'Utils/constants';
 
 const ClientBlog = () => {
   const classes = styles();
