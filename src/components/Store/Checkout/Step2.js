@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Paper,
   Typography,
@@ -7,21 +8,16 @@ import {
   Grid,
   Divider,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  TextField,
 } from '@material-ui/core';
 import { Box } from '@material-ui/system';
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   CustomRadioGroup,
   CustomInputField,
 } from 'components/FormControls';
 import TotalBill from './TotalBill';
+import useToggle from 'Hooks/useToggle';
+import RelayPointDialog from './RelayPointDialog';
 
 const deliveryMethods = [
   {
@@ -117,6 +113,8 @@ const Step2 = ({ validateStep, cart }) => {
   const { handleSubmit, control, watch, register, errors } =
     useForm();
   const [dialog, setDialog] = React.useState(false);
+  const [isMapDialogOpen, toggleMapDialog] = useToggle(false);
+
   const [postalAddress, setpostalAddress] = React.useState(
     'Lyon Librairie la bonne paye 50 rue delabarre 69008'
   );
@@ -126,22 +124,15 @@ const Step2 = ({ validateStep, cart }) => {
   );
   const watchBillingAddress = watch('billingaddress');
 
-  const handleDialogOpen = () => {
-    setDialog(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialog(false);
-  };
-
-  const postalCodeValidate = (data) => {
-    handleDialogClose();
-    setpostalAddress(data?.postalAddress);
-  };
-
   const travellersForm = (data) => {
     validateStep(data);
   };
+
+  const handleRelayPoint = (relayPoint) => {
+    console.log(`relayPoint`, relayPoint);
+    toggleMapDialog();
+  };
+
   return (
     <>
       <Grid container sx={{ mt: 5 }} spacing={2}>
@@ -219,7 +210,7 @@ const Step2 = ({ validateStep, cart }) => {
                               deliveryMethods[0].value && (
                               <>
                                 {relaypointContent(
-                                  handleDialogOpen,
+                                  toggleMapDialog,
                                   postalAddress
                                 )}
                                 <Divider
@@ -256,54 +247,13 @@ const Step2 = ({ validateStep, cart }) => {
         </Grid>
       </Grid>
 
-      <Dialog
-        fullWidth
-        maxWidth='md'
-        // maxWidth='sm'
-        open={dialog}
-        onClose={handleDialogClose}
-        aria-labelledby='form-dialog-title'
-        sx={{
-          '& form': {
-            backgroundColor: '#f2f2f2',
-          },
-        }}
-      >
-        <form onSubmit={handleSubmit(postalCodeValidate)}>
-          <DialogContent>
-            <DialogContentText>
-              Enter your postal code to find a relay point near you
-            </DialogContentText>
-
-            <Box
-              sx={{
-                mt: 3,
-                '& p': {
-                  display: 'none',
-                },
-              }}
-            >
-              <CustomInputField
-                name='postalCode'
-                label='Postal code'
-                type='number'
-                register={register}
-                errors={errors}
-                errorMessage='Specify the postal code'
-                placeholder='Postal Code'
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDialogClose} color='primary'>
-              Close
-            </Button>
-            <Button color='primary' type='submit'>
-              Modify
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <RelayPointDialog
+        open={isMapDialogOpen}
+        closeDialog={toggleMapDialog}
+        handleSubmit={handleRelayPoint}
+        register={register}
+        errors={errors}
+      />
     </>
   );
 };
