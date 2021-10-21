@@ -19,8 +19,10 @@ import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import BlogCard from './BlogCard';
 import useStyles from 'Styles/Blog';
 import { handleCatch, makeReq } from 'Utils/constants';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const BlogDetails = ({ match, history }) => {
+  const globalClasses = useGlobalClasses();
   const classes = useStyles();
   const formClasses = styles();
 
@@ -130,10 +132,27 @@ const BlogDetails = ({ match, history }) => {
               </Box>
             </Box>
           </Box>
-          <Container sx={{ mt: 8 }}>
-            <Typography variant='subtitle2' color='text.secondary'>
-              {blog?.text}
-            </Typography>
+          <Container
+            sx={{ mt: 8 }}
+            className={globalClasses.MainContainer}
+          >
+            {blog?.paragraphs.map((paragraph, idx) => (
+              <React.Fragment key={paragraph._id}>
+                <Typography
+                  variant='h5'
+                  color='text.secondary'
+                  sx={{ my: 3 }}
+                >
+                  {paragraph.text}
+                </Typography>
+                {blog?.images[idx + 1] && (
+                  <img
+                    src={blog?.images[idx + 1]}
+                    style={{ margin: 'auto' }}
+                  ></img>
+                )}
+              </React.Fragment>
+            ))}
 
             <Paper
               elevation={0}
