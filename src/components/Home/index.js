@@ -23,6 +23,7 @@ import MalaysiaImg from 'Assets/img/malaysiaVoyage.jpg';
 import AlAqsaMosqueImg from 'Assets/img/alaqsamosque.jpg';
 import TailorMadeTripImg from 'Assets/img/tailormadeTrips.jpg';
 import TravelMapImg from 'Assets/img/travelmap.png';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const products = [
   {
@@ -53,6 +54,8 @@ const products = [
 
 const Index = () => {
   const classes = useStyles();
+  const globalClasses = useGlobalClasses();
+
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (e) => {
@@ -72,7 +75,11 @@ const Index = () => {
 
   return (
     <>
-      <Container sx={{ my: 2 }}>
+      <Container
+        sx={{ my: 2 }}
+        // className={classes.root}
+        className={globalClasses.MainContainer}
+      >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} className={classes.LeftGridItem}>
             <Grid container spacing={2}>

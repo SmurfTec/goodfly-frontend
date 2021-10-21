@@ -407,17 +407,19 @@ const Header = ({ history }) => {
           Profile
         </Typography>
       </Link>
-      <Typography
-        variant='p'
-        color='primary.dark'
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <PhoneIcon />
-        Contact Us
-      </Typography>
+      <Link to='/contact-us'>
+        <Typography
+          variant='p'
+          color='primary.dark'
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <PhoneIcon />
+          Contact Us
+        </Typography>
+      </Link>
       <Typography
         variant='p'
         color='primary.dark'

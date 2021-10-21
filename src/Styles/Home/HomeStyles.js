@@ -3,6 +3,14 @@ import PromoImage from 'Assets/img/PromoImg.jpg';
 import HajjImage from 'Assets/kaaba.jpg';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '&.MuiContainer-root': {
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: 47,
+        paddingRight: 65,
+      },
+    },
+  },
   nav: {
     display: 'flex',
     overflowX: 'auto',

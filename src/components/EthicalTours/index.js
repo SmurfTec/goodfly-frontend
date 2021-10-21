@@ -14,13 +14,27 @@ import TuneIcon from '@material-ui/icons/Tune';
 import Advisor from './Adivsor';
 import { useTheme } from '@material-ui/styles';
 import { ToursContext } from 'Contexts/ToursContext';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Paper, TextField } from '@material-ui/core';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const EthicalHome = ({ location }) => {
   const { tours } = useContext(ToursContext);
+  const globalClasses = useGlobalClasses();
 
   const [ethicalTours, setEthicalTours] = useState();
+  const [tripType, setTripType] = useState('organized');
+
+  const defaultProps = {
+    options: ['all', 'excursions', 'circuits'],
+    getOptionLabel: (option) => option,
+  };
+
+  const handleTripTypeChange = (event, value) => {
+    setTripType(value);
+  };
 
   const theme = useTheme();
   const styleProps = {
@@ -37,6 +51,21 @@ const EthicalHome = ({ location }) => {
     setEthicalTours(tours.filter((el) => el.category === 'ethical'));
   }, [tours]);
 
+  useEffect(() => {
+    if (!tours) return;
+    if (tripType === 'all')
+      setEthicalTours(
+        tours.filter((el) => el.category === 'ethical')
+      );
+    else
+      setEthicalTours(
+        tours?.filter(
+          (el) =>
+            el.category === 'ethical' && el.subCategory === tripType
+        )
+      );
+  }, [tripType]);
+
   const classes = styles(styleProps);
 
   //? Filter Menu State
@@ -50,6 +79,10 @@ const EthicalHome = ({ location }) => {
 
   // ? Filter Menu open
   const filterMenuOpen = (e) => {
+    console.log('clicked');
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(`e.currentTarget`, e.currentTarget);
     setAnchorEl(e.currentTarget);
   };
 
@@ -115,84 +148,110 @@ const EthicalHome = ({ location }) => {
     <React.Fragment>
       <CssBaseline />
 
-      <main className={classes.root}>
-        {/* Hero unit */}
-        <Container className={classes.cardGrid} maxWidth='lg'>
-          <div className={classes.heroContent}>
-            <Container className={classes.mainFeaturedPost}>
-              <section className={classes.title}>
-                <Typography variant='h3'>
-                  Ethical Travel
-                  <FlashOnIcon sx={{ marginLeft: 2 }} />
-                </Typography>
-              </section>
-              <Advisor />
-            </Container>
-
-            <section className={classes.filter}>
-              <Button
-                variant='outlined'
-                startIcon={<TuneIcon />}
-                onClick={filterMenuOpen}
-              >
-                Select a filter
-              </Button>
-              <Menu
-                id='long-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                {options.map((option, index) => (
-                  <MenuItem
-                    key={index}
-                    data-filter={option}
-                    onClick={filterSelected}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Menu>
+      {/* Hero unit */}
+      <Container
+        className={globalClasses.MainContainer}
+        maxWidth='lg'
+      >
+        <div className={globalClasses.heroContent}>
+          <Container className={classes.mainFeaturedPost}>
+            <section className={classes.title}>
+              <Typography variant='h3'>
+                Ethical Travel
+                <FlashOnIcon sx={{ marginLeft: 2 }} />
+              </Typography>
             </section>
-          </div>
-          {/* End hero unit */}
-          <Typography variant='h5' color='textSecondary' align='left'>
-            Do you have a few days ahead of you? Découvrez les ventes
-          </Typography>
-          <Typography
-            variant='h5'
-            color='textSecondary'
-            align='left'
-            style={{
-              marginBottom: '2rem',
-            }}
-          >
-            Flash GOODFLY : les plans dernière minute à prix cassés.
-          </Typography>
-          {/* Upper GridView */}
-          <Grid container spacing={4}>
-            {ethicalTours ? (
-              ethicalTours.length > 0 ? (
-                ethicalTours.map((tour) => (
-                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                    <TripCard {...tour} />
-                  </Grid>
-                ))
-              ) : (
-                <Typography variant='h4'>No Tours Yet !</Typography>
-              )
-            ) : (
-              <div className='loader'></div>
-            )}
-          </Grid>
+            <Advisor />
+          </Container>
 
-          {/* Space Container */}
-          <div className={classes.spaceSection}>
-            <Typography variant='h5'>PUB SPACE</Typography>
-          </div>
-        </Container>
-      </main>
+          <section className={classes.filter}>
+            <Button
+              variant='outlined'
+              startIcon={<TuneIcon />}
+              // onMouseOver={filterMenuOpen}
+              onClick={filterMenuOpen}
+              sx={{ cursor: 'pointer' }}
+            >
+              Select a filter
+            </Button>
+
+            <Autocomplete
+              {...defaultProps}
+              id='disable-clearable'
+              disableClearable
+              value={tripType}
+              onChange={handleTripTypeChange}
+              PaperComponent={({ children }) => (
+                <Paper color='primary'>{children}</Paper>
+              )}
+              clearOnEscape
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label='Filter by Type'
+                  margin='normal'
+                  size='small'
+                  color='primary'
+                />
+              )}
+            />
+
+            <Menu
+              id='long-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              // MenuListProps={{ onMouseLeave: handleClose }}
+            >
+              {options.map((option, index) => (
+                <MenuItem
+                  key={index}
+                  data-filter={option}
+                  onClick={filterSelected}
+                >
+                  {option}
+                </MenuItem>
+              ))}
+            </Menu>
+          </section>
+        </div>
+        {/* End hero unit */}
+        <Typography variant='h5' color='textSecondary' align='left'>
+          Do you have a few days ahead of you? Découvrez les ventes
+        </Typography>
+        <Typography
+          variant='h5'
+          color='textSecondary'
+          align='left'
+          style={{
+            marginBottom: '2rem',
+          }}
+        >
+          Flash GOODFLY : les plans dernière minute à prix cassés.
+        </Typography>
+        {/* Upper GridView */}
+        <Grid container spacing={4}>
+          {ethicalTours ? (
+            ethicalTours.length > 0 ? (
+              ethicalTours.map((tour) => (
+                <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                  <TripCard {...tour} />
+                </Grid>
+              ))
+            ) : (
+              <Typography variant='h4'>No Tours Yet !</Typography>
+            )
+          ) : (
+            <div className='loader'></div>
+          )}
+        </Grid>
+
+        {/* Space Container */}
+        <div className={classes.spaceSection}>
+          <Typography variant='h5'>PUB SPACE</Typography>
+        </div>
+      </Container>
     </React.Fragment>
   );
 };

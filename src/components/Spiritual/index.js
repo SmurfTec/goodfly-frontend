@@ -4,20 +4,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import TripCard from './TripCard';
-import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import Advisor from './Adivsor';
 import { useTheme } from '@material-ui/styles';
 import Banner from 'components/common/Banner';
 import { ToursContext } from 'Contexts/ToursContext';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -30,7 +27,7 @@ const SpiritualHome = ({ location }) => {
     location,
     theme,
   };
-
+  const globalClasses = useGlobalClasses();
   useEffect(() => {
     if (!tours || !tours.length === 0) {
       setSpiritualTours([]);
@@ -122,12 +119,12 @@ const SpiritualHome = ({ location }) => {
     <React.Fragment>
       <CssBaseline />
 
-      <main className={classes.root}>
-        {/* Hero unit */}
-
-        <Container className={classes.cardGrid} maxWidth='lg'>
-          <div className={classes.heroContent}>
-            {/* <Container className={classes.mainFeaturedPost}>
+      <Container
+        className={globalClasses.MainContainer}
+        maxWidth='lg'
+      >
+        <div className={globalClasses.heroContent}>
+          {/* <Container className={classes.mainFeaturedPost}>
               <section className={classes.title}>
                 <Typography variant='h3'>
                   Ethical Travel
@@ -137,115 +134,114 @@ const SpiritualHome = ({ location }) => {
               <Advisor />
             </Container> */}
 
-            <Banner
-              imageUrl={
-                'https://m.hziegler.com/hza-resized-images/articles/hajj/mecca-at-night_450x300.jpg'
-              }
-              bannerTitle={`${
-                currentTab === 1 ? 'Omra' : 'Hajj'
-              } Offers`}
-              align='center'
-            />
+          <Banner
+            imageUrl={
+              'https://m.hziegler.com/hza-resized-images/articles/hajj/mecca-at-night_450x300.jpg'
+            }
+            bannerTitle={`${
+              currentTab === 1 ? 'Omra' : 'Hajj'
+            } Offers`}
+            align='center'
+          />
 
-            <section className={classes.filter}>
+          <section className={classes.filter}>
+            <Button
+              variant='outlined'
+              startIcon={<TuneIcon />}
+              onClick={filterMenuOpen}
+              color='inherit'
+              style={{
+                marginRight: '14rem',
+              }}
+            >
+              Select a filter
+            </Button>
+            <Box>
               <Button
                 variant='outlined'
-                startIcon={<TuneIcon />}
                 onClick={filterMenuOpen}
                 color='inherit'
+                style={{}}
+                onClick={handleTab.bind(this, 1)}
                 style={{
-                  marginRight: '14rem',
+                  color: currentTab === 1 ? '#000' : '#ccc',
+                  borderColor: currentTab === 1 ? '#000' : '#ccc',
+                  marginRight: '2rem',
                 }}
               >
-                Select a filter
+                OMRA OFFERS
               </Button>
-              <Box>
-                <Button
-                  variant='outlined'
-                  onClick={filterMenuOpen}
-                  color='inherit'
-                  style={{}}
-                  onClick={handleTab.bind(this, 1)}
-                  style={{
-                    color: currentTab === 1 ? '#000' : '#ccc',
-                    borderColor: currentTab === 1 ? '#000' : '#ccc',
-                    marginRight: '2rem',
-                  }}
-                >
-                  OMRA OFFERS
-                </Button>
-                <Button
-                  variant='outlined'
-                  onClick={filterMenuOpen}
-                  textSecondary
-                  color='inherit'
-                  onClick={handleTab.bind(this, 0)}
-                  style={{
-                    color: currentTab === 0 ? '#000' : '#ccc',
-                    borderColor: currentTab === 0 ? '#000' : '#ccc',
-                  }}
+              <Button
+                variant='outlined'
+                onClick={filterMenuOpen}
+                textSecondary
+                color='inherit'
+                onClick={handleTab.bind(this, 0)}
+                style={{
+                  color: currentTab === 0 ? '#000' : '#ccc',
+                  borderColor: currentTab === 0 ? '#000' : '#ccc',
+                }}
+              >
+                HAJJ OFFERS
+              </Button>
+            </Box>
+            <Menu
+              id='long-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+            >
+              {options.map((option, index) => (
+                <MenuItem
+                  key={option}
+                  data-filter={option}
+                  onClick={filterSelected}
                 >
                   HAJJ OFFERS
-                </Button>
-              </Box>
-              <Menu
-                id='long-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                {options.map((option, index) => (
-                  <MenuItem
-                    key={option}
-                    data-filter={option}
-                    onClick={filterSelected}
-                  >
-                    HAJJ OFFERS
-                  </MenuItem>
-                ))}
-              </Menu>
-            </section>
-          </div>
-          {/* End hero unit */}
-          <Typography variant='h5' color='textSecondary' align='left'>
-            Do you have a few days ahead of you? Découvrez les ventes
-          </Typography>
-          <Typography
-            variant='h5'
-            color='textSecondary'
-            align='left'
-            style={{
-              marginBottom: '2rem',
-            }}
-          >
-            Flash GOODFLY : les plans dernière minute à prix cassés.
-          </Typography>
-          {/* Upper GridView */}
-          <Grid container spacing={4}>
-            {spiritualTours ? (
-              spiritualTours.length > 0 ? (
-                spiritualTours.map((card) => (
-                  <Grid item key={card._id} xs={12} sm={6} md={4}>
-                    <TripCard {...card} />
-                  </Grid>
-                ))
-              ) : (
-                <Box mt={5}>
-                  <Typography variant='h4'>No Tours Yet !</Typography>
-                </Box>
-              )
+                </MenuItem>
+              ))}
+            </Menu>
+          </section>
+        </div>
+        {/* End hero unit */}
+        <Typography variant='h5' color='textSecondary' align='left'>
+          Do you have a few days ahead of you? Découvrez les ventes
+        </Typography>
+        <Typography
+          variant='h5'
+          color='textSecondary'
+          align='left'
+          style={{
+            marginBottom: '2rem',
+          }}
+        >
+          Flash GOODFLY : les plans dernière minute à prix cassés.
+        </Typography>
+        {/* Upper GridView */}
+        <Grid container spacing={4}>
+          {spiritualTours ? (
+            spiritualTours.length > 0 ? (
+              spiritualTours.map((card) => (
+                <Grid item key={card._id} xs={12} sm={6} md={4}>
+                  <TripCard {...card} />
+                </Grid>
+              ))
             ) : (
-              <div className='loader'></div>
-            )}
-          </Grid>
+              <Box mt={5}>
+                <Typography variant='h4'>No Tours Yet !</Typography>
+              </Box>
+            )
+          ) : (
+            <div className='loader'></div>
+          )}
+        </Grid>
 
-          {/* Space Container */}
-          <div className={classes.spaceSection}>
-            <Typography variant='h5'>PUB SPACE</Typography>
-          </div>
-        </Container>
-      </main>
+        {/* Space Container */}
+        <div className={classes.spaceSection}>
+          <Typography variant='h5'>PUB SPACE</Typography>
+        </div>
+      </Container>
     </React.Fragment>
   );
 };

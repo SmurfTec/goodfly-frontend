@@ -16,12 +16,13 @@ import Advisor from './Adivsor';
 
 import { useTheme } from '@material-ui/styles';
 import { ToursContext } from 'Contexts/ToursContext';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const FlashSale = ({ location }) => {
   const theme = useTheme();
-
+  const globalClasses = useGlobalClasses();
   const { tours } = useContext(ToursContext);
   const [flashSales, setFlashSales] = useState();
 
@@ -111,88 +112,90 @@ const FlashSale = ({ location }) => {
     <React.Fragment>
       <CssBaseline />
 
-      <main className={classes.root}>
-        {/* Hero unit */}
-        <Container className={classes.cardGrid} maxWidth='lg'>
-          <div className={classes.heroContent}>
-            <Container className={classes.mainFeaturedPost}>
-              <section className={classes.title}>
-                <Typography variant='h3'>
-                  FLASH SALE
-                  <FlashOnIcon sx={{ marginLeft: 2 }} />
-                </Typography>
-              </section>
-              <Advisor />
-            </Container>
-
-            <section className={classes.filter}>
-              <Button
-                variant='outlined'
-                startIcon={<TuneIcon />}
-                onClick={filterMenuOpen}
-              >
-                Select a filter
-              </Button>
-              <Menu
-                id='long-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                {options.map((option, index) => (
-                  <MenuItem
-                    key={option}
-                    data-filter={option}
-                    onClick={filterSelected}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Menu>
+      {/* Hero unit */}
+      <Container
+        className={globalClasses.MainContainer}
+        maxWidth='lg'
+      >
+        <div className={globalClasses.heroContent}>
+          <Container className={classes.mainFeaturedPost}>
+            <section className={classes.title}>
+              <Typography variant='h3'>
+                FLASH SALE
+                <FlashOnIcon sx={{ marginLeft: 2 }} />
+              </Typography>
             </section>
-          </div>
-          {/* End hero unit */}
-          <Typography variant='h5' color='textSecondary' align='left'>
-            Do you have a few days ahead of you? Découvrez les ventes
-          </Typography>
-          <Typography
-            variant='h5'
-            color='textSecondary'
-            align='left'
-            style={{
-              marginBottom: '2rem',
-            }}
-          >
-            Flash GOODFLY : les plans dernière minute à prix cassés.
-          </Typography>
-          {/* Upper GridView */}
-          <Grid container spacing={4}>
-            {flashSales ? (
-              flashSales.length > 0 ? (
-                flashSales.map((tour) => (
-                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                    <FlashCard {...tour} />
-                  </Grid>
-                ))
-              ) : (
-                <Box mt={5}>
-                  <Typography variant='h4'>
-                    No Flash Sales Available Now !
-                  </Typography>
-                </Box>
-              )
-            ) : (
-              <div className='loader'></div>
-            )}
-          </Grid>
+            <Advisor />
+          </Container>
 
-          {/* Space Container */}
-          <div className={classes.spaceSection}>
-            <Typography variant='h5'>PUB SPACE</Typography>
-          </div>
-        </Container>
-      </main>
+          <section className={classes.filter}>
+            <Button
+              variant='outlined'
+              startIcon={<TuneIcon />}
+              onClick={filterMenuOpen}
+            >
+              Select a filter
+            </Button>
+
+            <Menu
+              id='long-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+            >
+              {options.map((option, index) => (
+                <MenuItem
+                  key={option}
+                  data-filter={option}
+                  onClick={filterSelected}
+                >
+                  {option}
+                </MenuItem>
+              ))}
+            </Menu>
+          </section>
+        </div>
+        {/* End hero unit */}
+        <Typography variant='h5' color='textSecondary' align='left'>
+          Do you have a few days ahead of you? Découvrez les ventes
+        </Typography>
+        <Typography
+          variant='h5'
+          color='textSecondary'
+          align='left'
+          style={{
+            marginBottom: '2rem',
+          }}
+        >
+          Flash GOODFLY : les plans dernière minute à prix cassés.
+        </Typography>
+        {/* Upper GridView */}
+        <Grid container spacing={4}>
+          {flashSales ? (
+            flashSales.length > 0 ? (
+              flashSales.map((tour) => (
+                <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                  <FlashCard {...tour} />
+                </Grid>
+              ))
+            ) : (
+              <Box mt={5}>
+                <Typography variant='h4'>
+                  No Flash Sales Available Now !
+                </Typography>
+              </Box>
+            )
+          ) : (
+            <div className='loader'></div>
+          )}
+        </Grid>
+
+        {/* Space Container */}
+        <div className={classes.spaceSection}>
+          <Typography variant='h5'>PUB SPACE</Typography>
+        </div>
+      </Container>
     </React.Fragment>
   );
 };

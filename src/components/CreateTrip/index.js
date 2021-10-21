@@ -37,9 +37,11 @@ import {
   numberCode,
 } from './DumyData';
 import { CustomSelect } from 'components/FormControls';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
-function AddTrip() {
+const AddTrip = () => {
   const classes = useStyles();
+  const globalClasses = useGlobalClasses();
   const {
     handleSubmit,
     formState: { errors },
@@ -53,7 +55,7 @@ function AddTrip() {
   };
 
   return (
-    <Container>
+    <Container className={globalClasses.MainContainer}>
       <Banner
         imageUrl={img}
         bannerTitle='I CREATE MY TRIP   '
@@ -472,7 +474,7 @@ function AddTrip() {
                   render={({ field }) => (
                     <RadioGroup {...field} aria-label='tripTheme' row>
                       <Grid container spacing={1}>
-                        {tripTheme.map((theme,idx) => (
+                        {tripTheme.map((theme, idx) => (
                           <Grid item xs={12} sm={6} key={theme.value}>
                             <FormControlLabel
                               value={theme.value}
@@ -969,6 +971,6 @@ function AddTrip() {
       </Paper>
     </Container>
   );
-}
+};
 
 export default AddTrip;

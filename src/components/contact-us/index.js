@@ -33,6 +33,8 @@ import {
 import { makeReq, handleCatch } from 'Utils/constants';
 import { toast } from 'react-toastify';
 
+import useGlobalClasses from 'Hooks/useGlobalClasses';
+
 const useStyles = makeStyles((theme) => ({
   FormBox: {
     '& input,textarea': {
@@ -96,6 +98,7 @@ const Index = () => {
   const theme = useTheme();
   const classes = useStyles();
   const [email, setEmail] = useState('');
+  const globalClasses = useGlobalClasses();
 
   const initialState = {
     subject: '',
@@ -136,7 +139,7 @@ const Index = () => {
   };
 
   return (
-    <Container sx={{ maxWidth: 1200, marginTop: '3rem' }}>
+    <Container className={globalClasses.MainContainer}>
       <Grid container spacing={4}>
         <Grid item sm={12} md={8}>
           <ContactCard image={images[1]} />
@@ -157,7 +160,15 @@ const Index = () => {
           borderRadius: '15px',
         }}
       >
-        <Grid container spacing={4}>
+        <Grid
+          container
+          spacing={4}
+          sx={{
+            padding: '30px 20px',
+            border: '1px solid #ccc',
+            borderRadius: '10px',
+          }}
+        >
           <Grid item xs={12} sm={6}>
             <Box
               fullWidth
@@ -192,7 +203,10 @@ const Index = () => {
                 alignItems='center'
               >
                 <Box>
-                  <img src='https://imgur.com/lIumYeR.png' />
+                  <img
+                    src='https://imgur.com/lIumYeR.png'
+                    style={{ margin: 'auto' }}
+                  />
                   <Typography variant='h6' fontWeight='normal'>
                     Locate on the map
                   </Typography>
@@ -200,7 +214,7 @@ const Index = () => {
                 <Box
                   sx={{
                     width: 200,
-                    height: 200,
+                    height: 180,
                   }}
                 >
                   <GoogleMapReact

@@ -20,10 +20,12 @@ import TravelBagImg from 'Assets/img/travelBag.jpg';
 
 import styles from 'Styles/Blog';
 import { makeReq, handleCatch } from 'Utils/constants';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const ClientBlog = () => {
   const classes = styles();
   const history = useHistory();
+  const globalClasses = useGlobalClasses();
 
   const [blogs, setBlogs] = useState();
 
@@ -47,7 +49,7 @@ const ClientBlog = () => {
 
   return (
     <>
-      <Container sx={{ mt: 4 }}>
+      <Container className={globalClasses.MainContainer}>
         <Card sx={{ boxShadow: 'none' }}>
           <CardMedia
             sx={{ height: 250, position: 'relative' }}
@@ -63,13 +65,11 @@ const ClientBlog = () => {
             </Typography>
           </CardMedia>
         </Card>
-      </Container>
-      <Container sx={{ mt: 13 }}>
-        <Box>
+        <Box mt={10}>
           <Grid container spacing={3}>
             {blogs ? (
               blogs.length > 0 ? (
-                blogs.map((blog, i) => (
+                blogs.slice(0, 5).map((blog, i) => (
                   <Grid
                     key={blog._id}
                     item
@@ -94,6 +94,30 @@ const ClientBlog = () => {
             ESPACE PUB
           </Typography>
         </Card>
+        <Box mt={10}>
+          <Grid container spacing={3}>
+            {blogs ? (
+              blogs.length > 0 ? (
+                blogs.slice(5, blogs.length).map((blog, i) => (
+                  <Grid
+                    key={blog._id}
+                    item
+                    xs={12}
+                    sm={i === 3 ? 8 : 4}
+                  >
+                    <BlogCard blog={blog} handleClick={blogClick} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography variant='h5'>
+                  No Blogs Available
+                </Typography>
+              )
+            ) : (
+              <div className='loader'></div>
+            )}
+          </Grid>
+        </Box>
       </Container>
     </>
   );

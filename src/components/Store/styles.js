@@ -1,10 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(3, 0, 6),
-  },
   mainFeaturedPost: {
     position: 'relative',
     backgroundColor: theme.palette.grey[800],

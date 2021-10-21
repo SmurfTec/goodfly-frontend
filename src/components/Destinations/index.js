@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Container, Grid } from '@material-ui/core';
-// import { styles } from 'Styles/Home/HomeStyles';
 import Banner from 'components/common/Banner';
 import DestCard from './DestCard';
 import img from 'Assets/img/destinations1.jpg';
@@ -12,77 +11,16 @@ import oceania from 'Assets/img/oceania.jpg';
 import polarIslands from 'Assets/img/polarIslands.jpg';
 import america from 'Assets/img/america.jpg';
 import goodflyDestPromo from 'Assets/img/goodflyDestinations.png';
-
-const cards = [
-  {
-    title: 'Dubai',
-    _id: '1',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1583499882110-688e720b025e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Pakistan',
-    continent: 'America',
-  },
-  {
-    title: 'Dubai',
-    _id: '2',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Malaysia',
-    continent: 'Asis',
-  },
-
-  {
-    title: 'Dubai',
-    _id: '3',
-
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $200',
-    image:
-      'https://images.unsplash.com/photo-1589695021834-9f2413573b28?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Indonesia',
-    continent: 'Africa',
-  },
-  {
-    title: 'Dubai',
-    _id: '4',
-    desc: 'The Dubai that no one sees',
-    service: 'The GOODFLY guide on site will welcome you ...',
-    noofJourneys: '2 jours',
-    price: '> $2000',
-    image:
-      'https://images.unsplash.com/photo-1610823230542-55da5ce635aa?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWl8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    startingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 12),
-    endingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 24),
-    boardType: 'Half Board',
-    country: 'Turkeu',
-    continent: 'Europe',
-  },
-];
+import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const Destinations = () => {
   //    const classes = styles();
+  const globalClasses = useGlobalClasses();
   return (
-    <Container sx={{ mb: 20 }}>
+    <Container
+      sx={{ mb: 20 }}
+      className={globalClasses.MainContainer}
+    >
       <Banner
         imageUrl={img}
         bannerTitle='Destinations'

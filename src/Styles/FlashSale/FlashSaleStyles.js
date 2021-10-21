@@ -10,10 +10,7 @@ export const styles = makeStyles((theme) => ({
     padding: 10,
     maxWidth: 1200,
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(3, 0, 6),
-  },
+
   mainFeaturedPost: {
     position: 'relative',
     backgroundColor: theme.palette.grey[800],
@@ -68,9 +65,33 @@ export const styles = makeStyles((theme) => ({
     paddingLeft: 20,
     display: 'flex',
     alignItems: 'center',
-
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    '& .MuiAutocomplete-root': {
+      minWidth: 150,
+    },
+    [theme.breakpoints.up('xs')]: {
+      paddingRight: 20,
+      maxWidth: 'unset',
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '56%',
+    },
+    [theme.breakpoints.up('md')]: {
+      '& .MuiAutocomplete-root': {
+        minWidth: 200,
+      },
+    },
     '& h6': {
       marginLeft: 10,
+    },
+
+    '& .MuiFormLabel-root': {
+      color: theme.palette.primary.main,
+    },
+
+    '& .MuiOutlinedInput': {
+      borderColor: `${theme.palette.primary.main} !important`,
     },
   },
 }));

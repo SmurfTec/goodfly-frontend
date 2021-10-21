@@ -22,6 +22,7 @@ import StoreDetails from 'components/Store/Details';
 import Checkout from 'components/Store/Checkout';
 
 import Profile from 'components/Profile';
+import { GlobalClassesProvider } from 'Contexts/GlobalClasses';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -29,60 +30,62 @@ const App = () => {
   return (
     <div className='App'>
       <ThemeConfig>
-        {token ? (
-          user ? (
-            <>
-              <Route component={Header} />
-              <Switch>
-                <Route path='/tours' component={TourRouter} />
-                <Route exact path='/profile' component={Profile} />
-                <Route exact path='/' component={Home} />
-                <Route exact path='/store' component={Store} />
-                <Route
-                  exact
-                  path='/store/cart'
-                  component={Checkout}
-                />
-                <Route
-                  exact
-                  path='/store/product/:id'
-                  component={StoreDetails}
-                />
-                <Route exact path='/blogs' component={ClientBlog} />
-                <Route
-                  exact
-                  path='/blogs/:id'
-                  component={BlogDetails}
-                />
+        <GlobalClassesProvider>
+          {token ? (
+            user ? (
+              <>
+                <Route component={Header} />
+                <Switch>
+                  <Route path='/tours' component={TourRouter} />
+                  <Route exact path='/profile' component={Profile} />
+                  <Route exact path='/' component={Home} />
+                  <Route exact path='/store' component={Store} />
+                  <Route
+                    exact
+                    path='/store/cart'
+                    component={Checkout}
+                  />
+                  <Route
+                    exact
+                    path='/store/product/:id'
+                    component={StoreDetails}
+                  />
+                  <Route exact path='/blogs' component={ClientBlog} />
+                  <Route
+                    exact
+                    path='/blogs/:id'
+                    component={BlogDetails}
+                  />
 
-                <Route
-                  exact
-                  path='/contact-us'
-                  component={ContactUs}
-                />
-                <Route exact path='/logout' component={Logout} />
-                <Redirect from='*' to='/' />
-              </Switch>
-              <Route component={Footer} />
-            </>
+                  <Route
+                    exact
+                    path='/contact-us'
+                    component={ContactUs}
+                  />
+                  <Route exact path='/logout' component={Logout} />
+                  <Redirect from='*' to='/' />
+                </Switch>
+                <Route component={Footer} />
+              </>
+            ) : (
+              <img
+                style={{
+                  margin: 'auto ',
+                }}
+                src={img}
+                alt='loader'
+              />
+            )
           ) : (
-            <img
-              style={{
-                margin: 'auto ',
-              }}
-              src={img}
-              alt='loader'
-            />
-          )
-        ) : (
-          <>
-            <Switch>
-              <Route path='/auth' component={AuthRouter} />
+            <>
+              <Switch>
+                <Route path='/auth' component={AuthRouter} />
 
-              <Redirect to='/auth/login' />
-            </Switch>
-          </>
-        )}
+                <Redirect to='/auth/login' />
+              </Switch>
+            </>
+          )}
+        </GlobalClassesProvider>
       </ThemeConfig>
     </div>
   );
