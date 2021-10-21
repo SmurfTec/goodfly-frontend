@@ -13,7 +13,8 @@ import ReactCountryFlag from 'react-country-flag';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import InfoIcon from '@material-ui/icons/Info';
-import logo from 'Assets/img/airplane.svg';
+// import logo from 'Assets/img/airplane.svg';
+import logo from 'Assets/img/airplanesvg2.png';
 import useStyles from 'Styles/Navbar/NavbarStyles';
 import { Box, Divider } from '@material-ui/core';
 import { withRouter, Link, NavLink } from 'react-router-dom';
@@ -205,7 +206,12 @@ const Header = ({ history }) => {
       onClick={() => history.push('/')}
     >
       GOODFLY
-      <img src={logo} style={{ width: 40, height: 50 }} alt='logo' />
+      <img src={logo} style={{ height: 50 }} alt='logo' />
+      {/* <img
+        src='https://svg-clipart.com/svg/blue/Ha4TkHw-airplane-vector.svg'
+        style={{ width: 40, height: 50 }}
+        alt='logo'
+      /> */}
     </Typography>
   );
 

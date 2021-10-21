@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
     // color: '#B033fa',
     boxShadow: 'none',
     paddingBlock: 5,
-
-    [theme.breakpoints.up('sm')]: {
-      paddingInline: 60,
-    },
   },
   grow: {
     flexGrow: 1,
@@ -59,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
   sectionDesktop: {
     display: 'none',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'flex',
       justifyContent: 'flex-end',
       '& span': {
@@ -72,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   sectionMobile: {
     display: 'none',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

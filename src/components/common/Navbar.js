@@ -10,17 +10,20 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     alignItems: 'center',
 
-    maxWidth: 1250,
+    maxWidth: 1440,
     margin: '1rem auto',
+    justifyContent: 'center',
+
     minHeight: 50,
     paddingBlock: 10,
+
     cursor: 'pointer',
     '&:hover': {
       overflowX: 'auto',
     },
     '& span': {
       flex: '0 0 auto',
-      padding: '8px 10px',
+
       marginRight: '1rem',
       fontStyle: 'normal',
       letterSpacing: 'normal',
@@ -28,25 +31,16 @@ const useStyles = makeStyles((theme) => ({
       /* Text style for "Hôtels et" */
       color: theme.palette.text.secondary,
       fontFamily: 'Avenir Next Condensed Demi Bold',
-      fontSize: 15,
-      fontWeight: 'bold',
 
-      [theme.breakpoints.down('sm')]: {
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'center',
-        // position: 'absolute',
-        // right: '0',
-        // top: 20,
-        // backgroundColor: theme.palette.primary,
+      fontWeight: 'bold',
+      fontSize: 13,
+      [theme.breakpoints.down('md')]: {
         display: 'none',
       },
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-      position: 'relative',
-      height: 30,
+      [theme.breakpoints.up('lg')]: {
+        padding: '8px 10px',
+        fontSize: 16.5,
+      },
     },
   },
 }));
@@ -87,9 +81,9 @@ const Navbar = () => {
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/tours/flash-sales'> Flash Sales</NavLink>
       </Typography>
-      <Typography variant='p' color='primary.dark'>
+      {/* <Typography variant='p' color='primary.dark'>
         <NavLink to='/transport'> Transport / Logictics</NavLink>
-      </Typography>
+      </Typography> */}
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/blogs'> Blog</NavLink>
       </Typography>
@@ -101,10 +95,6 @@ const Navbar = () => {
       </Typography>
       <Typography variant='p' color='primary.dark'>
         <NavLink to='/store'> Store</NavLink>
-      </Typography>
-
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/contact-us'> Contact Us</NavLink>
       </Typography>
     </nav>
   );
