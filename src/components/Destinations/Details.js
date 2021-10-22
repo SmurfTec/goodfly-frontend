@@ -16,7 +16,7 @@ const allowedNames = [
   'africa',
   'oceania',
   'america',
-  'polar lands',
+  'polar-lands',
 ];
 
 const Details = ({ match, history }) => {
@@ -38,9 +38,7 @@ const Details = ({ match, history }) => {
       return;
     }
 
-    setRegionalTours(
-      tours.filter((el) => el.region === name.toLowerCase())
-    );
+    setRegionalTours(tours.filter((el) => el.region === name.toLowerCase()));
   }, [name, tours]);
 
   const handleClickBack = () => {
@@ -49,11 +47,7 @@ const Details = ({ match, history }) => {
 
   return (
     <Container>
-      <Banner
-        imageUrl={img}
-        bannerTitle='Destinations'
-        align='center'
-      />
+      <Banner imageUrl={img} bannerTitle='Destinations' align='center' />
       <Typography
         variant='h3'
         color='text.secondary'
@@ -77,9 +71,7 @@ const Details = ({ match, history }) => {
             ))
           ) : (
             <Box mt={10}>
-              <Typography variant='h4'>
-                No Tours for this Region !
-              </Typography>
+              <Typography variant='h4'>No Tours for this Region !</Typography>
             </Box>
           )
         ) : (

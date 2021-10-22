@@ -15,7 +15,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import InfoIcon from '@material-ui/icons/Info';
 // import logo from 'Assets/img/airplane.svg';
 import logo from 'Assets/img/airplanesvg2.png';
-import useStyles from 'Styles/Navbar/NavbarStyles';
+import useStyles from 'Styles/Navbar';
 import { Box, Divider } from '@material-ui/core';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 // import { ThemeContext } from 'Contexts/ThemeContext';

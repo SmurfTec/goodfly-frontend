@@ -1,103 +1,114 @@
 import React from 'react';
 
-import { Typography, Box, Container } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { Typography, Button } from '@material-ui/core';
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import HoverMenu from 'material-ui-popup-state/HoverMenu';
 
-const useStyles = makeStyles((theme) => ({
-  nav: {
-    display: 'flex',
-    overflowX: 'hidden',
-    alignItems: 'center',
+import {
+  usePopupState,
+  bindHover,
+  bindMenu,
+} from 'material-ui-popup-state/hooks';
 
-    maxWidth: 1440,
-    margin: '1rem auto',
-    justifyContent: 'center',
+import useStyles from 'Styles/Navbar';
+import NavbarData from './NavbarData';
 
-    minHeight: 50,
-    paddingBlock: 10,
-
-    cursor: 'pointer',
-    '&:hover': {
-      overflowX: 'auto',
-    },
-    '& span': {
-      flex: '0 0 auto',
-
-      marginRight: '1rem',
-      fontStyle: 'normal',
-      letterSpacing: 'normal',
-      lineHeight: 'normal',
-      /* Text style for "Hôtels et" */
-      color: theme.palette.text.secondary,
-      fontFamily: 'Avenir Next Condensed Demi Bold',
-
-      fontWeight: 'bold',
-      fontSize: 13,
-      [theme.breakpoints.down('md')]: {
-        display: 'none',
-      },
-      [theme.breakpoints.up('lg')]: {
-        padding: '8px 10px',
-        fontSize: 16.5,
-      },
-    },
-  },
-}));
-
-const Navbar = () => {
+const Navbar = ({ location }) => {
   const classes = useStyles();
+  const ethicalToursMenu = usePopupState({
+    variant: 'popover',
+    popupId: 'Ethical Trips',
+  });
 
+  const spiritualToursMenu = usePopupState({
+    variant: 'popover',
+    popupId: 'Spiritual Trips',
+  });
+
+  const excursionsToursMenu = usePopupState({
+    variant: 'popover',
+    popupId: 'Excursions & Circuits',
+  });
+
+  const destinationsToursMenu = usePopupState({
+    variant: 'popover',
+    popupId: 'Destinations',
+  });
+
+  React.useEffect(() => {
+    console.log('rerendered');
+  });
   return (
     <nav className={classes.nav}>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink
-          to='/tours/ethical'
-          activeStyle={{
-            color: '#fa0f0c',
-          }}
-        >
-          Ethical Trips
-        </NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/spiritual'> Spiritual Trips</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/excursions'>
-          {' '}
-          Excursions & Circuits
-        </NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/destinations'> Destinations</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/ticketing'> Ticketing</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/hotels'> Hotels and accommodations</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/flash-sales'> Flash Sales</NavLink>
-      </Typography>
-      {/* <Typography variant='p' color='primary.dark'>
-        <NavLink to='/transport'> Transport / Logictics</NavLink>
-      </Typography> */}
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/blogs'> Blog</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/promos'> Promos</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/tours/create'> Create Trip</NavLink>
-      </Typography>
-      <Typography variant='p' color='primary.dark'>
-        <NavLink to='/store'> Store</NavLink>
-      </Typography>
+      {NavbarData.map((navItem, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            <Typography
+              variant='p'
+              color='primary.dark'
+              style={{
+                color: location.pathname.includes(navItem.path) && '#fa0f0c',
+              }}
+              // {...{}}
+              {...(idx === 0 ? bindHover(ethicalToursMenu) : {})}
+              {...(idx === 1 ? bindHover(spiritualToursMenu) : {})}
+              {...(idx === 2 ? bindHover(excursionsToursMenu) : {})}
+              {...(idx === 3 ? bindHover(destinationsToursMenu) : {})}
+            >
+              {idx >= 4 ? (
+                <NavLink
+                  to={navItem.path}
+                  activeStyle={{
+                    color: '#fa0f0c',
+                  }}
+                >
+                  {navItem.title}
+                </NavLink>
+              ) : (
+                <>{navItem.title}</>
+              )}
+            </Typography>
+            {navItem.menuItems && (
+              <HoverMenu
+                {...(idx === 0 ? bindMenu(ethicalToursMenu) : {})}
+                {...(idx === 1 ? bindMenu(spiritualToursMenu) : {})}
+                {...(idx === 2 ? bindMenu(excursionsToursMenu) : {})}
+                {...(idx === 3 ? bindMenu(destinationsToursMenu) : {})}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                className={classes.MenuItem}
+              >
+                {navItem.menuItems.map((menuItem) => (
+                  <MenuItem key={menuItem}>
+                    <Link
+                      // * /tours/ethical?type=menuitem
+
+                      // * /tours/destination/menuitem
+                      to={`${navItem.path}${
+                        idx === 3 ? `/${menuItem}` : `?type=${menuItem}`
+                      }`}
+                      style={{ textAlign: 'center' }}
+                    >
+                      {menuItem.slice(0, 1).toUpperCase()}
+                      {menuItem.slice(1)}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </HoverMenu>
+            )}
+          </React.Fragment>
+        );
+      })}
     </nav>
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);

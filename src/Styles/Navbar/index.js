@@ -24,6 +24,49 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+  nav: {
+    display: 'flex',
+    overflowX: 'hidden',
+    alignItems: 'center',
+
+    maxWidth: 1440,
+    margin: '1rem auto',
+    justifyContent: 'center',
+
+    minHeight: 50,
+    paddingBlock: 10,
+
+    cursor: 'pointer',
+    '&:hover': {
+      overflowX: 'auto',
+    },
+    '& span': {
+      flex: '0 0 auto',
+
+      marginRight: 14,
+      fontSize: 14,
+      fontStyle: 'normal',
+      letterSpacing: 'normal',
+      lineHeight: 'normal',
+      /* Text style for "Hôtels et" */
+      color: theme.palette.text.secondary,
+      fontFamily: 'Avenir Next Condensed Demi Bold',
+
+      fontWeight: 'bold',
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
+
+      [theme.breakpoints.up('lg')]: {
+        padding: '8px 10px',
+        fontSize: 17,
+      },
+      [theme.breakpoints.up(1600)]: {
+        padding: '8px 10px',
+        fontSize: 18,
+      },
+    },
+  },
   NavItem: {
     display: 'block',
     color: '#000',
@@ -76,6 +119,22 @@ const useStyles = makeStyles((theme) => ({
   },
   MobileMenu: {
     height: 500,
+  },
+  MenuItem: {
+    '& .MuiMenuItem-root': {
+      minWidth: 170,
+      textAlign: 'center',
+    },
+    // [theme.breakpoints.up('lg')]: {
+    //   '& .MuiMenuItem-root': {
+    //     minWidth: 94,
+    //   },
+    // },
+    // [theme.breakpoints.up(1600)]: {
+    //   '& .MuiMenuItem-root': {
+    //     minWidth: 96,
+    //   },
+    // },
   },
 }));
 
