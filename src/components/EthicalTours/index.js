@@ -28,7 +28,7 @@ const EthicalHome = ({ location }) => {
   const [tripType, setTripType] = useState('organized');
 
   const defaultProps = {
-    options: ['all', 'excursions', 'circuits'],
+    options: ['all', 'organic', 'organized'],
     getOptionLabel: (option) => option,
   };
 
@@ -54,17 +54,19 @@ const EthicalHome = ({ location }) => {
   useEffect(() => {
     if (!tours) return;
     if (tripType === 'all')
-      setEthicalTours(
-        tours.filter((el) => el.category === 'ethical')
-      );
+      setEthicalTours(tours.filter((el) => el.category === 'ethical'));
     else
       setEthicalTours(
         tours?.filter(
-          (el) =>
-            el.category === 'ethical' && el.subCategory === tripType
+          (el) => el.category === 'ethical' && el.subCategory === tripType
         )
       );
   }, [tripType]);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('type');
+    if (defaultProps.options.includes(query.toLowerCase())) setTripType(query);
+  }, [location.search]);
 
   const classes = styles(styleProps);
 
@@ -104,9 +106,7 @@ const EthicalHome = ({ location }) => {
       case 'duration': {
         setEthicalTours((st) => {
           let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            a.duration > b.duration ? -1 : 1
-          );
+          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
           return sortedTours;
         });
         break;
@@ -115,9 +115,7 @@ const EthicalHome = ({ location }) => {
         setEthicalTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
-            new Date(a.startingDate) > new Date(b.startingDate)
-              ? -1
-              : 1
+            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
           );
           return sortedTours;
         });
@@ -149,10 +147,7 @@ const EthicalHome = ({ location }) => {
       <CssBaseline />
 
       {/* Hero unit */}
-      <Container
-        className={globalClasses.MainContainer}
-        maxWidth='lg'
-      >
+      <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <div className={globalClasses.heroContent}>
           <Container className={classes.mainFeaturedPost}>
             <section className={classes.title}>

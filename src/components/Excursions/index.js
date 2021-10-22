@@ -38,31 +38,30 @@ const ExcursionaHome = ({ location }) => {
       return;
     }
 
-    setExcursionTours(
-      tours.filter((el) => el.category === 'excursions')
-    );
+    setExcursionTours(tours.filter((el) => el.category === 'excursions'));
   }, [tours]);
 
   useEffect(() => {
     if (!tours) return;
     if (tripType === 'all')
-      setExcursionTours(
-        tours?.filter((el) => el.category === 'excursions')
-      );
+      setExcursionTours(tours?.filter((el) => el.category === 'excursions'));
     else
       setExcursionTours(
         tours?.filter(
-          (el) =>
-            el.category === 'excursions' &&
-            el.subCategory === tripType
+          (el) => el.category === 'excursions' && el.subCategory === tripType
         )
       );
   }, [tripType]);
 
   const defaultProps = {
-    options: ['all', 'organized', 'organic'],
+    options: ['all', 'excursion', 'circuit'],
     getOptionLabel: (option) => option,
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('type');
+    if (defaultProps.options.includes(query.toLowerCase())) setTripType(query);
+  }, [location.search]);
 
   const handleTripTypeChange = (event, value) => {
     setTripType(value);
@@ -101,9 +100,7 @@ const ExcursionaHome = ({ location }) => {
       case 'duration': {
         setExcursionTours((st) => {
           let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            a.duration > b.duration ? -1 : 1
-          );
+          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
           return sortedTours;
         });
         break;
@@ -112,9 +109,7 @@ const ExcursionaHome = ({ location }) => {
         setExcursionTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
-            new Date(a.startingDate) > new Date(b.startingDate)
-              ? -1
-              : 1
+            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
           );
           return sortedTours;
         });
@@ -146,10 +141,7 @@ const ExcursionaHome = ({ location }) => {
       <CssBaseline />
 
       {/* Hero unit */}
-      <Container
-        className={globalClasses.MainContainer}
-        maxWidth='lg'
-      >
+      <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <div className={globalClasses.heroContent}>
           <Container className={classes.mainFeaturedPost}>
             <section className={classes.title}>

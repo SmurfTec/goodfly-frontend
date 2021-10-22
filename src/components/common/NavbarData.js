@@ -12,7 +12,7 @@ const NavbarData = [
   {
     path: '/tours/excursions',
     title: 'Excursions & Circuits',
-    menuItems: ['excursions', 'circuits'],
+    menuItems: ['excursion', 'circuit'],
   },
   {
     path: '/tours/destinations',
