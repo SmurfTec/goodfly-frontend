@@ -4,17 +4,15 @@ import { Switch, Route } from 'react-router-dom';
 
 // * Tours --------------------- * //
 import EthicalTours from 'components/EthicalTours';
-import EthicalToursDetails from 'components/EthicalTours/Details';
 import ExcursionsTours from 'components/Excursions';
-import ExcursionsToursDetails from 'components/Excursions/Details';
 import Destinations from 'components/Destinations';
 import DestinationsDetails from 'components/Destinations/Details';
 import FlashSale from 'components/FlashSale';
-import FlashSaleDetails from 'components/FlashSale/Details';
 import SpirutialTours from 'components/Spiritual';
 import SpirutialToursDetails from 'components/Spiritual/Details';
 import CreateTrip from 'components/CreateTrip';
 import Reservations from 'components/Reservations';
+import TourDetails from 'components/common/tours/TourDetails';
 
 // *  --------------------- * //
 
@@ -22,34 +20,21 @@ const TourRouter = ({ match }) => {
   return (
     <Switch>
       {/* Create A Trip */}
-      <Route
-        exact
-        path={match.url + '/create'}
-        component={CreateTrip}
-      />
+      <Route exact path={match.url + '/create'} component={CreateTrip} />
 
-      {/* Ethical Tours */}
-      <Route
-        exact
-        path={match.url + '/ethical'}
-        component={EthicalTours}
-      />
-      <Route
-        exact
-        path={match.url + '/ethical/:id'}
-        component={EthicalToursDetails}
-      />
+      {/*  Tour Details Page */}
+      <Route exact path={match.url + '/details/:id'} component={TourDetails} />
+
+      {/* Ethical Tours Page */}
+      <Route exact path={match.url + '/ethical'} component={EthicalTours} />
+
       {/* Excursions Tours */}
       <Route
         exact
         path={match.url + '/excursions'}
         component={ExcursionsTours}
       />
-      <Route
-        exact
-        path={match.url + '/excursions/:id'}
-        component={ExcursionsToursDetails}
-      />
+
       {/* Destinations */}
       <Route
         exact
@@ -62,40 +47,21 @@ const TourRouter = ({ match }) => {
         component={DestinationsDetails}
       />
       {/* Flash Sales */}
-      <Route
-        exact
-        path={match.url + '/flash-sales'}
-        component={FlashSale}
-      />
-      <Route
-        exact
-        path={match.url + '/flash-sales/:id'}
-        component={FlashSaleDetails}
-      />
+      <Route exact path={match.url + '/flash-sales'} component={FlashSale} />
 
       {/* Spirutial Journeys */}
-      <Route
-        exact
-        path={match.url + '/spiritual'}
-        component={SpirutialTours}
-      />
+      <Route exact path={match.url + '/spiritual'} component={SpirutialTours} />
       <Route
         exact
         path={match.url + '/spiritual/:id'}
         component={SpirutialToursDetails}
       />
 
-      {/* //? Temporary solution */}
       <Route
         exact
-        path={match.url + '/:id/reservations'}
+        path={match.url + '/reservation/:id'}
         component={Reservations}
       />
-
-      {/* //? ends*/}
-
-      {/* <Route path={match.url + '/spiritual'} component={SpiritualTours} />
-      <Route path={match.url + '/circuits'} component={CircuitsTours} /> */}
     </Switch>
   );
 };

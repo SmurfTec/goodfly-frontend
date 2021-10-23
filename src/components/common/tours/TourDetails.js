@@ -7,32 +7,26 @@ import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
 
 // MUI
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { Grid, Box, Typography, Button, Tabs, Tab } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EuroIcon from '@material-ui/icons/Euro';
 // --- //
 
 // Assets
-import img1 from 'Assets/img/ethical.png';
-import img2 from 'Assets/img/desert.jpg';
-import img3 from 'Assets/img/malaysia.jpg';
-import img4 from 'Assets/img/maldives.jpg';
+// import img1 from 'Assets/img/ethical.png';
+// import img2 from 'Assets/img/desert.jpg';
+// import img3 from 'Assets/img/malaysia.jpg';
+// import img4 from 'Assets/img/maldives.jpg';
 
 import stageImg1 from 'Assets/img/stage1.png';
 import stageImg2 from 'Assets/img/stage12.png';
 import stageImg3 from 'Assets/img/stage2.png';
 import stageImg4 from 'Assets/img/stage23.png';
-import StagesTab from '../EthicalTours/StagesTab';
+import StagesTab from './StagesTab';
 
 import userImg from 'Assets/img/user1.png';
+import FormalitiesTab from './FormalitiesTab';
 
 // ------------------------------
 
@@ -56,90 +50,87 @@ const TabPanel = (props) => {
   );
 };
 
-const stages = [
-  {
-    _id: '12312',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [stageImg1],
-  },
-  {
-    _id: '12122',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [stageImg1, stageImg2, stageImg3, stageImg3, stageImg3],
-  },
-  {
-    _id: '121dasdad2',
-    date: '05/04/2020 - Jour #01 : ',
-    locatation: 'Départ Aéroport Paris CDG',
-    description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper 
-      pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-      magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum. 
-      `,
-    accommodations: [
-      {
-        _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
-        description:
-          'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-      },
-      {
-        _id: '12312',
-        location: 'Repas : Demi-pension',
-        description:
-          'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-      },
-    ],
-    images: [
-      stageImg3,
-      stageImg4,
-      // stageImg3,
-      // stageImg4,
-      // stageImg3,
-      // stageImg4,
-    ],
-  },
-];
+// const stages = [
+//   {
+//     _id: '12312',
+//     date: '05/04/2020 - Jour #01 : ',
+//     locatation: 'Départ Aéroport Paris CDG',
+//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
+//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
+//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
+//       `,
+//     accommodations: [
+//       {
+//         _id: '12312312',
+//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
+//         description:
+//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
+//       },
+//       {
+//         _id: '12312',
+//         location: 'Repas : Demi-pension',
+//         description:
+//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
+//       },
+//     ],
+//     images: [stageImg1],
+//   },
+//   {
+//     _id: '12122',
+//     date: '05/04/2020 - Jour #01 : ',
+//     locatation: 'Départ Aéroport Paris CDG',
+//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
+//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
+//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
+//       `,
+//     accommodations: [
+//       {
+//         _id: '12312312',
+//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
+//         description:
+//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
+//       },
+//       {
+//         _id: '12312',
+//         location: 'Repas : Demi-pension',
+//         description:
+//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
+//       },
+//     ],
+//     images: [stageImg1, stageImg2, stageImg3, stageImg3, stageImg3],
+//   },
+//   {
+//     _id: '121dasdad2',
+//     date: '05/04/2020 - Jour #01 : ',
+//     locatation: 'Départ Aéroport Paris CDG',
+//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
+//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
+//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
+//       `,
+//     accommodations: [
+//       {
+//         _id: '12312312',
+//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
+//         description:
+//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
+//       },
+//       {
+//         _id: '12312',
+//         location: 'Repas : Demi-pension',
+//         description:
+//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
+//       },
+//     ],
+//     images: [
+//       stageImg3,
+//       stageImg4,
+//       // stageImg3,
+//       // stageImg4,
+//       // stageImg3,
+//       // stageImg4,
+//     ],
+//   },
+// ];
 
 const reviews = [
   {
@@ -186,7 +177,7 @@ const reviews = [
   },
 ];
 
-const EthicalTourDetails = ({ match, history }) => {
+const TourDetails = ({ match, history }) => {
   const classes = useStyles();
   const { id } = match.params;
 
@@ -204,7 +195,7 @@ const EthicalTourDetails = ({ match, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/trips/${id}`);
-        // console.log(`resData`, resData);
+        console.log(`resData`, resData);
         setTour(resData.trip);
       } catch (err) {
         handleCatch(err);
@@ -227,34 +218,23 @@ const EthicalTourDetails = ({ match, history }) => {
         className={classes.Carousel}
       >
         <div>
-          <img src={img1} />
+          <img src={tour?.image} />
         </div>
-        <div>
-          <img src={img2} />
-        </div>
-        <div>
-          <img src={img3} />
-        </div>
-        <div>
-          <img src={img4} />
-        </div>
+        {tour?.stages.map((stage, index) =>
+          stage.images?.map((image, idx) => (
+            <div key={idx}>
+              <img src={image} />
+            </div>
+          ))
+        )}
       </Carousel>
       {tour ? (
         <Box>
           <Box className={classes.Grid1}>
             <Grid container>
-              <Grid
-                item
-                xs={12}
-                sm={7}
-                className={classes.TourDetails}
-              >
+              <Grid item xs={12} sm={7} className={classes.TourDetails}>
                 <Box padding={3}>
-                  <Typography
-                    variant='h3'
-                    color='textSecondary'
-                    align='left'
-                  >
+                  <Typography variant='h3' color='textSecondary' align='left'>
                     {tour.country.toUpperCase()}
                   </Typography>
                   <Box display='flex' alignItems='center'>
@@ -275,10 +255,7 @@ const EthicalTourDetails = ({ match, history }) => {
                       }}
                     />
                   </Box>
-                  <Box
-                    className={classes.TourDescription}
-                    marginTop={1}
-                  >
+                  <Box className={classes.TourDescription} marginTop={1}>
                     <Typography
                       style={{
                         borderRight: '1px solid #999999',
@@ -358,24 +335,14 @@ const EthicalTourDetails = ({ match, history }) => {
                 </Box>
               </Grid>
               <Grid item xs={0} sm={1} md={1}></Grid>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                md={3}
-                className={classes.RightGrid}
-              >
+              <Grid item xs={12} sm={4} md={3} className={classes.RightGrid}>
                 <Box padding={1} textAlign='center'>
                   <Typography variant='h5'>
                     YOUR GOODFLY ONLINE ADVISOR
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography
-                    variant='p'
-                    align='center'
-                    component='h5'
-                  >
+                  <Typography variant='p' align='center' component='h5'>
                     Call a member of our agency directly at
                   </Typography>
                 </Box>
@@ -400,25 +367,21 @@ const EthicalTourDetails = ({ match, history }) => {
                 <Tab
                   label='Route'
                   className={
-                    tabValue === 0
-                      ? classes.ActiveTab
-                      : classes.InActiveTab
+                    tabValue === 0 ? classes.ActiveTab : classes.InActiveTab
                   }
                 />
                 <Tab
                   className={
-                    tabValue === 1
-                      ? classes.ActiveTab
-                      : classes.InActiveTab
+                    tabValue === 1 ? classes.ActiveTab : classes.InActiveTab
                   }
                   label='Formalities'
                 />
               </Tabs>
               <TabPanel value={tabValue} index={0} dir='x'>
-                <StagesTab stages={stages ? stages : []} />
+                <StagesTab stages={tour ? tour.stages : []} />
               </TabPanel>
               <TabPanel value={tabValue} index={1} dir='x-reverse'>
-                Item Two
+                <FormalitiesTab></FormalitiesTab>
               </TabPanel>
             </Box>
           </Box>
@@ -453,9 +416,7 @@ const EthicalTourDetails = ({ match, history }) => {
                     >
                       <Box className={classes.ReviewUser}>
                         <img src={review.user.img} alt='user image' />
-                        <Typography variant='h5'>
-                          {review.user.name}
-                        </Typography>
+                        <Typography variant='h5'>{review.user.name}</Typography>
                       </Box>
                       <Box className={classes.ReviewInfo}>
                         <Rating
@@ -539,9 +500,8 @@ const EthicalTourDetails = ({ match, history }) => {
                     fontSize: 20,
                   }}
                 >
-                  At w3schools.com you will learn how to make a
-                  website. They offer free tutorials in all web
-                  development technologies.
+                  At w3schools.com you will learn how to make a website. They
+                  offer free tutorials in all web development technologies.
                 </textarea>
 
                 <Button
@@ -562,4 +522,4 @@ const EthicalTourDetails = ({ match, history }) => {
   );
 };
 
-export default withRouter(EthicalTourDetails);
+export default withRouter(TourDetails);

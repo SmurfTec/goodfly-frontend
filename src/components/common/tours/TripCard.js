@@ -101,22 +101,18 @@ const TripCard = (props) => {
   }, [user]);
 
   const handleClick = () => {
-    history.push(`/tours/ethical/${_id}`);
+    history.push(`/tours/details/${_id}`);
   };
 
   return (
     <Card className={classes.card}>
       <CardActionArea onClick={handleClick}>
-        <CardMedia
-          className={classes.cardMedia}
-          image={image}
-          title={title}
-        />
+        <CardMedia className={classes.cardMedia} image={image} title={title} />
 
         <div className={classes.cardoverlay}>
           {/* this text should overlay the image */}
           <Typography variant='h4' component='h2'>
-            {country.toUpperCase()}
+            {title.toUpperCase()}
           </Typography>
           <Typography variant='subtitle2' gutterBottom>
             Starting From {price}
@@ -129,9 +125,7 @@ const TripCard = (props) => {
           </Typography>
           <Typography variant='subtitle2' gutterBottom>
             {Math.ceil(
-              Math.abs(
-                new Date(endingDate) - new Date(startingDate)
-              ) /
+              Math.abs(new Date(endingDate) - new Date(startingDate)) /
                 1000 /
                 60 /
                 60 /

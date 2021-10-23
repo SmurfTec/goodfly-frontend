@@ -12,7 +12,7 @@ import TripCard from './TripCard';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
 import { useTheme } from '@material-ui/styles';
-import Banner from 'components/common/Banner';
+import Banner from 'components/common/tours/Banner';
 import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 
@@ -34,9 +34,7 @@ const SpiritualHome = ({ location }) => {
       return;
     }
 
-    setSpiritualTours(
-      tours.filter((el) => el.category === 'spiritual')
-    );
+    setSpiritualTours(tours.filter((el) => el.category === 'spiritual'));
   }, [tours]);
 
   const classes = styles(styleProps);
@@ -75,9 +73,7 @@ const SpiritualHome = ({ location }) => {
       case 'duration': {
         setSpiritualTours((st) => {
           let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            a.duration > b.duration ? -1 : 1
-          );
+          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
           return sortedTours;
         });
         break;
@@ -86,9 +82,7 @@ const SpiritualHome = ({ location }) => {
         setSpiritualTours((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
-            new Date(a.startingDate) > new Date(b.startingDate)
-              ? -1
-              : 1
+            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
           );
           return sortedTours;
         });
@@ -119,10 +113,7 @@ const SpiritualHome = ({ location }) => {
     <React.Fragment>
       <CssBaseline />
 
-      <Container
-        className={globalClasses.MainContainer}
-        maxWidth='lg'
-      >
+      <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <div className={globalClasses.heroContent}>
           {/* <Container className={classes.mainFeaturedPost}>
               <section className={classes.title}>
@@ -138,9 +129,7 @@ const SpiritualHome = ({ location }) => {
             imageUrl={
               'https://m.hziegler.com/hza-resized-images/articles/hajj/mecca-at-night_450x300.jpg'
             }
-            bannerTitle={`${
-              currentTab === 1 ? 'Omra' : 'Hajj'
-            } Offers`}
+            bannerTitle={`${currentTab === 1 ? 'Omra' : 'Hajj'} Offers`}
             align='center'
           />
 

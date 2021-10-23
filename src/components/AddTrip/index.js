@@ -1,5 +1,5 @@
 import React from 'react';
-import Banner from 'components/common/Banner';
+import Banner from 'components/common/tours/Banner';
 import Select from 'react-select';
 import {
   Container,
@@ -55,26 +55,18 @@ function AddTrip() {
 
   return (
     <Container>
-      <Banner
-        imageUrl={img}
-        bannerTitle='I CREATE MY TRIP   '
-        align='center'
-      />
+      <Banner imageUrl={img} bannerTitle='I CREATE MY TRIP   ' align='center' />
 
       <Box sx={{ fontStyle: 'italic', mt: 7 }}>
         <Typography variant='h5' color='text.secondary'>
-          The heart of our know-how is to be at your disposal to
-          imagine and design the trip of your dreams according to your
-          desires and your principles.
+          The heart of our know-how is to be at your disposal to imagine and
+          design the trip of your dreams according to your desires and your
+          principles.
         </Typography>
-        <Typography
-          variant='h5'
-          sx={{ mt: 3 }}
-          color='text.secondary'
-        >
-          Because understanding is above all knowing how to listen, a
-          dedicated advisor will follow your request and accompany you
-          throughout your trip ...
+        <Typography variant='h5' sx={{ mt: 3 }} color='text.secondary'>
+          Because understanding is above all knowing how to listen, a dedicated
+          advisor will follow your request and accompany you throughout your
+          trip ...
         </Typography>
       </Box>
       <Paper
@@ -89,32 +81,24 @@ function AddTrip() {
         // }}
       >
         <Typography variant='subtitle1'>
-          Describe to us as precisely as possible the trip you would
-          like:
+          Describe to us as precisely as possible the trip you would like:
         </Typography>
         <Typography variant='subtitle1'>
-          stages, desires, routes, activities, excursions, circuits,
-          centers of interest etc ...
+          stages, desires, routes, activities, excursions, circuits, centers of
+          interest etc ...
         </Typography>
 
         <Typography variant='subtitle1' sx={{ mt: 2 }}>
-          The information you give us allows us to best respond to
-          your request.
+          The information you give us allows us to best respond to your request.
         </Typography>
         <Typography variant='subtitle1' sx={{ mt: 2 }}>
-          In any case, we will deepen your project together by phone
-          and email.
+          In any case, we will deepen your project together by phone and email.
         </Typography>
         <FormProvider {...methods}>
-          <form
-            onSubmit={handleSubmit((data) => submitFormData(data))}
-          >
+          <form onSubmit={handleSubmit((data) => submitFormData(data))}>
             <Grid container sx={{ mt: 6 }} spacing={2}>
               <Grid item xs={12} sm={12}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                >
+                <Typography variant='subtitle1' color='text.secondary'>
                   Tell us about your project
                 </Typography>
               </Grid>
@@ -190,10 +174,7 @@ function AddTrip() {
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.destinations)}
-                >
+                <FormControl fullWidth error={Boolean(errors.destinations)}>
                   <input
                     className={classes.textInput}
                     {...register('destinations', {
@@ -211,10 +192,7 @@ function AddTrip() {
               </Grid>
 
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                >
+                <Typography variant='subtitle1' color='text.secondary'>
                   Have you already set the travel dates?
                 </Typography>
                 <Controller
@@ -222,11 +200,7 @@ function AddTrip() {
                   control={control}
                   defaultValue='yes'
                   render={({ field }) => (
-                    <RadioGroup
-                      {...field}
-                      aria-label='travelDate'
-                      row
-                    >
+                    <RadioGroup {...field} aria-label='travelDate' row>
                       <FormControlLabel
                         value='yes'
                         control={<Radio />}
@@ -242,10 +216,7 @@ function AddTrip() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.desiredDeparture)}
-                >
+                <FormControl fullWidth error={Boolean(errors.desiredDeparture)}>
                   <Typography
                     variant='subtitle1'
                     color='text.secondary'
@@ -268,10 +239,7 @@ function AddTrip() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.desiredReturn)}
-                >
+                <FormControl fullWidth error={Boolean(errors.desiredReturn)}>
                   <Typography
                     variant='subtitle1'
                     color='text.secondary'
@@ -287,9 +255,7 @@ function AddTrip() {
                     })}
                   />
                   {errors.desiredReturn && (
-                    <FormHelperText>
-                      Select desired return date
-                    </FormHelperText>
+                    <FormHelperText>Select desired return date</FormHelperText>
                   )}
                 </FormControl>
               </Grid>
@@ -309,11 +275,7 @@ function AddTrip() {
                   control={control}
                   defaultValue='yes'
                   render={({ field }) => (
-                    <RadioGroup
-                      {...field}
-                      aria-label='flexibleDates'
-                      row
-                    >
+                    <RadioGroup {...field} aria-label='flexibleDates' row>
                       <FormControlLabel
                         value='yes'
                         control={<Radio />}
@@ -472,8 +434,8 @@ function AddTrip() {
                   color='text.secondary'
                   sx={{ mb: 2 }}
                 >
-                  What theme and / or type of trip would you like?
-                  (several choices possible)
+                  What theme and / or type of trip would you like? (several
+                  choices possible)
                 </Typography>
 
                 <Controller
@@ -519,8 +481,8 @@ function AddTrip() {
                   color='text.secondary'
                   sx={{ mb: 2 }}
                 >
-                  What type of accommodation would you like? (several
-                  choices possible)
+                  What type of accommodation would you like? (several choices
+                  possible)
                 </Typography>
 
                 <Controller
@@ -528,19 +490,10 @@ function AddTrip() {
                   control={control}
                   defaultValue={tripAccomodation[0].value}
                   render={({ field }) => (
-                    <RadioGroup
-                      {...field}
-                      aria-label='tripAccomodation'
-                      row
-                    >
+                    <RadioGroup {...field} aria-label='tripAccomodation' row>
                       <Grid container spacing={1}>
                         {tripAccomodation.map((accomodation) => (
-                          <Grid
-                            item
-                            xs={12}
-                            sm={6}
-                            key={accomodation.value}
-                          >
+                          <Grid item xs={12} sm={6} key={accomodation.value}>
                             <FormControlLabel
                               value={accomodation.value}
                               control={<Radio />}
@@ -618,8 +571,7 @@ function AddTrip() {
                   color='text.secondary'
                   sx={{ mb: 1 }}
                 >
-                  Would you like to be accompanied by a guide during
-                  your trip?
+                  Would you like to be accompanied by a guide during your trip?
                 </Typography>
                 <Controller
                   name='guideAccompained'
@@ -637,17 +589,13 @@ function AddTrip() {
               </Grid>
 
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.globalBudget)}
-                >
+                <FormControl fullWidth error={Boolean(errors.globalBudget)}>
                   <Typography
                     variant='subtitle1'
                     color='text.secondary'
                     sx={{ mb: 1 }}
                   >
-                    Global budget in euros per person for this trip?
-                    (about)
+                    Global budget in euros per person for this trip? (about)
                   </Typography>
                   <input
                     className={classes.textInput}
@@ -660,8 +608,7 @@ function AddTrip() {
                   />
                   {errors.globalBudget && (
                     <FormHelperText>
-                      Specify the global budget per person for this
-                      trip
+                      Specify the global budget per person for this trip
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -712,11 +659,7 @@ function AddTrip() {
                   control={control}
                   defaultValue={timeToReachClient[0].value}
                   render={({ field }) => (
-                    <RadioGroup
-                      {...field}
-                      aria-label='timeToReachClient'
-                      row
-                    >
+                    <RadioGroup {...field} aria-label='timeToReachClient' row>
                       {timeToReachClient.map((time) => (
                         <FormControlLabel
                           key={time.value}
@@ -757,10 +700,7 @@ function AddTrip() {
                   </Grid>
 
                   <Grid item xs={6} sm={4}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.clientName)}
-                    >
+                    <FormControl fullWidth error={Boolean(errors.clientName)}>
                       <input
                         className={classes.textInput}
                         {...register('clientName', {
@@ -770,9 +710,7 @@ function AddTrip() {
                         placeholder='Name'
                       />
                       {errors.clientName && (
-                        <FormHelperText>
-                          Specify your name
-                        </FormHelperText>
+                        <FormHelperText>Specify your name</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
@@ -790,17 +728,12 @@ function AddTrip() {
                         placeholder='First Name'
                       />
                       {errors.clientFirstName && (
-                        <FormHelperText>
-                          Specify your first name
-                        </FormHelperText>
+                        <FormHelperText>Specify your first name</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sm={4}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.dateOfBirth)}
-                    >
+                    <FormControl fullWidth error={Boolean(errors.dateOfBirth)}>
                       <Tooltip title='Date Of Birth'>
                         <input
                           type='date'
@@ -831,9 +764,7 @@ function AddTrip() {
                         placeholder='Address'
                       />
                       {errors.clientAddress && (
-                        <FormHelperText>
-                          Specify your address
-                        </FormHelperText>
+                        <FormHelperText>Specify your address</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
@@ -853,17 +784,12 @@ function AddTrip() {
                         placeholder='Postal Code'
                       />
                       {errors.clientPostalCode && (
-                        <FormHelperText>
-                          Specify postal code
-                        </FormHelperText>
+                        <FormHelperText>Specify postal code</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sm={4}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.clientCity)}
-                    >
+                    <FormControl fullWidth error={Boolean(errors.clientCity)}>
                       <input
                         className={classes.textInput}
                         type='text'
@@ -893,17 +819,12 @@ function AddTrip() {
                         placeholder='Country'
                       />
                       {errors.clientCountry && (
-                        <FormHelperText>
-                          Specify country
-                        </FormHelperText>
+                        <FormHelperText>Specify country</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sm={5}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.clientEmail)}
-                    >
+                    <FormControl fullWidth error={Boolean(errors.clientEmail)}>
                       <input
                         className={classes.textInput}
                         type='email'
@@ -935,10 +856,7 @@ function AddTrip() {
                     />
                   </Grid>
                   <Grid item xs={6} sm={4}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.clientPhone)}
-                    >
+                    <FormControl fullWidth error={Boolean(errors.clientPhone)}>
                       <input
                         className={classes.textInput}
                         type='number'
@@ -949,9 +867,7 @@ function AddTrip() {
                         placeholder='Phone no'
                       />
                       {errors.clientPhone && (
-                        <FormHelperText>
-                          Specify your phone no
-                        </FormHelperText>
+                        <FormHelperText>Specify your phone no</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
@@ -966,11 +882,7 @@ function AddTrip() {
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
-                >
+                <Button variant='contained' color='primary' type='submit'>
                   Submit
                 </Button>
               </Grid>

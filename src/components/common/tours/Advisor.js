@@ -1,9 +1,9 @@
 import React from 'react';
-import useStyles from 'Styles/FlashSale/AdvisorStyles';
+import styles from 'Styles/FlashSale/AdvisorStyles';
 import { Typography } from '@material-ui/core';
 
-const Adivsor = () => {
-  const classes = useStyles();
+const Advisor = () => {
+  const classes = styles();
   return (
     <div className={classes.root}>
       <Typography variant='h6' className={classes.title}>
@@ -17,4 +17,4 @@ const Adivsor = () => {
   );
 };
 
-export default Adivsor;
+export default Advisor;

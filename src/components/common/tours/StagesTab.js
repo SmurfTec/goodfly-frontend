@@ -24,17 +24,16 @@ const useStyles = makeStyles((theme) => ({}));
 const StagesTab = ({ stages }) => {
   const classes = useStyles();
 
+  console.clear();
+  console.log(`stages`, stages);
+
   return (
     <>
-      {stages.map((stage, idx) => (
+      {stages?.map((stage, idx) => (
         <React.Fragment key={stage._id}>
           <Grid container>
             <Grid item sm={3} md={2}>
-              <img
-                src={stage?.images[0]}
-                alt=''
-                style={{ width: 210 }}
-              />
+              <img src={stage.images?.[0]} alt='' style={{ width: 210 }} />
               <Box
                 style={{
                   width: 190,
@@ -44,8 +43,8 @@ const StagesTab = ({ stages }) => {
                 display='flex'
                 justifyContent='space-between'
               >
-                {stage.images
-                  .slice(1, stage.images.length)
+                {stage?.images
+                  ?.slice(1, stage?.images.length)
                   .map((el, idx) => (
                     <img
                       src={el}
@@ -58,17 +57,15 @@ const StagesTab = ({ stages }) => {
             <Grid item sm={1} md={1}></Grid>
             <Grid item sm={8} md={9}>
               <Typography variant='h5' textAlign='left' gutterBottom>
-                {`${stage.date} Day : ${idx} ${stage.locatation}`}
+                {`${new Date(stage.date).toDateString()} Day : ${idx} ${
+                  stage.location
+                }`}
               </Typography>
-              <Typography
-                variant='h6'
-                textAlign='left'
-                fontWeight='normal'
-              >
+              <Typography variant='h6' textAlign='left' fontWeight='normal'>
                 {stage.description}
               </Typography>
               <List>
-                {stage.accommodations.map((el) => (
+                {stage.accommodations?.map((el) => (
                   <ListItem key={el._id}>
                     <ListItemAvatar>
                       <Avatar>

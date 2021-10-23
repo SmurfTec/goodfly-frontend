@@ -40,7 +40,7 @@ const TripCard = (props) => {
 
   const handleClick = () => {
     // console.log(`_id`, _id);
-    history.push(`/tours/spiritual/${_id}`);
+    history.push(`/tours/details/${_id}`);
   };
 
   return (
@@ -97,11 +97,7 @@ const TripCard = (props) => {
               align='center'
             >
               {Math.ceil(
-                Math.abs(endingDate - startingDate) /
-                  1000 /
-                  60 /
-                  60 /
-                  24
+                Math.abs(endingDate - startingDate) / 1000 / 60 / 60 / 24
               )}
               {' Days '} {boardType}
             </Typography>
@@ -112,9 +108,7 @@ const TripCard = (props) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions
-        style={{ justifyContent: 'center', paddingBottom: 20 }}
-      >
+      <CardActions style={{ justifyContent: 'center', paddingBottom: 20 }}>
         <Button
           variant='contained'
           size='small'

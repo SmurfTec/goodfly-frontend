@@ -7,14 +7,7 @@ import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
 
 // MUI
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
+import { Grid, Box, Typography, Button, Tabs, Tab } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EuroIcon from '@material-ui/icons/Euro';
@@ -30,7 +23,7 @@ import stageImg1 from 'Assets/img/stage1.png';
 import stageImg2 from 'Assets/img/stage12.png';
 import stageImg3 from 'Assets/img/stage2.png';
 import stageImg4 from 'Assets/img/stage23.png';
-import StagesTab from '../EthicalTours/StagesTab';
+import StagesTab from 'components/common/tours/StagesTab';
 
 import userImg from 'Assets/img/user1.png';
 
@@ -68,8 +61,7 @@ const stages = [
     accommodations: [
       {
         _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
+        location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
         description:
           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
       },
@@ -93,8 +85,7 @@ const stages = [
     accommodations: [
       {
         _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
+        location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
         description:
           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
       },
@@ -118,8 +109,7 @@ const stages = [
     accommodations: [
       {
         _id: '12312312',
-        location:
-          'Etape : Aéroport internationnal Paris Charles de Gaulle',
+        location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
         description:
           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
       },
@@ -243,11 +233,7 @@ const TourDetails = ({ match, history }) => {
         <Grid container>
           <Grid item xs={12} sm={7} className={classes.TourDetails}>
             <Box padding={3}>
-              <Typography
-                variant='h3'
-                color='textSecondary'
-                align='left'
-              >
+              <Typography variant='h3' color='textSecondary' align='left'>
                 {tour.country.toUpperCase()}
               </Typography>
               <Box display='flex' alignItems='center'>
@@ -348,17 +334,9 @@ const TourDetails = ({ match, history }) => {
             </Box>
           </Grid>
           <Grid item xs={0} sm={1} md={1}></Grid>
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={3}
-            className={classes.RightGrid}
-          >
+          <Grid item xs={12} sm={4} md={3} className={classes.RightGrid}>
             <Box padding={1} textAlign='center'>
-              <Typography variant='h5'>
-                YOUR GOODFLY ONLINE ADVISOR
-              </Typography>
+              <Typography variant='h5'>YOUR GOODFLY ONLINE ADVISOR</Typography>
             </Box>
             <Box>
               <Typography variant='p' align='center' component='h5'>
@@ -386,16 +364,12 @@ const TourDetails = ({ match, history }) => {
             <Tab
               label='Route'
               className={
-                tabValue === 0
-                  ? classes.ActiveTab
-                  : classes.InActiveTab
+                tabValue === 0 ? classes.ActiveTab : classes.InActiveTab
               }
             />
             <Tab
               className={
-                tabValue === 1
-                  ? classes.ActiveTab
-                  : classes.InActiveTab
+                tabValue === 1 ? classes.ActiveTab : classes.InActiveTab
               }
               label='Formalities'
             />
@@ -439,9 +413,7 @@ const TourDetails = ({ match, history }) => {
                 >
                   <Box className={classes.ReviewUser}>
                     <img src={review.user.img} alt='user image' />
-                    <Typography variant='h5'>
-                      {review.user.name}
-                    </Typography>
+                    <Typography variant='h5'>{review.user.name}</Typography>
                   </Box>
                   <Box className={classes.ReviewInfo}>
                     <Rating
@@ -525,9 +497,8 @@ const TourDetails = ({ match, history }) => {
                 fontSize: 20,
               }}
             >
-              At w3schools.com you will learn how to make a website.
-              They offer free tutorials in all web development
-              technologies.
+              At w3schools.com you will learn how to make a website. They offer
+              free tutorials in all web development technologies.
             </textarea>
 
             <Button

@@ -34,21 +34,16 @@ const styles = makeStyles((theme) => ({
 }));
 const FlashCard = (props) => {
   const classes = styles();
-  const { _id, title, service, description, price, image, history } =
-    props;
+  const { _id, title, service, description, price, image, history } = props;
 
   const handleClick = () => {
-    history.push(`/tours/flash-sales/${_id}`);
+    history.push(`/tours/details/${_id}`);
   };
 
   return (
     <Card className={classes.card}>
       <CardActionArea onClick={handleClick}>
-        <CardMedia
-          className={classes.cardMedia}
-          image={image}
-          title={title}
-        />
+        <CardMedia className={classes.cardMedia} image={image} title={title} />
         <CardContent className={classes.cardContent}>
           <section className={classes.content}>
             <section>

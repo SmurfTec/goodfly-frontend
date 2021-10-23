@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Banner from 'components/common/Banner';
+import Banner from 'components/common/tours/Banner';
 import img from 'Assets/img/destinations1.jpg';
 import { withRouter } from 'react-router-dom';
 
 import { Typography, Container, Grid, Box } from '@material-ui/core';
-import TripCard from './TripCard';
+import TripCard from 'components/common/tours/TripCard';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ToursContext } from 'Contexts/ToursContext';
@@ -66,7 +66,7 @@ const Details = ({ match, history }) => {
           regionalTours.length > 0 ? (
             regionalTours.map((tour) => (
               <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                <TripCard {...tour} />
+                <TripCard {...tour} title={tour.title} />
               </Grid>
             ))
           ) : (

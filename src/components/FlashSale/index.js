@@ -12,11 +12,12 @@ import FlashCard from './FlashCard';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
-import Advisor from './Adivsor';
-
+import Advisor from 'components/common/tours/Advisor';
 import { useTheme } from '@material-ui/styles';
 import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import flashImg from 'Assets/img/flash-sale.png';
+import Banner from 'components/common/tours/Banner';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -68,9 +69,7 @@ const FlashSale = ({ location }) => {
       case 'duration': {
         setFlashSales((st) => {
           let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            a.duration > b.duration ? -1 : 1
-          );
+          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
           return sortedTours;
         });
         break;
@@ -79,9 +78,7 @@ const FlashSale = ({ location }) => {
         setFlashSales((st) => {
           let sortedTours = st;
           sortedTours.sort((a, b) =>
-            new Date(a.startingDate) > new Date(b.startingDate)
-              ? -1
-              : 1
+            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
           );
           return sortedTours;
         });
@@ -113,49 +110,36 @@ const FlashSale = ({ location }) => {
       <CssBaseline />
 
       {/* Hero unit */}
-      <Container
-        className={globalClasses.MainContainer}
-        maxWidth='lg'
-      >
-        <div className={globalClasses.heroContent}>
-          <Container className={classes.mainFeaturedPost}>
-            <section className={classes.title}>
-              <Typography variant='h3'>
-                FLASH SALE
-                <FlashOnIcon sx={{ marginLeft: 2 }} />
-              </Typography>
-            </section>
-            <Advisor />
-          </Container>
+      <Container className={globalClasses.MainContainer} maxWidth='lg'>
+        <Banner imageUrl={flashImg} bannerTitle='Flash Sales' align='left' />
+        <section className={classes.filter}>
+          <Button
+            variant='outlined'
+            startIcon={<TuneIcon />}
+            onClick={filterMenuOpen}
+          >
+            Select a filter
+          </Button>
 
-          <section className={classes.filter}>
-            <Button
-              variant='outlined'
-              startIcon={<TuneIcon />}
-              onClick={filterMenuOpen}
-            >
-              Select a filter
-            </Button>
+          <Menu
+            id='long-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+          >
+            {options.map((option, index) => (
+              <MenuItem
+                key={option}
+                data-filter={option}
+                onClick={filterSelected}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+        </section>
 
-            <Menu
-              id='long-menu'
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-            >
-              {options.map((option, index) => (
-                <MenuItem
-                  key={option}
-                  data-filter={option}
-                  onClick={filterSelected}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
-          </section>
-        </div>
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
           Do you have a few days ahead of you? Découvrez les ventes

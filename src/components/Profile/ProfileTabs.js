@@ -5,15 +5,9 @@ import SwipeableViews from 'react-swipeable-views';
 
 // --------- MUI ----------- //
 import { makeStyles, useTheme } from '@material-ui/styles';
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-} from '@material-ui/core';
+import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
 import PersonalInfo from './PersonalInfo';
-import FavouritiesTab from './FavouritiesTab';
+import TripsTab from './TripsTab';
 // ------------------------ //
 
 const TabPanel = (props) => {
@@ -132,7 +126,7 @@ const FullWidthTabs = ({ user }) => {
           index={1}
           dir={theme.direction}
         >
-          <FavouritiesTab />
+          <TripsTab favourities={user.favourites} />
         </TabPanel>
         <TabPanel
           className={classes.TabPanel}
@@ -140,7 +134,7 @@ const FullWidthTabs = ({ user }) => {
           index={2}
           dir={theme.direction}
         >
-          <FavouritiesTab />
+          <TripsTab />
         </TabPanel>
         <TabPanel
           className={classes.TabPanel}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography } from '@material-ui/core';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
-import Advisor from 'components/common/Adivsor';
+import Advisor from 'components/common/tours/Advisor';
 import { makeStyles } from '@material-ui/styles';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 
