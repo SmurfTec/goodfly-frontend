@@ -20,6 +20,7 @@ import BlogCard from './BlogCard';
 import useStyles from 'Styles/Blog';
 import { handleCatch, makeReq } from 'Utils/constants';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import Page from 'components/common/Page';
 
 const BlogDetails = ({ match, history }) => {
   const globalClasses = useGlobalClasses();
@@ -97,7 +98,7 @@ const BlogDetails = ({ match, history }) => {
   return (
     <>
       {blog ? (
-        <>
+        <Page title={`Blog | ${blog.title}`}>
           <Box sx={{ mt: 3 }}>
             <Box
               className={classes.bannerImg}
@@ -132,17 +133,10 @@ const BlogDetails = ({ match, history }) => {
               </Box>
             </Box>
           </Box>
-          <Container
-            sx={{ mt: 8 }}
-            className={globalClasses.MainContainer}
-          >
+          <Container sx={{ mt: 8 }} className={globalClasses.MainContainer}>
             {blog?.paragraphs.map((paragraph, idx) => (
               <React.Fragment key={paragraph._id}>
-                <Typography
-                  variant='h5'
-                  color='text.secondary'
-                  sx={{ my: 3 }}
-                >
+                <Typography variant='h5' color='text.secondary' sx={{ my: 3 }}>
                   {paragraph.text}
                 </Typography>
                 {blog?.images[idx + 1] && (
@@ -181,17 +175,13 @@ const BlogDetails = ({ match, history }) => {
               </Box>
 
               <Box sx={{ mt: 6 }}>
-                <Typography variant='subtitle2'>
-                  Add a comment
-                </Typography>
+                <Typography variant='subtitle2'>Add a comment</Typography>
                 <Typography variant='subtitle1' sx={{ mt: 4 }}>
                   Your comment
                 </Typography>
                 <form
                   id='formComment'
-                  onSubmit={handleSubmit((data) =>
-                    submitFormData(data)
-                  )}
+                  onSubmit={handleSubmit((data) => submitFormData(data))}
                 >
                   <Paper elevation={3} sx={{ px: 2, py: 3, mt: 1 }}>
                     <FormControl
@@ -206,8 +196,7 @@ const BlogDetails = ({ match, history }) => {
                         })}
                         placeholder='Write something about the blog post...'
                       />
-                      {errors?.commentTextArea?.type ===
-                        'required' && (
+                      {errors?.commentTextArea?.type === 'required' && (
                         <FormHelperText>
                           {errors?.commentTextArea?.message}
                         </FormHelperText>
@@ -228,21 +217,13 @@ const BlogDetails = ({ match, history }) => {
             </Paper>
 
             <Box sx={{ mt: 17 }}>
-              <Typography
-                variant='h4'
-                fullWidth
-                align='center'
-                sx={{ my: 6 }}
-              >
+              <Typography variant='h4' fullWidth align='center' sx={{ my: 6 }}>
                 Latest Articles Online
               </Typography>
               <CarouselLayout>
                 {blogs ? (
                   blogs.map((blog) => (
-                    <div
-                      key={blog._id}
-                      className={classes.carouselCard}
-                    >
+                    <div key={blog._id} className={classes.carouselCard}>
                       <BlogCard blog={blog} handleClick={blogClick} />
                     </div>
                   ))
@@ -252,7 +233,7 @@ const BlogDetails = ({ match, history }) => {
               </CarouselLayout>
             </Box>
           </Container>
-        </>
+        </Page>
       ) : (
         <div className='loader'></div>
       )}

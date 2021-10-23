@@ -8,6 +8,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 import axios from 'axios';
 import { API_BASE_URL } from 'Utils/constants';
+import Page from 'components/common/Page';
 
 const ConfirmMail = ({ match, history }) => {
   const classes = useStyles();
@@ -34,53 +35,51 @@ const ConfirmMail = ({ match, history }) => {
   }, [token]);
 
   return (
-    <div className={classes.Wrapper}>
-      <img
-        src={img1}
-        alt='plane img'
-        className={classes.backgroundImg}
-      />
+    <Page title='GoodFly |  Confirm Email'>
+      <div className={classes.Wrapper}>
+        <img src={img1} alt='plane img' className={classes.backgroundImg} />
 
-      <Box className={classes.Main}>
-        <Box className={classes.Header}>
-          <Typography variant='h4' color='primary' align='center'>
-            GOODFLY
-          </Typography>
-        </Box>
-        <Box className={classes.Form}>
-          {authenticating && (
-            <Typography
-              variant='body'
-              color='textSecondary'
-              style={{ marginBottom: '2rem' }}
-              component='p'
-            >
-              Authenticating ConfirmMail Token
+        <Box className={classes.Main}>
+          <Box className={classes.Header}>
+            <Typography variant='h4' color='primary' align='center'>
+              GOODFLY
             </Typography>
-          )}
+          </Box>
+          <Box className={classes.Form}>
+            {authenticating && (
+              <Typography
+                variant='body'
+                color='textSecondary'
+                style={{ marginBottom: '2rem' }}
+                component='p'
+              >
+                Authenticating ConfirmMail Token
+              </Typography>
+            )}
 
-          {authenticating ? (
-            <div className='loader'></div>
-          ) : (
-            <Typography
-              variant='h6'
-              component='p'
-              color={`${success ? 'success' : 'error'}`}
-            >
-              {success
-                ? 'Email Verified Successfully !'
-                : 'Email Verification Token Invalid or Expired !'}
-            </Typography>
-          )}
-          <Box sx={{ my: 2 }}></Box>
-          <Link to='/signup'>
-            <Typography variant='p' color='textSecondary'>
-              Goto Login
-            </Typography>
-          </Link>
+            {authenticating ? (
+              <div className='loader'></div>
+            ) : (
+              <Typography
+                variant='h6'
+                component='p'
+                color={`${success ? 'success' : 'error'}`}
+              >
+                {success
+                  ? 'Email Verified Successfully !'
+                  : 'Email Verification Token Invalid or Expired !'}
+              </Typography>
+            )}
+            <Box sx={{ my: 2 }}></Box>
+            <Link to='/signup'>
+              <Typography variant='p' color='textSecondary'>
+                Goto Login
+              </Typography>
+            </Link>
+          </Box>
         </Box>
-      </Box>
-    </div>
+      </div>
+    </Page>
   );
 };
 

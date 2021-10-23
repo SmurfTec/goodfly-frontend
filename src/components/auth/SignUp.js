@@ -9,6 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 import { API_BASE_URL } from 'Utils/constants';
+import Page from 'components/common/Page';
 
 const SignUp = () => {
   const classes = useStyles();
@@ -43,9 +44,7 @@ const SignUp = () => {
       //   `err.response.data.message`,
       //   err.response.data.message
       // );
-      toast.error(
-        err.response.data.message || 'Something went wrong'
-      );
+      toast.error(err.response.data.message || 'Something went wrong');
     }
   };
 
@@ -54,91 +53,89 @@ const SignUp = () => {
   };
 
   return (
-    <div className={classes.Wrapper}>
-      <img
-        src={img1}
-        alt='plane img'
-        className={classes.backgroundImg}
-      />
+    <Page title='GoodFly |  SignUp'>
+      <div className={classes.Wrapper}>
+        <img src={img1} alt='plane img' className={classes.backgroundImg} />
 
-      <Box className={classes.Main}>
-        <Box className={classes.Header}>
-          <Typography variant='h4' color='primary' align='center'>
-            GOODFLY
-          </Typography>
-        </Box>
-        <form className={classes.Form} onSubmit={handleSubmit}>
-          <Typography variant='h5' color='textSecondary' gutterBottom>
-            SignUp
-          </Typography>
-
-          <input
-            className={classes.textInput}
-            type='text'
-            placeholder='Name'
-            value={state.name}
-            onChange={handleTextChange}
-            name='name'
-            id='name'
-          />
-          <input
-            className={classes.textInput}
-            type='text'
-            placeholder='First Name'
-            value={state.firstName}
-            onChange={handleTextChange}
-            name='firstName'
-            id='firstName'
-          />
-          <input
-            className={classes.textInput}
-            type='email'
-            placeholder='Email'
-            value={state.email}
-            onChange={handleTextChange}
-            name='email'
-            id='email'
-          />
-
-          <input
-            className={classes.textInput}
-            type='password'
-            placeholder='Password'
-            value={state.password}
-            name='password'
-            id='password'
-            onChange={handleTextChange}
-          />
-
-          <input
-            className={classes.textInput}
-            type='password'
-            placeholder='Password Confirm'
-            value={state.passwordConfirm}
-            name='passwordConfirm'
-            id='passwordConfirm'
-            onChange={handleTextChange}
-          />
-
-          <Button
-            fullWidth
-            type='submit'
-            variant='contained'
-            color='primary'
-            style={{ marginTop: 20, marginBottom: '1rem' }}
-          >
-            Sign Up
-          </Button>
-
-          <Box sx={{ my: 2 }}></Box>
-          <Link to='/auth/login'>
-            <Typography variant='p' color='textSecondary'>
-              Already Have an Account ? Login
+        <Box className={classes.Main}>
+          <Box className={classes.Header}>
+            <Typography variant='h4' color='primary' align='center'>
+              GOODFLY
             </Typography>
-          </Link>
-        </form>
-      </Box>
-    </div>
+          </Box>
+          <form className={classes.Form} onSubmit={handleSubmit}>
+            <Typography variant='h5' color='textSecondary' gutterBottom>
+              SignUp
+            </Typography>
+
+            <input
+              className={classes.textInput}
+              type='text'
+              placeholder='Name'
+              value={state.name}
+              onChange={handleTextChange}
+              name='name'
+              id='name'
+            />
+            <input
+              className={classes.textInput}
+              type='text'
+              placeholder='First Name'
+              value={state.firstName}
+              onChange={handleTextChange}
+              name='firstName'
+              id='firstName'
+            />
+            <input
+              className={classes.textInput}
+              type='email'
+              placeholder='Email'
+              value={state.email}
+              onChange={handleTextChange}
+              name='email'
+              id='email'
+            />
+
+            <input
+              className={classes.textInput}
+              type='password'
+              placeholder='Password'
+              value={state.password}
+              name='password'
+              id='password'
+              onChange={handleTextChange}
+            />
+
+            <input
+              className={classes.textInput}
+              type='password'
+              placeholder='Password Confirm'
+              value={state.passwordConfirm}
+              name='passwordConfirm'
+              id='passwordConfirm'
+              onChange={handleTextChange}
+            />
+
+            <Button
+              fullWidth
+              type='submit'
+              variant='contained'
+              color='primary'
+              style={{ marginTop: 20, marginBottom: '1rem' }}
+            >
+              Sign Up
+            </Button>
+
+            <Box sx={{ my: 2 }}></Box>
+            <Link to='/auth/login'>
+              <Typography variant='p' color='textSecondary'>
+                Already Have an Account ? Login
+              </Typography>
+            </Link>
+          </form>
+        </Box>
+      </div>
+    </Page>
   );
 };
 

@@ -4,13 +4,13 @@ import { Container } from '@material-ui/core';
 
 const Page = ({ title, description, children }) => {
   return (
-    <Container>
+    <>
       <Helmet>
         <title>{title}</title>
-        <meta name='description' content={description} />
+        {description && <meta name='description' content={description} />}
       </Helmet>
       {children}
-    </Container>
+    </>
   );
 };
 

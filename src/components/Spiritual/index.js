@@ -15,6 +15,7 @@ import { useTheme } from '@material-ui/styles';
 import Banner from 'components/common/tours/Banner';
 import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import Page from 'components/common/Page';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -110,7 +111,7 @@ const SpiritualHome = ({ location }) => {
   };
 
   return (
-    <React.Fragment>
+    <Page title='GoodFly |  Spiritual Tours'>
       <CssBaseline />
 
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
@@ -231,7 +232,7 @@ const SpiritualHome = ({ location }) => {
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
       </Container>
-    </React.Fragment>
+    </Page>
   );
 };
 export default withRouter(SpiritualHome);

@@ -18,6 +18,7 @@ import ethicalImg from 'Assets/img/ethical-main.png';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Paper, TextField } from '@material-ui/core';
 import Banner from 'components/common/tours/Banner';
+import Page from 'components/common/Page';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -137,7 +138,7 @@ const ExcursionaHome = ({ location }) => {
   };
 
   return (
-    <React.Fragment>
+    <Page title='GoodFly |  Excursions'>
       <CssBaseline />
 
       {/* Hero unit */}
@@ -229,7 +230,7 @@ const ExcursionaHome = ({ location }) => {
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
       </Container>
-    </React.Fragment>
+    </Page>
   );
 };
 export default withRouter(ExcursionaHome);

@@ -18,6 +18,7 @@ import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import flashImg from 'Assets/img/flash-sale.png';
 import Banner from 'components/common/tours/Banner';
+import Page from 'components/common/Page';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -106,7 +107,7 @@ const FlashSale = ({ location }) => {
   };
 
   return (
-    <React.Fragment>
+    <Page title='GoodFly |  Flash Sales'>
       <CssBaseline />
 
       {/* Hero unit */}
@@ -180,7 +181,7 @@ const FlashSale = ({ location }) => {
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
       </Container>
-    </React.Fragment>
+    </Page>
   );
 };
 export default withRouter(FlashSale);

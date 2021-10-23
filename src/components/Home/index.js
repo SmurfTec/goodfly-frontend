@@ -24,6 +24,7 @@ import AlAqsaMosqueImg from 'Assets/img/alaqsamosque.jpg';
 import TailorMadeTripImg from 'Assets/img/tailormadeTrips.jpg';
 import TravelMapImg from 'Assets/img/travelmap.png';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import Page from 'components/common/Page';
 
 const products = [
   {
@@ -74,7 +75,7 @@ const Index = () => {
   };
 
   return (
-    <>
+    <Page title='Goodfly | Home'>
       <Container
         sx={{ my: 2 }}
         // className={classes.root}
@@ -112,9 +113,9 @@ const Index = () => {
               sx={{ my: 2, fontStyle: 'italic' }}
               align='center'
             >
-              Take advantage of the best offers on flights, boats,
-              trains, vehicle rentals and accommodation by signing up
-              to the <a href='/'>newsletters GOODFLY !</a>
+              Take advantage of the best offers on flights, boats, trains,
+              vehicle rentals and accommodation by signing up to the{' '}
+              <a href='/'>newsletters GOODFLY !</a>
             </Typography>
           </Grid>
         </Grid>
@@ -130,33 +131,24 @@ const Index = () => {
         <CarouselLayout>
           {products.map((p) => (
             <div key={p.id} className={classes.carouselContainer}>
-              <Card
-                id={p.id}
-                desc={p.desc}
-                image={p.image}
-                title={p.title}
-              />
+              <Card id={p.id} desc={p.desc} image={p.image} title={p.title} />
             </div>
           ))}
         </CarouselLayout>
       </Container>
-      <section
-        className={`${classes.promoBigImg} ${classes.travelPromo}`}
-      >
+      <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
         <div className={classes.promoContent}>
-          <Typography variant='h2'>
-            Travel made to measure !
-          </Typography>
+          <Typography variant='h2'>Travel made to measure !</Typography>
           <div className={classes.travelPromoDesc}>
             <Typography variant='subtitle1'>
-              The heart of our know-how is to be at your disposal to
-              imagine and design the trip of your dreams according to
-              your desires and principles.
+              The heart of our know-how is to be at your disposal to imagine and
+              design the trip of your dreams according to your desires and
+              principles.
               <br />
               <br />
-              Because understanding is above all knowing and will
-              accompany you throughout your journey. listen, a
-              dedicated advisor will follow your request
+              Because understanding is above all knowing and will accompany you
+              throughout your journey. listen, a dedicated advisor will follow
+              your request
             </Typography>
             <Box sx={{ textAlign: 'center' }}>
               <Button
@@ -193,24 +185,19 @@ const Index = () => {
                 className={`${classes.promoBigImg} ${classes.hajjOmraPromo}`}
               >
                 <div className={classes.hajjOmraPromoDesc}>
-                  <Typography
-                    variant='h3'
-                    align='center'
-                    sx={{ mb: 2 }}
-                  >
+                  <Typography variant='h3' align='center' sx={{ mb: 2 }}>
                     Hajj 2021
                   </Typography>
                   <Typography variant='subtitle1'>
-                    Discover all of our offers for the 2021
-                    pilgrimage.
+                    Discover all of our offers for the 2021 pilgrimage.
                     <br />
-                    The GOODFLY team offers you several scholarships.
-                    formulas that will suit all Pilgrims are looked
-                    after by a staff that meets your expectations.
+                    The GOODFLY team offers you several scholarships. formulas
+                    that will suit all Pilgrims are looked after by a staff that
+                    meets your expectations.
                     <br />
-                    Explanations and clarifications of each religious
-                    rites. Visits of scholars and Departures possible
-                    from all over France.
+                    Explanations and clarifications of each religious rites.
+                    Visits of scholars and Departures possible from all over
+                    France.
                   </Typography>
                   <Box
                     sx={{
@@ -226,8 +213,7 @@ const Index = () => {
                         color: '#FFF',
                         mt: 2,
                         fontStyle: 'italic',
-                        boxShadow:
-                          'rgba(255, 255, 255, 1) 0px 0px 8px',
+                        boxShadow: 'rgba(255, 255, 255, 1) 0px 0px 8px',
                         border: 'none',
                       }}
                     >
@@ -271,16 +257,10 @@ const Index = () => {
             <VoyageCard image={MalaysiaImg} title='Organized trips' />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <VoyageCard
-              image={AlAqsaMosqueImg}
-              title='Ethical travels'
-            />
+            <VoyageCard image={AlAqsaMosqueImg} title='Ethical travels' />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <VoyageCard
-              image={TailorMadeTripImg}
-              title='Tailor-made trips'
-            />
+            <VoyageCard image={TailorMadeTripImg} title='Tailor-made trips' />
           </Grid>
         </Grid>
       </Container>
@@ -290,13 +270,9 @@ const Index = () => {
           <Grid item xs={12} sm={6}>
             <Box className={classes.newsLetterSubs}>
               <Typography variant='h6'>
-                Receive the best offers{' '}
-                <span>via the newsletter GOODFLY</span>
+                Receive the best offers <span>via the newsletter GOODFLY</span>
               </Typography>
-              <Grid
-                container
-                sx={{ mt: 1, justifyContent: 'center' }}
-              >
+              <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
                 <Grid item xs={8} sm={7}>
                   <input
                     className={classes.textInput}
@@ -333,8 +309,8 @@ const Index = () => {
                     GOODFLY Les Mureaux
                   </Typography>
                   <Typography variant='body2' color='text.primary'>
-                    60 Maurice Bellonte Street <br /> 78130 LES
-                    MUREAUX <br /> contact@goodfly.fr <br />
+                    60 Maurice Bellonte Street <br /> 78130 LES MUREAUX <br />{' '}
+                    contact@goodfly.fr <br />
                     01 00 00 00 00
                   </Typography>
                 </Box>
@@ -395,7 +371,7 @@ const Index = () => {
                />
             </Box>
          </section> */}
-    </>
+    </Page>
   );
 };
 

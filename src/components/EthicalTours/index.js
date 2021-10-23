@@ -17,6 +17,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Paper, TextField } from '@material-ui/core';
 import Banner from 'components/common/tours/Banner';
 import ethicalImg from 'Assets/img/ethical-main.png';
+import Page from 'components/common/Page';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -144,7 +145,7 @@ const EthicalHome = ({ location }) => {
   };
 
   return (
-    <React.Fragment>
+    <Page title='GoodFly |  Ethical Tours'>
       <CssBaseline />
 
       {/* Hero unit */}
@@ -242,7 +243,7 @@ const EthicalHome = ({ location }) => {
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
       </Container>
-    </React.Fragment>
+    </Page>
   );
 };
 export default withRouter(EthicalHome);

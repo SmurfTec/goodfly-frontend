@@ -9,6 +9,7 @@ import Back from '@material-ui/icons/ArrowBackIos';
 
 import { makeStyles } from '@material-ui/styles';
 import { StoreContext } from 'Contexts/StoreContext';
+import Page from 'components/common/Page';
 
 const useStyles = makeStyles((theme) => ({
   backButton: {
@@ -37,12 +38,8 @@ function getSteps() {
 
 const Checkout = () => {
   const classes = useStyles();
-  const {
-    cart,
-    increaseQuantity,
-    decreaseQuantity,
-    removeItemFromCart,
-  } = useContext(StoreContext);
+  const { cart, increaseQuantity, decreaseQuantity, removeItemFromCart } =
+    useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
@@ -90,22 +87,24 @@ const Checkout = () => {
   };
 
   return (
-    <Container sx={{ mt: 8 }}>
-      <StoreNav />
+    <Page title='GoodFly |  Checkout'>
+      <Container sx={{ mt: 8 }}>
+        <StoreNav />
 
-      {activeStep > 0 && (
-        <>
-          <Box className={classes.backButton} onClick={handleBack}>
-            <Back fontSize='small' />
-            <Typography variant='subtitle2'>
-              Back to {steps[activeStep]}
-            </Typography>
-          </Box>
-        </>
-      )}
+        {activeStep > 0 && (
+          <>
+            <Box className={classes.backButton} onClick={handleBack}>
+              <Back fontSize='small' />
+              <Typography variant='subtitle2'>
+                Back to {steps[activeStep]}
+              </Typography>
+            </Box>
+          </>
+        )}
 
-      {getStepContent(activeStep)}
-    </Container>
+        {getStepContent(activeStep)}
+      </Container>
+    </Page>
   );
 };
 

@@ -16,6 +16,7 @@ import { TravelDetails } from './TravelDetails';
 import Back from '@material-ui/icons/ArrowBackIos';
 import { Box } from '@material-ui/system';
 import { useHistory } from 'react-router-dom';
+import Page from 'components/common/Page';
 
 // const steps = ['Shipping address', 'Payment details'];
 
@@ -56,17 +57,11 @@ const Reservations = () => {
     switch (stepIndex) {
       case 0:
         return (
-          <Step1
-            travellersInfo={TravellersSelected}
-            clientForm={clientForm}
-          />
+          <Step1 travellersInfo={TravellersSelected} clientForm={clientForm} />
         );
       case 1:
         return (
-          <Step2
-            travellers={noOfTravellers}
-            travellersForm={travellersInfo}
-          />
+          <Step2 travellers={noOfTravellers} travellersForm={travellersInfo} />
         );
       case 2:
         return <Step3 />;
@@ -110,73 +105,69 @@ const Reservations = () => {
   };
 
   return (
-    <Container sx={{ mb: 4, mt: 7 }}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography>All steps completed</Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
-          <>
-            <Container>
-              <Box
-                className={classes.backButton}
-                onClick={handleMoveBack}
-              >
-                <Back fontSize='small' />{' '}
-                {activeStep === 0 ? (
-                  <Typography variant='subtitle2'>
-                    Back to Offers Page
-                  </Typography>
-                ) : (
-                  <Typography variant='subtitle2'>
-                    Back to {steps[activeStep]}
-                  </Typography>
-                )}
-              </Box>
-            </Container>
-            <Grid container spacing={2} sx={{ mt: 6 }}>
-              <Grid
-                item
-                xs={12}
-                sm={activeStep === 0 || activeStep === 2 ? 8 : 12}
-              >
-                {getStepContent(activeStep)}
-              </Grid>
-              {(activeStep === 0 || activeStep === 2) && (
-                <Grid item xs={12} sm={4}>
-                  <TravelDetails
-                    packageName={packageInfo.name}
-                    price={packageInfo.price}
-                    depDate='11-11-2211'
-                    travellers={noOfTravellers}
-                  />
-                  <Button
-                    form='form1'
-                    variant='contained'
-                    color='primary'
-                    type='submit'
-                    sx={{ mt: 3 }}
-                    fullWidth
-                  >
-                    {activeStep === steps.length - 1
-                      ? 'Finish'
-                      : 'Next'}
-                  </Button>
+    <Page title='GoodFly | Trip Reservation'>
+      <Container sx={{ mb: 4, mt: 7 }}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          {activeStep === steps.length ? (
+            <div>
+              <Typography>All steps completed</Typography>
+              <Button onClick={handleReset}>Reset</Button>
+            </div>
+          ) : (
+            <>
+              <Container>
+                <Box className={classes.backButton} onClick={handleMoveBack}>
+                  <Back fontSize='small' />{' '}
+                  {activeStep === 0 ? (
+                    <Typography variant='subtitle2'>
+                      Back to Offers Page
+                    </Typography>
+                  ) : (
+                    <Typography variant='subtitle2'>
+                      Back to {steps[activeStep]}
+                    </Typography>
+                  )}
+                </Box>
+              </Container>
+              <Grid container spacing={2} sx={{ mt: 6 }}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={activeStep === 0 || activeStep === 2 ? 8 : 12}
+                >
+                  {getStepContent(activeStep)}
                 </Grid>
-              )}
-            </Grid>
-          </>
+                {(activeStep === 0 || activeStep === 2) && (
+                  <Grid item xs={12} sm={4}>
+                    <TravelDetails
+                      packageName={packageInfo.name}
+                      price={packageInfo.price}
+                      depDate='11-11-2211'
+                      travellers={noOfTravellers}
+                    />
+                    <Button
+                      form='form1'
+                      variant='contained'
+                      color='primary'
+                      type='submit'
+                      sx={{ mt: 3 }}
+                      fullWidth
+                    >
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                  </Grid>
+                )}
+              </Grid>
+            </>
 
-          /* <div>
+            /* <div>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
@@ -192,9 +183,10 @@ const Reservations = () => {
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </div> */
-        )}
-      </div>
-    </Container>
+          )}
+        </div>
+      </Container>
+    </Page>
   );
 };
 

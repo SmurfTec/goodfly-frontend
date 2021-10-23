@@ -21,6 +21,7 @@ import TravelBagImg from 'Assets/img/travelBag.jpg';
 import styles from 'Styles/Blog';
 import { makeReq, handleCatch } from 'Utils/constants';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import Page from 'components/common/Page';
 
 const ClientBlog = () => {
   const classes = styles();
@@ -48,7 +49,7 @@ const ClientBlog = () => {
   };
 
   return (
-    <>
+    <Page title='GoodFly | Blogs'>
       <Container className={globalClasses.MainContainer}>
         <Card sx={{ boxShadow: 'none' }}>
           <CardMedia
@@ -70,19 +71,12 @@ const ClientBlog = () => {
             {blogs ? (
               blogs.length > 0 ? (
                 blogs.slice(0, 5).map((blog, i) => (
-                  <Grid
-                    key={blog._id}
-                    item
-                    xs={12}
-                    sm={i === 3 ? 8 : 4}
-                  >
+                  <Grid key={blog._id} item xs={12} sm={i === 3 ? 8 : 4}>
                     <BlogCard blog={blog} handleClick={blogClick} />
                   </Grid>
                 ))
               ) : (
-                <Typography variant='h5'>
-                  No Blogs Available
-                </Typography>
+                <Typography variant='h5'>No Blogs Available</Typography>
               )
             ) : (
               <div className='loader'></div>
@@ -99,19 +93,12 @@ const ClientBlog = () => {
             {blogs ? (
               blogs.length > 0 ? (
                 blogs.slice(5, blogs.length).map((blog, i) => (
-                  <Grid
-                    key={blog._id}
-                    item
-                    xs={12}
-                    sm={i === 3 ? 8 : 4}
-                  >
+                  <Grid key={blog._id} item xs={12} sm={i === 3 ? 8 : 4}>
                     <BlogCard blog={blog} handleClick={blogClick} />
                   </Grid>
                 ))
               ) : (
-                <Typography variant='h5'>
-                  No Blogs Available
-                </Typography>
+                <Typography variant='h5'>No Blogs Available</Typography>
               )
             ) : (
               <div className='loader'></div>
@@ -119,7 +106,7 @@ const ClientBlog = () => {
           </Grid>
         </Box>
       </Container>
-    </>
+    </Page>
   );
 };
 
