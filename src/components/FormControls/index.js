@@ -10,6 +10,7 @@ import {
   Checkbox,
   Rating,
 } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
 import { useStyles } from 'Styles/Form/FormStyles';

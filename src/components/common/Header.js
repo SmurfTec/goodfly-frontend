@@ -296,7 +296,7 @@ const Header = ({ history }) => {
               </NavLink>
             </Typography>
             {navContent?.info?.map((subContent) => (
-              <React.Fragment>
+              <React.Fragment key={subContent?.route}>
                 <Typography variant='subtitle1' sx={{ mb: 1 }}>
                   <NavLink to={subContent?.route}>
                     {subContent?.name}

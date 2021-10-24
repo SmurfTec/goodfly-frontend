@@ -15,13 +15,16 @@ import {
   FormHelperText,
   Tooltip,
   Checkbox,
+  Autocomplete,
+  TextField,
 } from '@material-ui/core';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import img from 'Assets/img/createTrip.jpg';
 import { useStyles } from 'Styles/CreateTrip/FormStyles';
 import {
   participants,
-  occasion,
+  type2,
+  type,
   random,
   travelMonth,
   travelYear,
@@ -35,9 +38,14 @@ import {
   timeToReachClient,
   clientCivility,
   numberCode,
+  groupType,
+  reactSelectFields,
 } from './DumyData';
 import { CustomSelect } from 'components/FormControls';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import { makeReq, handleCatch, countryCodes } from 'Utils/constants';
+import datePickerCheck from 'Utils/datePickerCheck';
+import MuiAutoComplete from '../FormControls/MUIAutoComplete';
 
 const AddTrip = () => {
   const classes = useStyles();
@@ -47,11 +55,127 @@ const AddTrip = () => {
     formState: { errors },
     control,
     register,
+    watch,
   } = useForm();
 
   const methods = useForm();
-  const submitFormData = (data) => {
-    // console.log('Form Data :', data);
+  const watchFields = watch([
+    'departureDate',
+    'desiredReturnOn',
+    'type',
+  ]);
+
+  const watchType = watch('type');
+
+  const removeExtraFields = (data, ...fields) => {
+    Object.keys(data).forEach((key) => {
+      if (!!fields?.find((el) => el === key)) {
+        delete data[key];
+      }
+    });
+  };
+  const getReactSelectValue = (data, ...fields) => {
+    Object.keys(data).forEach((key) => {
+      if (!!fields?.find((el) => el === key)) {
+        data[key] = data[key].value;
+      }
+    });
+  };
+
+  const getCountryCode = (data, field) => {
+    Object.keys(data).forEach((key) => {
+      if (field === key) {
+        data[key] = data[key].phone;
+      }
+    });
+  };
+
+  const removeEmptyNullFields = (data, ...fields) => {
+    Object.keys(data).forEach((key) => {
+      if (data[key] === '' || data[key] == null) {
+        delete data[key];
+      }
+    });
+  };
+
+  const watchTravelDates = watch('isTravelDates', 'no');
+
+  const submitFormData = async (data) => {
+    removeEmptyNullFields(data);
+    switch (watchFields[2]?.value) {
+      case 'in-couple': {
+        //  * Remove Shit Other fields
+        removeExtraFields(
+          data,
+          'numOfAdults',
+          'numOfAdolescants',
+          'numOfChildren',
+          'numOfBabies',
+          'groupType'
+        );
+        break;
+      }
+      case 'in-group': {
+        //  * Remove Shit Other fields
+        removeExtraFields(
+          data,
+          'numOfAdults',
+          'numOfAdolescants',
+          'numOfChildren',
+          'numOfBabies',
+          'type2'
+        );
+
+        break;
+      }
+      case 'family':
+      case 'friends': {
+        //  * Remove Shit Other fields
+        removeExtraFields(data, 'type2', 'groupType');
+        break;
+      }
+
+      default: {
+        removeExtraFields(
+          data,
+          'numOfAdults',
+          'numOfAdolescants',
+          'numOfChildren',
+          'numOfBabies',
+          'groupType',
+          'type2'
+        );
+      }
+    }
+
+    if (watchTravelDates === 'yes')
+      removeExtraFields(data, 'departureDate', 'desiredReturnOn');
+
+    getReactSelectValue(data, ...reactSelectFields);
+    // getCountryCode(data, 'countrycode');
+    console.log(data['countrycode']);
+    // getReactSelectValue(data, 'phone', 'countrycode');
+    //  Object.keys(data).find((key) => {
+    //    if (fields?.find((el) => el === key)) {
+    //      data[key] = data[key].value;
+    //    }
+    //  });
+
+    console.log(data);
+    // try {
+    //   const resData = await makeReq(
+    //     `/trips/customTrip`,
+    //     {
+    //       body: { ...data, title: 'Testing Dummy Data' },
+    //     },
+    //     'POST'
+    //   );
+
+    //   console.log(`Create Trip Response `, resData);
+    // } catch (err) {
+    //   console.log(err);
+    //   handleCatch(err);
+    // }
   };
 
   return (
@@ -61,7 +185,6 @@ const AddTrip = () => {
         bannerTitle='I CREATE MY TRIP   '
         align='center'
       />
-
       <Box sx={{ fontStyle: 'italic', mt: 7 }}>
         <Typography variant='h5' color='text.secondary'>
           The heart of our know-how is to be at your disposal to
@@ -111,7 +234,7 @@ const AddTrip = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <CustomSelect
-                  name='participant'
+                  name='numOfParticipants'
                   control={control}
                   message='Specify no of Participants'
                   placeholder='Participants'
@@ -119,67 +242,88 @@ const AddTrip = () => {
                   errors={errors}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <CustomSelect
-                  name='occasion'
-                  control={control}
-                  message='Choose occasion'
-                  placeholder='Occasion'
-                  options={occasion}
-                  errors={errors}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  name='groupType'
+                  name='type'
                   control={control}
                   message='Specify group type'
-                  placeholder='Group Type'
-                  options={occasion}
+                  placeholder='You will be'
+                  options={type}
                   errors={errors}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  name='adults'
-                  control={control}
-                  message='Specify no of adults'
-                  placeholder='No of Adults'
-                  options={random}
-                  errors={errors}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  name='adolescents'
-                  control={control}
-                  message='Specify no of adolescents'
-                  placeholder='Adolescents'
-                  options={random}
-                  errors={errors}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  name='children'
-                  control={control}
-                  message='Specify no of children'
-                  placeholder='No of Children'
-                  options={random}
-                  errors={errors}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomSelect
-                  name='babies'
-                  control={control}
-                  message='Specify no of babies'
-                  placeholder='No of Babies'
-                  options={random}
-                  errors={errors}
-                />
-              </Grid>
+              {watchFields[2]?.value === 'in-couple' && (
+                <Grid item xs={12} sm={6}>
+                  <CustomSelect
+                    name='type2'
+                    control={control}
+                    message='Choose occasion'
+                    placeholder='Couple occasion'
+                    options={type2}
+                    errors={errors}
+                  />
+                </Grid>
+              )}
+              {watchFields[2]?.value === 'in-group' && (
+                <Grid item xs={12} sm={6}>
+                  <CustomSelect
+                    name='groupType'
+                    control={control}
+                    message='Choose occasion'
+                    placeholder=' Group occasion'
+                    options={groupType}
+                    errors={errors}
+                  />
+                </Grid>
+              )}
+              {(watchFields[2]?.value === 'family' ||
+                watchFields[2]?.value === 'friends') && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <CustomSelect
+                      name='numOfAdults'
+                      control={control}
+                      message='Specify no of adults'
+                      placeholder='No of Adults'
+                      options={random}
+                      errors={errors}
+                      preConfition={
+                        watchFields[2]?.value === 'friends'
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CustomSelect
+                      name='numOfAdolescents'
+                      control={control}
+                      message='Specify no of adolescents'
+                      placeholder='Adolescents'
+                      options={random}
+                      errors={errors}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CustomSelect
+                      name='numOfChildren'
+                      control={control}
+                      message='Specify no of children'
+                      placeholder='No of Children'
+                      options={random}
+                      errors={errors}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CustomSelect
+                      name='numOfBabies'
+                      control={control}
+                      message='Specify no of babies'
+                      placeholder='No of Babies'
+                      options={random}
+                      errors={errors}
+                    />
+                  </Grid>
+                </>
+              )}
               <Grid item xs={12} sm={12}>
                 <FormControl
                   fullWidth
@@ -200,7 +344,6 @@ const AddTrip = () => {
                   )}
                 </FormControl>
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                 <Typography
                   variant='subtitle1'
@@ -209,9 +352,9 @@ const AddTrip = () => {
                   Have you already set the travel dates?
                 </Typography>
                 <Controller
-                  name='travelDateAlreadySet'
+                  name='isTravelDates'
                   control={control}
-                  defaultValue='yes'
+                  defaultValue='no'
                   render={({ field }) => (
                     <RadioGroup
                       {...field}
@@ -232,60 +375,85 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.desiredDeparture)}
-                >
-                  <Typography
-                    variant='subtitle1'
-                    color='text.secondary'
-                    sx={{ mt: 2, mb: 1, mx: 0 }}
-                  >
-                    Desired departure on
-                  </Typography>
-                  <input
-                    type='date'
-                    className={classes.textInput}
-                    {...register('desiredDeparture', {
-                      required: true,
-                    })}
-                  />
-                  {errors.desiredDeparture && (
-                    <FormHelperText>
-                      Select desired departure date
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(errors.desiredReturn)}
-                >
-                  <Typography
-                    variant='subtitle1'
-                    color='text.secondary'
-                    sx={{ mt: 2, mb: 1, mx: 0 }}
-                  >
-                    Desired return on
-                  </Typography>
-                  <input
-                    type='date'
-                    className={classes.textInput}
-                    {...register('desiredReturn', {
-                      required: true,
-                    })}
-                  />
-                  {errors.desiredReturn && (
-                    <FormHelperText>
-                      Select desired return date
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
 
-              <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
+              {watchTravelDates === 'no' && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl
+                      fullWidth
+                      error={`${
+                        watchTravelDates === 'no' ||
+                        (Boolean(errors.departureDate) &&
+                          Boolean(datePickerCheck(watchFields[0])))
+                      }`}
+                      // error={false}
+                    >
+                      <Typography
+                        variant='subtitle1'
+                        color='text.secondary'
+                        sx={{ mt: 2, mb: 1, mx: 0 }}
+                      >
+                        Desired departure on
+                      </Typography>
+                      <input
+                        type='date'
+                        className={classes.textInput}
+                        {...register('departureDate', {
+                          required: true,
+                        })}
+                      />
+
+                      {datePickerCheck(watchFields[0]) && (
+                        <FormHelperText>
+                          Please select today date or any future date
+                        </FormHelperText>
+                      )}
+                      {errors.departureDate && (
+                        <FormHelperText>
+                          Select desired departure date
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <FormControl
+                      fullWidth
+                      error={`${
+                        watchTravelDates === 'no' ||
+                        (Boolean(errors.desiredReturnOn) &&
+                          Boolean(datePickerCheck(watchFields[1])))
+                      }`}
+                    >
+                      <Typography
+                        variant='subtitle1'
+                        color='text.secondary'
+                        sx={{ mt: 2, mb: 1, mx: 0 }}
+                      >
+                        Desired return on
+                      </Typography>
+                      <input
+                        type='date'
+                        className={classes.textInput}
+                        {...register('desiredReturnOn', {
+                          required: true,
+                        })}
+                      />
+                      {datePickerCheck(watchFields[1]) && (
+                        <FormHelperText>
+                          Please select any future date
+                        </FormHelperText>
+                      )}
+                      {errors.desiredReturnOn && (
+                        <FormHelperText>
+                          Select desired return date
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                </>
+              )}
+              {/* <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
                   color='text.secondary'
@@ -294,7 +462,6 @@ const AddTrip = () => {
                   Flexible Dates
                 </Typography>
 
-                {/* //* Change this */}
                 <Controller
                   name='flexibleDates'
                   control={control}
@@ -318,9 +485,7 @@ const AddTrip = () => {
                     </RadioGroup>
                   )}
                 />
-                {/* //* end */}
               </Grid>
-
               <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -344,7 +509,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -362,7 +526,6 @@ const AddTrip = () => {
                   errors={errors}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -373,7 +536,7 @@ const AddTrip = () => {
                 </Typography>
 
                 <Controller
-                  name='travelYear'
+                  name='year'
                   control={control}
                   defaultValue={travelYear[0]}
                   render={({ field }) => (
@@ -386,7 +549,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -396,7 +558,7 @@ const AddTrip = () => {
                   Which month would you like to travel?
                 </Typography>
                 <Controller
-                  name='travelMonth'
+                  name='month'
                   control={control}
                   defaultValue={travelMonth[0]}
                   render={({ field }) => (
@@ -408,8 +570,7 @@ const AddTrip = () => {
                     />
                   )}
                 />
-              </Grid>
-
+              </Grid>{' '}
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -420,7 +581,7 @@ const AddTrip = () => {
                 </Typography>
 
                 <Controller
-                  name='desiredDuration'
+                  name='duration'
                   control={control}
                   defaultValue={desiredDuration[0]}
                   render={({ field }) => (
@@ -432,8 +593,7 @@ const AddTrip = () => {
                     />
                   )}
                 />
-              </Grid>
-
+              </Grid> */}
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -443,9 +603,9 @@ const AddTrip = () => {
                   What type of flight would you like?
                 </Typography>
                 <Controller
-                  name='typeOfFlight'
+                  name='flightsType'
                   control={control}
-                  defaultValue={flightType[0]}
+                  defaultValue={flightType[0].value}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -456,7 +616,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                 <Typography
                   variant='subtitle1'
@@ -468,11 +627,11 @@ const AddTrip = () => {
                 </Typography>
 
                 <Controller
-                  name='tripTheme'
+                  name='tripType'
                   control={control}
                   defaultValue={tripTheme[0].value}
                   render={({ field }) => (
-                    <RadioGroup {...field} aria-label='tripTheme' row>
+                    <RadioGroup {...field} row>
                       <Grid container spacing={1}>
                         {tripTheme.map((theme, idx) => (
                           <Grid item xs={12} sm={6} key={theme.value}>
@@ -503,7 +662,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                 <Typography
                   variant='subtitle1'
@@ -515,13 +673,14 @@ const AddTrip = () => {
                 </Typography>
 
                 <Controller
-                  name='tripAccomodation'
+                  name='accomodationType'
                   control={control}
                   defaultValue={tripAccomodation[0].value}
-                  render={({ field }) => (
+                  render={({ field: { onChange, value } }) => (
                     <RadioGroup
-                      {...field}
-                      aria-label='tripAccomodation'
+                      defaultChecked={tripAccomodation[0].value}
+                      value={value}
+                      onChange={onChange}
                       row
                     >
                       <Grid container spacing={1}>
@@ -558,7 +717,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <Typography
                   variant='subtitle1'
@@ -567,8 +725,9 @@ const AddTrip = () => {
                 >
                   For meals would you like?
                 </Typography>
+
                 <Controller
-                  name='typeMeals'
+                  name='meals'
                   control={control}
                   defaultValue={meals[0]}
                   render={({ field }) => (
@@ -592,7 +751,7 @@ const AddTrip = () => {
                 <Controller
                   name='transportOnSite'
                   control={control}
-                  defaultValue={transportOnSite[0]}
+                  defaultValue={transportOnSite[0].value}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -613,7 +772,7 @@ const AddTrip = () => {
                   your trip?
                 </Typography>
                 <Controller
-                  name='guideAccompained'
+                  name='guideAccompany'
                   control={control}
                   defaultValue={guideAccompained[0]}
                   render={({ field }) => (
@@ -626,11 +785,10 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                 <FormControl
                   fullWidth
-                  error={Boolean(errors.globalBudget)}
+                  error={Boolean(errors.budgetPerPerson)}
                 >
                   <Typography
                     variant='subtitle1'
@@ -643,13 +801,13 @@ const AddTrip = () => {
                   <input
                     className={classes.textInput}
                     type='number'
-                    {...register('globalBudget', {
+                    {...register('budgetPerPerson', {
                       required: true,
                       maxLength: 15,
                     })}
                     placeholder='specify'
                   />
-                  {errors.globalBudget && (
+                  {errors.budgetPerPerson && (
                     <FormHelperText>
                       Specify the global budget per person for this
                       trip
@@ -657,7 +815,6 @@ const AddTrip = () => {
                   )}
                 </FormControl>
               </Grid>
-
               <Grid
                 item
                 xs={12}
@@ -680,16 +837,14 @@ const AddTrip = () => {
                 <textarea
                   rows='15'
                   className={classes.textInput}
-                  name='clientDesires'
-                  {...register('clientDesires')}
+                  // name='clientDesires'
+                  {...register('desires')}
                   placeholder='Describe to us as precisely as possible the trip you would like: stages, desires, itineraries, activities, excursions, circuits, centers of interest etc ...'
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 6 }}>
                 <hr />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                 <Typography
                   variant='subtitle1'
@@ -699,7 +854,7 @@ const AddTrip = () => {
                   When is the best time to reach you by phone?
                 </Typography>
                 <Controller
-                  name='timeToReachClient'
+                  name='phoneTime'
                   control={control}
                   defaultValue={timeToReachClient[0].value}
                   render={({ field }) => (
@@ -720,7 +875,6 @@ const AddTrip = () => {
                   )}
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                 <Typography
                   variant='subtitle1'
@@ -733,7 +887,7 @@ const AddTrip = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={4}>
                     <Controller
-                      name='clientCivility'
+                      name='pronoun'
                       control={control}
                       defaultValue={clientCivility[0]}
                       render={({ field }) => (
@@ -750,37 +904,17 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientName)}
+                      error={Boolean(errors.firstName)}
                     >
                       <input
                         className={classes.textInput}
-                        {...register('clientName', {
+                        {...register('firstName', {
                           required: true,
                           maxLength: 50,
                         })}
-                        placeholder='Name'
+                        placeholder=' First Name'
                       />
-                      {errors.clientName && (
-                        <FormHelperText>
-                          Specify your name
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6} sm={4}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(errors.clientFirstName)}
-                    >
-                      <input
-                        className={classes.textInput}
-                        {...register('clientFirstName', {
-                          required: true,
-                          maxLength: 50,
-                        })}
-                        placeholder='First Name'
-                      />
-                      {errors.clientFirstName && (
+                      {errors.firstName && (
                         <FormHelperText>
                           Specify your first name
                         </FormHelperText>
@@ -790,18 +924,41 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.dateOfBirth)}
+                      error={Boolean(errors.lastName)}
                     >
-                      <Tooltip title='Date Of Birth'>
-                        <input
-                          type='date'
-                          className={classes.textInput}
-                          {...register('dateOfBirth', {
-                            required: true,
-                          })}
-                        />
-                      </Tooltip>
-                      {errors.dateOfBirth && (
+                      <input
+                        className={classes.textInput}
+                        {...register('lastName', {
+                          required: true,
+                          maxLength: 50,
+                        })}
+                        placeholder='Last Name'
+                      />
+                      {errors.lastName && (
+                        <FormHelperText>
+                          Specify your last name
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sm={4}>
+                    <FormControl
+                      fullWidth
+                      error={Boolean(errors.birthDate)}
+                    >
+                      <Typography
+                        varaint='subtitle1'
+                        color='textSecondary'
+                        sx={{ mt: 2, mb: 1, mx: 0 }}
+                      ></Typography>
+                      <input
+                        type='date'
+                        className={classes.textInput}
+                        {...register('birthDate', {
+                          required: true,
+                        })}
+                      />
+                      {errors.birthDate && (
                         <FormHelperText>
                           Specify your date of birth
                         </FormHelperText>
@@ -811,17 +968,17 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={8}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientAddress)}
+                      error={Boolean(errors.address)}
                     >
                       <input
                         className={classes.textInput}
-                        {...register('clientAddress', {
+                        {...register('address', {
                           required: true,
                           maxLength: 50,
                         })}
                         placeholder='Address'
                       />
-                      {errors.clientAddress && (
+                      {errors.address && (
                         <FormHelperText>
                           Specify your address
                         </FormHelperText>
@@ -832,20 +989,20 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientPostalCode)}
+                      error={Boolean(errors.zipCode)}
                     >
                       <input
                         className={classes.textInput}
                         type='number'
-                        {...register('clientPostalCode', {
+                        {...register('zipCode', {
                           required: true,
                           maxLength: 50,
                         })}
-                        placeholder='Postal Code'
+                        placeholder='Zip Code'
                       />
-                      {errors.clientPostalCode && (
+                      {errors.zipCode && (
                         <FormHelperText>
-                          Specify postal code
+                          Specify zip code
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -853,18 +1010,18 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientCity)}
+                      error={Boolean(errors.city)}
                     >
                       <input
                         className={classes.textInput}
                         type='text'
-                        {...register('clientCity', {
+                        {...register('city', {
                           required: true,
                           maxLength: 50,
                         })}
                         placeholder='City'
                       />
-                      {errors.clientCity && (
+                      {errors.city && (
                         <FormHelperText>Specify city</FormHelperText>
                       )}
                     </FormControl>
@@ -872,18 +1029,18 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientCountry)}
+                      error={Boolean(errors.country)}
                     >
                       <input
                         className={classes.textInput}
                         type='text'
-                        {...register('clientCountry', {
+                        {...register('country', {
                           required: true,
                           maxLength: 50,
                         })}
                         placeholder='Country'
                       />
-                      {errors.clientCountry && (
+                      {errors.country && (
                         <FormHelperText>
                           Specify country
                         </FormHelperText>
@@ -893,25 +1050,25 @@ const AddTrip = () => {
                   <Grid item xs={6} sm={5}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientEmail)}
+                      error={Boolean(errors.email)}
                     >
                       <input
                         className={classes.textInput}
                         type='email'
-                        {...register('clientEmail', {
+                        {...register('email', {
                           required: true,
                           maxLength: 50,
                         })}
                         placeholder='Email'
                       />
-                      {errors.clientEmail && (
+                      {errors.email && (
                         <FormHelperText>Specify email</FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
 
                   <Grid item xs={4} sm={3}>
-                    <Controller
+                    {/* <Controller
                       name='numberCode'
                       control={control}
                       render={({ field }) => (
@@ -923,23 +1080,25 @@ const AddTrip = () => {
                           options={numberCode}
                         />
                       )}
-                    />
+                    /> */}
+
+                    <MuiAutoComplete control={control} />
                   </Grid>
                   <Grid item xs={6} sm={4}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.clientPhone)}
+                      error={Boolean(errors.phoneNumber)}
                     >
                       <input
                         className={classes.textInput}
                         type='number'
-                        {...register('clientPhone', {
+                        {...register('phoneNumber', {
                           required: true,
                           maxLength: 12,
                         })}
                         placeholder='Phone no'
                       />
-                      {errors.clientPhone && (
+                      {errors.phoneNumber && (
                         <FormHelperText>
                           Specify your phone no
                         </FormHelperText>
@@ -952,7 +1111,7 @@ const AddTrip = () => {
                 <FormControlLabel
                   control={<Checkbox />}
                   label='I would like to receive the GOODFLY newsletter'
-                  {...register('subscribe')}
+                  {...register('subscribeNewsLetter')}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -964,7 +1123,6 @@ const AddTrip = () => {
                   Submit
                 </Button>
               </Grid>
-              {/* //* End */}
             </Grid>
           </form>
         </FormProvider>

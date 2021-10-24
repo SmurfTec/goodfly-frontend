@@ -1,61 +1,80 @@
-import { toast } from 'react-toastify';
+/* eslint-disable no-use-before-define */
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from '@material-ui/styles';
+import { Controller } from 'react-hook-form';
 
-// * Development URLs
-// const API_BASE_URL = `http://localhost:7000/api`;
+// ISO 3166-1 alpha-2
+// ⚠️ No support for IE 11
+function countryToFlag(isoCode) {
+  console.log(isoCode);
+  // return typeof String.fromCodePoint !== 'undefined'
+  //   ? isoCode
+  //       .toUpperCase()
+  //       .replace(/./g, (char) =>
+  //         String.fromCodePoint(char.charCodeAt(0) + 127397)
+  //       )
+  //   : isoCode;
+}
 
-// * Production URLs
-const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
-// const API_BASE_URL = `http://4da7-119-73-113-182.ngrok.io/api`;
-
-const handleCatch = (err) => {
-  // console.log('**********');
-  // console.log(`err`, err);
-  let errMsg = 'Something Went Wrong';
-  if (err.message) errMsg = err.message;
-  toast.error(errMsg);
-};
-
-const makeReq = (
-  endpoint,
-  { body, ...customConfig } = {},
-  method = 'GET'
-) => {
-  const token = localStorage.getItem('jwt');
-  const headers = { 'Content-Type': 'application/json' };
-
-  if (token) {
-    // console.log(`token`, token);
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  const config = {
-    method: method,
-    ...customConfig,
-    headers: {
-      ...headers,
-      ...customConfig.headers,
+const useStyles = makeStyles({
+  option: {
+    fontSize: 15,
+    '& > span': {
+      marginRight: 10,
+      fontSize: 18,
     },
-  };
+  },
+});
 
-  if (body) {
-    config.body = JSON.stringify(body);
-  }
+export default function CountrySelect({ onChange, control }) {
+  const classes = useStyles();
 
-  // console.log(`body`, body);
-  return fetch(`${API_BASE_URL}${endpoint}`, config).then(
-    async (res) => {
-      const data = await res.json();
-      // console.log(`data`, data);
-      if (res.ok) {
+  return (
+    <Controller
+      render={({ field }) => (
+        <Autocomplete
+          id='country-select-demo'
+          style={{ width: 300 }}
+          options={countries}
+          classes={{
+            option: classes.option,
+          }}
+          autoHighlight
+          getOptionLabel={(option) => option.label}
+          renderOption={(option) => (
+            <React.Fragment>
+              <span>{countryToFlag(option.code)}</span>
+              {option.label} ({option.code}) +{option.phone}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label='Choose a country'
+              variant='outlined'
+              fullWidth
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: 'disabled', // disable autocomplete and autofill
+              }}
+            />
+          )}
+        />
+      )}
+      onChange={([event, data]) => {
         return data;
-      } else {
-        return Promise.reject(data);
-      }
-    }
+      }}
+      name='numbercountry'
+      control={control}
+      defaultValue={{ code: 'AF', label: 'Afghanistan', phone: '93' }}
+    />
   );
-};
+}
 
-const countryCodes = [
+// From https://bitbucket.org/atlassian/atlaskit-mk-2/raw/4ad0e56649c3e6c973e226b7efaeb28cb240ccb0/packages/core/select/src/data/countries.js
+const countries = [
   { code: 'AD', label: 'Andorra', phone: '376' },
   { code: 'AE', label: 'United Arab Emirates', phone: '971' },
   { code: 'AF', label: 'Afghanistan', phone: '93' },
@@ -94,13 +113,13 @@ const countryCodes = [
   { code: 'BZ', label: 'Belize', phone: '501' },
   { code: 'CA', label: 'Canada', phone: '1', suggested: true },
   { code: 'CC', label: 'Cocos (Keeling) Islands', phone: '61' },
+  { code: 'CD', label: 'Congo, Republic of the', phone: '242' },
+  { code: 'CF', label: 'Central African Republic', phone: '236' },
   {
-    code: 'CD',
+    code: 'CG',
     label: 'Congo, Democratic Republic of the',
     phone: '243',
   },
-  { code: 'CF', label: 'Central African Republic', phone: '236' },
-  { code: 'CG', label: 'Congo, Republic of the', phone: '242' },
   { code: 'CH', label: 'Switzerland', phone: '41' },
   { code: 'CI', label: "Cote d'Ivoire", phone: '225' },
   { code: 'CK', label: 'Cook Islands', phone: '682' },
@@ -345,5 +364,3 @@ const countryCodes = [
   { code: 'ZM', label: 'Zambia', phone: '260' },
   { code: 'ZW', label: 'Zimbabwe', phone: '263' },
 ];
-
-export { API_BASE_URL, makeReq, handleCatch, countryCodes };
