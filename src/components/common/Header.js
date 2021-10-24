@@ -30,8 +30,12 @@ const mobileNavContent = [
     to: '/tours/ethical',
     info: [
       {
-        name: 'Organized travels',
-        route: '/tours/ethical',
+        name: 'Organized Trips',
+        route: '/tours/ethical?type=organized',
+      },
+      {
+        name: 'Organic Trips',
+        route: '/tours/ethical?type=organic',
       },
     ],
   },
@@ -41,19 +45,19 @@ const mobileNavContent = [
     info: [
       {
         name: 'Hajj',
-        route: '/tours/spiritual',
+        route: '/tours/spiritual?type=hajj',
       },
       {
         name: 'Omra',
-        route: '/tours/spiritual',
+        route: '/tours/spiritual?type=omra',
       },
       {
         name: 'Al-Quds',
-        route: '/tours/spiritual',
+        route: '/tours/spiritual?type=al-quds',
       },
       {
         name: 'Combined Omra / Al-Quds',
-        route: '/tours/spiritual',
+        route: '/tours/spiritual?type=combine-hajj-omra',
       },
     ],
   },
@@ -63,11 +67,11 @@ const mobileNavContent = [
     info: [
       {
         name: 'Excursions',
-        route: '/tours/excursions',
+        route: '/tours/excursions?type=excursion',
       },
       {
         name: 'Circuits',
-        route: '/tours/excursions',
+        route: '/tours/excursions?type=circuit',
       },
     ],
   },
@@ -77,27 +81,27 @@ const mobileNavContent = [
     info: [
       {
         name: 'Africa',
-        route: '/tours/destinations/Africa',
+        route: '/tours/destinations/africa',
       },
       {
         name: 'Asia',
-        route: '/tours/destinations/Asia',
+        route: '/tours/destinations/asia',
       },
       {
         name: 'Europe',
-        route: '/tours/destinations/Europe',
+        route: '/tours/destinations/europe',
       },
       {
         name: 'America',
-        route: '/tours/destinations/America',
+        route: '/tours/destinations/america',
       },
       {
         name: 'Oceania',
-        route: '/tours/destinations/Oceania',
+        route: '/tours/destinations/oceania',
       },
       {
         name: 'Polar-Islands',
-        route: '/tours/destinations/Polar-Islands',
+        route: '/tours/destinations/polar-lands',
       },
     ],
   },
@@ -288,19 +292,14 @@ const Header = ({ history }) => {
                 mb: 1,
               }}
             >
-              <NavLink
-                to={navContent?.to}
-                sx={{ color: 'textSecondary' }}
-              >
+              <NavLink to={navContent?.to} sx={{ color: 'textSecondary' }}>
                 {navContent?.title}
               </NavLink>
             </Typography>
             {navContent?.info?.map((subContent) => (
               <React.Fragment>
                 <Typography variant='subtitle1' sx={{ mb: 1 }}>
-                  <NavLink to={subContent?.route}>
-                    {subContent?.name}
-                  </NavLink>
+                  <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
                 </Typography>
               </React.Fragment>
             ))}
@@ -439,13 +438,9 @@ const Header = ({ history }) => {
       <AppBar position='fixed' className={classes.Appbar}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           {logoSection}
-          <Box className={classes.sectionMobile}>
-            {mobileViewContent}
-          </Box>
+          <Box className={classes.sectionMobile}>{mobileViewContent}</Box>
 
-          <Box className={classes.sectionDesktop}>
-            {desktopViewContent}
-          </Box>
+          <Box className={classes.sectionDesktop}>{desktopViewContent}</Box>
         </Toolbar>
       </AppBar>
 
