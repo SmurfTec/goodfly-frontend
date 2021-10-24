@@ -13,10 +13,7 @@ import {
   FormControl,
 } from '@material-ui/core';
 
-import {
-  CustomRadioGroup,
-  CustomInputField,
-} from 'components/FormControls';
+import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { useForm } from 'react-hook-form';
@@ -31,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: '9px 20px',
     textAlign: 'left',
-    border: 0,
+    border: '1px solid #ccc',
+
     outline: 0,
     borderRadius: 6,
     backgroundColor: '#fff',
@@ -91,9 +89,7 @@ const RelayPointDialog = ({ open, closeDialog }) => {
       <DialogContent>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={5} className={classes.LeftSection}>
-            <form
-              onSubmit={handleSubmit((data) => submitFormData(data))}
-            >
+            <form onSubmit={handleSubmit((data) => submitFormData(data))}>
               <Box className={classes.postalCodeBox}>
                 <FormControl
                   error={Boolean(errors.postalCode)}
@@ -113,11 +109,7 @@ const RelayPointDialog = ({ open, closeDialog }) => {
                     <FormHelperText>Postal Code</FormHelperText>
                   )}
                 </FormControl>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  type='submit'
-                >
+                <Button variant='contained' color='primary' type='submit'>
                   Validate
                 </Button>
               </Box>

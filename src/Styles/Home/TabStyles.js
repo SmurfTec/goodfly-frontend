@@ -62,9 +62,12 @@ const useStyles = makeStyles((theme) => ({
 
   textInput: {
     width: '100%',
+
     padding: '9px 20px',
     textAlign: 'left',
-    border: 0,
+    // border: 0,
+    border: '1px solid #ccc',
+
     outline: 0,
     borderRadius: 6,
     backgroundColor: '#fff',

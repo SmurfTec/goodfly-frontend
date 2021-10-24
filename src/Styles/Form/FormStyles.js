@@ -6,7 +6,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: '9px 20px',
     minHeight: 40,
     textAlign: 'left',
-    border: 0,
+    // border: 0,
+    border: '1px solid #ccc',
+
     outline: 0,
     borderRadius: 6,
     backgroundColor: '#fff',
