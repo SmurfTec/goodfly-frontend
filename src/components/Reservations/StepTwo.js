@@ -6,23 +6,26 @@ import {
   CustomInputField,
   CustomRadioGroup,
 } from 'components/FormControls';
+import { dateBeforeToday } from 'Utils/formValidations';
 
-const StepTwo = ({ travellers, travellersForm }) => {
+const StepTwo = ({ data, submitForm, defaultStep2Values }) => {
   const {
     formState: { errors },
     register,
     handleSubmit,
     control,
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues: defaultStep2Values && defaultStep2Values,
+  });
 
   const watchAllFields = watch();
   // console.log('All Fields :', watchAllFields?.['emailRadio-1']);
 
   return (
-    <form id='formTravellers' onSubmit={handleSubmit(travellersForm)}>
+    <form id='formTravellers' onSubmit={handleSubmit(submitForm)}>
       <Grid container spacing={1}>
-        {[...Array(travellers)].map((e, i) => (
+        {[...Array(data.numOfTravellers)].map((e, i) => (
           <Grid item key={i} xs={12} sm={6}>
             <Paper
               elevation={0}
@@ -40,9 +43,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                     type='text'
                     register={register}
                     errors={errors}
-                    errorMessage={`Specify first name of traveller ${
-                      i + 1
-                    }`}
+                    errorMessage={`Specify first name of traveller ${i + 1}`}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -53,9 +54,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                     type='text'
                     register={register}
                     errors={errors}
-                    errorMessage={`Specify last name of traveller ${
-                      i + 1
-                    }`}
+                    errorMessage={`Specify last name of traveller ${i + 1}`}
                   />
                 </Grid>
                 <Grid item xs={12} sm={7} sx={{ mt: 1 }}>
@@ -66,6 +65,8 @@ const StepTwo = ({ travellers, travellersForm }) => {
                     errors={errors}
                     errorMessage='Specify Date of birth'
                     register={register}
+                    validation={dateBeforeToday}
+                    validationMessage='Date of birth must be before today'
                   />
                 </Grid>
                 <Grid item xs={12} sm={5} sx={{ mt: 1 }}>
@@ -76,9 +77,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                     type='number'
                     register={register}
                     errors={errors}
-                    errorMessage={`Specify passport no of traveller ${
-                      i + 1
-                    }`}
+                    errorMessage={`Specify passport no of traveller ${i + 1}`}
                   />
                 </Grid>
 
@@ -100,8 +99,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                     ]}
                   />
                 </Grid>
-                {watchAllFields?.[`emailRadio-${i + 1}`] ===
-                  'different' && (
+                {watchAllFields?.[`emailRadio-${i + 1}`] === 'different' && (
                   <Grid item xs={12} sm={12}>
                     <CustomInputField
                       key={i}
@@ -110,9 +108,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
                       type='email'
                       register={register}
                       errors={errors}
-                      errorMessage={`Specify email of traveller ${
-                        i + 1
-                      }`}
+                      errorMessage={`Specify email of traveller ${i + 1}`}
                     />
                   </Grid>
                 )}
@@ -123,11 +119,7 @@ const StepTwo = ({ travellers, travellersForm }) => {
         ))}
 
         <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
-          <Button
-            variant='contained'
-            sx={{ width: 150 }}
-            type='submit'
-          >
+          <Button variant='contained' sx={{ width: 150 }} type='submit'>
             Validate
           </Button>
         </Grid>

@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import 'react-image-lightbox/style.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // -------------------------------- //
 

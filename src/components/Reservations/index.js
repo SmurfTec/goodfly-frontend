@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
   Stepper,
@@ -15,8 +15,10 @@ import Step3 from './StepThree';
 import { TravelDetails } from './TravelDetails';
 import Back from '@material-ui/icons/ArrowBackIos';
 import { Box } from '@material-ui/system';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/common/Page';
+import Skeleton from 'react-loading-skeleton';
+import { handleCatch, makeReq } from 'Utils/constants';
 
 // const steps = ['Shipping address', 'Payment details'];
 
@@ -46,38 +48,137 @@ function getSteps() {
 }
 
 const Reservations = () => {
-  const packageInfo = { name: 'Hajj 2021', price: '4525,00€' };
+  const { id } = useParams();
+
+  const initialState = {
+    reservationType: 'selfReserve',
+    firstName: '',
+    lastName: '',
+    address: '',
+    addionalAddress: '',
+    postalcode: '',
+    city: '',
+    country: '',
+    phone: '',
+    email: '',
+    passportNumber: '',
+    dateOfBirth: '',
+    travellers: [],
+    numOfTravellers: 2,
+  };
+  const [tour, setTour] = useState();
+  const [reservation, setReservation] = useState(initialState);
+  const [defaultStep2Values, setDefaultStep2Values] = useState();
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(2);
-  const [noOfTravellers, setnoOfTravellers] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log(`id`, id);
+
+    (async () => {
+      try {
+        const resData = await makeReq(`/trips/${id}`);
+        console.log(`resData`, resData);
+        setTour(resData.trip);
+      } catch (err) {
+        handleCatch(err);
+      }
+    })();
+  }, [id]);
 
   const getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:
         return (
-          <Step1 travellersInfo={TravellersSelected} clientForm={clientForm} />
+          <Step1
+            changeTravelers={handleChangeTravelers}
+            submitForm={handleSubmit1}
+            data={reservation}
+          />
         );
       case 1:
         return (
-          <Step2 travellers={noOfTravellers} travellersForm={travellersInfo} />
+          <Step2
+            data={reservation}
+            submitForm={handleSubmit2}
+            defaultStep2Values={defaultStep2Values}
+          />
         );
       case 2:
-        return <Step3 />;
+        return <Step3 data={reservation} />;
       default:
         return 'Unknown stepIndex';
     }
   };
 
-  const clientForm = (data) => {
-    // console.log(data);
-    handleNext();
+  const handleChangeTravelers = (v) => {
+    setReservation((st) => ({ ...st, numOfTravellers: v.value }));
   };
 
-  const travellersInfo = (data) => {
-    // console.log(data);
+  const handleSubmit1 = (data) => {
     handleNext();
+    console.log(data);
+    setReservation((st) => ({
+      ...data,
+      travellers: st.travellers,
+      numOfTravellers: st.numOfTravellers,
+    }));
+  };
+
+  //*  Handle handleSubmit2 functions
+  // * ----------------------------
+
+  const getArrIndex = (key) => {
+    let dashIdx = key.indexOf('-');
+    return key.slice(dashIdx + 1, dashIdx + 2) * 1 - 1;
+  };
+
+  const getProperKey = (key) => {
+    let properKey = key.indexOf('-');
+    return key.slice(0, properKey);
+  };
+
+  // * -----------------------------
+
+  const handleSubmit2 = (data) => {
+    console.log(data);
+    setDefaultStep2Values(data);
+    // * Extract Travellers from Object and Move into Reservation State
+
+    let newTravelers = [];
+
+    for (var key in data) {
+      const keyIdx = getArrIndex(key);
+      console.log({ keyIdx });
+      const properKey = getProperKey(key);
+      console.log(`properKey`, properKey);
+      if (data.hasOwnProperty(key)) {
+        // * Get array index
+        newTravelers[keyIdx] = {
+          ...newTravelers[keyIdx],
+          [properKey]: data[key],
+        };
+      }
+    }
+
+    // * if properKey is 'email' && emailRadio is same, then email  is data.email
+    newTravelers = newTravelers.map((traveler) => ({
+      ...traveler,
+      email:
+        traveler.emailRadio === 'same' ? reservation.email : traveler.email,
+    }));
+
+    // * Remove Irrelevant field from Array
+    newTravelers.forEach((traveler) => {
+      delete traveler.emailRadio;
+    });
+
+    console.log({ newTravelers });
+
+    handleNext();
+    setReservation((st) => ({ ...st, ...data, travellers: newTravelers }));
   };
 
   const handleNext = () => {
@@ -92,15 +193,41 @@ const Reservations = () => {
     setActiveStep(0);
   };
 
-  const TravellersSelected = (v) => {
-    setnoOfTravellers(v.value);
-  };
-
   const handleMoveBack = () => {
     if (activeStep === 0) {
-      history.push('/tours/destinations');
+      history.goBack();
     } else {
       handleBack();
+    }
+  };
+
+  const renderBackTitle = () => {
+    console.log('Gooo');
+    console.log(`activeStep`, activeStep);
+    switch (activeStep) {
+      case 0:
+        return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
+        break;
+
+      case 1:
+        return (
+          <Typography variant='subtitle2'>
+            Back to Client Reservation{' '}
+          </Typography>
+        );
+        break;
+
+      case 2:
+        return (
+          <Typography variant='subtitle2'>
+            Back to Travellers Booking{' '}
+          </Typography>
+        );
+        break;
+
+      default:
+        return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
+        break;
     }
   };
 
@@ -124,16 +251,7 @@ const Reservations = () => {
             <>
               <Container>
                 <Box className={classes.backButton} onClick={handleMoveBack}>
-                  <Back fontSize='small' />{' '}
-                  {activeStep === 0 ? (
-                    <Typography variant='subtitle2'>
-                      Back to Offers Page
-                    </Typography>
-                  ) : (
-                    <Typography variant='subtitle2'>
-                      Back to {steps[activeStep]}
-                    </Typography>
-                  )}
+                  <Back fontSize='small' /> {renderBackTitle()}
                 </Box>
               </Container>
               <Grid container spacing={2} sx={{ mt: 6 }}>
@@ -146,12 +264,14 @@ const Reservations = () => {
                 </Grid>
                 {(activeStep === 0 || activeStep === 2) && (
                   <Grid item xs={12} sm={4}>
-                    <TravelDetails
-                      packageName={packageInfo.name}
-                      price={packageInfo.price}
-                      depDate='11-11-2211'
-                      travellers={noOfTravellers}
-                    />
+                    {tour ? (
+                      <TravelDetails
+                        tour={tour}
+                        travellers={reservation.travellers.length}
+                      />
+                    ) : (
+                      <Skeleton height={250} />
+                    )}
                     <Button
                       form='form1'
                       variant='contained'
@@ -166,23 +286,6 @@ const Reservations = () => {
                 )}
               </Grid>
             </>
-
-            /* <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleNext}
-              >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div> */
           )}
         </div>
       </Container>

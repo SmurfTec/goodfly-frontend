@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
@@ -11,6 +11,7 @@ import { Grid, Box, Typography, Button, Tabs, Tab } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EuroIcon from '@material-ui/icons/Euro';
+import { animateScroll as scroll } from 'react-scroll';
 // --- //
 
 // Assets
@@ -19,10 +20,10 @@ import EuroIcon from '@material-ui/icons/Euro';
 // import img3 from 'Assets/img/malaysia.jpg';
 // import img4 from 'Assets/img/maldives.jpg';
 
-import stageImg1 from 'Assets/img/stage1.png';
-import stageImg2 from 'Assets/img/stage12.png';
-import stageImg3 from 'Assets/img/stage2.png';
-import stageImg4 from 'Assets/img/stage23.png';
+// import stageImg1 from 'Assets/img/stage1.png';
+// import stageImg2 from 'Assets/img/stage12.png';
+// import stageImg3 from 'Assets/img/stage2.png';
+// import stageImg4 from 'Assets/img/stage23.png';
 import StagesTab from './StagesTab';
 
 import userImg from 'Assets/img/user1.png';
@@ -190,7 +191,12 @@ const TourDetails = ({ match, history }) => {
   const handleReviewChange = (e) => {
     setReviewValue(e.target.value);
   };
-
+  const handleLinkClick = () => {
+    scroll.scrollToTop({
+      duration: 1000,
+      delay: 100,
+    });
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -296,7 +302,9 @@ const TourDetails = ({ match, history }) => {
                       paddingInline: 20,
                       width: 300,
                     }}
-                    // onClick={handleReserve}
+                    component={Link}
+                    to={`/tours/reservation/${id}`}
+                    onClick={handleLinkClick}
                   >
                     Reserve
                   </Button>

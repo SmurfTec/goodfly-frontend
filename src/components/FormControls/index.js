@@ -33,11 +33,7 @@ export const CustomSelect = ({
 }) => {
   return (
     <>
-      <FormControl
-        size={'small'}
-        error={Boolean(errors[name])}
-        fullWidth
-      >
+      <FormControl size={'small'} error={Boolean(errors[name])} fullWidth>
         <Controller
           rules={{
             required: `${message}`,
@@ -88,7 +84,16 @@ export const CustomTextField = (props) => {
 };
 
 export const CustomDatePicker = (props) => {
-  const { errors, label, name, errorMessage, register, type } = props;
+  const {
+    errors,
+    label,
+    name,
+    errorMessage,
+    register,
+    type,
+    validation,
+    validationMessage,
+  } = props;
   const classes = useStyles();
 
   return (
@@ -99,13 +104,31 @@ export const CustomDatePicker = (props) => {
       <input
         type={type}
         className={classes.textInput}
-        {...register(name, {
-          required: true,
-        })}
+        {...register(
+          name,
+          {
+            required: true,
+            validate: validation,
+          }
+          // validation
+          //   ? {
+          //       required: true,
+          //       validate: validation,
+          //     }
+          //   : {
+          //       required: true,
+          //     }
+        )}
       />
 
-      {errors?.[name] && (
-        <FormHelperText>{errorMessage}</FormHelperText>
+      {/* {errors?.[name] && <FormHelperText>{errorMessage}</FormHelperText>} */}
+
+      {errors?.[name]?.type === 'required' && (
+        <FormHelperText>Specify date of birth</FormHelperText>
+      )}
+      {console.log(errors?.[name]?.type)}
+      {errors?.[name]?.type === 'validate' && (
+        <FormHelperText>{validationMessage}</FormHelperText>
       )}
     </FormControl>
   );

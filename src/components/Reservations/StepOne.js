@@ -8,40 +8,59 @@ import {
   FormControl,
   FormHelperText,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { CustomTextField } from 'components/FormControls';
 import Select from 'react-select';
 import { useStyles } from 'Styles/Form/FormStyles';
+import { dateBeforeToday } from 'Utils/formValidations';
 
-const StepOne = ({ travellersInfo, clientForm }) => {
+const StepOne = ({ changeTravelers, submitForm, data }) => {
   const {
     formState: { errors },
     control,
     register,
     handleSubmit,
     watch,
-  } = useForm();
+    getValues,
+  } = useForm({
+    defaultValues: {
+      reservationType: data.reservationType,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address: data.address,
+      addionalAddress: data.addionalAddress,
+      postalcode: data.postalcode,
+      city: data.city,
+      country: data.country,
+      phone: data.phone,
+      email: data.email,
+      travellers: {
+        value: data.numOfTravellers,
+        label: '' + data.numOfTravellers,
+      },
+      passportNumber: data.passportNumber,
+      dateOfBirth: data.dateOfBirth,
+    },
+  });
 
-  React.useEffect(() => {
-    const subscriptions = watch((value) =>
-      travellersInfo(value.noOfTravellers)
-    );
+  useEffect(() => {
+    const subscriptions = watch((value) => changeTravelers(value.travellers));
     return () => subscriptions.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch]);
 
   return (
     <>
-      <form id='form1' onSubmit={handleSubmit(clientForm)}>
+      <form id='form1' onSubmit={handleSubmit(submitForm)}>
         <Controller
           name='reservationType'
           control={control}
-          defaultValue='yes'
           render={({ field }) => (
             <RadioGroup
               {...field}
               row
+              aria-label='reservationType'
               sx={{
                 justifyContent: 'center',
                 mb: 3,
@@ -50,7 +69,7 @@ const StepOne = ({ travellersInfo, clientForm }) => {
             >
               <FormControlLabel
                 value='selfReserve'
-                control={<Radio checked />}
+                control={<Radio />}
                 label='I reserve for me'
               />
 
@@ -62,10 +81,7 @@ const StepOne = ({ travellersInfo, clientForm }) => {
             </RadioGroup>
           )}
         />
-        <Paper
-          elevation={0}
-          sx={{ px: 4, py: 4, backgroundColor: '#fafafa' }}
-        >
+        <Paper elevation={0} sx={{ px: 4, py: 4, backgroundColor: '#fafafa' }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <CustomTextField
@@ -77,8 +93,8 @@ const StepOne = ({ travellersInfo, clientForm }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <CustomTextField
-                name='name'
-                label='Name'
+                name='lastName'
+                label='Last Name'
                 control={control}
                 type='text'
               />
@@ -149,14 +165,20 @@ const StepOne = ({ travellersInfo, clientForm }) => {
               </Typography>
 
               <Controller
-                name='noOfTravellers'
+                name='travellers'
                 control={control}
-                defaultValue={{ value: 1, label: '1' }}
+                // defaultValue={{
+                //   value: 5,
+                //   label: '' + 5,
+                //   // value: data.numOfTravellers,
+                //   // label: '' + data.numOfTravellers,
+                // }}
                 render={({ field }) => (
                   <Select
                     {...field}
                     isSearchable={false}
                     placeholder='Travellers'
+                    value={getValues('travellers')}
                     options={[
                       { key: 11, value: 1, label: '1' },
                       { key: 12, value: 2, label: '2' },
@@ -169,10 +191,7 @@ const StepOne = ({ travellersInfo, clientForm }) => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl
-                fullWidth
-                error={Boolean(errors.dateOfBirth)}
-              >
+              <FormControl fullWidth error={Boolean(errors.dateOfBirth)}>
                 <Typography
                   variant='body2'
                   color='text.secondary'
@@ -185,11 +204,15 @@ const StepOne = ({ travellersInfo, clientForm }) => {
                   className={useStyles().textInput}
                   {...register('dateOfBirth', {
                     required: true,
+                    validate: dateBeforeToday,
                   })}
                 />
-                {errors.dateOfBirth && (
+                {errors.dateOfBirth?.type === 'required' && (
+                  <FormHelperText>Specify date of birth</FormHelperText>
+                )}
+                {errors.dateOfBirth?.type === 'validate' && (
                   <FormHelperText>
-                    Specify date of birth
+                    Date of birth must be before today
                   </FormHelperText>
                 )}
               </FormControl>

@@ -12,23 +12,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TravelDetails = (props) => {
+export const TravelDetails = ({ tour, travellers }) => {
   const classes = useStyles();
-  const { packageName, price, depDate, travellers } = props;
+  const { title, price, startingDate } = tour;
 
   return (
     <>
       <Typography variant='h4' sx={{ mb: 4.5 }}>
         Total
       </Typography>
-      <Paper
-        elevation={0}
-        sx={{ px: 1, py: 2, backgroundColor: '#fafafa' }}
-      >
+      <Paper elevation={0} sx={{ px: 1, py: 2, backgroundColor: '#fafafa' }}>
         <Box className={classes.box}>
           <span>
-            <Typography variant='h5'>{packageName}</Typography>
-            <Typography variant='body1'>{depDate}</Typography>
+            <Typography variant='h5'>{title}</Typography>
+            <Typography variant='body1'>
+              {new Date(startingDate).toDateString()}
+            </Typography>
           </span>
           <Typography variant='subtitle1'>{price}</Typography>
         </Box>
