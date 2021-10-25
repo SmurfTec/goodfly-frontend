@@ -1,10 +1,4 @@
-import {
-  Card,
-  Paper,
-  Grid,
-  Typography,
-  CardContent,
-} from '@material-ui/core';
+import { Card, Paper, Grid, Typography, CardContent } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
@@ -13,6 +7,8 @@ import FlashWhite from 'Assets/flashwhite.svg';
 import FlashRed from 'Assets/flashred.svg';
 import { Box } from '@material-ui/system';
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
+
+import Skeleton from 'react-loading-skeleton';
 
 const styles = makeStyles((theme) => ({
   paper: {
@@ -44,38 +40,46 @@ const flashData = [
   {
     id: 1,
     title: 'Malaysia',
-    subtitle: 'Full Board',
-    service: '1week',
-    amount: '990€',
-    desc: '',
+    boardType: 'Full Board',
+    duration: '1week',
+    price: '990€',
+    description: '',
   },
   {
     id: 2,
     title: 'Marrakech',
-    subtitle: 'Week-end Express',
-    service: '3jours',
-    amount: '355€',
-    desc: '',
+    boardType: 'Week-end Express',
+    duration: '3jours',
+    price: '355€',
+    description: '',
   },
   {
     id: 3,
     title: 'Algeria',
-    subtitle: 'Villa',
-    service: '1week',
-    amount: '395€',
-    desc: 'lux premium',
+    boardType: 'Villa',
+    duration: '1week',
+    price: '395€',
+    description: 'lux premium',
   },
   {
     id: 4,
     title: 'Indonesia',
-    subtitle: 'RoadTrip',
-    service: '2week',
-    amount: '1455€',
-    desc: 'with guide!',
+    boardType: 'RoadTrip',
+    duration: '2week',
+    price: '1455€',
+    description: 'with guide!',
+  },
+  {
+    id: 5,
+    title: 'Indonesia',
+    boardType: 'RoadTrip',
+    duration: '2week',
+    price: '1455€',
+    description: 'with guide!',
   },
 ];
 
-const FlashPromos = () => {
+const FlashPromos = ({ tours }) => {
   const classes = styles();
   return (
     <>
@@ -102,56 +106,55 @@ const FlashPromos = () => {
         </Typography>
         <img src={FlashRed} width='25px' height=' 25px' alt='White' />
       </Box>
-      <Paper elevation={0} className={classes.paper}>
-        <Grid container spacing={2}>
-          {flashData.map((data, i) => (
-            <React.Fragment key={i}>
-              <Grid item xs={3} sm={3}>
-                <Card className={classes.card}>
-                  <Typography
-                    variant='h3'
-                    sx={{ color: 'white' }}
-                    align='center'
-                  >
-                    {i + 1}
-                  </Typography>
-                </Card>
-              </Grid>
-              <Grid item xs={5} sm={5}>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                  <Typography variant='subtitle1' sx={{ mr: 1 }}>
-                    {data.title}
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={FlashWhite}
-                      width='20px'
-                      height='20px'
-                      alt='White'
-                    />
-                    <span>{data.service}</span>
+      {tours ? (
+        <Paper elevation={0} className={classes.paper}>
+          <Grid container spacing={2}>
+            {tours.map((data, i) => (
+              <React.Fragment key={i}>
+                <Grid item xs={3} sm={3}>
+                  <Card className={classes.card}>
+                    <Typography
+                      variant='h3'
+                      sx={{ color: 'white' }}
+                      align='center'
+                    >
+                      {i + 1}
+                    </Typography>
+                  </Card>
+                </Grid>
+                <Grid item xs={5} sm={5}>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Typography variant='subtitle1' sx={{ mr: 1 }}>
+                      {data.title}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <img
+                        src={FlashWhite}
+                        width='20px'
+                        height='20px'
+                        alt='White'
+                      />
+                      <span>{data.duration}</span>
+                    </Box>
                   </Box>
-                </Box>
 
-                <Typography variant='subtitle2'>
-                  {data.subtitle}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Card
-                  className={classes.priceCard}
-                  sx={{ px: 1, py: 1 }}
-                >
-                  <Typography variant='h4' align='center'>
-                    {/* <ArrowIcon size='small' sx={{ pt: 1 }} /> */}
-                    {data.amount}
-                  </Typography>
-                </Card>
-              </Grid>
-            </React.Fragment>
-          ))}
-        </Grid>
-      </Paper>
+                  <Typography variant='subtitle2'>{data.boardType}</Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Card className={classes.priceCard} sx={{ px: 1, py: 1 }}>
+                    <Typography variant='h4' align='center'>
+                      {/* <ArrowIcon size='small' sx={{ pt: 1 }} /> */}
+                      {data.price}
+                    </Typography>
+                  </Card>
+                </Grid>
+              </React.Fragment>
+            ))}
+          </Grid>
+        </Paper>
+      ) : (
+        <Skeleton height={420} />
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import useStyles from 'Styles/Home/HomeStyles';
 // import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -12,8 +12,6 @@ import {
 } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import FeaturedCard from './FeaturedCard';
-import CarouselLayout from 'components/common/Carousel/CarouselLayout';
-import Card from 'components/common/Carousel/CaourselCard';
 import { makeReq, handleCatch } from 'Utils/constants';
 import FlashPromos from './FlashPromos';
 import Tabs from './Tabs';
@@ -25,6 +23,11 @@ import TailorMadeTripImg from 'Assets/img/tailormadeTrips.jpg';
 import TravelMapImg from 'Assets/img/travelmap.png';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
+import Skeleton from 'react-loading-skeleton';
+import { ToursContext } from 'Contexts/ToursContext';
+import { Link } from 'react-router-dom';
+import CarouselLayout from 'components/common/Carousel/CarouselLayout';
+import Card from 'components/common/Carousel/CaourselCard';
 
 const products = [
   {
@@ -54,14 +57,32 @@ const products = [
 ];
 
 const Index = () => {
+  const { tours } = useContext(ToursContext);
   const classes = useStyles();
   const globalClasses = useGlobalClasses();
+
+  const [offers, setOffers] = useState();
+
+  const [flashSales, setFlashSales] = useState();
 
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+
+  // * Top 5 Flash Sales
+  useEffect(() => {
+    setFlashSales(tours?.filter((el) => el.sale)?.slice(0, 5));
+
+    setOffers(
+      tours
+        ?.filter(
+          (el) => el.category === 'ethical' || el.category === 'excursions'
+        )
+        ?.slice(0, 6)
+    );
+  }, [tours]);
 
   const handleSubscribe = async () => {
     try {
@@ -128,13 +149,15 @@ const Index = () => {
         >
           Explore our latest organized trips
         </Typography>
-        <CarouselLayout>
-          {products.map((p) => (
-            <div key={p.id} className={classes.carouselContainer}>
-              <Card id={p.id} desc={p.desc} image={p.image} title={p.title} />
-            </div>
-          ))}
-        </CarouselLayout>
+        {offers && offers.length > 0 && (
+          <CarouselLayout>
+            {offers?.map((offer) => (
+              <div key={offer.id} className={classes.carouselContainer}>
+                <Card {...offer} />
+              </div>
+            ))}
+          </CarouselLayout>
+        )}
       </Container>
       <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
         <div className={classes.promoContent}>
@@ -166,7 +189,7 @@ const Index = () => {
       <Container sx={{ my: 12 }}>
         <Grid container spacing={2} sx={{ mt: 10 }}>
           <Grid item xs={12} sm={5} sx={{ position: 'relative' }}>
-            <FlashPromos />
+            <FlashPromos tours={flashSales} />
           </Grid>
           <Grid item xs={12} sm={7}>
             <>
@@ -216,6 +239,8 @@ const Index = () => {
                         boxShadow: 'rgba(255, 255, 255, 1) 0px 0px 8px',
                         border: 'none',
                       }}
+                      component={Link}
+                      to={`/tours/spiritual?type=hajj`}
                     >
                       see the offers
                     </Button>

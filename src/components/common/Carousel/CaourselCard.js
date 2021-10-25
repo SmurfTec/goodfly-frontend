@@ -1,57 +1,58 @@
 import React from 'react';
 import {
-   Card,
-   CardContent,
-   Typography,
-   CardActions,
-   CardMedia,
-   Button,
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  CardMedia,
+  Button,
+  CardActionArea,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
-   card: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      //   paddingInline: 2,
-   },
-   cardMedia: {
-      paddingTop: '56.25%', // 16:9
-   },
-   cardContent: {
-      flexGrow: 1,
-   },
-   cardTitle: {
-      marginLeft: theme.spacing(2),
-      marginBottom: theme.spacing(1),
-      color: '#ffffff',
-      fontSize: 35,
-      fontWeight: 'bold',
-      fontStyle: 'normal',
-      letterSpacing: 'normal',
-      lineHeight: 'normal',
-   },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    //   paddingInline: 2,
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  cardTitle: {
+    marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+    color: '#ffffff',
+    fontSize: 35,
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    letterSpacing: 'normal',
+    lineHeight: 'normal',
+  },
 }));
 
-function CaourselCard({ title, desc, image }) {
-   const classes = useStyles();
-   return (
-      <Card className={classes.card}>
-         <CardMedia
-            className={classes.cardMedia}
-            image={image}
-            title={desc}
-         >
-            <Typography className={classes.cardTitle}>
-               {title}
-            </Typography>
-         </CardMedia>
-         <CardContent className={classes.cardContent}>
-            <Typography>{desc}</Typography>
-         </CardContent>
-      </Card>
-   );
+function CaourselCard({ title, description, image, _id, history }) {
+  const classes = useStyles();
+  const handleClick = () => {
+    history.push(`/tours/details/${_id}`);
+  };
+  return (
+    <Card className={classes.card}>
+      <CardActionArea onClick={handleClick}>
+        <CardMedia className={classes.cardMedia} image={image}>
+          <Typography className={classes.cardTitle}>{title}</Typography>
+        </CardMedia>
+      </CardActionArea>
+      <CardContent className={classes.cardContent}>
+        <Typography>{description}</Typography>
+      </CardContent>
+    </Card>
+  );
 }
 
-export default CaourselCard;
+export default withRouter(CaourselCard);
