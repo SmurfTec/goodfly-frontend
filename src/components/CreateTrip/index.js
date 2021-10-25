@@ -13,10 +13,7 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  Tooltip,
   Checkbox,
-  Autocomplete,
-  TextField,
 } from '@material-ui/core';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import img from 'Assets/img/createTrip.jpg';
@@ -26,9 +23,9 @@ import {
   type2,
   type,
   random,
-  travelMonth,
-  travelYear,
-  desiredDuration,
+  // travelMonth,
+  // travelYear,
+  // desiredDuration,
   flightType,
   tripTheme,
   tripAccomodation,
@@ -37,13 +34,12 @@ import {
   guideAccompained,
   timeToReachClient,
   clientCivility,
-  numberCode,
   groupType,
   reactSelectFields,
 } from './DumyData';
 import { CustomSelect } from 'components/FormControls';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
-import { makeReq, handleCatch, countryCodes } from 'Utils/constants';
+import { makeReq, handleCatch } from 'Utils/constants';
 import datePickerCheck from 'Utils/datePickerCheck';
 import MuiAutoComplete from '../FormControls/MUIAutoComplete';
 
@@ -65,8 +61,6 @@ const AddTrip = () => {
     'type',
   ]);
 
-  const watchType = watch('type');
-
   const removeExtraFields = (data, ...fields) => {
     Object.keys(data).forEach((key) => {
       if (!!fields?.find((el) => el === key)) {
@@ -82,12 +76,8 @@ const AddTrip = () => {
     });
   };
 
-  const getCountryCode = (data, field) => {
-    Object.keys(data).forEach((key) => {
-      if (field === key) {
-        data[key] = data[key].phone;
-      }
-    });
+  const getCountryCode = (data, key) => {
+    data[key] = data[key].phone;
   };
 
   const removeEmptyNullFields = (data, ...fields) => {
@@ -98,15 +88,11 @@ const AddTrip = () => {
     });
   };
 
-  const watchTravelDates = watch('isTravelDates', 'no');
-
-  const submitFormData = async (data) => {
-    removeEmptyNullFields(data);
-    switch (watchFields[2]?.value) {
+  const GroupTypeSelect = (arr, value) => {
+    switch (value) {
       case 'in-couple': {
-        //  * Remove Shit Other fields
         removeExtraFields(
-          data,
+          arr,
           'numOfAdults',
           'numOfAdolescants',
           'numOfChildren',
@@ -116,9 +102,8 @@ const AddTrip = () => {
         break;
       }
       case 'in-group': {
-        //  * Remove Shit Other fields
         removeExtraFields(
-          data,
+          arr,
           'numOfAdults',
           'numOfAdolescants',
           'numOfChildren',
@@ -130,14 +115,13 @@ const AddTrip = () => {
       }
       case 'family':
       case 'friends': {
-        //  * Remove Shit Other fields
-        removeExtraFields(data, 'type2', 'groupType');
+        removeExtraFields(arr, 'type2', 'groupType');
         break;
       }
 
       default: {
         removeExtraFields(
-          data,
+          arr,
           'numOfAdults',
           'numOfAdolescants',
           'numOfChildren',
@@ -147,35 +131,39 @@ const AddTrip = () => {
         );
       }
     }
+  };
 
+  const watchTravelDates = watch('isTravelDates', 'no');
+
+  const submitFormData = async (data) => {
+    //? Remove null or empty fields from data
+    removeEmptyNullFields(data);
+    //? Remove fields based on type dropdown select
+    GroupTypeSelect(data, watchFields[2]?.value);
+    //? Remove fields based on travel date already select
     if (watchTravelDates === 'yes')
       removeExtraFields(data, 'departureDate', 'desiredReturnOn');
-
+    //? Destructure the fields
     getReactSelectValue(data, ...reactSelectFields);
-    // getCountryCode(data, 'countrycode');
-    console.log(data['countrycode']);
-    // getReactSelectValue(data, 'phone', 'countrycode');
-    //  Object.keys(data).find((key) => {
-    //    if (fields?.find((el) => el === key)) {
-    //      data[key] = data[key].value;
-    //    }
-    //  });
+    //? Destructure the country field
+    getCountryCode(data, 'countryCode');
 
-    console.log(data);
-    // try {
-    //   const resData = await makeReq(
-    //     `/trips/customTrip`,
-    //     {
-    //       body: { ...data, title: 'Testing Dummy Data' },
-    //     },
-    //     'POST'
-    //   );
+    console.log('data new', data);
 
-    //   console.log(`Create Trip Response `, resData);
-    // } catch (err) {
-    //   console.log(err);
-    //   handleCatch(err);
-    // }
+    try {
+      const resData = await makeReq(
+        `/trips/customTrip`,
+        {
+          body: { ...data, title: 'Dummy Data' },
+        },
+        'POST'
+      );
+
+      console.log(`Create Trip Response `, resData);
+    } catch (err) {
+      console.log(err);
+      handleCatch(err);
+    }
   };
 
   return (

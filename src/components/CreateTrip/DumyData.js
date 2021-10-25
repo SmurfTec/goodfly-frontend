@@ -76,48 +76,22 @@ export const flightType = flightTypeData.map(function (p) {
   return { value: p.replace(/\s/g, '_'), label: p };
 });
 
-export const tripTheme = [
-  {
-    value: uuid(),
-    label: 'Organic and Ecological Travel (Solidarity)',
-  },
-  {
-    value: uuid(),
-    label: 'Altitude / Mountain Travel',
-  },
-  {
-    value: uuid(),
-    label: 'City / Urban Travel',
-  },
-  {
-    value: uuid(),
-    label: 'City Break / Trip Travel',
-  },
-  {
-    value: uuid(),
-    label: 'Safari trip',
-  },
-  {
-    value: uuid(),
-    label: 'Wellness / Relaxation Trip',
-  },
-  {
-    value: uuid(),
-    label: 'Romantic / Family Travel',
-  },
-  {
-    value: uuid(),
-    label: 'Halal Friendly',
-  },
-  {
-    value: uuid(),
-    label: 'Discovery / Nature / Cultural Trip',
-  },
-  {
-    value: uuid(),
-    label: 'Travel Trek & Hiking / Trails',
-  },
+const tripThemeData = [
+  'Organic and Ecological Travel (Solidarity)',
+  'Altitude / Mountain Travel',
+  'City / Urban Travel',
+  'City Break / Trip Travel',
+  'Safari trip',
+  'Wellness / Relaxation Trip',
+  'Romantic / Family Travel',
+  'Halal Friendly',
+  'Discovery / Nature / Cultural Trip',
+  'Travel Trek & Hiking / Trails',
 ];
+
+export const tripTheme = tripThemeData.map((p) => {
+  return { value: p.replace(/\s/g, '_'), label: p };
+});
 
 const tripAccomodationData = [
   'Budget hotel',
@@ -208,25 +182,6 @@ export const year = [
   { value: generateYear(0), label: generateYear(0) },
   { value: generateYear(1), label: generateYear(1) },
   { value: generateYear(2), label: generateYear(2) },
-];
-
-export const numberCode = [
-  {
-    value: uuid(),
-    label: '+33',
-  },
-  {
-    value: uuid(),
-    label: '+34',
-  },
-  {
-    value: uuid(),
-    label: '+35',
-  },
-  {
-    value: uuid(),
-    label: '+36',
-  },
 ];
 
 export const reactSelectFields = [
