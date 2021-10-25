@@ -10,7 +10,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a lo
 import 'react-image-lightbox/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-
+import 'mapbox-gl/dist/mapbox-gl.css';
 // -------------------------------- //
 
 import { BrowserRouter } from 'react-router-dom';

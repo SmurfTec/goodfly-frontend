@@ -17,6 +17,8 @@ import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { useForm } from 'react-hook-form';
+// import {MapBox1 as MapBox} from './MapBox';
+import { MapBox2 as MapBox } from './MapBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,7 +117,9 @@ const RelayPointDialog = ({ open, closeDialog }) => {
               </Box>
             </form>
           </Grid>
-          <Grid item xs={12} sm={7}></Grid>
+          <Grid item xs={12} sm={7}>
+            <MapBox />
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
