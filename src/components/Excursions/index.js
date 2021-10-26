@@ -34,16 +34,10 @@ const ExcursionaHome = ({ location }) => {
   };
 
   useEffect(() => {
-    if (!tours || !tours.length === 0) {
-      setExcursionTours([]);
-      return;
-    }
-
-    setExcursionTours(tours.filter((el) => el.category === 'excursions'));
+    setExcursionTours(tours?.filter((el) => el.category === 'excursions'));
   }, [tours]);
 
   useEffect(() => {
-    if (!tours) return;
     if (tripType === 'all')
       setExcursionTours(tours?.filter((el) => el.category === 'excursions'));
     else
@@ -143,7 +137,7 @@ const ExcursionaHome = ({ location }) => {
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
-        <Banner imageUrl={ethicalImg} bannerTitle='Flash Sales' align='left' />
+        <Banner imageUrl={ethicalImg} bannerTitle='Excursions' align='left' />
 
         <section className={classes.filter}>
           <Button

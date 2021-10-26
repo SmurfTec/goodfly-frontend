@@ -107,7 +107,14 @@ const Reservations = () => {
           />
         );
       case 2:
-        return <Step3 data={reservation} />;
+        return (
+          <Step3
+            data={reservation}
+            submitForm={handleSubmit3}
+            tour={tour}
+            travellers={reservation?.travellers?.length}
+          />
+        );
       default:
         return 'Unknown stepIndex';
     }
@@ -139,8 +146,6 @@ const Reservations = () => {
     let properKey = key.indexOf('-');
     return key.slice(0, properKey);
   };
-
-  // * -----------------------------
 
   const handleSubmit2 = (data) => {
     console.log(data);
@@ -180,6 +185,12 @@ const Reservations = () => {
     handleNext();
     setReservation((st) => ({ ...st, ...data, travellers: newTravelers }));
   };
+  // * -----------------------------
+
+  // * Handle Submit of Step 3
+  const handleSubmit3 = (data) => {
+    console.log(`data`, data);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -207,7 +218,6 @@ const Reservations = () => {
     switch (activeStep) {
       case 0:
         return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
-        break;
 
       case 1:
         return (
@@ -215,7 +225,6 @@ const Reservations = () => {
             Back to Client Reservation{' '}
           </Typography>
         );
-        break;
 
       case 2:
         return (
@@ -223,11 +232,9 @@ const Reservations = () => {
             Back to Travellers Booking{' '}
           </Typography>
         );
-        break;
 
       default:
         return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
-        break;
     }
   };
 
@@ -255,14 +262,11 @@ const Reservations = () => {
                 </Box>
               </Container>
               <Grid container spacing={2} sx={{ mt: 6 }}>
-                <Grid
-                  item
-                  xs={12}
-                  sm={activeStep === 0 || activeStep === 2 ? 8 : 12}
-                >
+                <Grid item xs={12} sm={activeStep === 0 ? 8 : 12}>
                   {getStepContent(activeStep)}
                 </Grid>
-                {(activeStep === 0 || activeStep === 2) && (
+                {/* // {(activeStep === 0 || activeStep === 2) && ( */}
+                {activeStep === 0 && (
                   <Grid item xs={12} sm={4}>
                     {tour ? (
                       <TravelDetails

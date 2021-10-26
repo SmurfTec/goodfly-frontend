@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TravelDetails = ({ tour, travellers }) => {
+export const TravelDetails = ({ tour, travellers, formId }) => {
   const classes = useStyles();
   const { title, price, startingDate } = tour;
 

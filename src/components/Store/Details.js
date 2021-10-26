@@ -120,13 +120,9 @@ const ClientStore = ({ match }) => {
 
     (async () => {
       try {
-        const resData = await makeReq(
-          `/products?category=${product.category}`
-        );
+        const resData = await makeReq(`/products?category=${product.category}`);
 
-        setRelatedProjects(
-          resData.products.filter((p) => p._id !== id)
-        );
+        setRelatedProjects(resData.products.filter((p) => p._id !== id));
       } catch (err) {
         handleCatch(err);
       }
@@ -184,7 +180,7 @@ const ClientStore = ({ match }) => {
                           position: 'relative',
                           backgroundSize: 'contain',
                         }}
-                        image={product.images[0]}
+                        image={product?.images?.[0]}
                       />
                     </Card>
                   </Grid>
@@ -221,9 +217,7 @@ const ClientStore = ({ match }) => {
                   <div>404</div>
                 ) : (
                   <div>
-                    <Typography variant='h3'>
-                      {product.name}
-                    </Typography>
+                    <Typography variant='h3'>{product.name}</Typography>
                     <Typography
                       variant='h4'
                       color='text.secondary'
@@ -270,10 +264,7 @@ const ClientStore = ({ match }) => {
                       >
                         <RemoveRounded />
                       </IconButton>
-                      <Typography
-                        variant='h4'
-                        sx={{ userSelect: 'none' }}
-                      >
+                      <Typography variant='h4' sx={{ userSelect: 'none' }}>
                         {noOfItem}
                       </Typography>
                       <IconButton
@@ -316,14 +307,10 @@ const ClientStore = ({ match }) => {
         >
           <Tab
             label='Description'
-            className={
-              tabValue === 0 ? classes.ActiveTab : classes.InActiveTab
-            }
+            className={tabValue === 0 ? classes.ActiveTab : classes.InActiveTab}
           />
           <Tab
-            className={
-              tabValue === 1 ? classes.ActiveTab : classes.InActiveTab
-            }
+            className={tabValue === 1 ? classes.ActiveTab : classes.InActiveTab}
             label='Comments'
           />
         </Tabs>
@@ -336,10 +323,7 @@ const ClientStore = ({ match }) => {
             <Grid item xs={12} sm={6}>
               {product ? (
                 <>
-                  <Typography
-                    variant='subtitle1'
-                    sx={{ mt: 5, mb: 8 }}
-                  >
+                  <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
                     {product.reviews.length} reviews for this product
                   </Typography>
                   {product.reviews.map((review) => (
@@ -360,9 +344,7 @@ const ClientStore = ({ match }) => {
               </Typography>
               <form
                 id='formopinion'
-                onSubmit={handleSubmit((data) =>
-                  submitFormData(data)
-                )}
+                onSubmit={handleSubmit((data) => submitFormData(data))}
               >
                 <CustomRating
                   name='commentRating'
@@ -391,8 +373,7 @@ const ClientStore = ({ match }) => {
                       rows='15'
                       className={`${formClasses.textInput} ${classes.textArea}`}
                       {...register('opinionTextArea', {
-                        required:
-                          'Write something about the product to submit',
+                        required: 'Write something about the product to submit',
                       })}
                       placeholder='Give your opinion about the product...'
                     />
@@ -418,12 +399,7 @@ const ClientStore = ({ match }) => {
         </TabPanel>
       </Box>
       <Box sx={{ mt: 17 }}>
-        <Typography
-          variant='h4'
-          fullWidth
-          align='center'
-          sx={{ my: 6 }}
-        >
+        <Typography variant='h4' fullWidth align='center' sx={{ my: 6 }}>
           Related Products
         </Typography>
         <CarouselLayout>

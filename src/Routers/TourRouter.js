@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 // * Tours --------------------- * //
 import EthicalTours from 'components/EthicalTours';
@@ -62,6 +62,8 @@ const TourRouter = ({ match }) => {
         path={match.url + '/reservation/:id'}
         component={Reservations}
       />
+
+      <Redirect to='/tours/ethical' />
     </Switch>
   );
 };

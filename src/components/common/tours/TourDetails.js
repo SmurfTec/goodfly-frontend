@@ -28,6 +28,7 @@ import StagesTab from './StagesTab';
 
 import userImg from 'Assets/img/user1.png';
 import FormalitiesTab from './FormalitiesTab';
+import { AuthContext } from 'Contexts/AuthContext';
 
 // ------------------------------
 
@@ -180,6 +181,7 @@ const reviews = [
 
 const TourDetails = ({ match, history }) => {
   const classes = useStyles();
+  const { user } = useContext(AuthContext);
   const { id } = match.params;
 
   const [tour, setTour] = useState();
@@ -303,7 +305,11 @@ const TourDetails = ({ match, history }) => {
                       width: 300,
                     }}
                     component={Link}
-                    to={`/tours/reservation/${id}`}
+                    to={
+                      user
+                        ? `/tours/reservation/${id}`
+                        : `/auth/login?redirect=/tours/reservation/${id}`
+                    }
                     onClick={handleLinkClick}
                   >
                     Reserve
