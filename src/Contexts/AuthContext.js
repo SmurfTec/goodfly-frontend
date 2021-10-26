@@ -45,10 +45,13 @@ export const AuthProvider = withRouter(({ children, history }) => {
     setTimeout(() => {
       setToken(tk);
       setUser(us);
+
+      // history.push('/');
     }, 1000);
   };
 
   const logoutUser = () => {
+    console.log('Logging Out');
     setToken(null);
     setUser(null);
 

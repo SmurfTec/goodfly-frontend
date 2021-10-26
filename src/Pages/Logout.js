@@ -1,10 +1,16 @@
 import { AuthContext } from 'Contexts/AuthContext';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { withRouter } from 'react-router';
 
-const Logout = () => {
-  const { logoutUser } = useContext(AuthContext);
-  logoutUser();
+const Logout = ({ location, history }) => {
+  const { logoutUser, user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (user) logoutUser();
+    else history.push('/');
+  }, [user, location]);
+
   return <div></div>;
 };
 
-export default Logout;
+export default withRouter(Logout);

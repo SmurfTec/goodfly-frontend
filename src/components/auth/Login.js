@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import useStyles from './Styles';
 import img1 from 'Assets/img/authbg.png';
 import { Box } from '@material-ui/system';
 import { Button, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -12,15 +12,25 @@ import { API_BASE_URL } from 'Utils/constants';
 import { AuthContext } from 'Contexts/AuthContext';
 import Page from 'components/common/Page';
 
-const Login = () => {
+const Login = ({ location, history }) => {
   const classes = useStyles();
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, user } = useContext(AuthContext);
 
   const initialState = {
     email: '',
     password: '',
     remember: false,
   };
+
+  let redirect = location.search ? location.search.split('=')[1] : '/';
+
+  useEffect(() => {
+    console.log(`redirect`, redirect);
+
+    if (user) {
+      history.push(redirect);
+    }
+  }, [user, history, redirect]);
 
   const [state, setState] = useState(initialState);
 
@@ -131,4 +141,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

@@ -11,31 +11,28 @@ import {
 } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  CustomRadioGroup,
-  CustomInputField,
-} from 'components/FormControls';
+import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
 import TotalBill from './TotalBill';
 import useToggle from 'Hooks/useToggle';
 import RelayPointDialog from './RelayPointDialog';
 
 const deliveryMethods = [
   {
-    value: 'rpd1111',
+    value: 'relay-point',
     label: 'Relay point delivery',
     time: '24H',
     scheduledDelivery: 'Delivery scheduled for 11/16/2020',
     rate: '240€',
   },
   {
-    value: 'hd1112',
+    value: 'home-delivery',
     label: 'Home delivery by Collissimo',
     time: '24H',
     scheduledDelivery: 'Delivery scheduled for 11/16/2020',
     rate: '540€',
   },
   {
-    value: 'pus1113',
+    value: 'store-pickup',
     label: 'Pick up in store',
     time: '24H',
     scheduledDelivery: 'Order available 11/16/2020',
@@ -63,15 +60,11 @@ const relaypointContent = (handleClick, postalAddress) => {
 const addressContent = (control, isAddressDiff, formProps) => {
   return (
     <Box sx={{ mt: 2 }}>
-      <Typography
-        variant='subtitle1'
-        color='textSecondary'
-        sx={{ mb: 1 }}
-      >
-        Billing Address
+      <Typography variant='subtitle1' color='textSecondary' sx={{ mb: 1 }}>
+        Shipping Address
       </Typography>
       <CustomRadioGroup
-        name='billingaddress'
+        name='shippingAddress'
         control={control}
         options={[
           {
@@ -79,7 +72,7 @@ const addressContent = (control, isAddressDiff, formProps) => {
             value: 'identical',
           },
           {
-            label: 'Use a different billing address',
+            label: 'Use a different Shipping address',
             value: 'different',
           },
         ]}
@@ -95,13 +88,40 @@ const addressContent = (control, isAddressDiff, formProps) => {
           }}
         >
           <CustomInputField
-            name='newBillingAddress'
-            label='Billing Address'
+            name='address'
+            label='Address'
             type='text'
             register={formProps?.register}
             errors={formProps?.errors}
-            errorMessage='Specify another billing address'
-            placeholder='New Billing Address'
+            errorMessage='address is required'
+            placeholder='Address'
+          />
+          <CustomInputField
+            name='city'
+            label='City'
+            type='text'
+            register={formProps?.register}
+            errors={formProps?.errors}
+            errorMessage='city is required'
+            placeholder='City'
+          />
+          <CustomInputField
+            name='country'
+            label='Country'
+            type='text'
+            register={formProps?.register}
+            errors={formProps?.errors}
+            errorMessage='country is required'
+            placeholder='Country'
+          />
+          <CustomInputField
+            name='postalCode'
+            label='Postal Code'
+            type='text'
+            register={formProps?.register}
+            errors={formProps?.errors}
+            errorMessage='postalCode is required'
+            placeholder='Postal Code'
           />
         </Box>
       )}
@@ -110,19 +130,15 @@ const addressContent = (control, isAddressDiff, formProps) => {
 };
 
 const Step2 = ({ validateStep, cart }) => {
-  const { handleSubmit, control, watch, register, errors } =
-    useForm();
+  const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
   const [isMapDialogOpen, toggleMapDialog] = useToggle(false);
 
   const [postalAddress, setpostalAddress] = React.useState(
     'Lyon Librairie la bonne paye 50 rue delabarre 69008'
   );
-  const watchDeliveryMethod = watch(
-    'deliveryMethod',
-    deliveryMethods[0].value
-  );
-  const watchBillingAddress = watch('billingaddress');
+  const watchDeliveryMethod = watch('deliveryMethod', deliveryMethods[0].value);
+  const watchShippingAddress = watch('shippingAddress');
 
   const travellersForm = (data) => {
     validateStep(data);
@@ -150,10 +166,7 @@ const Step2 = ({ validateStep, cart }) => {
               mb: 4,
             }}
           >
-            <form
-              id='formDelivery'
-              onSubmit={handleSubmit(travellersForm)}
-            >
+            <form id='formDelivery' onSubmit={handleSubmit(travellersForm)}>
               <Controller
                 name='deliveryMethod'
                 control={control}
@@ -162,7 +175,7 @@ const Step2 = ({ validateStep, cart }) => {
                   <RadioGroup {...field} row>
                     {deliveryMethods.map((singleOption, i) => {
                       return (
-                        <React.Fragment key={singleOption.value}>
+                        <React.Fragment key={i}>
                           <Grid container spacing={2}>
                             <Grid item xs={12} sm={4}>
                               <Box
@@ -204,32 +217,26 @@ const Step2 = ({ validateStep, cart }) => {
                               </Typography>
                             </Grid>
                           </Grid>
-                          {watchDeliveryMethod ===
-                            deliveryMethods[0].value &&
-                            singleOption.value ===
-                              deliveryMethods[0].value && (
+                          {watchDeliveryMethod === deliveryMethods[0].value &&
+                            singleOption.value === deliveryMethods[0].value && (
                               <>
                                 {relaypointContent(
                                   toggleMapDialog,
                                   postalAddress
                                 )}
-                                <Divider
-                                  sx={{ my: 2, width: '100%' }}
-                                />
+                                <Divider sx={{ my: 2, width: '100%' }} />
                               </>
                             )}
-                          {watchDeliveryMethod ===
-                            singleOption.value &&
-                            watchDeliveryMethod !==
-                              deliveryMethods[2].value && (
-                              <Box sx={{ mt: 2 }}>
-                                {addressContent(
-                                  control,
-                                  watchBillingAddress,
-                                  { register, errors }
-                                )}
-                              </Box>
-                            )}
+                          {watchDeliveryMethod === singleOption.value && (
+                            // watchDeliveryMethod !==
+                            //   deliveryMethods[2].value && (
+                            <Box sx={{ mt: 2 }}>
+                              {addressContent(control, watchShippingAddress, {
+                                register,
+                                errors,
+                              })}
+                            </Box>
+                          )}
                           {i < deliveryMethods.length - 1 && (
                             <Divider sx={{ my: 3, width: '100%' }} />
                           )}

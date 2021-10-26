@@ -1,22 +1,14 @@
 import React from 'react';
-import {
-  Typography,
-  Button,
-  Box,
-  Paper,
-  Divider,
-} from '@material-ui/core';
+import { Typography, Button, Box, Paper, Divider } from '@material-ui/core';
+import { makeReq } from 'Utils/constants';
 
-const TotalBill = ({ validateForm, formName, cart }) => {
+const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
   return (
     <>
       <Typography variant='h4' sx={{ mt: 8 }}>
         Basket total
       </Typography>
-      <Paper
-        elevation={0}
-        sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}
-      >
+      <Paper elevation={0} sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}>
         <Box
           sx={{
             display: 'flex',
@@ -58,8 +50,6 @@ const TotalBill = ({ validateForm, formName, cart }) => {
           </Box>
         </Box>
       </Paper>
-      {console.log('FormName ', formName)}
-      {console.log('!FormName ', !formName)}
       {!formName ? (
         <Button
           variant='contained'
@@ -67,6 +57,7 @@ const TotalBill = ({ validateForm, formName, cart }) => {
           sx={{ mt: 3, minHeight: 70, fontSize: 20 }}
           fullWidth
           onClick={validateForm}
+          disabled={cart.orderItems.length === 0}
         >
           VALIDATE THE ORDER
         </Button>

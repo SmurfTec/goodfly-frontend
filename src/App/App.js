@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import './App.css';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
 
 import Home from 'components/Home/index';
@@ -27,52 +27,29 @@ import { GlobalClassesProvider } from 'Contexts/GlobalClasses';
 const App = () => {
   const { token, user } = useContext(AuthContext);
 
+  const location = useLocation();
+
   return (
     <div className='App'>
       <ThemeConfig>
         <GlobalClassesProvider>
-          {token ? (
-            user ? (
-              <>
-                <Route component={Header} />
-                <Switch>
-                  <Route path='/tours' component={TourRouter} />
-                  <Route exact path='/profile' component={Profile} />
-                  <Route exact path='/' component={Home} />
-                  <Route exact path='/store' component={Store} />
-                  <Route exact path='/store/cart' component={Checkout} />
-                  <Route
-                    exact
-                    path='/store/product/:id'
-                    component={StoreDetails}
-                  />
-                  <Route exact path='/blogs' component={ClientBlog} />
-                  <Route exact path='/blogs/:id' component={BlogDetails} />
+          {!location.pathname.includes('/auth') && <Route component={Header} />}
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/tours' component={TourRouter} />
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/store' component={Store} />
+            <Route exact path='/store/cart' component={Checkout} />
+            <Route exact path='/store/product/:id' component={StoreDetails} />
+            <Route exact path='/blogs' component={ClientBlog} />
+            <Route exact path='/blogs/:id' component={BlogDetails} />
 
-                  <Route exact path='/contact-us' component={ContactUs} />
-                  <Route exact path='/logout' component={Logout} />
-                  <Redirect from='*' to='/' />
-                </Switch>
-                <Route component={Footer} />
-              </>
-            ) : (
-              <img
-                style={{
-                  margin: 'auto ',
-                }}
-                src={img}
-                alt='loader'
-              />
-            )
-          ) : (
-            <>
-              <Switch>
-                <Route path='/auth' component={AuthRouter} />
-
-                <Redirect to='/auth/login' />
-              </Switch>
-            </>
-          )}
+            <Route exact path='/contact-us' component={ContactUs} />
+            <Route path='/auth' component={AuthRouter} />
+            <Route exact path='/logout' component={Logout} />
+            <Redirect from='*' to='/' />
+          </Switch>
+          {!location.pathname.includes('/auth') && <Route component={Footer} />}
         </GlobalClassesProvider>
       </ThemeConfig>
     </div>

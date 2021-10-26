@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,6 +23,7 @@ import { withRouter, Link, NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { AuthContext } from 'Contexts/AuthContext';
 
 const mobileNavContent = [
   {
@@ -166,11 +167,22 @@ const mobileNavContent = [
     to: '/store',
     // info: [],
   },
+  {
+    title: 'Login',
+    to: '/auth/login',
+    // info: [],
+  },
+  {
+    title: 'Logout',
+    to: '/logout',
+    // info: [],
+  },
 ];
 
 const Header = ({ history }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user, logoutUser } = useContext(AuthContext);
   // const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const [lang, setLang] = useState('GB');
@@ -280,33 +292,44 @@ const Header = ({ history }) => {
         </IconButton>
       </Box>
       <Box sx={{ my: 2 }}>
-        {mobileNavContent.map((navContent) => (
-          <React.Fragment key={navContent?.title}>
-            <Typography
-              variant='h5'
-              sx={{
-                '& a': {
-                  color: '#000',
-                },
-                mt: 3,
-                mb: 1,
-              }}
-            >
-              <NavLink to={navContent?.to} sx={{ color: 'textSecondary' }}>
-                {navContent?.title}
-              </NavLink>
-            </Typography>
-            {navContent?.info?.map((subContent) => (
-              <React.Fragment key={subContent?.route}>
-                <Typography variant='subtitle1' sx={{ mb: 1 }}>
-                  <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
-                </Typography>
-              </React.Fragment>
-            ))}
+        {mobileNavContent.map((navContent) =>
+          navContent.title === 'Logout' && !user ? (
+            <></>
+          ) : navContent.title === 'Login' && user ? (
+            <> </>
+          ) : (
+            <React.Fragment key={navContent?.title}>
+              <Typography
+                variant='h5'
+                sx={{
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: '#fa0f0c',
+                  },
+                  mt: 3,
+                  mb: 1,
+                }}
+              >
+                {navContent?.title === 'Logout' ? (
+                  <a onClick={logoutUser}>{navContent?.title}</a>
+                ) : (
+                  <NavLink to={navContent?.to} sx={{ color: 'textSecondary' }}>
+                    {navContent?.title}
+                  </NavLink>
+                )}
+              </Typography>
+              {navContent?.info?.map((subContent) => (
+                <React.Fragment key={subContent?.route}>
+                  <Typography variant='subtitle1' sx={{ mb: 1 }}>
+                    <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
+                  </Typography>
+                </React.Fragment>
+              ))}
 
-            <Divider sx={{ mt: 3 }} />
-          </React.Fragment>
-        ))}
+              <Divider sx={{ mt: 3 }} />
+            </React.Fragment>
+          )
+        )}
       </Box>
     </Drawer>
   );

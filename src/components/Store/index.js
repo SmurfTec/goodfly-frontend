@@ -25,6 +25,7 @@ import StoreProducts from './StoreProducts';
 import ProductCard from './ProductCard';
 import { StoreContext } from 'Contexts/StoreContext';
 import Page from 'components/common/Page';
+import StoreSubNav from './StoreSubNav';
 
 const Index = () => {
   const classes = useStyles();
@@ -99,6 +100,8 @@ const Index = () => {
           </Box>
         </Box>
         <Container>
+          <StoreSubNav />
+
           {products ? (
             <StoreProducts products={products} classes={classes} />
           ) : (

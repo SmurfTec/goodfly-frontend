@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 // * Auth Components --------------------- * //
 import Login from 'components/auth/Login';
@@ -30,6 +30,7 @@ const AuthRouter = ({ match }) => {
         path={match.url + '/confirmMail/:token'}
         component={ConfirmMail}
       />
+      <Redirect to='/' />
     </Switch>
   );
 };

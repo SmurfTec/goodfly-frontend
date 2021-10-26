@@ -168,9 +168,9 @@ export const CustomInputField = ({
 
 export const CustomRadioGroup = ({ name, control, options }) => {
   const generateRadioOptions = () => {
-    return options.map((singleOption) => (
+    return options.map((singleOption, idx) => (
       <FormControlLabel
-        key={singleOption.key}
+        key={idx}
         value={singleOption.value}
         label={singleOption.label}
         control={<Radio />}

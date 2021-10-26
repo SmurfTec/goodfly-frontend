@@ -11,8 +11,6 @@ export const ToursProvider = withRouter(({ children, history }) => {
   const [tours, setTours] = useState();
 
   useEffect(() => {
-    if (!user) return;
-
     (async () => {
       try {
         const resData = await makeReq(`/trips`);

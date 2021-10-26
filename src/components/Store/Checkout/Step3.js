@@ -17,10 +17,7 @@ import {
 import { Box } from '@material-ui/system';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  CustomRadioGroup,
-  CustomInputField,
-} from 'components/FormControls';
+import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
 import { isMethod } from '@babel/types';
 import TotalBill from './TotalBill';
 import BankCardOption from './paymentStep/paymentOptions/BankCardOption';
@@ -29,8 +26,7 @@ import PaypalOption from './paymentStep/paymentOptions/PaypalOption';
 import LoyaltyPointsOption from './paymentStep/paymentOptions/LoyaltyPoints';
 
 const Step3 = ({ validateStep, cart }) => {
-  const { handleSubmit, control, watch, register, errors } =
-    useForm();
+  const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
 
   const values = ['card', 'bank', 'paypal', 'points'];
@@ -40,12 +36,11 @@ const Step3 = ({ validateStep, cart }) => {
     cardexpires: '',
     cardNumber: '',
   };
-  const [bankCardDetails, setBankCardDetails] =
-    useState(bankCardInitial);
+  const [bankCardDetails, setBankCardDetails] = useState(bankCardInitial);
   const [postalAddress, setpostalAddress] = React.useState(
     'Lyon Librairie la bonne paye 50 rue delabarre 69008'
   );
-  const watchPaymentOptions = watch('paymentOptions');
+  const watchPaymentOptions = watch('paymentMethod');
 
   const handleDialogOpen = () => {
     setDialog(true);
@@ -81,12 +76,9 @@ const Step3 = ({ validateStep, cart }) => {
               mb: 4,
             }}
           >
-            <form
-              id='formDelivery'
-              onSubmit={handleSubmit(travellersForm)}
-            >
+            <form id='formDelivery' onSubmit={handleSubmit(travellersForm)}>
               <Controller
-                name='paymentOptions'
+                name='paymentMethod'
                 control={control}
                 defaultValue={values[0]}
                 render={({ field }) => (
@@ -107,7 +99,11 @@ const Step3 = ({ validateStep, cart }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5} sx={{ mt: -9 }}>
-          <TotalBill formName='formDelivery' cart={cart} />
+          <TotalBill
+            formName='formDelivery'
+            cart={cart}
+            paymentOption={watchPaymentOptions}
+          />
         </Grid>
       </Grid>
 

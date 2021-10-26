@@ -11,17 +11,30 @@ export const StoreProvider = withRouter(({ children, history }) => {
   const { user } = useContext(AuthContext);
   const initialState = {
     orderItems: [],
+
     subTotal: 0,
     total: 0,
-    shippingPrice: 0,
-    billingaddress: user?.address || '',
   };
+  // const orderInitialState = {
+  //   orderItems: [],
+
+  //   subTotal: 0,
+  //   total: 0,
+  //   subTotal: 0,
+  //   total: 0,
+  //   deliveryMethod: '',
+  //   deliveryAddress: '',
+  //   shippingAddress: {
+  //     address: '',
+  //     city: '',
+  //     country: '',
+  //     postalCode: '',
+  //   },
+  // };
 
   const [products, setProducts] = useState();
-  const [cart, setCart, resetCart] = UseLocalStorage(
-    'cart',
-    initialState
-  );
+  const [cart, setCart, resetCart] = UseLocalStorage('cart', initialState);
+  const [order, setOrder] = useState();
 
   useEffect(() => {
     (async () => {
@@ -43,21 +56,17 @@ export const StoreProvider = withRouter(({ children, history }) => {
 
       console.log(`cart.orderItems`, cart.orderItems);
 
-      let totalPrice = cart.orderItems.map(
-        (el) => el.price * el.quantity * 1
-      );
+      let totalPrice = cart.orderItems.map((el) => el.price * el.quantity * 1);
 
       totalPrice = totalPrice.reduce(addReducer);
       console.log(`totalPrice`, totalPrice);
-      console.log(
-        `totalPrice + st.shippingPrice`,
-        cart.shippingPrice
-      );
       setCart((st) => ({
         ...st,
         subTotal: totalPrice,
-        total: totalPrice + st.shippingPrice,
+        total: totalPrice,
       }));
+    } else {
+      setCart(initialState);
     }
 
     window.localStorage.setItem('cart', JSON.stringify(cart));
@@ -66,9 +75,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
   const addItemToCart = (item, quantity) => {
     console.log(`addItem`, item);
     // * If Item is Already in Cart , then increase quantity
-    const alreadyInCart = !!cart.orderItems.find(
-      (el) => el._id === item._id
-    );
+    const alreadyInCart = !!cart.orderItems.find((el) => el._id === item._id);
     console.log(`new item`, {
       ...item,
       quantity,
@@ -135,9 +142,9 @@ export const StoreProvider = withRouter(({ children, history }) => {
     }));
   };
 
-  const changeShippingAmount = (amount) => {
-    setCart((st) => ({ ...st, shippingPrice: amount * 1 }));
-  };
+  // const changeShippingAmount = (amount) => {
+  //   setCart((st) => ({ ...st, shippingPrice: amount * 1 }));
+  // };
 
   return (
     <StoreContext.Provider
@@ -150,7 +157,8 @@ export const StoreProvider = withRouter(({ children, history }) => {
         removeItemFromCart,
         increaseQuantity,
         decreaseQuantity,
-        changeShippingAmount,
+        order,
+        setOrder,
       }}
     >
       {children}
