@@ -84,7 +84,7 @@ const Login = () => {
               </Typography>
             </Link>
             <Box sx={{ my: 2 }}></Box>
-            <Link to='/signup'>
+            <Link to='/auth/signup'>
               <Typography variant='p' color='textSecondary'>
                 Dont Have an Account ? SignUp
               </Typography>

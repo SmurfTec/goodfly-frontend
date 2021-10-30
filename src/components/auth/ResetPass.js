@@ -42,7 +42,7 @@ const ResetPassword = ({ history, match }) => {
       // console.log(`res`, res);
       toast.success('Reset Password Success !');
       setState(initialState);
-      history.push('/login');
+      history.push('/auth/login');
     } catch (err) {
       // console.log(
       //   `err.response.data.message`,
@@ -107,7 +107,7 @@ const ResetPassword = ({ history, match }) => {
               </Typography>
             </Link>
             <Box sx={{ my: 2 }}></Box>
-            <Link to='/signup'>
+            <Link to='/auth/signup'>
               <Typography variant='p' color='textSecondary'>
                 Dont Have an Account ? SignUp
               </Typography>

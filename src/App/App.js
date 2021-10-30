@@ -25,7 +25,7 @@ import Profile from 'components/Profile';
 import { GlobalClassesProvider } from 'Contexts/GlobalClasses';
 
 const App = () => {
-  const { token, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const location = useLocation();
 
@@ -38,7 +38,7 @@ const App = () => {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/tours' component={TourRouter} />
-            <Route exact path='/profile' component={Profile} />
+            {user && <Route exact path='/profile' component={Profile} />}
             <Route exact path='/store' component={Store} />
             <Route exact path='/store/cart' component={Checkout} />
             <Route exact path='/store/product/:id' component={StoreDetails} />

@@ -21,9 +21,12 @@ import { withRouter, Link, NavLink } from 'react-router-dom';
 // import { ThemeContext } from 'Contexts/ThemeContext';
 // import DarkModeToggle from 'react-dark-mode-toggle';
 import Navbar from './Navbar';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AuthContext } from 'Contexts/AuthContext';
+import { AccountBox } from '@material-ui/icons';
 
 const mobileNavContent = [
   {
@@ -206,6 +209,10 @@ const Header = ({ history }) => {
     setAnchorEl(null);
   };
 
+  const handleLogin = () => {
+    history.push('/auth/login');
+  };
+
   const logoSection = (
     <Typography
       variant='h5'
@@ -246,17 +253,24 @@ const Header = ({ history }) => {
           svg
         />
       </IconButton>
-      <NavLink to='/profile'>
-        <IconButton aria-label='profile'>
-          <PersonIcon color='action' />
-        </IconButton>
-      </NavLink>
+      {user && (
+        <NavLink to='/profile'>
+          <IconButton aria-label='profile'>
+            <PersonIcon color='action' />
+          </IconButton>
+        </NavLink>
+      )}
       <IconButton aria-label='contact-us'>
         <PhoneIcon color='action' />
       </IconButton>
       <IconButton aria-label='opinion'>
         <InfoIcon color='action' />
       </IconButton>
+      {user && (
+        <IconButton aria-label='logout' onClick={logoutUser}>
+          <ExitToAppIcon color='action' />
+        </IconButton>
+      )}
 
       <IconButton aria-label='toggleMenu' onClick={toggleMobileNav}>
         <MenuIcon color='action' sx={{ cursor: 'pointer' }} />
@@ -416,19 +430,21 @@ const Header = ({ history }) => {
         />
       </IconButton>
       {languageMenu}
-      <Link to='/profile'>
-        <Typography
-          variant='p'
-          color='primary.dark'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <PersonIcon />
-          Profile
-        </Typography>
-      </Link>
+      {user && (
+        <Link to='/profile'>
+          <Typography
+            variant='p'
+            color='primary.dark'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <PersonIcon />
+            Profile
+          </Typography>
+        </Link>
+      )}
       <Link to='/contact-us'>
         <Typography
           variant='p'
@@ -453,6 +469,34 @@ const Header = ({ history }) => {
         <InfoIcon />
         Give Opinion
       </Typography>
+
+      {user ? (
+        <Typography
+          variant='p'
+          color='primary.dark'
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+          onClick={logoutUser}
+        >
+          <ExitToAppIcon />
+          Logout
+        </Typography>
+      ) : (
+        <Typography
+          variant='p'
+          color='primary.dark'
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+          onClick={handleLogin}
+        >
+          <AccountBox />
+          Login
+        </Typography>
+      )}
     </Box>
   );
 

@@ -71,7 +71,7 @@ const ConfirmMail = ({ match, history }) => {
               </Typography>
             )}
             <Box sx={{ my: 2 }}></Box>
-            <Link to='/signup'>
+            <Link to='/auth/signup'>
               <Typography variant='p' color='textSecondary'>
                 Goto Login
               </Typography>
