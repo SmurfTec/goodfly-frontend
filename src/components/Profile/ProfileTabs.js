@@ -5,9 +5,16 @@ import SwipeableViews from 'react-swipeable-views';
 
 // --------- MUI ----------- //
 import { makeStyles, useTheme } from '@material-ui/styles';
-import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+} from '@material-ui/core';
 import PersonalInfo from './PersonalInfo';
 import TripsTab from './TripsTab';
+import PurchasesTab from './PurchasesTab';
 // ------------------------ //
 
 const TabPanel = (props) => {
@@ -80,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 const FullWidthTabs = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(3);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -142,7 +149,7 @@ const FullWidthTabs = ({ user }) => {
           index={3}
           dir={theme.direction}
         >
-          Item 4
+          <PurchasesTab />
         </TabPanel>
       </SwipeableViews>
     </div>

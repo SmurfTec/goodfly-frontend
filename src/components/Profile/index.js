@@ -39,7 +39,7 @@ const Index = () => {
             color: theme.palette.common.grey1,
           }}
         >
-          {user.loyaltyPoints} Points
+          {user?.loyaltyPoints} Points
         </Typography>
       </Box>
       <ProfileTabs user={user} />
