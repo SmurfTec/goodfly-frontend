@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
@@ -26,6 +26,8 @@ import stageImg4 from 'Assets/img/stage23.png';
 import StagesTab from 'components/common/tours/StagesTab';
 
 import userImg from 'Assets/img/user1.png';
+import { AuthContext } from 'Contexts/AuthContext';
+import { animateScroll as scroll } from 'react-scroll';
 
 // ------------------------------
 
@@ -183,6 +185,7 @@ const TourDetails = ({ match, history }) => {
   const [tour, setTour] = useState();
   const [ratingValue, setRatingValue] = useState(2);
   const [tabValue, setTabValue] = React.useState(0);
+  const { user } = useContext(AuthContext);
 
   const [reviewValue, setReviewValue] = useState('');
 
@@ -204,7 +207,12 @@ const TourDetails = ({ match, history }) => {
       }
     })();
   }, [id]);
-
+  const handleLinkClick = () => {
+    scroll.scrollToTop({
+      duration: 1000,
+      delay: 100,
+    });
+  };
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -234,7 +242,7 @@ const TourDetails = ({ match, history }) => {
           <Grid item xs={12} sm={7} className={classes.TourDetails}>
             <Box padding={3}>
               <Typography variant='h3' color='textSecondary' align='left'>
-                {tour.country.toUpperCase()}
+                {tour?.country.toUpperCase()}
               </Typography>
               <Box display='flex' alignItems='center'>
                 <Typography
@@ -243,7 +251,7 @@ const TourDetails = ({ match, history }) => {
                   color='textSecondary'
                   marginRight={2}
                 >
-                  {new Date(tour.startingDate).toDateString()}
+                  {new Date(tour?.startingDate).toDateString()}
                 </Typography>
                 <Rating
                   size='small'
@@ -265,7 +273,7 @@ const TourDetails = ({ match, history }) => {
                   }}
                   variant='p'
                 >
-                  {tour.description}
+                  {tour?.description}
                 </Typography>
                 <Box>
                   <Typography
@@ -281,7 +289,7 @@ const TourDetails = ({ match, history }) => {
                       textAlign: 'left',
                     }}
                   >
-                    {tour.services?.map((service) => (
+                    {tour?.services?.map((service) => (
                       <li key={service}>{service}</li>
                     ))}
                   </ul>
@@ -295,7 +303,13 @@ const TourDetails = ({ match, history }) => {
                   paddingInline: 20,
                   width: 300,
                 }}
-                // onClick={handleReserve}
+                component={Link}
+                to={
+                  user
+                    ? `/tours/reservation/${id}`
+                    : `/auth/login?redirect=/tours/spiritual/${id}`
+                }
+                onClick={handleLinkClick}
               >
                 Reserve
               </Button>
@@ -329,7 +343,7 @@ const TourDetails = ({ match, history }) => {
                 }}
                 endIcon={<EuroIcon />}
               >
-                {tour.price}
+                {tour?.price}
               </Button>
             </Box>
           </Grid>

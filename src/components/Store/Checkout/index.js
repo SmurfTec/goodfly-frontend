@@ -125,6 +125,9 @@ const Checkout = () => {
     }
   }, [order]);
 
+  useEffect(() => {
+    if (!user) setActiveStep(0);
+  }, [user]);
   const validateStep1 = () => {
     console.log('validated step 1');
     // * If user if NOT Logged in , move her to Login page

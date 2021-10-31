@@ -15,7 +15,7 @@ import Step3 from './StepThree';
 import { TravelDetails } from './TravelDetails';
 import Back from '@material-ui/icons/ArrowBackIos';
 import { Box } from '@material-ui/system';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import Page from 'components/common/Page';
 import Skeleton from 'react-loading-skeleton';
 import { handleCatch, makeReq } from 'Utils/constants';
@@ -73,6 +73,7 @@ const Reservations = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     console.log(`id`, id);
@@ -206,7 +207,13 @@ const Reservations = () => {
 
   const handleMoveBack = () => {
     if (activeStep === 0) {
-      history.goBack();
+      // history.goBack();
+      // console.log(`location.pathname`, location.pathname);
+      // * We have to go to /tours from /tours/reservations/213c
+      //  * "" , "tours" , "resevations" , "213c"
+      const [, path, , tourId] = location.pathname.split('/');
+
+      history.push(`/tours/details/${tourId}`);
     } else {
       handleBack();
     }

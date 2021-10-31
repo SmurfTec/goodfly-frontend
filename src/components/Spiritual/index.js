@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,9 +16,12 @@ import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 
-const options = ['Price', 'Date', 'Duration', 'Best Score'];
+import { useLocation, useHistory } from 'react-router-dom';
 
-const SpiritualHome = ({ location }) => {
+const options = ['Price', 'Date', 'Duration', 'Best Score'];
+const SpiritualHome = () => {
+  const location = useLocation();
+  const history = useHistory();
   const { tours } = useContext(ToursContext);
   const [spiritualTours, setSpiritualTours] = useState();
   const [currentTab, setCurrentTab] = useState(1);
@@ -47,6 +49,48 @@ const SpiritualHome = ({ location }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  useEffect(() => {
+    switch (currentTab) {
+      case 0:
+        setSpiritualTours(
+          tours?.filter(
+            (tour) =>
+              tour.category === 'spiritual' && tour.subCategory === 'hajj'
+          )
+        );
+        break;
+      case 1:
+        setSpiritualTours(
+          tours?.filter(
+            (tour) =>
+              tour.category === 'spiritual' && tour.subCategory === 'omra'
+          )
+        );
+        break;
+      case 2:
+        setSpiritualTours(
+          tours?.filter(
+            (tour) =>
+              tour.category === 'spiritual' && tour.subCategory === 'al-quds'
+          )
+        );
+        break;
+      case 3:
+        setSpiritualTours(
+          tours?.filter(
+            (tour) =>
+              tour.category === 'spiritual' &&
+              tour.subCategory === 'combine-hajj-omra'
+          )
+        );
+        break;
+
+      default:
+        setSpiritualTours(tours);
+        break;
+    }
+  }, [currentTab]);
+
   //? Closing filter menu
   const handleClose = () => {
     setAnchorEl(null);
@@ -54,6 +98,10 @@ const SpiritualHome = ({ location }) => {
 
   // ? Filter Menu open
   const filterMenuOpen = (e) => {
+    console.log('clicked');
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(`e.currentTarget`, e.currentTarget);
     setAnchorEl(e.currentTarget);
   };
 
@@ -138,14 +186,13 @@ const SpiritualHome = ({ location }) => {
             <Button
               variant='outlined'
               startIcon={<TuneIcon />}
+              // onMouseOver={filterMenuOpen}
               onClick={filterMenuOpen}
-              color='inherit'
-              style={{
-                marginRight: '14rem',
-              }}
+              sx={{ cursor: 'pointer' }}
             >
               Select a filter
             </Button>
+
             <Box>
               <Button
                 variant='outlined'
@@ -184,11 +231,11 @@ const SpiritualHome = ({ location }) => {
             >
               {options.map((option, index) => (
                 <MenuItem
-                  key={option}
+                  key={index}
                   data-filter={option}
                   onClick={filterSelected}
                 >
-                  HAJJ OFFERS
+                  {option}
                 </MenuItem>
               ))}
             </Menu>
@@ -212,9 +259,9 @@ const SpiritualHome = ({ location }) => {
         <Grid container spacing={4}>
           {spiritualTours ? (
             spiritualTours.length > 0 ? (
-              spiritualTours.map((card) => (
-                <Grid item key={card._id} xs={12} sm={6} md={4}>
-                  <TripCard {...card} />
+              spiritualTours.map((tour) => (
+                <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                  <TripCard tour={tour} />
                 </Grid>
               ))
             ) : (
@@ -235,4 +282,4 @@ const SpiritualHome = ({ location }) => {
     </Page>
   );
 };
-export default withRouter(SpiritualHome);
+export default SpiritualHome;

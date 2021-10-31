@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box } from '@material-ui/system';
 
@@ -21,9 +21,11 @@ import useStyles from 'Styles/Blog';
 import { handleCatch, makeReq } from 'Utils/constants';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
+import { AuthContext } from 'Contexts/AuthContext';
 
-const BlogDetails = ({ match, history }) => {
+const BlogDetails = ({ match, history, location }) => {
   const globalClasses = useGlobalClasses();
+  const { user } = useContext(AuthContext);
   const classes = useStyles();
   const formClasses = styles();
 
@@ -70,6 +72,12 @@ const BlogDetails = ({ match, history }) => {
 
   const submitFormData = async (data) => {
     // console.log('Form Data :', data);
+
+    //  * If User is NOT Logged In , redirect to login
+    if (!user) {
+      history.push(`/auth/login?redirect=${location.pathname}`);
+      return;
+    }
 
     try {
       const resData = await makeReq(

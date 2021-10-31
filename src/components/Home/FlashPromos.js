@@ -9,6 +9,7 @@ import { Box } from '@material-ui/system';
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 
 import Skeleton from 'react-loading-skeleton';
+import { useHistory } from 'react-router';
 
 const styles = makeStyles((theme) => ({
   paper: {
@@ -36,51 +37,13 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-const flashData = [
-  {
-    id: 1,
-    title: 'Malaysia',
-    boardType: 'Full Board',
-    duration: '1week',
-    price: '990€',
-    description: '',
-  },
-  {
-    id: 2,
-    title: 'Marrakech',
-    boardType: 'Week-end Express',
-    duration: '3jours',
-    price: '355€',
-    description: '',
-  },
-  {
-    id: 3,
-    title: 'Algeria',
-    boardType: 'Villa',
-    duration: '1week',
-    price: '395€',
-    description: 'lux premium',
-  },
-  {
-    id: 4,
-    title: 'Indonesia',
-    boardType: 'RoadTrip',
-    duration: '2week',
-    price: '1455€',
-    description: 'with guide!',
-  },
-  {
-    id: 5,
-    title: 'Indonesia',
-    boardType: 'RoadTrip',
-    duration: '2week',
-    price: '1455€',
-    description: 'with guide!',
-  },
-];
-
 const FlashPromos = ({ tours }) => {
+  const history = useHistory();
   const classes = styles();
+  const handleClick = (e) => {
+    const { id } = e.currentTarget.dataset;
+    history.push(`/tours/details/${id}`);
+  };
   return (
     <>
       <Box
@@ -110,7 +73,7 @@ const FlashPromos = ({ tours }) => {
         <Paper elevation={0} className={classes.paper}>
           <Grid container spacing={2}>
             {tours.map((data, i) => (
-              <React.Fragment key={i}>
+              <React.Fragment key={data._id}>
                 <Grid item xs={3} sm={3}>
                   <Card className={classes.card}>
                     <Typography
@@ -122,7 +85,14 @@ const FlashPromos = ({ tours }) => {
                     </Typography>
                   </Card>
                 </Grid>
-                <Grid item xs={5} sm={5}>
+                <Grid
+                  item
+                  xs={5}
+                  sm={5}
+                  data-id={data._id}
+                  sx={{ cursor: 'pointer' }}
+                  onClick={handleClick}
+                >
                   <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                     <Typography variant='subtitle1' sx={{ mr: 1 }}>
                       {data.title}
@@ -137,7 +107,6 @@ const FlashPromos = ({ tours }) => {
                       <span>{data.duration}</span>
                     </Box>
                   </Box>
-
                   <Typography variant='subtitle2'>{data.boardType}</Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>

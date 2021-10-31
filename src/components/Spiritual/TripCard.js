@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TripCard = (props) => {
+const TripCard = ({ tour, history }) => {
   const classes = useStyles();
 
   const {
@@ -33,13 +33,12 @@ const TripCard = (props) => {
     desc,
     price,
     image,
-    history,
     country,
     startingDate,
     endingDate,
     boardType,
     ratings,
-  } = props;
+  } = tour;
 
   const handleClick = () => {
     // console.log(`_id`, _id);
@@ -48,88 +47,80 @@ const TripCard = (props) => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={image}
-          title='Contemplative Reptile'
-          onClick={handleClick}
-        />
-        <CardContent>
-          <Box onClick={handleClick}>
-            <Box
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Typography
-                gutterBottom
-                variant='h5'
-                component='h2'
-                align='center'
-                style={{ marginRight: 20 }}
-              >
-                {title}
-              </Typography>
-              <Typography
-                gutterBottom
-                variant='h5'
-                component='h2'
-                align='center'
-                color='error'
-              >
-                {price}
-              </Typography>
-            </Box>
+      <CardMedia
+        className={classes.media}
+        image={image}
+        title='Contemplative Reptile'
+      />
+      <CardContent>
+        <Box onClick={handleClick}>
+          <Box
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Typography
-              color='textSecondary'
-              align='center'
-              variant='subtitle2'
-              style={{ minWidth: 190 }}
-            >
-              {`from ${startingDate.toLocaleDateString()} to 
-           ${endingDate.toLocaleDateString()}
-            `}
-            </Typography>
-            <Typography
-              color='textSecondary'
-              variant='subtitle2'
               gutterBottom
+              variant='h5'
+              component='h2'
               align='center'
+              style={{ marginRight: 20 }}
             >
-              {Math.ceil(
-                Math.abs(endingDate - startingDate) /
-                  1000 /
-                  60 /
-                  60 /
-                  24
-              )}
-              {' Days '} {boardType}
+              {title}
             </Typography>
-            <Rating
-              name='read-only'
-              value={ratings}
-              readOnly
-              style={{
-                position: 'absolute',
-                top: 10,
-                left: 10,
-              }}
-              size='small'
-            />
+            <Typography
+              gutterBottom
+              variant='h5'
+              component='h2'
+              align='center'
+              color='error'
+            >
+              {price}
+            </Typography>
           </Box>
-        </CardContent>
-      </CardActionArea>
-      <CardActions
-        style={{ justifyContent: 'center', paddingBottom: 20 }}
-      >
+          <Typography
+            color='textSecondary'
+            align='center'
+            variant='subtitle2'
+            style={{ minWidth: 190 }}
+          >
+            {`from ${new Date(startingDate).toDateString()} to 
+           ${new Date(endingDate).toDateString()}
+            `}
+          </Typography>
+          <Typography
+            color='textSecondary'
+            variant='subtitle2'
+            gutterBottom
+            align='center'
+          >
+            {Math.ceil(
+              Math.abs(endingDate - startingDate) / 1000 / 60 / 60 / 24
+            )}
+            {' Days '} {boardType}
+          </Typography>
+          <Rating
+            name='read-only'
+            value={ratings}
+            readOnly
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 10,
+            }}
+            size='small'
+          />
+        </Box>
+      </CardContent>
+      <CardActions style={{ justifyContent: 'center', paddingBottom: 20 }}>
         <Button
           variant='contained'
           size='small'
           color='primary'
           style={{ borderRadius: 0, paddingInline: 30 }}
+          onClick={handleClick}
         >
           Find Out More
         </Button>

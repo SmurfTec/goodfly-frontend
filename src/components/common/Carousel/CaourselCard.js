@@ -45,7 +45,9 @@ function CaourselCard({ title, description, image, _id, history }) {
     <Card className={classes.card}>
       <CardActionArea onClick={handleClick}>
         <CardMedia className={classes.cardMedia} image={image}>
-          <Typography className={classes.cardTitle}>{title}</Typography>
+          <Typography className={classes.cardTitle}>
+            {title.toUpperCase()}
+          </Typography>
         </CardMedia>
       </CardActionArea>
       <CardContent className={classes.cardContent}>

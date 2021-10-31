@@ -90,11 +90,11 @@ const TripCard = (props) => {
   const [isFavourite, setIsFavourite] = useState(false);
 
   useEffect(() => {
-    if (!user.favourities || user.favourities.length === 0) {
+    if (!user?.favourities || user?.favourities.length === 0) {
       setIsFavourite(false);
       return;
     }
-    if (user.favourities.includes(_id)) setIsFavourite(true);
+    if (user?.favourities.includes(_id)) setIsFavourite(true);
     else setIsFavourite(false);
   }, [user]);
 

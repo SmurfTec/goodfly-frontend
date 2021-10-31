@@ -263,9 +263,7 @@ const Header = ({ history }) => {
       <IconButton aria-label='contact-us'>
         <PhoneIcon color='action' />
       </IconButton>
-      <IconButton aria-label='opinion'>
-        <InfoIcon color='action' />
-      </IconButton>
+
       {user && (
         <IconButton aria-label='logout' onClick={logoutUser}>
           <ExitToAppIcon color='action' />
@@ -458,17 +456,6 @@ const Header = ({ history }) => {
           Contact Us
         </Typography>
       </Link>
-      <Typography
-        variant='p'
-        color='primary.dark'
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <InfoIcon />
-        Give Opinion
-      </Typography>
 
       {user ? (
         <Typography

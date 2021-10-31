@@ -28,33 +28,7 @@ import { ToursContext } from 'Contexts/ToursContext';
 import { Link } from 'react-router-dom';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Card from 'components/common/Carousel/CaourselCard';
-
-const products = [
-  {
-    id: 0,
-    desc: 'GOODFLY has found the best places to Visits to several islands including the less frequented ... Indonesia on a RoadTrip! stay in this multi-faceted country.',
-    image: 'https://source.unsplash.com/random',
-    title: 'Indonesia',
-  },
-  {
-    id: 1,
-    desc: 'giraffes, elephants. Be closer to the most hidden ... Discover Namibian wildlife. Visit of the great desert, safari to meet the animals that inhabit these large spaces: lions,',
-    image: 'https://source.unsplash.com/random',
-    title: 'Namibian ',
-  },
-  {
-    id: 2,
-    desc: 'Madagascar and its sumptuous landscapes.The tour of the island is prepared for you by our team onplace: by minibus and train, go exploringfrom the east coast of the country. Between full green ...',
-    image: 'https://source.unsplash.com/random',
-    title: 'Madagascar ',
-  },
-  {
-    id: 3,
-    desc: 'GOODFLY has found the best places to Visits to several islands including the less frequented ... Indonesia on a RoadTrip! stay in this multi-faceted country.',
-    image: 'https://source.unsplash.com/random',
-    title: 'Indonesia',
-  },
-];
+import GoogleMapReact from 'google-map-react';
 
 const Index = () => {
   const { tours } = useContext(ToursContext);
@@ -62,16 +36,25 @@ const Index = () => {
   const globalClasses = useGlobalClasses();
 
   const [offers, setOffers] = useState();
+  const [tourCards, setTourCards] = useState();
 
   const [flashSales, setFlashSales] = useState();
 
   const [email, setEmail] = useState('');
 
+  const goodflyLocation = {
+    center: {
+      lat: 33.68,
+      lng: 73,
+    },
+    zoom: 11,
+  };
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  // * Top 5 Flash Sales
+  // * All Trip Cards
   useEffect(() => {
     setFlashSales(tours?.filter((el) => el.sale)?.slice(0, 5));
 
@@ -81,6 +64,14 @@ const Index = () => {
           (el) => el.category === 'ethical' || el.category === 'excursions'
         )
         ?.slice(0, 6)
+    );
+
+    setTourCards(
+      tours
+        ?.filter(
+          (el) => el.category === 'ethical' || el.category === 'excursions'
+        )
+        ?.slice(0, 3)
     );
   }, [tours]);
 
@@ -94,6 +85,7 @@ const Index = () => {
       handleCatch(err);
     }
   };
+  const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
   return (
     <Page title='Goodfly | Home'>
@@ -106,22 +98,37 @@ const Index = () => {
           <Grid item xs={12} sm={6} className={classes.LeftGridItem}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
-                <FeaturedCard
-                  mainHeading='The Maldives'
-                  image='https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFsZGl2ZXN8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                />
+                {tourCards ? (
+                  <FeaturedCard
+                    mainHeading={tourCards[0].title}
+                    image={tourCards[0].image}
+                    id={tourCards[0]._id}
+                  />
+                ) : (
+                  <Skeleton height={244} />
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FeaturedCard
-                  mainHeading='Discover Malaysia'
-                  image='https://images.unsplash.com/photo-1533118673680-d7eaa85beb24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80'
-                />
+                {tourCards ? (
+                  <FeaturedCard
+                    mainHeading={tourCards[1].title}
+                    image={tourCards[1].image}
+                    id={tourCards[1]._id}
+                  />
+                ) : (
+                  <Skeleton height={244} />
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FeaturedCard
-                  mainHeading='Take a tour of our excursions'
-                  image='https://images.unsplash.com/photo-1576159470850-494c8b17aca0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZHViYWklMjBkZXNlcnR8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                />
+                {tourCards ? (
+                  <FeaturedCard
+                    mainHeading={tourCards[2].title}
+                    image={tourCards[2].image}
+                    id={tourCards[2]._id}
+                  />
+                ) : (
+                  <Skeleton height={244} />
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -178,6 +185,8 @@ const Index = () => {
                 variant='outlined'
                 color='primary'
                 sx={{ mt: 2, fontStyle: 'italic' }}
+                component={Link}
+                to='/tours/create'
               >
                 Ask for a quote
               </Button>
@@ -341,17 +350,17 @@ const Index = () => {
                 </Box>
                 <Box
                   sx={{
-                    flexGrow: 0,
-                    display: 'flex',
-                    alignItems: 'center',
+                    width: 200,
+                    height: 180,
                   }}
                 >
-                  <img
-                    src={TravelMapImg}
-                    alt='GoodFly Travels Location'
-                    width='150px'
-                    height='100px'
-                  />
+                  <GoogleMapReact
+                    // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+                    defaultCenter={goodflyLocation.center}
+                    defaultZoom={goodflyLocation.zoom}
+                  >
+                    <AnyReactComponent lat={33.68} lng={73} text='My Marker' />
+                  </GoogleMapReact>
                 </Box>
               </Box>
             </Box>
@@ -359,43 +368,28 @@ const Index = () => {
         </Grid>
       </Container>
       {/* 
-         <section className={classes.partnersSection}>
-            <Typography variant='h4' align='center'>
-               Our partners
-            </Typography>
+      <section className={classes.partnersSection}>
+        <Typography variant='h4' align='center'>
+          Our partners
+        </Typography>
 
-            <Box
-               sx={{
-                  mt: 2,
-                  height: 100,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  '& img': {
-                     marginInline: 10,
-                  },
-               }}
-            >
-               <img
-                  with='50px'
-                  height='50px'
-                  src={Partner1}
-                  alt='img'
-               />
-               <img
-                  with='50px'
-                  height='50px'
-                  src={Partner1}
-                  alt='img'
-               />
-               <img
-                  with='50px'
-                  height='50px'
-                  src={Partner1}
-                  alt='img'
-               />
-            </Box>
-         </section> */}
+        <Box
+          sx={{
+            mt: 2,
+            height: 100,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            '& img': {
+              marginInline: 10,
+            },
+          }}
+        >
+          <img with='50px' height='50px' src={Partner1} alt='img' />
+          <img with='50px' height='50px' src={Partner1} alt='img' />
+          <img with='50px' height='50px' src={Partner1} alt='img' />
+        </Box>
+      </section> */}
     </Page>
   );
 };

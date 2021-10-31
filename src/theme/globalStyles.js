@@ -53,7 +53,7 @@ const GlobalStyles = withStyles((theme) => ({
       color: theme.palette.text.secondary,
       textDecoration: 'none',
       '&:hover': {
-        color: '#fa0f0c',
+        // color: '#fa0f0c',
         cursor: 'pointer',
       },
     },

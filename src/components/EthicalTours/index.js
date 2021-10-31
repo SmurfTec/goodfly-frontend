@@ -26,9 +26,9 @@ const EthicalHome = ({ location }) => {
   const globalClasses = useGlobalClasses();
 
   const [ethicalTours, setEthicalTours] = useState();
-  const [tripType, setTripType] = useState('organized');
+  const [tripType, setTripType] = useState('all');
 
-  const defaultProps = {
+  const tripTypes = {
     options: ['all', 'organic', 'organized'],
     getOptionLabel: (option) => option,
   };
@@ -67,7 +67,7 @@ const EthicalHome = ({ location }) => {
   useEffect(() => {
     const query = new URLSearchParams(location.search).get('type');
     if (!query) return;
-    if (defaultProps.options.includes(query.toLowerCase())) setTripType(query);
+    if (tripTypes.options.includes(query.toLowerCase())) setTripType(query);
   }, [location.search]);
 
   const classes = styles(styleProps);
@@ -167,7 +167,7 @@ const EthicalHome = ({ location }) => {
           </Button>
 
           <Autocomplete
-            {...defaultProps}
+            {...tripTypes}
             id='disable-clearable'
             disableClearable
             value={tripType}

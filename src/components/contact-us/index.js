@@ -112,7 +112,7 @@ const Index = () => {
   };
   const [state, resetState, handleTxtChange] = UseInput(initialState);
 
-  const defaultProps = {
+  const goodflyLocation = {
     center: {
       lat: 33.68,
       lng: 73,
@@ -213,8 +213,8 @@ const Index = () => {
                 >
                   <GoogleMapReact
                     // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-                    defaultCenter={defaultProps.center}
-                    defaultZoom={defaultProps.zoom}
+                    defaultCenter={goodflyLocation.center}
+                    defaultZoom={goodflyLocation.zoom}
                   >
                     <AnyReactComponent lat={33.68} lng={73} text='My Marker' />
                   </GoogleMapReact>
