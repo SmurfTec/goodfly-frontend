@@ -87,6 +87,7 @@ const palette = {
     white: '#fff',
     grey1: '#999999',
     grey2: '#808080',
+    grey3: '#B3B3B3',
   },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
