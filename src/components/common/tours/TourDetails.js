@@ -179,7 +179,7 @@ const reviews = [
   },
 ];
 
-const TourDetails = ({ match, history }) => {
+const TourDetails = ({ match, history, location }) => {
   const classes = useStyles();
   const { user } = useContext(AuthContext);
   const { id } = match.params;
@@ -217,6 +217,16 @@ const TourDetails = ({ match, history }) => {
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  const handleReview = () => {
+    if (user) {
+      //  * Handle Review
+    } else {
+      //  * Redirect to Login
+      history.push(`/auth/login?redirect=${location.pathname}}`);
+    }
+  };
+
   return (
     <div>
       <Carousel
@@ -343,6 +353,7 @@ const TourDetails = ({ match, history }) => {
                       borderBottomRightRadius: 15,
                     }}
                     endIcon={<EuroIcon />}
+                    component={'div'}
                   >
                     {tour.price}
                   </Button>
@@ -521,7 +532,7 @@ const TourDetails = ({ match, history }) => {
                 <Button
                   variant='contained'
                   color='primary'
-                  // onClick={handleReview}
+                  onClick={handleReview}
                 >
                   Submit
                 </Button>

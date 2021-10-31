@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Cart from './Cart';
 import Step2 from './Step2';
 import Step3 from './Step3';
-import StoreNav from '../StoreSubNav';
 import Back from '@material-ui/icons/ArrowBackIos';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PayPalButton } from 'react-paypal-button-v2';
@@ -177,6 +176,7 @@ const Checkout = () => {
         console.log(`resData`, resData);
         setActiveStep(3);
         setOrder(resData.order);
+        // * Clear Cart
       } catch (err) {
         handleCatch(err);
       }
@@ -195,8 +195,6 @@ const Checkout = () => {
   return (
     <Page title='GoodFly |  Checkout'>
       <Container sx={{ mt: 8 }}>
-        <StoreNav />
-
         {activeStep > 0 && activeStep < 3 && (
           <>
             <Box className={classes.backButton} onClick={handleBack}>

@@ -34,7 +34,25 @@ export const StoreProvider = withRouter(({ children, history }) => {
 
   const [products, setProducts] = useState();
   const [cart, setCart, resetCart] = UseLocalStorage('cart', initialState);
+  const [userOrders, setUserOrders] = useState();
   const [order, setOrder] = useState();
+
+  // * Get User Orders if he gets Logged In
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        try {
+          const resData = await makeReq(`/orders/me`);
+          console.log(`resData`, resData);
+          setUserOrders(resData.orders);
+        } catch (err) {
+          //  console.log(`err`, err)
+        }
+      })();
+    } else {
+      setUserOrders();
+    }
+  }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -159,6 +177,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
         decreaseQuantity,
         order,
         setOrder,
+        userOrders,
       }}
     >
       {children}

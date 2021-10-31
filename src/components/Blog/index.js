@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Container,
-  Card,
-  CardMedia,
-  Typography,
-  Grid,
-} from '@material-ui/core';
+import { Container, Card, Typography, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Box } from '@material-ui/system';
-import TextIcon from '@material-ui/icons/Textsms';
 
 import BlogCard from './BlogCard';
 import BannerImg from 'Assets/img/airbaloon.jpg';
-import LoyaltyImg from 'Assets/img/loyaltyCard.jpg';
-import SkingImg from 'Assets/img/skyingFrance.jpg';
-import JakartaImg from 'Assets/img/jakarta.jpg';
-import MalaysianBeachesImg from 'Assets/img/malaysiaBeaches.jpg';
-import TravelBagImg from 'Assets/img/travelBag.jpg';
 
 import styles from 'Styles/Blog';
 import { makeReq, handleCatch } from 'Utils/constants';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
+import Banner from 'components/common/tours/Banner';
 
 const ClientBlog = () => {
   const classes = styles();
@@ -51,22 +40,13 @@ const ClientBlog = () => {
   return (
     <Page title='GoodFly | Blogs'>
       <Container className={globalClasses.MainContainer}>
-        <Card sx={{ boxShadow: 'none' }}>
-          <CardMedia
-            sx={{ height: 250, position: 'relative' }}
-            image={BannerImg}
-          >
-            <Typography
-              variant='h3'
-              className={classes.title}
-              align='center'
-              sx={{ mb: 1 }}
-            >
-              <TextIcon /> THE BLOG
-            </Typography>
-          </CardMedia>
-        </Card>
-        <Box mt={10}>
+        <Banner
+          imageUrl={BannerImg}
+          bannerTitle='Blogs'
+          align='left'
+          noAdvisor
+        />
+        <Box>
           <Grid container spacing={3}>
             {blogs ? (
               blogs.length > 0 ? (
@@ -92,7 +72,7 @@ const ClientBlog = () => {
           <Grid container spacing={3}>
             {blogs ? (
               blogs.length > 0 ? (
-                blogs.slice(5, blogs.length).map((blog, i) => (
+                blogs.slice(5).map((blog, i) => (
                   <Grid key={blog._id} item xs={12} sm={i === 3 ? 8 : 4}>
                     <BlogCard blog={blog} handleClick={blogClick} />
                   </Grid>

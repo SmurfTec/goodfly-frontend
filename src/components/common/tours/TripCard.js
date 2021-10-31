@@ -67,36 +67,48 @@ const TripCard = (props) => {
     title,
     price,
     image,
-    history,
     startingDate,
     endingDate,
     boardType,
+    history,
+    location,
   } = props;
 
   const handleFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    //  * If User NOT Logged In , goto Login Page
+    console.log(`path`, `/auth/login?redirect=${location.pathname}`);
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}`);
     favouriteTrip(_id);
   };
 
   const handleUnFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    console.log(`path`, `/auth/login?redirect=${location.pathname}`);
 
-    unFavouriteTrip(_id);
+    //  * If User NOT Logged In , goto Login Page
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}}`);
+    else unFavouriteTrip(_id);
   };
 
   const [isFavourite, setIsFavourite] = useState(false);
 
   useEffect(() => {
-    if (!user?.favourities || user?.favourities.length === 0) {
-      setIsFavourite(false);
-      return;
-    }
-    if (user?.favourities.includes(_id)) setIsFavourite(true);
+    // // if (!user?.favourities || user?.favourities.length === 0) {
+    // //   setIsFavourite(false);
+    // //   return;
+    // // }
+    // // * If User if NOT Logged In , log him in
+    // if(!user) {
+    //   setIsFavourite(false)
+    // }
+
+    if (!!user?.favourities?.find((el) => el._id === _id)) setIsFavourite(true);
     else setIsFavourite(false);
-  }, [user]);
+  }, [user, _id]);
 
   const handleClick = () => {
     history.push(`/tours/details/${_id}`);

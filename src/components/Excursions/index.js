@@ -55,6 +55,7 @@ const ExcursionaHome = ({ location }) => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search).get('type');
+    if (!query) return;
     if (defaultProps.options.includes(query.toLowerCase())) setTripType(query);
   }, [location.search]);
 
