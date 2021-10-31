@@ -12,7 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ReactCountryFlag from 'react-country-flag';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
-import InfoIcon from '@material-ui/icons/Info';
 // import logo from 'Assets/img/airplane.svg';
 import logo from 'Assets/img/airplanesvg2.png';
 import useStyles from 'Styles/Navbar';
@@ -260,10 +259,11 @@ const Header = ({ history }) => {
           </IconButton>
         </NavLink>
       )}
-      <IconButton aria-label='contact-us'>
-        <PhoneIcon color='action' />
-      </IconButton>
-
+      <NavLink to='/contact-us'>
+        <IconButton aria-label='contact-us'>
+          <PhoneIcon color='action' />
+        </IconButton>
+      </NavLink>
       {user && (
         <IconButton aria-label='logout' onClick={logoutUser}>
           <ExitToAppIcon color='action' />
