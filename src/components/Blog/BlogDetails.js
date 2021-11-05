@@ -22,6 +22,7 @@ import { handleCatch, makeReq } from 'Utils/constants';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 import { AuthContext } from 'Contexts/AuthContext';
+import parse from 'html-react-parser';
 
 const BlogDetails = ({ match, history, location }) => {
   const globalClasses = useGlobalClasses();
@@ -142,7 +143,7 @@ const BlogDetails = ({ match, history, location }) => {
             </Box>
           </Box>
           <Container sx={{ mt: 8 }} className={globalClasses.MainContainer}>
-            {blog?.paragraphs.map((paragraph, idx) => (
+            {/* {blog?.paragraphs.map((paragraph, idx) => (
               <React.Fragment key={paragraph._id}>
                 <Typography variant='h5' color='text.secondary' sx={{ my: 3 }}>
                   {paragraph.text}
@@ -154,8 +155,8 @@ const BlogDetails = ({ match, history, location }) => {
                   ></img>
                 )}
               </React.Fragment>
-            ))}
-
+            ))} */}
+            {parse(blog.content)}
             <Paper
               elevation={0}
               sx={{ backgroundColor: '#fafafa', p: 4, mt: 8 }}
@@ -223,7 +224,6 @@ const BlogDetails = ({ match, history, location }) => {
                 </form>
               </Box>
             </Paper>
-
             <Box sx={{ mt: 17 }}>
               <Typography variant='h4' fullWidth align='center' sx={{ my: 6 }}>
                 Latest Articles Online

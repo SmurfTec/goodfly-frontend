@@ -8,7 +8,7 @@ import { Box } from '@material-ui/system';
 
 const BlogCard = ({ blog, handleClick }) => {
   const classes = styles();
-  const { _id, tag, createdAt, images, title } = blog;
+  const { _id, keywords, createdAt, images, title } = blog;
 
   return (
     <Card className={classes.card}>
@@ -30,7 +30,7 @@ const BlogCard = ({ blog, handleClick }) => {
           ></Typography>
           <Box className={classes.title}>
             <Typography variant='h5' sx={{ fontStyle: 'italic' }}>
-              {tag}
+              {keywords.map((keyword) => `${keyword}{' '}`)}
             </Typography>
             <Typography variant='h4'>{title}</Typography>
           </Box>

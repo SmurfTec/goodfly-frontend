@@ -37,10 +37,11 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 
 const useStyles = makeStyles((theme) => ({
   FormBox: {
+    width: '100%',
     '& input,textarea': {
       padding: '9px 20px',
       textAlign: 'left',
-      border: 0,
+      border: '1px solid #ccc',
       outline: 0,
       borderRadius: 6,
       backgroundColor: '#fff',
@@ -152,15 +153,15 @@ const Index = () => {
           </Grid>
         </Hidden>
       </Grid>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          padding: '20px 40px',
-          marginTop: '3rem',
-          backgroundColor: '#f2f2f2',
-          borderRadius: '15px',
-        }}
+      <Box
+      // square
+      // elevation={0}
+      // sx={{
+      //   padding: '20px 40px',
+      //   marginTop: '3rem',
+      //   backgroundColor: '#f2f2f2',
+      //   borderRadius: '15px',
+      // }}
       >
         <Grid
           container
@@ -228,7 +229,7 @@ const Index = () => {
         </Grid>
         <Divider />
         <Box mt={5} paddingTop={5} display='flex' justifyContent='center'>
-          <Box className={classes.FormBox}>
+          <Box className={classes.FormBox} fullWidth>
             <Typography variant='h4' sx={{ marginBottom: '2rem' }}>
               Contact Form
             </Typography>
@@ -247,7 +248,10 @@ const Index = () => {
                 value={state.subject}
                 name='subject'
                 placeholder='What is the subject of your message'
-                style={{ width: 350 }}
+                style={{
+                  width: '80%',
+                  maxWidth: 350,
+                }}
               />
               <br />
               <Box
@@ -317,7 +321,7 @@ const Index = () => {
             </form>
           </Box>
         </Box>
-      </Paper>
+      </Box>
       <Box className={classes.newsLetterSubs} my={3}>
         <Typography variant='h6'>
           Receive the best offers <span>via the newsletter GOODFLY</span>
@@ -340,10 +344,7 @@ const Index = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box
-        mt={5}
-        sx={{ width: 500, marginInline: 'auto', textAlign: 'center' }}
-      >
+      <Box mt={5} sx={{ marginInline: 'auto', textAlign: 'center' }}>
         <Typography variant='h4'>FOLLOW GOODFLY ON SOCIAL MEDIA</Typography>
         <Box
           mt={1}
