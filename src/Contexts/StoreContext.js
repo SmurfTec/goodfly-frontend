@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { handleCatch, makeReq, API_BASE_URL } from 'Utils/constants';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
+import useUpdateEffect from 'Hooks/useUpdateEffect';
 
 export const StoreContext = React.createContext();
 
@@ -67,7 +68,8 @@ export const StoreProvider = withRouter(({ children, history }) => {
     })();
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  useUpdateEffect(() => {
     if (cart?.orderItems.length > 0) {
       const addReducer = (accumulator, currentValue) =>
         accumulator + currentValue;

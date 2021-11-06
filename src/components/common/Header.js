@@ -26,6 +26,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AuthContext } from 'Contexts/AuthContext';
 import { AccountBox } from '@material-ui/icons';
+import v4 from 'uuid/dist/v4';
 
 const mobileNavContent = [
   {
@@ -310,7 +311,7 @@ const Header = ({ history }) => {
           ) : navContent.title === 'Login' && user ? (
             <> </>
           ) : (
-            <React.Fragment key={navContent?.title}>
+            <React.Fragment key={v4()}>
               <Typography
                 variant='h5'
                 sx={{
@@ -331,7 +332,7 @@ const Header = ({ history }) => {
                 )}
               </Typography>
               {navContent?.info?.map((subContent) => (
-                <React.Fragment key={subContent?.route}>
+                <React.Fragment key={v4()}>
                   <Typography variant='subtitle1' sx={{ mb: 1 }}>
                     <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
                   </Typography>
