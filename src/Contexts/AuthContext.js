@@ -89,6 +89,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
         setUser,
         signInUser,
         updateMe,
+        getMe,
       }}
     >
       {children}

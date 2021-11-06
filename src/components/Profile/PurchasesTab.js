@@ -1,16 +1,14 @@
-import {
-  Container,
-  Divider,
-  Typography,
-  Box,
-} from '@material-ui/core';
-import React from 'react';
+import { Container, Divider, Typography, Box } from '@material-ui/core';
+import React, { useContext } from 'react';
 import CollapseHeader from './CollapseHeader';
 import StoreItem from './StoreCollapseItem';
 import PurchaseItem from './PurchasesCollapseItem';
 import { orders, purchases } from './DummyData';
+import { StoreContext } from 'Contexts/StoreContext';
 
-const PurchasesTab = () => {
+const PurchasesTab = ({ purchases, orders }) => {
+  // const {orders,products} = useContext(StoreContext)
+
   const orderDetails = (status) => {
     return orders
       .filter((order) => order.status === status)
@@ -46,7 +44,7 @@ const PurchasesTab = () => {
         >
           Completed Orders
         </Typography>
-        {orderDetails('completed')}
+        {orderDetails('paid')}
 
         <Typography
           variant='subtitle1'

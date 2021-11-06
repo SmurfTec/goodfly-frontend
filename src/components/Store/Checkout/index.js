@@ -102,7 +102,11 @@ const Checkout = () => {
                 console.log(`data`, data);
 
                 console.log(`order`, order);
-                const resData = await makeReq(`/orders/${order._id}`);
+                const resData = await makeReq(
+                  `/orders/${order._id}`,
+                  {},
+                  'PATCH'
+                );
                 console.log(`resData`, resData);
                 toast.success('Order Payed successfully');
                 history.push('/store');

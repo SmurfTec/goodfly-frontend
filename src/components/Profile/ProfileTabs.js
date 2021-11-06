@@ -144,7 +144,7 @@ const ProfileTabs = ({ user }) => {
           index={3}
           dir={theme.direction}
         >
-          <PurchasesTab />
+          <PurchasesTab orders={user.orders} purchases={user.Purchases} />
         </TabPanel>
       </SwipeableViews>
     </div>
