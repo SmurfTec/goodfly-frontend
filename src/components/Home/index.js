@@ -96,8 +96,8 @@ const Index = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} className={classes.LeftGridItem}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
+            <Grid container spacing={2} className={classes.TripCardsContainer}>
+              <Grid item xs={12} sm={12} className={classes.TripCards}>
                 {tourCards ? (
                   <FeaturedCard
                     mainHeading={tourCards[0].title}
@@ -108,7 +108,7 @@ const Index = () => {
                   <Skeleton height={244} />
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} className={classes.TripCards}>
                 {tourCards ? (
                   <FeaturedCard
                     mainHeading={tourCards[1].title}
@@ -119,7 +119,7 @@ const Index = () => {
                   <Skeleton height={244} />
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} className={classes.TripCards}>
                 {tourCards ? (
                   <FeaturedCard
                     mainHeading={tourCards[2].title}

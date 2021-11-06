@@ -3,14 +3,6 @@ import PromoImage from 'Assets/img/PromoImg.jpg';
 import HajjImage from 'Assets/kaaba.jpg';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '&.MuiContainer-root': {
-      [theme.breakpoints.up('md')]: {
-        paddingLeft: 47,
-        paddingRight: 65,
-      },
-    },
-  },
   nav: {
     display: 'flex',
     overflowX: 'auto',
@@ -41,11 +33,25 @@ const useStyles = makeStyles((theme) => ({
     },
     display: 'inline-block',
 
+    [theme.breakpoints.down('xs')]: {
+      minWidth: '100%',
+    },
     [theme.breakpoints.up('md')]: {
       maxHeight: 525,
       //  position: 'absolute',
       bottom: 20,
       left: 65,
+    },
+  },
+  TripCards: {
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%',
+    },
+  },
+  TripCardsContainer: {
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%',
+      margin: 'auto',
     },
   },
   RightGridItem: {

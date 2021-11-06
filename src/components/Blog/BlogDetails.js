@@ -143,19 +143,6 @@ const BlogDetails = ({ match, history, location }) => {
             </Box>
           </Box>
           <Container sx={{ mt: 8 }} className={globalClasses.MainContainer}>
-            {/* {blog?.paragraphs.map((paragraph, idx) => (
-              <React.Fragment key={paragraph._id}>
-                <Typography variant='h5' color='text.secondary' sx={{ my: 3 }}>
-                  {paragraph.text}
-                </Typography>
-                {blog?.images[idx + 1] && (
-                  <img
-                    src={blog?.images[idx + 1]}
-                    style={{ margin: 'auto' }}
-                  ></img>
-                )}
-              </React.Fragment>
-            ))} */}
             {parse(blog.content)}
             <Paper
               elevation={0}

@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
       flex: '0 0 auto',
 
       marginRight: 14,
-      fontSize: 14,
+      // fontSize: '1.35vw',
+      fontSize: '1.35vw',
       fontStyle: 'normal',
       letterSpacing: 'normal',
       lineHeight: 'normal',

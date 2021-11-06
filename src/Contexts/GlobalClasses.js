@@ -5,8 +5,15 @@ const useStyles = makeStyles((theme) => ({
   MainContainer: {
     '&.MuiContainer-root': {
       [theme.breakpoints.up('sm')]: {
-        paddingLeft: 47,
-        paddingRight: 60,
+        // paddingLeft: 47,
+        // paddingRight: 60,
+        paddingInline: '5vw',
+        /* max-width: 1052px; */
+        width: '87vw',
+        paddingInline: 'unset',
+      },
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: 'unset',
       },
     },
   },

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme, props) => ({
     flexDirection: 'column',
     position: 'relative',
 
-    '& .MuiCardActionArea-root': { minHeight: 250 },
+    '& .MuiCardActionArea-root': { Height: 250 },
   },
   media: {
     height: '100%',
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme, props) => ({
     backgroundPosition: 'center',
     minHeight: 245,
     borderRadius: 15,
+
     [theme.breakpoints.down('sm')]: {
       minHeight: 180,
     },
