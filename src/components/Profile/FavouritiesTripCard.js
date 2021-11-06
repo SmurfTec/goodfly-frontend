@@ -9,6 +9,8 @@ import { Button, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { Link, withRouter } from 'react-router-dom';
 
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -22,17 +24,19 @@ const TripCard = (props) => {
   const classes = useStyles();
 
   const {
+    _id,
+    title,
     noOfJourneys,
-
+    service,
+    desc,
+    price,
+    image,
     history,
     country,
-    departureDate,
-    returnDate,
-
-    trip,
+    startingDate,
+    endingDate,
+    boardType,
   } = props;
-
-  const { _id, title, service, desc, price, image, boardType } = trip;
 
   const handleClick = () => {
     // console.log(`_id`, _id);
@@ -82,8 +86,8 @@ const TripCard = (props) => {
               variant='subtitle2'
               style={{ minWidth: 190 }}
             >
-              {`From ${new Date(departureDate).toLocaleDateString()} To 
-           ${new Date(returnDate).toLocaleDateString()}
+              {`from ${new Date(startingDate).toLocaleDateString()} to 
+           ${new Date(endingDate).toLocaleDateString()}
             `}
             </Typography>
             <Typography
@@ -92,12 +96,30 @@ const TripCard = (props) => {
               gutterBottom
               align='center'
             >
-              {/* {new Date(returnDate) - new Date(departureDate)} */}
-              {boardType.toUpperCase()}
+              {Math.ceil(
+                Math.abs(endingDate - startingDate) / 1000 / 60 / 60 / 24
+              )}
+              {' Days '} {boardType}
             </Typography>
+            <FavoriteIcon
+              color='error'
+              style={{ position: 'absolute', left: 10, top: 20 }}
+            />
           </Box>
         </CardContent>
       </CardActionArea>
+      <CardActions style={{ justifyContent: 'center', paddingBottom: 20 }}>
+        <Button
+          variant='contained'
+          size='small'
+          color='primary'
+          style={{ borderRadius: 0, paddingInline: 30 }}
+          component={Link}
+          to={`/tours/details/${_id}`}
+        >
+          Find Out More
+        </Button>
+      </CardActions>
     </Card>
   );
 };

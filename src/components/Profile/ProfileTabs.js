@@ -5,15 +5,10 @@ import SwipeableViews from 'react-swipeable-views';
 
 // --------- MUI ----------- //
 import { makeStyles, useTheme } from '@material-ui/styles';
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-} from '@material-ui/core';
+import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
 import PersonalInfo from './PersonalInfo';
-import TripsTab from './TripsTab';
+import FavouritiesTab from './FavouritiesTab';
+import TripsTab from './TripsTabs';
 import PurchasesTab from './PurchasesTab';
 // ------------------------ //
 
@@ -84,10 +79,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FullWidthTabs = ({ user }) => {
+const ProfileTabs = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(3);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -133,7 +128,7 @@ const FullWidthTabs = ({ user }) => {
           index={1}
           dir={theme.direction}
         >
-          <TripsTab favourities={user.favourites} />
+          <FavouritiesTab trips={user.favourities} />
         </TabPanel>
         <TabPanel
           className={classes.TabPanel}
@@ -141,7 +136,7 @@ const FullWidthTabs = ({ user }) => {
           index={2}
           dir={theme.direction}
         >
-          <TripsTab />
+          <TripsTab trips={user.Purchases} />
         </TabPanel>
         <TabPanel
           className={classes.TabPanel}
@@ -156,4 +151,4 @@ const FullWidthTabs = ({ user }) => {
   );
 };
 
-export default FullWidthTabs;
+export default ProfileTabs;

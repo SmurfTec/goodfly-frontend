@@ -4,9 +4,9 @@ import React from 'react';
 import { Container, Grid } from '@material-ui/core';
 // ------------------------ //
 
-import TripCard from './TripCard';
+import TripCard from './FavouritiesTripCard';
 
-const TripsTab = ({ trips }) => {
+const FavouritiesTab = ({ trips }) => {
   return (
     <Container>
       Favourities
@@ -21,4 +21,4 @@ const TripsTab = ({ trips }) => {
   );
 };
 
-export default TripsTab;
+export default FavouritiesTab;
