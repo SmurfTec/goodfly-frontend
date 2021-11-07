@@ -30,7 +30,7 @@ const BlogCard = ({ blog, handleClick }) => {
           ></Typography>
           <Box className={classes.title}>
             <Typography variant='h5' sx={{ fontStyle: 'italic' }}>
-              {keywords.map((keyword) => `${keyword}{' '}`)}
+              {keywords.map((keyword) => `${keyword} `)}
             </Typography>
             <Typography variant='h4'>{title}</Typography>
           </Box>

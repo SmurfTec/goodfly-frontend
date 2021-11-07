@@ -28,9 +28,9 @@ const PurchaseCollapseItem = (props) => {
   };
 
   const checkStatus = () => {
-    if (purchase.meetingWithStaff === 'no') return 0;
-    if (purchase.meetingWithStaff === 'yes') {
-      if (purchase.reserved) return 2;
+    if (purchase.status === 'pre-booked') return 0;
+    if (purchase.status !== 'pre-booked') {
+      if (purchase.status === 'paid') return 2;
       else return 1;
     }
   };
@@ -45,6 +45,22 @@ const PurchaseCollapseItem = (props) => {
       I want to cancel
     </Button>
   );
+
+  function days_between(date1, date2) {
+    // The number of milliseconds in one day
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    // Calculate the difference in milliseconds
+    const differenceMs = Math.abs(date1 - date2);
+
+    // Convert back to days and return
+    return Math.round(differenceMs / ONE_DAY);
+  }
+
+  const subtractDays = (date, days) => {
+    date.setDate(date.getDate() - days);
+    return date;
+  };
 
   const reservationConfig = (num) => {
     //? 0 means 'client has not yet meet with the staff member'
@@ -78,7 +94,7 @@ const PurchaseCollapseItem = (props) => {
       return (
         <>
           <Typography variant='body2' component='span' align='center'>
-            Reservation ({purchase?.bookedOn})
+            Reservation ({new Date(purchase.bookedDate).toDateString()})
           </Typography>
           {cancelResButton}
           <Typography
@@ -87,7 +103,11 @@ const PurchaseCollapseItem = (props) => {
             component='span'
             align='center'
           >
-            Cancellation possible until {purchase.date}
+            Cancellation possible until{' '}
+            {days_between(
+              new Date(),
+              subtractDays(new Date(purchase.departureDte), 14)
+            )}
           </Typography>
         </>
       );
@@ -97,21 +117,16 @@ const PurchaseCollapseItem = (props) => {
   const paymentDetails = (num) => {
     if (num === 0)
       return (
-        <Typography
-          variant='subtitle2'
-          component='span'
-          sx={{ color: 'red' }}
-        >
-          A member of the Goodfly team will get in touch with you very
-          soon to set up your payment schedule for this trip! a bit of
-          patience
+        <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
+          A member of the Goodfly team will get in touch with you very soon to
+          set up your payment schedule for this trip! a bit of patience
         </Typography>
       );
     else {
       const remAmount =
-        purchase.deposit.status === 'paid'
-          ? purchase.price - purchase.deposit.amount
-          : purchase.price;
+        purchase.status === 'paid'
+          ? purchase.trip.price - purchase.paidAmount
+          : purchase.trip.price;
       return (
         <>
           <Typography
@@ -139,7 +154,8 @@ const PurchaseCollapseItem = (props) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5' component='span'>
-            {purchase.name} - {purchase.date} -
+            {purchase.trip.title.toUpperCase()} -{' '}
+            {new Date(purchase.departureDate).toDateString()} -
           </Typography>
           <Typography
             variant='subtitle1'
@@ -147,7 +163,7 @@ const PurchaseCollapseItem = (props) => {
             component='span'
             sx={{ fontStyle: 'italic' }}
           >
-            {purchase.price}€
+            {purchase.trip.price}€
           </Typography>
           <IconButton
             disableRipple
@@ -160,11 +176,7 @@ const PurchaseCollapseItem = (props) => {
             <ExpandLessIcon />
           </IconButton>
         </Box>
-        <Typography
-          variant='subtitle2'
-          component='span'
-          color='textSecondary'
-        >
+        <Typography variant='subtitle2' component='span' color='textSecondary'>
           Timeline
         </Typography>
       </Box>

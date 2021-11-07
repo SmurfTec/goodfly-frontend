@@ -81,11 +81,7 @@ const PersonalInfo = () => {
 
   return (
     <Container>
-      <Box
-        display='flex'
-        justifyContent='space-between'
-        alignItems='center'
-      >
+      <Box display='flex' justifyContent='space-between' alignItems='center'>
         <FormControl
           component='fieldset'
           size='small'
@@ -396,7 +392,7 @@ const PersonalInfo = () => {
         </Typography>
         {user.attachments?.slice(0, 3).map((el, idx) => (
           <img
-            src={el}
+            src={el.image}
             alt={`Attachment ${idx}`}
             style={{ width: '100%' }}
           />
