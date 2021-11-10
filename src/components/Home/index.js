@@ -99,33 +99,39 @@ const Index = () => {
             <Grid container spacing={2} className={classes.TripCardsContainer}>
               <Grid item xs={12} sm={12} className={classes.TripCards}>
                 {tourCards ? (
-                  <FeaturedCard
-                    mainHeading={tourCards[0].title}
-                    image={tourCards[0].image}
-                    id={tourCards[0]._id}
-                  />
+                  tourCards.length > 0 && (
+                    <FeaturedCard
+                      mainHeading={tourCards[0].title}
+                      image={tourCards[0].image}
+                      id={tourCards[0]._id}
+                    />
+                  )
                 ) : (
                   <Skeleton height={244} />
                 )}
               </Grid>
               <Grid item xs={12} sm={6} className={classes.TripCards}>
                 {tourCards ? (
-                  <FeaturedCard
-                    mainHeading={tourCards[1].title}
-                    image={tourCards[1].image}
-                    id={tourCards[1]._id}
-                  />
+                  tourCards.length > 0 && (
+                    <FeaturedCard
+                      mainHeading={tourCards[1].title}
+                      image={tourCards[1].image}
+                      id={tourCards[1]._id}
+                    />
+                  )
                 ) : (
                   <Skeleton height={244} />
                 )}
               </Grid>
               <Grid item xs={12} sm={6} className={classes.TripCards}>
                 {tourCards ? (
-                  <FeaturedCard
-                    mainHeading={tourCards[2].title}
-                    image={tourCards[2].image}
-                    id={tourCards[2]._id}
-                  />
+                  tourCards.length > 0 && (
+                    <FeaturedCard
+                      mainHeading={tourCards[2].title}
+                      image={tourCards[2].image}
+                      id={tourCards[2]._id}
+                    />
+                  )
                 ) : (
                   <Skeleton height={244} />
                 )}
