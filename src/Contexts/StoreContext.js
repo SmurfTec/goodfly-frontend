@@ -44,10 +44,10 @@ export const StoreProvider = withRouter(({ children, history }) => {
       (async () => {
         try {
           const resData = await makeReq(`/orders/me`);
-          console.log(`resData`, resData);
+          // console.log(`resData`, resData);
           setUserOrders(resData.orders);
         } catch (err) {
-          //  console.log(`err`, err)
+          console.log(`err`, err);
         }
       })();
     } else {
@@ -74,12 +74,12 @@ export const StoreProvider = withRouter(({ children, history }) => {
       const addReducer = (accumulator, currentValue) =>
         accumulator + currentValue;
 
-      console.log(`cart.orderItems`, cart.orderItems);
+      // console.log(`cart.orderItems`, cart.orderItems);
 
       let totalPrice = cart.orderItems.map((el) => el.price * el.quantity * 1);
 
       totalPrice = totalPrice.reduce(addReducer);
-      console.log(`totalPrice`, totalPrice);
+      // console.log(`totalPrice`, totalPrice);
       setCart((st) => ({
         ...st,
         subTotal: totalPrice,
@@ -93,14 +93,14 @@ export const StoreProvider = withRouter(({ children, history }) => {
   }, [cart.orderItems]);
 
   const addItemToCart = (item, quantity) => {
-    console.log(`addItem`, item);
+    // console.log(`addItem`, item);
     // * If Item is Already in Cart , then increase quantity
     const alreadyInCart = !!cart.orderItems.find((el) => el._id === item._id);
-    console.log(`new item`, {
-      ...item,
-      quantity,
-      subTotal: item.price * quantity,
-    });
+    // console.log(`new item`, {
+    //   ...item,
+    //   quantity,
+    //   subTotal: item.price * quantity,
+    // });
     if (alreadyInCart)
       setCart((st) => ({
         ...st,
@@ -125,7 +125,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
   };
 
   const removeItemFromCart = (id) => {
-    console.log(`id`, id);
+    // console.log(`id`, id);
     setCart((st) => ({
       ...st,
       orderItems: st.orderItems.filter((item) => item._id !== id),

@@ -22,7 +22,7 @@ const MapBox = () => {
   const [place, setPlace] = useState();
 
   useEffect(() => {
-    console.log(`place`, place);
+    // console.log(`place`, place);
   }, [place]);
 
   useEffect(() => {
@@ -202,7 +202,7 @@ const MapBox = () => {
   });
 
   const changeCenter = () => {
-    console.log('called');
+    // console.log('called');
     map.current.flyTo({
       center: [-77.007481, 38.876516],
     });

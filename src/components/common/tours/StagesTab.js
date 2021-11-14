@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme) => ({}));
 const StagesTab = ({ stages }) => {
   const classes = useStyles();
 
-  console.clear();
-  console.log(`stages`, stages);
-
   return (
     <>
       {stages?.map((stage, idx) => (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import { withRouter, Link } from 'react-router-dom';
@@ -227,6 +227,16 @@ const TourDetails = ({ match, history, location }) => {
     }
   };
 
+  const isAlreadyPurchased = useMemo(() => {
+    console.log(`user?.purchases`, user?.Purchases);
+    console.log(`user`, user);
+    return !!user?.Purchases?.find((purchase) => {
+      console.log(`purchase.trip._id`, purchase.trip._id);
+      console.log(`id`, id);
+      return purchase.trip._id === id;
+    });
+  }, [id, user]);
+
   return (
     <div>
       <Carousel
@@ -309,11 +319,11 @@ const TourDetails = ({ match, history, location }) => {
                   <Button
                     variant='contained'
                     style={{
-                      backgroundColor: '#46b9f6',
                       marginTop: '1rem',
                       paddingInline: 20,
                       width: 300,
                     }}
+                    sx={{ color: '#46b9f6' }}
                     component={Link}
                     to={
                       user
@@ -321,6 +331,7 @@ const TourDetails = ({ match, history, location }) => {
                         : `/auth/login?redirect=/tours/reservation/${id}`
                     }
                     onClick={handleLinkClick}
+                    disabled={isAlreadyPurchased}
                   >
                     Reserve
                   </Button>

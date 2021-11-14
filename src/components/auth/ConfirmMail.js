@@ -22,7 +22,7 @@ const ConfirmMail = ({ match, history }) => {
       try {
         await axios.get(`${API_BASE_URL}/auth/ConfirmMail/${token}`);
       } catch (err) {
-        console.log(`err`, err);
+        // console.log(`err`, err);
         setSuccess(false);
       } finally {
         setAuthenticating(false);

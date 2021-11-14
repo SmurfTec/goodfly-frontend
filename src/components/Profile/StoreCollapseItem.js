@@ -124,16 +124,16 @@ const StoreCollapseItem = ({ order }) => {
                     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
                   }}
                   onSuccess={async (details, data) => {
-                    console.log(`details`, details);
-                    console.log(`data`, data);
+                    // console.log(`details`, details);
+                    // console.log(`data`, data);
 
-                    console.log(`order`, order);
+                    // console.log(`order`, order);
                     const resData = await makeReq(
                       `/orders/${order._id}`,
                       {},
                       'PATCH'
                     );
-                    console.log(`resData`, resData);
+                    // console.log(`resData`, resData);
                     getMe();
                     toast.success('Order Payed successfully');
                   }}

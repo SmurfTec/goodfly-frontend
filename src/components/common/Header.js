@@ -192,7 +192,7 @@ const Header = ({ history }) => {
 
   const toggleMobileNav = () => {
     setOpenMobileNav((st) => !st);
-    console.log('mobileNavToggle');
+    // console.log('mobileNavToggle');
   };
 
   const handleLanguage = (event) => {

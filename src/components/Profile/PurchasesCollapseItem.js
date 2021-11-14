@@ -21,10 +21,10 @@ const PurchaseCollapseItem = (props) => {
   };
 
   const handlePay = () => {
-    console.log('Handle Payment');
+    // console.log('Handle Payment');
   };
   const handleCancelRes = () => {
-    console.log('Cancel Reservation');
+    // console.log('Cancel Reservation');
   };
 
   const checkStatus = () => {

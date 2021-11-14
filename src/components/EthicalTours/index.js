@@ -83,10 +83,8 @@ const EthicalHome = ({ location }) => {
 
   // ? Filter Menu open
   const filterMenuOpen = (e) => {
-    console.log('clicked');
     e.preventDefault();
     e.stopPropagation();
-    console.log(`e.currentTarget`, e.currentTarget);
     setAnchorEl(e.currentTarget);
   };
 

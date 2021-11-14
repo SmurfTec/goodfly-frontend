@@ -32,20 +32,20 @@ const StepThree = ({ tour, travellers, data }) => {
   const watchFields = watch();
 
   const handeSubmitForm = async (formData) => {
-    console.log(`formData`, formData);
+    // console.log(`formData`, formData);
     data = { ...data, ...formData, trip: tour._id };
-    console.log(`data`, data);
+    // console.log(`data`, data);
     removeKeyIncludingString(data, '-');
     removeKeyIncludingString(data, 'numOfTravellers');
-    console.log(`data`, data);
+    // console.log(`data`, data);
 
     try {
       const resData = await makeReq(
-        `/trips/${tour._id}/purchase`,
-        { body: { ...data } },
+        `/purchases`,
+        { body: { ...data, tripId: tour._id } },
         'POST'
       );
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       toast.success('Your Trip is Reserved');
       history.push('/tours/ethical');
     } catch (err) {

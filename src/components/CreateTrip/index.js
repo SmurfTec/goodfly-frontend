@@ -147,8 +147,6 @@ const AddTrip = () => {
     //? Destructure the country field
     getCountryCode(data, 'countryCode');
 
-    console.log('data new', data);
-
     try {
       const resData = await makeReq(
         `/trips/customTrip`,
@@ -158,11 +156,9 @@ const AddTrip = () => {
         'POST'
       );
 
-      console.log(`Create Trip Response `, resData);
       toast.success('Success');
       history.push('/');
     } catch (err) {
-      console.log(err);
       handleCatch(err);
     }
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import { Link, withRouter } from 'react-router-dom';
@@ -197,7 +197,7 @@ const TourDetails = ({ match, history }) => {
     (async () => {
       try {
         const resData = await makeReq(`/trips/${id}`);
-        // console.log(`resData`, resData);
+        console.log(`resData`, resData);
         setTour(resData.trip);
       } catch (err) {
         setTimeout(() => {
@@ -207,15 +207,37 @@ const TourDetails = ({ match, history }) => {
       }
     })();
   }, [id]);
+
   const handleLinkClick = () => {
     scroll.scrollToTop({
       duration: 1000,
       delay: 100,
     });
   };
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
+  // console.log('********');
+
+  const params = useMemo(() => {
+    // console.log('********');
+    // console.log('********');
+    // console.log('********');
+    return { id };
+  }, [id, user]);
+
+  const isAlreadyPurchased = useMemo(
+    () => () =>
+      !!user?.purchases.find((purchase) => {
+        // console.log(`purchase.trip._id`, purchase.trip._id);
+        // console.log(`id`, id);
+        return purchase.trip._id === id;
+      }),
+
+    [id, user]
+  );
+
   return (
     <div>
       <Carousel
@@ -310,6 +332,7 @@ const TourDetails = ({ match, history }) => {
                     : `/auth/login?redirect=/tours/spiritual/${id}`
                 }
                 onClick={handleLinkClick}
+                disabled={isAlreadyPurchased}
               >
                 Reserve
               </Button>

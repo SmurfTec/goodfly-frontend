@@ -76,12 +76,12 @@ const Reservations = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(`id`, id);
+    //// console.log(`id`, id);
 
     (async () => {
       try {
         const resData = await makeReq(`/trips/${id}`);
-        console.log(`resData`, resData);
+        //// console.log(`resData`, resData);
         setTour(resData.trip);
       } catch (err) {
         handleCatch(err);
@@ -127,7 +127,7 @@ const Reservations = () => {
 
   const handleSubmit1 = (data) => {
     handleNext();
-    console.log(data);
+    //// console.log(data);
     setReservation((st) => ({
       ...data,
       travellers: st.travellers,
@@ -149,7 +149,7 @@ const Reservations = () => {
   };
 
   const handleSubmit2 = (data) => {
-    console.log(data);
+    //// console.log(data);
     setDefaultStep2Values(data);
     // * Extract Travellers from Object and Move into Reservation State
 
@@ -157,9 +157,9 @@ const Reservations = () => {
 
     for (var key in data) {
       const keyIdx = getArrIndex(key);
-      console.log({ keyIdx });
+      //console.log({ keyIdx });
       const properKey = getProperKey(key);
-      console.log(`properKey`, properKey);
+      //console.log(`properKey`, properKey);
       if (data.hasOwnProperty(key)) {
         // * Get array index
         newTravelers[keyIdx] = {
@@ -181,7 +181,7 @@ const Reservations = () => {
       delete traveler.emailRadio;
     });
 
-    console.log({ newTravelers });
+    //console.log({ newTravelers });
 
     handleNext();
     setReservation((st) => ({ ...st, ...data, travellers: newTravelers }));
@@ -190,7 +190,7 @@ const Reservations = () => {
 
   // * Handle Submit of Step 3
   const handleSubmit3 = (data) => {
-    console.log(`data`, data);
+    //console.log(`data`, data);
   };
 
   const handleNext = () => {
@@ -208,10 +208,10 @@ const Reservations = () => {
   const handleMoveBack = () => {
     if (activeStep === 0) {
       // history.goBack();
-      // console.log(`location.pathname`, location.pathname);
+      //// console.log(`location.pathname`, location.pathname);
       // * We have to go to /tours from /tours/reservations/213c
       //  * "" , "tours" , "resevations" , "213c"
-      const [, path, , tourId] = location.pathname.split('/');
+      const [, , , tourId] = location.pathname.split('/');
 
       history.push(`/tours/details/${tourId}`);
     } else {
@@ -220,8 +220,8 @@ const Reservations = () => {
   };
 
   const renderBackTitle = () => {
-    console.log('Gooo');
-    console.log(`activeStep`, activeStep);
+    //console.log('Gooo');
+    //console.log(`activeStep`, activeStep);
     switch (activeStep) {
       case 0:
         return <Typography variant='subtitle2'>Back to Offers Page</Typography>;

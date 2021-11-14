@@ -79,7 +79,6 @@ const TripCard = (props) => {
     e.stopPropagation();
 
     //  * If User NOT Logged In , goto Login Page
-    console.log(`path`, `/auth/login?redirect=${location.pathname}`);
     if (!user) history.push(`/auth/login?redirect=${location.pathname}`);
     favouriteTrip(_id);
   };
@@ -87,7 +86,6 @@ const TripCard = (props) => {
   const handleUnFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(`path`, `/auth/login?redirect=${location.pathname}`);
 
     //  * If User NOT Logged In , goto Login Page
     if (!user) history.push(`/auth/login?redirect=${location.pathname}}`);

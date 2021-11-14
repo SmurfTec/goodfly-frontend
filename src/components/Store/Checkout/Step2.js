@@ -145,7 +145,7 @@ const Step2 = ({ validateStep, cart }) => {
   };
 
   const handleRelayPoint = (relayPoint) => {
-    console.log(`relayPoint`, relayPoint);
+    // console.log(`relayPoint`, relayPoint);
     toggleMapDialog();
   };
 

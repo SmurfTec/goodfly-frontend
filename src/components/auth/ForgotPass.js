@@ -34,7 +34,7 @@ const Login = () => {
       toast.success(`Reset Password Link Send to your email ${state.email}`);
       setState(initialState);
     } catch (err) {
-      console.log(`err.response.data.message`, err.response.data.message);
+      // console.log(`err.response.data.message`, err.response.data.message);
       toast.error(err.response.data.message || 'Something went wrong');
     }
   };

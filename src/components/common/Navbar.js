@@ -36,10 +36,6 @@ const Navbar = ({ location }) => {
     variant: 'popover',
     popupId: 'Destinations',
   });
-
-  React.useEffect(() => {
-    console.log('rerendered');
-  });
   return (
     <nav className={classes.nav}>
       {NavbarData.map((navItem, idx) => {
@@ -87,20 +83,20 @@ const Navbar = ({ location }) => {
                 className={classes.MenuItem}
               >
                 {navItem.menuItems.map((menuItem) => (
-                  <MenuItem key={menuItem}>
-                    <Link
-                      // * /tours/ethical?type=menuitem
-
-                      // * /tours/destination/menuitem
-                      to={`${navItem.path}${
-                        idx === 3 ? `/${menuItem}` : `?type=${menuItem}`
-                      }`}
-                      style={{ textAlign: 'center' }}
-                    >
+                  <Link
+                    // * /tours/ethical?type=menuitem
+                    key={menuItem}
+                    // * /tours/destination/menuitem
+                    to={`${navItem.path}${
+                      idx === 3 ? `/${menuItem}` : `?type=${menuItem}`
+                    }`}
+                    style={{ textAlign: 'center' }}
+                  >
+                    <MenuItem>
                       {menuItem.slice(0, 1).toUpperCase()}
                       {menuItem.slice(1)}
-                    </Link>
-                  </MenuItem>
+                    </MenuItem>
+                  </Link>
                 ))}
               </HoverMenu>
             )}
