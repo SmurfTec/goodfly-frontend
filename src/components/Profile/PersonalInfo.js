@@ -23,6 +23,8 @@ import {
   Save,
 } from '@material-ui/icons';
 import { AuthContext } from 'Contexts/AuthContext';
+import Attachments from './Attachments';
+import useArray from 'Hooks/useArray';
 // ------------------------ //
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +40,15 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonalInfo = () => {
   const classes = useStyles();
-
+  const [
+    attachments,
+    setAttachments,
+    pushAttachment,
+    ,
+    updateAttachment,
+    removeAttachment,
+    ,
+  ] = useArray([], '_id');
   const { user, updateMe } = useContext(AuthContext);
 
   const [state, setState] = useState({
@@ -66,6 +76,12 @@ const PersonalInfo = () => {
     twitterProfile: '',
     snapChatProfile: '',
   });
+  useEffect(() => {
+    if (user) {
+      console.log(`user.attachments`, user.attachments);
+      setAttachments(user.attachments);
+    }
+  }, [user]);
 
   useEffect(() => {
     setState({ ...user });
@@ -76,7 +92,7 @@ const PersonalInfo = () => {
   };
 
   const handleSave = () => {
-    updateMe({ ...state });
+    updateMe({ ...state, attachments });
   };
 
   return (
@@ -381,29 +397,20 @@ const PersonalInfo = () => {
         </Box>
       </Box>
 
-      <Box mt={10}>
-        <Typography
-          variant='h6'
-          fontWeight='normal'
-          component='p'
-          color='textSecondary'
-        >
-          Attachments
-        </Typography>
-        {user.attachments?.slice(0, 3).map((el, idx) => (
-          <img
-            src={el.image}
-            alt={`Attachment ${idx}`}
-            style={{ width: '100%' }}
-          />
-        ))}
-      </Box>
+      <Attachments
+        user={user}
+        attachments={attachments}
+        classes={classes}
+        pushAttachment={pushAttachment}
+        removeAttachment={removeAttachment}
+      />
+
       <Button
         startIcon={<Save />}
         variant='contained'
         color='primary'
         style={{
-          marginTop: '5rem',
+          marginTop: '1rem',
         }}
         onClick={handleSave}
       >

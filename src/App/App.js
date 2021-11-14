@@ -35,7 +35,6 @@ const App = () => {
       <ThemeConfig>
         <GlobalClassesProvider>
           {!location.pathname.includes('/auth') && <Route component={Header} />}
-          {/* <Route component={Header} /> */}
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/tours' component={TourRouter} />
