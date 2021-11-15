@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
   root: {
@@ -32,23 +33,20 @@ const useStyles = makeStyles({
   },
 });
 
-const VoyageCard = ({ image, title }) => {
+const VoyageCard = ({ image, title, url }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(url);
+  };
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={image}
-          title={title}
-        >
+      <CardActionArea onClick={handleClick}>
+        <CardMedia className={classes.media} image={image} title={title}>
           <span className={classes.overlay} />
-          <Typography
-            variant='h3'
-            className={classes.title}
-            align='center'
-          >
+          <Typography variant='h3' className={classes.title} align='center'>
             {title}
             <br />
             <ArrowDownIcon fontSize='large' />

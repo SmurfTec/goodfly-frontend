@@ -294,13 +294,25 @@ const Index = () => {
 
         <Grid container spacing={2} sx={{ mt: 2 }}>
           <Grid item xs={12} sm={4}>
-            <VoyageCard image={MalaysiaImg} title='Organized trips' />
+            <VoyageCard
+              image={MalaysiaImg}
+              url='/tours/ethical?type=organic'
+              title='Organized Trips'
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <VoyageCard image={AlAqsaMosqueImg} title='Ethical travels' />
+            <VoyageCard
+              image={AlAqsaMosqueImg}
+              url='/tours/spiritual'
+              title='Spiritual Travels'
+            />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <VoyageCard image={TailorMadeTripImg} title='Tailor-made trips' />
+            <VoyageCard
+              image={TailorMadeTripImg}
+              url='/tours/create'
+              title='Create Trips'
+            />
           </Grid>
         </Grid>
       </Container>
