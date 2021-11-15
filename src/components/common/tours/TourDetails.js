@@ -7,7 +7,15 @@ import { handleCatch, makeReq } from 'Utils/constants';
 import useStyles from 'Styles/Tours/Ethical';
 
 // MUI
-import { Grid, Box, Typography, Button, Tabs, Tab } from '@material-ui/core';
+import {
+  Grid,
+  Box,
+  Typography,
+  Button,
+  Tabs,
+  Tab,
+  Container,
+} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EuroIcon from '@material-ui/icons/Euro';
@@ -26,7 +34,7 @@ import { animateScroll as scroll } from 'react-scroll';
 // import stageImg4 from 'Assets/img/stage23.png';
 import StagesTab from './StagesTab';
 
-import userImg from 'Assets/img/user1.png';
+import defaultUserImg from 'Assets/img/user1.png';
 import FormalitiesTab from './FormalitiesTab';
 import { AuthContext } from 'Contexts/AuthContext';
 
@@ -51,133 +59,6 @@ const TabPanel = (props) => {
     </div>
   );
 };
-
-// const stages = [
-//   {
-//     _id: '12312',
-//     date: '05/04/2020 - Jour #01 : ',
-//     locatation: 'Départ Aéroport Paris CDG',
-//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
-//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
-//       `,
-//     accommodations: [
-//       {
-//         _id: '12312312',
-//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
-//         description:
-//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-//       },
-//       {
-//         _id: '12312',
-//         location: 'Repas : Demi-pension',
-//         description:
-//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-//       },
-//     ],
-//     images: [stageImg1],
-//   },
-//   {
-//     _id: '12122',
-//     date: '05/04/2020 - Jour #01 : ',
-//     locatation: 'Départ Aéroport Paris CDG',
-//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
-//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
-//       `,
-//     accommodations: [
-//       {
-//         _id: '12312312',
-//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
-//         description:
-//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-//       },
-//       {
-//         _id: '12312',
-//         location: 'Repas : Demi-pension',
-//         description:
-//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-//       },
-//     ],
-//     images: [stageImg1, stageImg2, stageImg3, stageImg3, stageImg3],
-//   },
-//   {
-//     _id: '121dasdad2',
-//     date: '05/04/2020 - Jour #01 : ',
-//     locatation: 'Départ Aéroport Paris CDG',
-//     description: `Ut mi turpis, sagittis quis eleifend non, faucibus eget velit. Proin ullamcorper
-//       pulvinar velit, vitae egestas mauris mattis in. Nam dapibus facilisis nisi, non mollis
-//       magna. Pellentesque at tincidunt tortor. Quisque imperdiet condimentum.
-//       `,
-//     accommodations: [
-//       {
-//         _id: '12312312',
-//         location: 'Etape : Aéroport internationnal Paris Charles de Gaulle',
-//         description:
-//           'Aliquam vel purus molestie, bibendum quam ac, tempor tortor.',
-//       },
-//       {
-//         _id: '12312',
-//         location: 'Repas : Demi-pension',
-//         description:
-//           'Urna quis sodales luctus, leo diam porttitor ante, sit amet venenatis sapien nisi in lacus.',
-//       },
-//     ],
-//     images: [
-//       stageImg3,
-//       stageImg4,
-//       // stageImg3,
-//       // stageImg4,
-//       // stageImg3,
-//       // stageImg4,
-//     ],
-//   },
-// ];
-
-const reviews = [
-  {
-    _id: '123',
-    user: {
-      img: userImg,
-      name: 'NiyahDesign',
-    },
-    date: '1 novembre 2021',
-    review: `Lorem ipsum dolor sit amet, consectetur 
-    adipiscing elit. Aliquam quis tortor 
-    fermentum, fringilla dolor vel, sollicitudin 
-    augue. Ut interdum, nisi in bibendum 
-    faucibus, purus nibh scelerisque turpis`,
-    rating: 4,
-  },
-  {
-    _id: '12asdv3',
-    img: userImg,
-    user: {
-      name: 'NiyahDesign',
-    },
-    date: '1 novembre 2021',
-    review: `Lorem ipsum dolor sit amet, consectetur 
-    adipiscing elit. Aliquam quis tortor 
-    fermentum, fringilla dolor vel, sollicitudin 
-    augue. Ut interdum, nisi in bibendum 
-    faucibus, purus nibh scelerisque turpis`,
-    rating: 4,
-  },
-  {
-    _id: '11',
-    img: userImg,
-    user: {
-      name: 'NiyahDesign',
-    },
-    date: '1 novembre 2021',
-    review: `Lorem ipsum dolor sit amet, consectetur 
-    adipiscing elit. Aliquam quis tortor 
-    fermentum, fringilla dolor vel, sollicitudin 
-    augue. Ut interdum, nisi in bibendum 
-    faucibus, purus nibh scelerisque turpis`,
-    rating: 4,
-  },
-];
 
 const TourDetails = ({ match, history, location }) => {
   const classes = useStyles();
@@ -227,15 +108,25 @@ const TourDetails = ({ match, history, location }) => {
     }
   };
 
+  const tripReservation = () =>
+    user?.Purchases?.find((purchase) => purchase.trip._id === id);
+
   const isAlreadyPurchased = useMemo(() => {
-    console.log(`user?.purchases`, user?.Purchases);
-    console.log(`user`, user);
-    return !!user?.Purchases?.find((purchase) => {
-      console.log(`purchase.trip._id`, purchase.trip._id);
-      console.log(`id`, id);
-      return purchase.trip._id === id;
-    });
+    return !!tripReservation();
   }, [id, user]);
+
+  const canUserReview = useMemo(() => {
+    if (!isAlreadyPurchased) return;
+
+    // * User's Purchase's Status must be reservation-paid
+    // * And Trip's Ending Date must have been passed
+    // % i.e Visitor can review if trip have been completed
+    const tripPurchase = tripReservation;
+    return (
+      tripPurchase?.status === 'reservation-paid' &&
+      new Date() > new Date(tour.endingDate)
+    );
+  }, [isAlreadyPurchased]);
 
   return (
     <div>
@@ -421,7 +312,7 @@ const TourDetails = ({ match, history, location }) => {
             </Box>
           </Box>
 
-          <Box className={classes.Reviews}>
+          <Container className={classes.Reviews}>
             <Typography variant='h6' color='textPrimary'>
               Reviews {`(${tour?.reviews?.length || 0})`}
             </Typography>
@@ -435,8 +326,8 @@ const TourDetails = ({ match, history, location }) => {
                   marginTop: '2rem',
                 }}
               >
-                {/* {tour?.reviews?.map( */}
-                {reviews?.map((review, idx) => (
+                {tour?.reviews?.map((review, idx) => (
+                  // {reviews?.map((review, idx) => (
                   <Box
                     key={review._id}
                     className={classes.Review}
@@ -450,7 +341,10 @@ const TourDetails = ({ match, history, location }) => {
                       alignItems='center'
                     >
                       <Box className={classes.ReviewUser}>
-                        <img src={review.user.img} alt='user image' />
+                        <img
+                          src={review.user.photo || defaultUserImg}
+                          alt='user image'
+                        />
                         <Typography variant='h5'>{review.user.name}</Typography>
                       </Box>
                       <Box className={classes.ReviewInfo}>
@@ -466,8 +360,7 @@ const TourDetails = ({ match, history, location }) => {
                           fontWeight='normal'
                           color='textSecondary'
                         >
-                          {review.date}
-                          {/* {new Date(review.date).toDateString()} */}
+                          {new Date(review.date).toLocaleDateString()}
                         </Typography>
                       </Box>
                     </Box>
@@ -484,7 +377,7 @@ const TourDetails = ({ match, history, location }) => {
                   </Box>
                 ))}
               </Grid>
-              {isAlreadyPurchased && (
+              {canUserReview && (
                 <Grid
                   item
                   xs={12}
@@ -550,7 +443,7 @@ const TourDetails = ({ match, history, location }) => {
                 </Grid>
               )}
             </Grid>
-          </Box>
+          </Container>
         </Box>
       ) : (
         <div className='loading'></div>

@@ -9,7 +9,6 @@ import Destinations from 'components/Destinations';
 import DestinationsDetails from 'components/Destinations/Details';
 import FlashSale from 'components/FlashSale';
 import SpirutialTours from 'components/Spiritual';
-import SpirutialToursDetails from 'components/Spiritual/Details';
 import CreateTrip from 'components/CreateTrip';
 import Reservations from 'components/Reservations';
 import TourDetails from 'components/common/tours/TourDetails';
@@ -52,11 +51,6 @@ const TourRouter = ({ match }) => {
 
       {/* Spirutial Journeys */}
       <Route exact path={match.url + '/spiritual'} component={SpirutialTours} />
-      <Route
-        exact
-        path={match.url + '/spiritual/:id'}
-        component={SpirutialToursDetails}
-      />
 
       <ProtechtedRoute
         exact

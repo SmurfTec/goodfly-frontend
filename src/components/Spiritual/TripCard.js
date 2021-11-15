@@ -42,7 +42,7 @@ const TripCard = ({ tour, history }) => {
 
   const handleClick = () => {
     // console.log(`_id`, _id);
-    history.push(`/tours/spiritual/${_id}`);
+    history.push(`/tours/details/${_id}`);
   };
 
   return (

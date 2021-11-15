@@ -17,8 +17,9 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 
 import { useLocation, useHistory } from 'react-router-dom';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Paper, TextField } from '@material-ui/core';
 
-const options = ['Price', 'Date', 'Duration', 'Best Score'];
 const SpiritualHome = () => {
   const location = useLocation();
   const history = useHistory();
@@ -41,13 +42,19 @@ const SpiritualHome = () => {
   }, [tours]);
 
   const classes = styles(styleProps);
-  const handleTab = (st) => {
-    setCurrentTab(st);
-  };
 
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [tripType, setTripType] = useState('all');
+
+  const tripTypes = {
+    options: ['all', 'hajj', 'omra', 'combine-hajj-omra', 'al-quds'],
+    getOptionLabel: (option) => option,
+  };
+
+  const handleTripTypeChange = (event, value) => {
+    setTripType(value);
+  };
 
   useEffect(() => {
     switch (currentTab) {
@@ -91,10 +98,17 @@ const SpiritualHome = () => {
     }
   }, [currentTab]);
 
-  //? Closing filter menu
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  useEffect(() => {
+    if (!tours) return;
+    if (tripType === 'all')
+      setSpiritualTours(tours.filter((el) => el.category === 'spiritual'));
+    else
+      setSpiritualTours(
+        tours?.filter(
+          (el) => el.category === 'spiritual' && el.subCategory === tripType
+        )
+      );
+  }, [tripType]);
 
   // ? Filter Menu open
   const filterMenuOpen = (e) => {
@@ -105,75 +119,12 @@ const SpiritualHome = () => {
     setAnchorEl(e.currentTarget);
   };
 
-  //? Filter Item selected
-  const filterSelected = (e) => {
-    //? Got the selected filter value, uncomment below line
-    const { filter } = e.currentTarget.dataset;
-    // console.log(filter);
-    switch (filter.toLowerCase()) {
-      case 'price': {
-        setSpiritualTours((st) => {
-          let sortedTours = st;
-          sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
-          return sortedTours;
-        });
-        break;
-      }
-      case 'duration': {
-        setSpiritualTours((st) => {
-          let sortedTours = st;
-          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
-          return sortedTours;
-        });
-        break;
-      }
-      case 'date': {
-        setSpiritualTours((st) => {
-          let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
-          );
-          return sortedTours;
-        });
-        break;
-      }
-      default: {
-        setSpiritualTours((st) => {
-          let sortedTours = st;
-          sortedTours.sort((a, b) =>
-            a.reviews.length > 0 &&
-            a.reviews?.reduce((x, y) => 0 + y.rating) * 1 >
-              b.reviews.length >
-              0 &&
-            b.reviews?.reduce((x, y) => 0 + y.rating) * 1
-              ? -1
-              : 1
-          );
-          return sortedTours;
-        });
-        break;
-      }
-    }
-
-    setAnchorEl(null);
-  };
-
   return (
     <Page title='GoodFly |  Spiritual Tours'>
       <CssBaseline />
 
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <div className={globalClasses.heroContent}>
-          {/* <Container className={classes.mainFeaturedPost}>
-              <section className={classes.title}>
-                <Typography variant='h3'>
-                  Ethical Travel
-                  <FlashOnIcon sx={{ marginLeft: 2 }} />
-                </Typography>
-              </section>
-              <Advisor />
-            </Container> */}
-
           <Banner
             imageUrl={
               'https://m.hziegler.com/hza-resized-images/articles/hajj/mecca-at-night_450x300.jpg'
@@ -193,52 +144,26 @@ const SpiritualHome = () => {
               Select a filter
             </Button>
 
-            <Box>
-              <Button
-                variant='outlined'
-                onClick={filterMenuOpen}
-                color='inherit'
-                style={{}}
-                onClick={handleTab.bind(this, 1)}
-                style={{
-                  color: currentTab === 1 ? '#000' : '#ccc',
-                  borderColor: currentTab === 1 ? '#000' : '#ccc',
-                  marginRight: '2rem',
-                }}
-              >
-                OMRA OFFERS
-              </Button>
-              <Button
-                variant='outlined'
-                onClick={filterMenuOpen}
-                textSecondary
-                color='inherit'
-                onClick={handleTab.bind(this, 0)}
-                style={{
-                  color: currentTab === 0 ? '#000' : '#ccc',
-                  borderColor: currentTab === 0 ? '#000' : '#ccc',
-                }}
-              >
-                HAJJ OFFERS
-              </Button>
-            </Box>
-            <Menu
-              id='long-menu'
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-            >
-              {options.map((option, index) => (
-                <MenuItem
-                  key={index}
-                  data-filter={option}
-                  onClick={filterSelected}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
+            <Autocomplete
+              {...tripTypes}
+              id='disable-clearable'
+              disableClearable
+              value={tripType}
+              onChange={handleTripTypeChange}
+              PaperComponent={({ children }) => (
+                <Paper color='primary'>{children}</Paper>
+              )}
+              clearOnEscape
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label='Filter by Type'
+                  margin='normal'
+                  size='small'
+                  color='primary'
+                />
+              )}
+            />
           </section>
         </div>
         {/* End hero unit */}

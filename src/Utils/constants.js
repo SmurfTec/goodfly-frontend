@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
 
 // * Development URLs
-// const API_BASE_URL = `http://localhost:7000/api`;
+const API_BASE_URL = `http://localhost:7000/api`;
 
 // * Production URLs
-const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
+// const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
 // const API_BASE_URL = `http://d998-119-73-113-182.ngrok.io/api`;
 
 const handleCatch = (err) => {

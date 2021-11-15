@@ -27,14 +27,31 @@ const styles = makeStyles((theme) => ({
   content: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   amountContent: {
-    flex: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 20,
+  },
+  DiscountPrice: {
+    backgroundColor: '#fff',
+    padding: theme.spacing(1.2),
+    borderRadius: 15,
+    transform: 'scale(0.9)',
+    opacity: 0.5,
+    textDecoration: 'line-through solid red',
+  },
+  Price: {
+    backgroundColor: '#fff',
+    padding: theme.spacing(1.2),
+    borderRadius: 15,
   },
 }));
 const FlashCard = (props) => {
   const classes = styles();
-  const { _id, title, service, description, price, image, history } = props;
+  const { _id, title, service, description, price, image, history, discount } =
+    props;
 
   const handleClick = () => {
     history.push(`/tours/details/${_id}`);
@@ -56,10 +73,10 @@ const FlashCard = (props) => {
               <Typography variant='subtitle2'>{service}</Typography>
             </section>
             <section className={classes.amountContent}>
-              <Typography
-                variant='h4'
-                sx={{ backgroundColor: '#fff', padding: 1.2 }}
-              >
+              <Typography variant='h4' className={classes.DiscountPrice}>
+                {price + discount}
+              </Typography>
+              <Typography variant='h4' className={classes.Price}>
                 {price}
               </Typography>
             </section>
