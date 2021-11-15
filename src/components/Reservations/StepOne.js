@@ -35,7 +35,7 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
       country: data.country,
       phone: data.phone,
       email: data.email,
-      travellers: {
+      travelers: {
         value: data.numOfTravellers,
         label: '' + data.numOfTravellers,
       },
@@ -45,7 +45,7 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
   });
 
   useEffect(() => {
-    const subscriptions = watch((value) => changeTravelers(value.travellers));
+    const subscriptions = watch((value) => changeTravelers(value.travelers));
     return () => subscriptions.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch]);
@@ -165,7 +165,7 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
               </Typography>
 
               <Controller
-                name='travellers'
+                name='travelers'
                 control={control}
                 // defaultValue={{
                 //   value: 5,
@@ -178,7 +178,7 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
                     {...field}
                     isSearchable={false}
                     placeholder='Travellers'
-                    value={getValues('travellers')}
+                    value={getValues('travelers')}
                     options={[
                       { key: 11, value: 1, label: '1' },
                       { key: 12, value: 2, label: '2' },

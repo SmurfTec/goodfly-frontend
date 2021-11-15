@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TravelDetails = ({ tour, travellers, formId }) => {
+export const TravelDetails = ({ tour, travelers, formId }) => {
   const classes = useStyles();
   const { title, price, startingDate } = tour;
 
@@ -35,14 +35,14 @@ export const TravelDetails = ({ tour, travellers, formId }) => {
         <Box className={classes.box}>
           <span>
             <Typography variant='h5'>
-              {travellers} x {price}
+              {travelers} x {price}
             </Typography>
             <Typography variant='body1'>
-              vous et {travellers} voyageurs
+              vous et {travelers} voyageurs
             </Typography>
           </span>
           <Typography variant='subtitle1'>
-            {parseInt(travellers) * parseFloat(price)}€
+            {parseInt(travelers) * parseFloat(price)}€
           </Typography>
         </Box>
         <Divider />
@@ -52,7 +52,7 @@ export const TravelDetails = ({ tour, travellers, formId }) => {
             {/* <Typography variant='body1'>dont TVA</Typography> */}
           </span>
           <Typography variant='subtitle1'>
-            {parseInt(travellers) * parseFloat(price)}€
+            {parseInt(travelers) * parseFloat(price)}€
           </Typography>
         </Box>
       </Paper>

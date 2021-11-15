@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   Typography,
   IconButton,
@@ -11,71 +11,100 @@ import classnames from 'classnames';
 import styles from 'Styles/Profile/ProfileTabStyles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Stepper from './PaymentStepper';
+import { useTheme } from '@material-ui/styles';
+import UseToggle from 'Hooks/useToggle';
+import { ConfirmDialogBox, PaymentDialog } from 'dialogs';
+import { ToursContext } from 'Contexts/ToursContext';
+import { daysBetween } from 'Utils/datePickerCheck';
+import { AuthContext } from 'Contexts/AuthContext';
 
 const PurchaseCollapseItem = (props) => {
+  const { cancelReservation } = useContext(ToursContext);
+  const { updateMe, user } = useContext(AuthContext);
   const classes = styles();
+  const theme = useTheme();
+  const [isCancelOpen, toggleCancelOpen] = UseToggle(false);
+  const [isPaymentOpen, togglePaymentOpen] = UseToggle(false);
+  const [latestUnpaidPayment, setLatestUnpaidPayment] = useState();
   const { purchase } = props;
   const [expanded, setExpanded] = React.useState(false);
+
+  useEffect(() => {
+    if (!purchase) return;
+
+    // * Only Validated and ScheduleInProgress purchases can have payments
+    if (!['validated', 'schedule-inProgress'].includes(purchase.status)) return;
+
+    // * Find the first unpaid payment
+    const targetPayment = purchase.payments.find((el) => !el.isPaid);
+    // console.log(`targetPayment`, targetPayment);
+    setLatestUnpaidPayment(targetPayment);
+  }, [purchase]);
+
   const handleExpandClick = () => {
     setExpanded((st) => !st);
   };
 
   const handlePay = () => {
     // console.log('Handle Payment');
-  };
-  const handleCancelRes = () => {
-    // console.log('Cancel Reservation');
+    togglePaymentOpen();
   };
 
-  const checkStatus = () => {
-    if (purchase.status === 'pre-booked') return 0;
-    if (purchase.status !== 'pre-booked') {
-      if (purchase.status === 'paid') return 2;
-      else return 1;
-    }
+  const handleCancell = () => {
+    cancelReservation(purchase._id);
+    toggleCancelOpen();
   };
 
+  const handlePaymentSuccess = (updatedPurchase) => {
+    togglePaymentOpen();
+    console.log(`updatedPurchase._id`, updatedPurchase._id);
+    updateMe({
+      ...user,
+      Purchases: user.purchases.map((el) =>
+        el._id === updatedPurchase._id ? updatedPurchase : el
+      ),
+    });
+    console.log('updatedUser', {
+      ...user,
+      purchases: user.purchases.map((el) =>
+        el._id === updatedPurchase._id ? updatedPurchase : el
+      ),
+    });
+  };
   const cancelResButton = (
     <Button
       variant='outlined'
       color='primary'
-      onClick={handleCancelRes}
+      onClick={toggleCancelOpen}
       fullWidth
+      disabled={daysBetween(new Date(), new Date(purchase.departureDate)) <= 14}
     >
       I want to cancel
     </Button>
   );
-
-  function days_between(date1, date2) {
-    // The number of milliseconds in one day
-    const ONE_DAY = 1000 * 60 * 60 * 24;
-
-    // Calculate the difference in milliseconds
-    const differenceMs = Math.abs(date1 - date2);
-
-    // Convert back to days and return
-    return Math.round(differenceMs / ONE_DAY);
-  }
 
   const subtractDays = (date, days) => {
     date.setDate(date.getDate() - days);
     return date;
   };
 
-  const reservationConfig = (num) => {
+  const reservationConfig = useMemo(() => {
     //? 0 means 'client has not yet meet with the staff member'
-    // console.log(num);
-    if (num === 0) {
+    // console.log(purchase.status);
+    if (purchase.status === 'pre-reservation') {
       return cancelResButton;
     }
 
     //? 1 means 'The client has met with a staff member and discussed about reservation.'
-    else if (num === 1) {
+    else if (
+      purchase.status === 'validated' ||
+      purchase.status === 'schedule-inProgress'
+    ) {
       return (
         <>
-          <Typography variant='body2' component='span' align='center'>
-            Reservation ({purchase?.bookedOn})
-          </Typography>
+          {/* <Typography variant='body2' component='span' align='center'>
+            Reservation ({purchase?.validationDate})
+          </Typography> */}
           <Button
             variant='contained'
             color='primary'
@@ -90,12 +119,14 @@ const PurchaseCollapseItem = (props) => {
       );
     }
     //? After full payment by the user or after successful reservation.
-    else {
+    else if (purchase.status === 'reservation-paid') {
       return (
         <>
-          <Typography variant='body2' component='span' align='center'>
-            Reservation ({new Date(purchase.bookedDate).toDateString()})
-          </Typography>
+          <Typography
+            variant='body2'
+            component='span'
+            align='center'
+          ></Typography>
           {cancelResButton}
           <Typography
             variant='body2'
@@ -104,29 +135,31 @@ const PurchaseCollapseItem = (props) => {
             align='center'
           >
             Cancellation possible until{' '}
-            {days_between(
-              new Date(),
-              subtractDays(new Date(purchase.departureDte), 14)
-            )}
+            {new Date(
+              subtractDays(new Date(purchase.departureDate), 14)
+            ).toLocaleDateString()}
           </Typography>
         </>
       );
     }
-  };
+  }, [purchase]);
 
-  const paymentDetails = (num) => {
-    if (num === 0)
+  const paymentDetails = useMemo(() => {
+    // return (
+    //   <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
+    //     A member of the Goodfly team will get in touch with you very soon to set
+    //     up your payment schedule for this trip! a bit of patience
+    //   </Typography>
+    // );
+    if (purchase.status === 'pre-reservation')
       return (
         <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
           A member of the Goodfly team will get in touch with you very soon to
           set up your payment schedule for this trip! a bit of patience
         </Typography>
       );
-    else {
-      const remAmount =
-        purchase.status === 'paid'
-          ? purchase.trip.price - purchase.paidAmount
-          : purchase.trip.price;
+    else if (['validated', 'schedule-inProgress'].includes(purchase.status)) {
+      const remAmount = purchase.trip.price - purchase.paidAmount;
       return (
         <>
           <Typography
@@ -140,8 +173,52 @@ const PurchaseCollapseItem = (props) => {
           <Stepper purchase={purchase} />
         </>
       );
-    }
-  };
+    } else if (purchase.status === 'reservation-paid') {
+      const remAmount = 0;
+      return (
+        <>
+          <Typography
+            variant={'subtitle2'}
+            component='span'
+            sx={{ color: 'red', mb: 2 }}
+            align='center'
+          >
+            remaining to pay for this trip : {remAmount}€
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item sm={12} md={9}>
+              <Stepper purchase={purchase} />
+            </Grid>
+
+            <Grid item sm={12} md={3}>
+              <Typography
+                variant='h5'
+                style={{
+                  width: 200,
+                  textAlign: 'center',
+                  color: '#fff',
+                  backgroundColor: theme.palette.primary.main,
+                  padding: 20,
+                  borderRadius: 10,
+                }}
+              >
+                Congratulations! Your Trip is Reserved
+              </Typography>
+            </Grid>
+          </Grid>
+        </>
+      );
+    } else
+      return (
+        <Typography variant='h5' color='info'>
+          Your Trip is in{' '}
+          <span style={{ color: theme.palette.warning.main }}>
+            "{purchase.status}"
+          </span>{' '}
+          Status !
+        </Typography>
+      );
+  }, [purchase]);
 
   return (
     <>
@@ -189,17 +266,27 @@ const PurchaseCollapseItem = (props) => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={3}>
-            <Box className={classes.resConfig}>
-              {reservationConfig(checkStatus())}
-            </Box>
+            <Box className={classes.resConfig}>{reservationConfig}</Box>
           </Grid>
           <Grid item xs={12} sm={9}>
-            <Box className={classes.payDetailsGrid}>
-              {paymentDetails(checkStatus())}
-            </Box>
+            <Box className={classes.payDetailsGrid}>{paymentDetails}</Box>
           </Grid>
         </Grid>
       </Collapse>
+      <ConfirmDialogBox
+        open={isCancelOpen}
+        toggleDialog={toggleCancelOpen}
+        dialogTitle='Cancel this Reservation ?'
+        success={handleCancell}
+      />
+      <PaymentDialog
+        open={isPaymentOpen}
+        toggleDialog={togglePaymentOpen}
+        dialogTitle='Make Payment for this Trip'
+        success={handlePaymentSuccess}
+        payment={latestUnpaidPayment}
+        purchaseId={purchase._id}
+      />
     </>
   );
 };

@@ -63,7 +63,7 @@ const Reservations = () => {
     email: '',
     passportNumber: '',
     dateOfBirth: '',
-    travellers: [],
+    travelers: [],
     numOfTravellers: 2,
   };
   const [tour, setTour] = useState();
@@ -113,7 +113,7 @@ const Reservations = () => {
             data={reservation}
             submitForm={handleSubmit3}
             tour={tour}
-            travellers={reservation?.travellers?.length}
+            travelers={reservation?.travelers?.length}
           />
         );
       default:
@@ -130,7 +130,7 @@ const Reservations = () => {
     //// console.log(data);
     setReservation((st) => ({
       ...data,
-      travellers: st.travellers,
+      travelers: st.travelers,
       numOfTravellers: st.numOfTravellers,
     }));
   };
@@ -184,7 +184,7 @@ const Reservations = () => {
     //console.log({ newTravelers });
 
     handleNext();
-    setReservation((st) => ({ ...st, ...data, travellers: newTravelers }));
+    setReservation((st) => ({ ...st, ...data, travelers: newTravelers }));
   };
   // * -----------------------------
 
@@ -278,7 +278,7 @@ const Reservations = () => {
                     {tour ? (
                       <TravelDetails
                         tour={tour}
-                        travellers={reservation.travellers.length}
+                        travelers={reservation.travelers.length}
                       />
                     ) : (
                       <Skeleton height={250} />

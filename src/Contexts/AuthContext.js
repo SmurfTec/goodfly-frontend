@@ -63,19 +63,22 @@ export const AuthProvider = withRouter(({ children, history }) => {
     // }, 1000);
   };
 
-  const updateMe = async (profile) => {
-    try {
-      const resData = await makeReq(
-        `/users/me`,
-        { body: { ...profile } },
-        'PATCH'
-      );
-      // console.log(`resData`, resData);
-      toast.success('Profile Updated Successfully !');
-      setUser(resData.user);
-    } catch (err) {
-      handleCatch(err);
-    }
+  const updateMe = async (updatedUser, onlyInContext) => {
+    if (onlyInContext) {
+      setUser({ ...user, ...updatedUser });
+    } else
+      try {
+        const resData = await makeReq(
+          `/users/me`,
+          { body: { ...updatedUser } },
+          'PATCH'
+        );
+        // console.log(`resData`, resData);
+        toast.success('Profile Updated Successfully !');
+        setUser(resData.user);
+      } catch (err) {
+        handleCatch(err);
+      }
   };
 
   return (

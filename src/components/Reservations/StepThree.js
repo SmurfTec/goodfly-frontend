@@ -9,7 +9,7 @@ import {
   Button,
   Container,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { CustomInputField } from 'components/FormControls';
 import { Box } from '@material-ui/system';
@@ -19,8 +19,10 @@ import { handleCatch, makeReq } from 'Utils/constants';
 import { toast } from 'react-toastify';
 
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from 'Contexts/AuthContext';
 
-const StepThree = ({ tour, travellers, data }) => {
+const StepThree = ({ tour, travelers, data }) => {
+  const { updateMe } = useContext(AuthContext);
   const history = useHistory();
   const {
     formState: { errors },
@@ -46,7 +48,12 @@ const StepThree = ({ tour, travellers, data }) => {
         'POST'
       );
       // console.log(`resData`, resData);
-      toast.success('Your Trip is Reserved');
+      toast.info(
+        'Your Reservation Request is send , Goodfly agent will contact you soon !'
+      );
+
+      updateMe(resData.user, true);
+
       history.push('/tours/ethical');
     } catch (err) {
       handleCatch(err);
@@ -130,7 +137,7 @@ const StepThree = ({ tour, travellers, data }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TravelDetails tour={tour} travellers={travellers} />
+            <TravelDetails tour={tour} travelers={travelers} />
             <Button
               form='paymentChoice'
               variant='contained'

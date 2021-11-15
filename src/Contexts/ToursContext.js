@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router';
+import { toast } from 'react-toastify';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { AuthContext } from './AuthContext';
 
@@ -52,10 +53,19 @@ export const ToursProvider = withRouter(({ children, history }) => {
     }
   };
 
+  const cancelReservation = async (reservationId) => {
+    try {
+      await makeReq(`/purchases/${reservationId}/cancell`, {}, 'PATCH');
+      toast.info('Your Cancellation Request is Submitted !');
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
   return (
     <ToursContext.Provider
       displayName='Tour Context'
-      value={{ tours, favouriteTrip, unFavouriteTrip }}
+      value={{ tours, favouriteTrip, unFavouriteTrip, cancelReservation }}
     >
       {children}
     </ToursContext.Provider>

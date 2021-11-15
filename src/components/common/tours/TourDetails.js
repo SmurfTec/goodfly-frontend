@@ -323,7 +323,6 @@ const TourDetails = ({ match, history, location }) => {
                       paddingInline: 20,
                       width: 300,
                     }}
-                    sx={{ color: '#46b9f6' }}
                     component={Link}
                     to={
                       user
@@ -485,69 +484,71 @@ const TourDetails = ({ match, history, location }) => {
                   </Box>
                 ))}
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                style={{
-                  marginTop: '2rem',
-                  textAlign: 'left',
-                  padding: 40,
-                }}
-              >
-                <Typography variant='h6' fontWeight='bold'>
-                  Add a Review
-                </Typography>
-                <Typography variant='h4' fontWeight='bold'>
-                  Vote Now
-                </Typography>
-                <Rating
-                  // size='small'
-                  name='simple-controlled'
-                  value={ratingValue}
-                  onChange={(event, newValue) => {
-                    setRatingValue(newValue);
-                  }}
-                />
-                <Box marginTop={2} marginBottom={2} />
-                <Typography
-                  variant='h5'
-                  fontWeight='bold'
+              {isAlreadyPurchased && (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
                   style={{
                     marginTop: '2rem',
-                  }}
-                  component='label'
-                  htmlFor='review'
-                >
-                  Your Opinion
-                </Typography>
-                {/* <label for='w3review'>Review of W3Schools:</label> */}
-                <textarea
-                  id='review'
-                  name='review'
-                  rows='4'
-                  cols='50'
-                  value={reviewValue}
-                  placeholder='Review'
-                  onChange={handleReviewChange}
-                  style={{
-                    width: '100%',
-                    padding: 20,
-                    fontSize: 20,
+                    textAlign: 'left',
+                    padding: 40,
                   }}
                 >
-                  At w3schools.com you will learn how to make a website. They
-                  offer free tutorials in all web development technologies.
-                </textarea>
+                  <Typography variant='h6' fontWeight='bold'>
+                    Add a Review
+                  </Typography>
+                  <Typography variant='h4' fontWeight='bold'>
+                    Vote Now
+                  </Typography>
+                  <Rating
+                    // size='small'
+                    name='simple-controlled'
+                    value={ratingValue}
+                    onChange={(event, newValue) => {
+                      setRatingValue(newValue);
+                    }}
+                  />
+                  <Box marginTop={2} marginBottom={2} />
+                  <Typography
+                    variant='h5'
+                    fontWeight='bold'
+                    style={{
+                      marginTop: '2rem',
+                    }}
+                    component='label'
+                    htmlFor='review'
+                  >
+                    Your Opinion
+                  </Typography>
+                  {/* <label for='w3review'>Review of W3Schools:</label> */}
+                  <textarea
+                    id='review'
+                    name='review'
+                    rows='4'
+                    cols='50'
+                    value={reviewValue}
+                    placeholder='Review'
+                    onChange={handleReviewChange}
+                    style={{
+                      width: '100%',
+                      padding: 20,
+                      fontSize: 20,
+                    }}
+                  >
+                    At w3schools.com you will learn how to make a website. They
+                    offer free tutorials in all web development technologies.
+                  </textarea>
 
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleReview}
-                >
-                  Submit
-                </Button>
-              </Grid>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleReview}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              )}
             </Grid>
           </Box>
         </Box>

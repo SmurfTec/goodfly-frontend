@@ -40,7 +40,7 @@ import {
 import { CustomSelect } from 'components/FormControls';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import { makeReq, handleCatch } from 'Utils/constants';
-import datePickerCheck from 'Utils/datePickerCheck';
+import { datePickerCheck } from 'Utils/datePickerCheck';
 import MuiAutoComplete from '../FormControls/MUIAutoComplete';
 import v4 from 'uuid/dist/v4';
 import { toast } from 'react-toastify';

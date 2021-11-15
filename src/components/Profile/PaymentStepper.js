@@ -14,6 +14,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import v4 from 'uuid/dist/v4';
+import { useTheme } from '@emotion/react';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -109,70 +111,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getSteps(props) {
-  const { installment, deposit } = props;
-  let arr = [];
-
-  arr.push({
-    _id: '123112',
-    title: 'Deposit',
-    payment: { ...deposit },
-  });
-
-  for (var i = 1; i < installment.noOfInstallments; i++) {
-    arr.push({
-      _id: `121212${i}`,
-      title: `Payment ${i}`,
-      payment: {
-        ...installment,
-      },
-    });
-  }
-
-  arr.push({
-    _id: '123115',
-    title: 'Reserve',
-    payment: null,
-  });
-
-  return arr;
-}
-
-const checkStatus = (props) => {
-  let a = 0;
-  props.forEach((element) => {
-    if (element?.payment?.status === 'paid') a++;
-    else {
-      // eslint-disable-next-line no-eval
-      if (eval(element?.payment?.status) === 1) a++;
-    }
-  });
-
-  return a;
-};
-
-const paymentMessage = [
-  'deposit to be paid before 23/12/2021 before cancellation',
-  'payment deadline: 23/12/2021 before cancellation',
-];
-
-export default function CustomizedSteppers({ purchase }) {
+export default function PaymentSteppers({ purchase }) {
   const classes = useStyles();
-  const steps = getSteps(purchase);
-  const chkStatus = checkStatus(steps);
+
+  const theme = useTheme();
 
   return (
     <div className={classes.root}>
       <Stepper
         alternativeLabel
-        activeStep={chkStatus}
+        // activeStep={1}
         connector={<QontoConnector />}
       >
-        {steps.map((step) => (
-          <Step key={step._id}>
+        {purchase.payments.map((payment, idx) => (
+          <Step key={v4()}>
             <StepLabel
               StepIconComponent={QontoStepIcon}
-              StepIconProps={{ amount: step?.payment?.amount }}
+              StepIconProps={{
+                amount: payment.amount,
+                completed: payment.isPaid,
+              }}
             >
               <Typography
                 variant='subtitle1'
@@ -183,26 +141,22 @@ export default function CustomizedSteppers({ purchase }) {
                   textTransform: 'uppercase',
                 }}
               >
-                {step.title}
+                {/* {payment.title} */}
+                {`Payment ${idx + 1}`}
               </Typography>
-              {step.title === 'Deposit' ? (
-                step?.payment?.status === '0' ? (
-                  <Typography variant='body1' sx={{ color: 'red' }}>
-                    {paymentMessage[0]}
-                    setState(false)
-                  </Typography>
-                ) : (
-                  <Typography variant='body1' color='textSecondary'>
-                    Paid On
-                    {step?.payment?.paidOn}
-                  </Typography>
-                )
-              ) : step.title === 'Reserve' ? (
-                <Typography variant='body1' sx={{ color: 'red' }}>
-                  {paymentMessage[1]}
+              {payment.isPaid ? (
+                <Typography
+                  variant='body1'
+                  style={{
+                    color: theme.palette.success.main,
+                  }}
+                >
+                  Paid On {new Date(payment.paidDate).toLocaleDateString()}
                 </Typography>
               ) : (
-                ''
+                <Typography variant='body1' color='error'>
+                  Deadline {new Date(payment.deadline).toLocaleDateString()}
+                </Typography>
               )}
             </StepLabel>
           </Step>
@@ -211,27 +165,3 @@ export default function CustomizedSteppers({ purchase }) {
     </div>
   );
 }
-
-// return [
-//   {
-//     _id: '1231',
-//     isComplete: true,
-//     amount: 500,
-//     isPaid: true,
-//     paidAt: new Date(),
-//   },
-//   {
-//     _id: '1231',
-//     isComplete: true,
-//     amount: 500,
-//     isPaid: false,
-//     paidAt: new Date(),
-//   },
-//   {
-//     _id: '1231',
-//     isComplete: true,
-//     amount: 500,
-//     isPaid: true,
-//     paidAt: new Date(),
-//   },
-// ];
