@@ -4,9 +4,10 @@ export default function useArray(defaultValue = [], idKey = 'id') {
   const [array, setArray] = useState(defaultValue);
 
   const push = (element) => {
+    console.log('push');
     setArray((a) => [...a, element]);
   };
-  
+
   const filter = (callback) => {
     setArray((a) => a.filter(callback));
   };

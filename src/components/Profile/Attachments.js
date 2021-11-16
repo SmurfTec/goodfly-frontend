@@ -4,12 +4,12 @@ import { Grid, Typography, Box, CardMedia, Button } from '@material-ui/core';
 import { Add, PlusOne } from '@material-ui/icons';
 import UseToggle from 'Hooks/useToggle';
 import LoadingOverlay from 'react-loading-overlay';
-import { v4 as uuid } from 'uuid/dist/v4';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import { makeStyles } from '@material-ui/styles';
 import useArray from 'Hooks/useArray';
+import v4 from 'uuid/dist/v4';
 
 const useStyles = makeStyles((theme) => ({
   mainBox: {
@@ -80,7 +80,7 @@ const Attachments = ({
           console.log(`res`, res);
 
           setUploadingText('Updating Image ...');
-          pushAttachment({ image: uploadedImage, _id: uuid() });
+          pushAttachment({ image: uploadedImage, _id: v4() });
           toggleImageUploading();
         };
       } else {

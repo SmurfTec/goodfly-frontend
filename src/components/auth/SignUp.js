@@ -15,8 +15,8 @@ const SignUp = () => {
   const classes = useStyles();
 
   const initialState = {
-    name: '',
     firstName: '',
+    lastName: '',
     email: '',
     password: '',
     passwordConfirm: '',
@@ -67,16 +67,6 @@ const SignUp = () => {
             <Typography variant='h5' color='textSecondary' gutterBottom>
               SignUp
             </Typography>
-
-            <input
-              className={classes.textInput}
-              type='text'
-              placeholder='Name'
-              value={state.name}
-              onChange={handleTextChange}
-              name='name'
-              id='name'
-            />
             <input
               className={classes.textInput}
               type='text'
@@ -86,6 +76,16 @@ const SignUp = () => {
               name='firstName'
               id='firstName'
             />
+            <input
+              className={classes.textInput}
+              type='text'
+              placeholder='Last Name'
+              value={state.lastName}
+              onChange={handleTextChange}
+              name='lastName'
+              id='lastName'
+            />
+
             <input
               className={classes.textInput}
               type='email'

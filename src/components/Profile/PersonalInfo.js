@@ -148,11 +148,19 @@ const PersonalInfo = () => {
         flexWra='wrap'
       >
         <TextField
-          name='birthName'
-          value={state.birthName}
+          name='firstName'
+          value={state.firstName}
           onChange={handleChange}
           id='standard-basic'
-          label='Birth Name'
+          label='First Name'
+          variant='standard'
+        />
+        <TextField
+          name='lastName'
+          value={state.lastName}
+          onChange={handleChange}
+          id='standard-basic'
+          label='Last Name'
           variant='standard'
         />
         <TextField
@@ -162,15 +170,6 @@ const PersonalInfo = () => {
           id='standard-basic'
           label='Spouse Name'
           variant='standard'
-        />
-        <TextField
-          name='telephoneNumber'
-          value={state.telephoneNumber}
-          onChange={handleChange}
-          id='standard-basic'
-          label='Telephone Number'
-          variant='standard'
-          type='number'
         />
       </Box>
       <Box
@@ -182,20 +181,21 @@ const PersonalInfo = () => {
         mb={5}
       >
         <TextField
-          name='name'
-          value={state.name}
-          onChange={handleChange}
-          id='standard-basic'
-          label='Name'
-          variant='standard'
-        />
-        <TextField
           name='email'
           value={state.email}
           onChange={handleChange}
           id='standard-basic'
           label='Email'
           variant='standard'
+        />{' '}
+        <TextField
+          name='telephoneNumber'
+          value={state.telephoneNumber}
+          onChange={handleChange}
+          id='standard-basic'
+          label='Telephone Number'
+          variant='standard'
+          type='number'
         />
         <TextField
           name='telephoneLineNumber'
