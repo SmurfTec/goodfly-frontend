@@ -38,7 +38,7 @@ const SignUp = () => {
       // console.log(`res`, res);
       toast.success('SignUp Success');
       toast.success(`Activation Send to your email ${state.email}`);
-      // setState(initialState)
+      setState(initialState);
     } catch (err) {
       // console.log(
       //   `err.response.data.message`,

@@ -25,6 +25,7 @@ import {
 import { AuthContext } from 'Contexts/AuthContext';
 import Attachments from './Attachments';
 import useArray from 'Hooks/useArray';
+import { getMuiDateFormat } from 'Utils/constants';
 // ------------------------ //
 
 const useStyles = makeStyles((theme) => ({
@@ -76,15 +77,10 @@ const PersonalInfo = () => {
     twitterProfile: '',
     snapChatProfile: '',
   });
-  useEffect(() => {
-    if (user) {
-      console.log(`user.attachments`, user.attachments);
-      setAttachments(user.attachments);
-    }
-  }, [user]);
 
   useEffect(() => {
-    setState({ ...user });
+    setAttachments(user?.attachments || []);
+    setState({ ...user, dateOfBirth: getMuiDateFormat(user.dateOfBirth) });
   }, [user]);
 
   const handleChange = (e) => {
