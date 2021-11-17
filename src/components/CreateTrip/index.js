@@ -24,9 +24,9 @@ import {
   type2,
   type,
   random,
-  // travelMonth,
-  // travelYear,
-  // desiredDuration,
+  travelMonth,
+  travelYear,
+  desiredDuration,
   flightType,
   tripTheme,
   tripAccomodation,
@@ -89,6 +89,10 @@ const AddTrip = () => {
     data[key] = data[key].map((el) => el.label);
   };
 
+  const getValue = (data, key) => {
+    data[key] = data[key].value;
+  };
+
   const removeEmptyNullFields = (data, ...fields) => {
     Object.keys(data).forEach((key) => {
       if (data[key] === '' || data[key] == null) {
@@ -143,6 +147,7 @@ const AddTrip = () => {
   };
 
   const watchTravelDates = watch('isTravelDates', 'no');
+  const watchFlexibleDates = watch('isFlexibleDates', 'no');
 
   const submitFormData = async (data) => {
     //? Remove null or empty fields from data
@@ -152,12 +157,18 @@ const AddTrip = () => {
     //? Remove fields based on travel date already select
     if (watchTravelDates === 'yes')
       removeExtraFields(data, 'departureDate', 'desiredReturnOn');
+    if (watchFlexibleDates === 'no')
+      removeExtraFields(data, 'year', 'month', 'duration');
     //? Destructure the fields
     getReactSelectValue(data, ...reactSelectFields);
     //? Destructure the country code field
     getCountryCode(data, 'countryCode');
     //? Destructure the country code fields
     getDestinations(data, 'destination');
+
+    getValue(data, 'year');
+    getValue(data, 'month');
+    getValue(data, 'duration');
 
     try {
       const resData = await makeReq(
@@ -169,7 +180,7 @@ const AddTrip = () => {
       );
 
       toast.success('Success');
-      history.push('/');
+      // history.push('/');
     } catch (err) {
       handleCatch(err);
     }
@@ -385,7 +396,6 @@ const AddTrip = () => {
                       )}
                     />
                   </Grid>
-
                   {watchTravelDates === 'no' && (
                     <>
                       <Grid item xs={12} sm={6}>
@@ -463,143 +473,108 @@ const AddTrip = () => {
                       </Grid>
                     </>
                   )}
-                  {/* <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  Flexible Dates
-                </Typography>
+                  <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
+                    <Typography
+                      variant='subtitle1'
+                      color='text.secondary'
+                      sx={{ mb: 1 }}
+                    >
+                      Flexible Dates
+                    </Typography>
 
-                <Controller
-                  name='flexibleDates'
-                  control={control}
-                  defaultValue='yes'
-                  render={({ field }) => (
-                    <RadioGroup {...field} aria-label='flexibleDates' row>
-                      <FormControlLabel
-                        value='yes'
-                        control={<Radio />}
-                        label='Yes'
-                      />
-                      <FormControlLabel
-                        value='no'
-                        control={<Radio />}
-                        label='No'
-                      />
-                    </RadioGroup>
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  Number
-                </Typography>
+                    <Controller
+                      name='isFlexibleDates'
+                      control={control}
+                      defaultValue='yes'
+                      render={({ field }) => (
+                        <RadioGroup {...field} aria-label='isFlexibleDates' row>
+                          <FormControlLabel
+                            value='yes'
+                            control={<Radio />}
+                            label='Yes'
+                          />
+                          <FormControlLabel
+                            value='no'
+                            control={<Radio />}
+                            label='No'
+                          />
+                        </RadioGroup>
+                      )}
+                    />
+                  </Grid>
 
-                <Controller
-                  name='number'
-                  control={control}
-                  defaultValue={random[1]}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isSearchable={false}
-                      placeholder='Number'
-                      options={random.slice(1)}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  Period
-                </Typography>
-                <CustomSelect
-                  name='period'
-                  control={control}
-                  message='Choose the period'
-                  placeholder='Week'
-                  options={random.slice(1)}
-                  errors={errors}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  Which year would you like to travel?
-                </Typography>
+                  {watchFlexibleDates === 'yes' && (
+                    <>
+                      <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
+                        <Typography
+                          variant='subtitle1'
+                          color='text.secondary'
+                          sx={{ mb: 1 }}
+                        >
+                          Which year would you like to travel?
+                        </Typography>
 
-                <Controller
-                  name='year'
-                  control={control}
-                  defaultValue={travelYear[0]}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isSearchable={false}
-                      placeholder='Travel Year'
-                      options={travelYear}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  Which month would you like to travel?
-                </Typography>
-                <Controller
-                  name='month'
-                  control={control}
-                  defaultValue={travelMonth[0]}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isSearchable={false}
-                      placeholder='Travel Month'
-                      options={travelMonth}
-                    />
-                  )}
-                />
-              </Grid>{' '}
-              <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
-                <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  sx={{ mb: 1 }}
-                >
-                  The desired duration?
-                </Typography>
+                        <Controller
+                          name='year'
+                          control={control}
+                          defaultValue={travelYear[0]}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              isSearchable={false}
+                              placeholder='Travel Year'
+                              options={travelYear}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
+                        <Typography
+                          variant='subtitle1'
+                          color='text.secondary'
+                          sx={{ mb: 1 }}
+                        >
+                          Which month would you like to travel?
+                        </Typography>
+                        <Controller
+                          name='month'
+                          control={control}
+                          defaultValue={travelMonth[0]}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              isSearchable={false}
+                              placeholder='Travel Month'
+                              options={travelMonth}
+                            />
+                          )}
+                        />
+                      </Grid>{' '}
+                      <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
+                        <Typography
+                          variant='subtitle1'
+                          color='text.secondary'
+                          sx={{ mb: 1 }}
+                        >
+                          The desired duration?
+                        </Typography>
 
-                <Controller
-                  name='duration'
-                  control={control}
-                  defaultValue={desiredDuration[0]}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isSearchable={false}
-                      placeholder='Desired Duration'
-                      options={desiredDuration}
-                    />
+                        <Controller
+                          name='duration'
+                          control={control}
+                          defaultValue={desiredDuration[0]}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              isSearchable={false}
+                              placeholder='Desired Duration'
+                              options={desiredDuration}
+                            />
+                          )}
+                        />
+                      </Grid>
+                    </>
                   )}
-                />
-              </Grid> */}
                   <Grid item xs={12} sm={12} sx={{ mt: 4 }}>
                     <Typography
                       variant='subtitle1'
@@ -947,11 +922,6 @@ const AddTrip = () => {
                           fullWidth
                           error={Boolean(errors.birthDate)}
                         >
-                          <Typography
-                            varaint='subtitle1'
-                            color='textSecondary'
-                            sx={{ mt: 2, mb: 1, mx: 0 }}
-                          ></Typography>
                           <input
                             type='date'
                             className={classes.textInput}

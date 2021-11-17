@@ -3,13 +3,7 @@ import uuid from 'uuid/dist/v4';
 //? Data Of Dropdowns
 const participantsData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const randomData = [0, 1, 2, 3, 4, 5, 6];
-const typeData = [
-  'only',
-  'in-couple',
-  'family',
-  'friends',
-  'in-group',
-];
+const typeData = ['only', 'in-couple', 'family', 'friends', 'in-group'];
 const type2Data = [
   'honeymoon',
   'wedding-aniversary',
@@ -19,7 +13,6 @@ const type2Data = [
 ];
 
 const groupTypeData = ['company-seminar', 'club', 'school', 'other'];
-const travelYearData = ['Year 2021', 'Year 2022'];
 const travelMonthData = ['January 2021', 'February 2021'];
 const flightTypeData = [
   'low-cost',
@@ -29,12 +22,7 @@ const flightTypeData = [
   'private-tourist-plane',
 ];
 
-const mealsData = [
-  'breakfast',
-  'half-board',
-  'full-board',
-  'no-meals',
-];
+const mealsData = ['breakfast', 'half-board', 'full-board', 'no-meals'];
 
 //? It is done becuase react select requires specific format for options (dropdown)
 //? React-select requires options in array of objects having Value and Label fields
@@ -63,11 +51,22 @@ export const type2 = type2Data.map(function (p) {
   };
 });
 
-export const travelYear = travelYearData.map(function (p) {
-  return { value: p.replace(/\s/g, '_'), label: p };
-});
-export const travelMonth = travelMonthData.map(function (p) {
-  return { value: p.replace(/\s/g, '_'), label: p };
+export const travelYear = Array(3)
+  .fill(new Date())
+  .map((el, idx) => ({
+    value: el.getFullYear() + idx,
+    label: el.getFullYear() + idx,
+  }));
+// export const travelMonth = travelMonthData.map(function (p) {
+//   return { value: p.replace(/\s/g, '_'), label: p };
+// });
+export const travelMonth = Array.from({ length: 12 }, (e, i) => {
+  return {
+    value: i,
+    label: new Date(null, i + 1, null).toLocaleDateString('en', {
+      month: 'long',
+    }),
+  };
 });
 export const desiredDuration = participantsData.map(function (p) {
   return { value: p, label: `${p} days` };
