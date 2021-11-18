@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     alignItems: 'center',
 
-    maxWidth: 1440,
+    maxWidth: 1500,
     margin: '1rem auto',
     justifyContent: 'center',
 

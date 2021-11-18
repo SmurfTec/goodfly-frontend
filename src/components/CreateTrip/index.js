@@ -159,16 +159,17 @@ const AddTrip = () => {
       removeExtraFields(data, 'departureDate', 'desiredReturnOn');
     if (watchFlexibleDates === 'no')
       removeExtraFields(data, 'year', 'month', 'duration');
+    else {
+      getValue(data, 'year');
+      getValue(data, 'month');
+      getValue(data, 'duration');
+    }
     //? Destructure the fields
     getReactSelectValue(data, ...reactSelectFields);
     //? Destructure the country code field
     getCountryCode(data, 'countryCode');
     //? Destructure the country code fields
     getDestinations(data, 'destination');
-
-    getValue(data, 'year');
-    getValue(data, 'month');
-    getValue(data, 'duration');
 
     try {
       const resData = await makeReq(
@@ -180,7 +181,7 @@ const AddTrip = () => {
       );
 
       toast.success('Success');
-      // history.push('/');
+      history.push('/');
     } catch (err) {
       handleCatch(err);
     }
