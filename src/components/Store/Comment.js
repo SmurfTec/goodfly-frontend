@@ -1,10 +1,4 @@
-import {
-  Paper,
-  Avatar,
-  Grid,
-  Typography,
-  Rating,
-} from '@material-ui/core';
+import { Paper, Avatar, Grid, Typography, Rating } from '@material-ui/core';
 import React from 'react';
 import { Box } from '@material-ui/system';
 import styles from 'Styles/Comment';
@@ -14,8 +8,7 @@ import { useForm } from 'react-hook-form';
 const Comment = (props) => {
   const classes = styles();
   console.log(props);
-  const { userName, userImage, createdAt, description, rating } =
-    props;
+  const { visitor, createdAt, description, rating } = props;
 
   return (
     <Paper
@@ -27,7 +20,7 @@ const Comment = (props) => {
           <Box className={classes.avatarBox}>
             <Avatar
               alt='Remy Sharp'
-              src={userImage}
+              src={visitor?.photo}
               className={classes.large}
             />
             <Typography
@@ -35,7 +28,7 @@ const Comment = (props) => {
               color='text.secondary'
               sx={{ mt: 1 }}
             >
-              {userName}
+              {visitor?.fullName}
             </Typography>
           </Box>
         </Grid>
@@ -62,11 +55,7 @@ const Comment = (props) => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={12}>
-          <Typography
-            variant='body1'
-            color='text.primary'
-            sx={{ mt: 3 }}
-          >
+          <Typography variant='body1' color='text.primary' sx={{ mt: 3 }}>
             {description}
           </Typography>
         </Grid>

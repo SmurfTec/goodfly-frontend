@@ -20,7 +20,7 @@ const ProductCard = ({ product, history }) => {
       <CardActionArea onClick={handleClick}>
         <CardMedia
           sx={{ height: 250, position: 'relative' }}
-          image={images[0]}
+          image={images?.[0]?.image}
           title={name}
         />
         <CardContent
@@ -35,18 +35,10 @@ const ProductCard = ({ product, history }) => {
             },
           }}
         >
-          <Typography
-            gutterBottom
-            variant='h5'
-            color='text.secondary'
-          >
+          <Typography gutterBottom variant='h5' color='text.secondary'>
             {name}
           </Typography>
-          <Typography
-            gutterBottom
-            variant='subtitle1'
-            sx={{ fontWeight: 900 }}
-          >
+          <Typography gutterBottom variant='subtitle1' sx={{ fontWeight: 900 }}>
             {price}€
           </Typography>
           <Typography variant='subtitle1' color='text.secondary'>

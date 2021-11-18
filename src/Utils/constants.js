@@ -5,21 +5,17 @@ import { toast } from 'react-toastify';
 
 // * Production URLs
 const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
-// const API_BASE_URL = `https://259b-119-73-114-101.ngrok.io/api`;
+// const API_BASE_URL = `https://8651-119-73-118-121.ngrok.io/api`;
 
 const handleCatch = (err) => {
   // console.log('**********');
   // console.log(`err`, err);
   let errMsg = 'Something Went Wrong';
-  if (err.message) errMsg = err.message;
+  if (err?.message) errMsg = err?.message;
   toast.error(errMsg);
 };
 
-const makeReq = (
-  endpoint,
-  { body, ...customConfig } = {},
-  method = 'GET'
-) => {
+const makeReq = (endpoint, { body, ...customConfig } = {}, method = 'GET') => {
   const token = localStorage.getItem('jwt');
   const headers = { 'Content-Type': 'application/json' };
 
@@ -42,17 +38,15 @@ const makeReq = (
   }
 
   // console.log(`body`, body);
-  return fetch(`${API_BASE_URL}${endpoint}`, config).then(
-    async (res) => {
-      const data = await res.json();
-      // console.log(`data`, data);
-      if (res.ok) {
-        return data;
-      } else {
-        return Promise.reject(data);
-      }
+  return fetch(`${API_BASE_URL}${endpoint}`, config).then(async (res) => {
+    const data = await res.json();
+    // console.log(`data`, data);
+    if (res.ok) {
+      return data;
+    } else {
+      return Promise.reject(data);
     }
-  );
+  });
 };
 
 const countryCodes = [

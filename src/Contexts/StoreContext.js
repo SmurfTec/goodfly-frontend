@@ -5,17 +5,20 @@ import { handleCatch, makeReq, API_BASE_URL } from 'Utils/constants';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import useUpdateEffect from 'Hooks/useUpdateEffect';
+import { toast } from 'react-toastify';
 
 export const StoreContext = React.createContext();
 
 export const StoreProvider = withRouter(({ children, history }) => {
-  const { user } = useContext(AuthContext);
+  const { user, updateMe } = useContext(AuthContext);
   const initialState = {
     orderItems: [],
 
     subTotal: 0,
     total: 0,
   };
+
+  const [userOrders, setUserOrders] = useState();
   // const orderInitialState = {
   //   orderItems: [],
 
@@ -34,28 +37,22 @@ export const StoreProvider = withRouter(({ children, history }) => {
   // };
 
   const [products, setProducts] = useState();
-  const [cart, setCart, resetCart] = UseLocalStorage(
-    'cart',
-    initialState
-  );
-  const [userOrders, setUserOrders] = useState();
+  const [cart, setCart, resetCart] = UseLocalStorage('cart', initialState);
   const [order, setOrder] = useState();
 
   // * Get User Orders if he gets Logged In
   useEffect(() => {
-    if (user) {
-      (async () => {
-        try {
-          const resData = await makeReq(`/orders/me`);
-          // console.log(`resData`, resData);
-          setUserOrders(resData.orders);
-        } catch (err) {
-          console.log(`err`, err);
-        }
-      })();
-    } else {
-      setUserOrders();
-    }
+    if (!user) return;
+    console.log(`user`, user);
+    (async () => {
+      try {
+        const resData = await makeReq(`/orders/me`);
+        // console.log(`resData`, resData);
+        setUserOrders(resData.orders);
+      } catch (err) {
+        console.log(`err`, err);
+      }
+    })();
   }, [user]);
 
   useEffect(() => {
@@ -79,9 +76,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
 
       // console.log(`cart.orderItems`, cart.orderItems);
 
-      let totalPrice = cart.orderItems.map(
-        (el) => el.price * el.quantity * 1
-      );
+      let totalPrice = cart.orderItems.map((el) => el.price * el.quantity * 1);
 
       totalPrice = totalPrice.reduce(addReducer);
       // console.log(`totalPrice`, totalPrice);
@@ -90,8 +85,6 @@ export const StoreProvider = withRouter(({ children, history }) => {
         subTotal: totalPrice,
         total: totalPrice,
       }));
-    } else {
-      setCart(initialState);
     }
 
     window.localStorage.setItem('cart', JSON.stringify(cart));
@@ -100,9 +93,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
   const addItemToCart = (item, quantity) => {
     // console.log(`addItem`, item);
     // * If Item is Already in Cart , then increase quantity
-    const alreadyInCart = !!cart.orderItems.find(
-      (el) => el._id === item._id
-    );
+    const alreadyInCart = !!cart.orderItems.find((el) => el._id === item._id);
     // console.log(`new item`, {
     //   ...item,
     //   quantity,
@@ -173,6 +164,21 @@ export const StoreProvider = withRouter(({ children, history }) => {
   //   setCart((st) => ({ ...st, shippingPrice: amount * 1 }));
   // };
 
+  const payOrder = async (orderId, url) => {
+    const resData = await makeReq(`/orders/pay/${orderId}`, {}, 'PATCH');
+    console.log(`resData`, resData);
+    toast.success('Order Payed successfully');
+    setOrder();
+
+    // * Update User Orders
+    setUserOrders([...userOrders, resData.order]);
+
+    // * If Url is provided, then redirect
+    if (url)
+      setTimeout(() => {
+        history.push(url);
+      }, 1000);
+  };
   return (
     <StoreContext.Provider
       displayName='Store Context'
@@ -187,6 +193,8 @@ export const StoreProvider = withRouter(({ children, history }) => {
         order,
         setOrder,
         userOrders,
+        payOrder,
+        setUserOrders,
       }}
     >
       {children}

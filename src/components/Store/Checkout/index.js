@@ -50,6 +50,9 @@ const Checkout = () => {
     removeItemFromCart,
     order,
     setOrder,
+    resetCart,
+    payOrder,
+    setUserOrders,
   } = useContext(StoreContext);
   const { user } = useContext(AuthContext);
 
@@ -98,18 +101,7 @@ const Checkout = () => {
                 clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
               }}
               onSuccess={async (details, data) => {
-                console.log(`details`, details);
-                console.log(`data`, data);
-
-                console.log(`order`, order);
-                const resData = await makeReq(
-                  `/orders/pay/${order._id}`,
-                  {},
-                  'PATCH'
-                );
-                console.log(`resData`, resData);
-                toast.success('Order Payed successfully');
-                history.push('/store');
+                payOrder(order._id, '/store');
               }}
             />
           )
@@ -152,14 +144,11 @@ const Checkout = () => {
     setState(newState);
     handleNext();
   };
-  const validateStep3 = (data) => {
-    console.log('validated step 2', data);
-
+  const validateStep3 = async (data) => {
     const orderItems = cart.orderItems.map((item) => ({
       product: item._id,
       quantity: item.quantity,
     }));
-    console.log(`orderItems`, orderItems);
 
     const newState = {
       ...state,
@@ -168,23 +157,21 @@ const Checkout = () => {
     };
 
     // * Create Order
-
-    setTimeout(async () => {
-      console.log(`newState`, newState);
-      try {
-        const resData = await makeReq(
-          `/orders`,
-          { body: { ...newState } },
-          'POST'
-        );
-        console.log(`resData`, resData);
-        setActiveStep(3);
-        setOrder(resData.order);
-        // * Clear Cart
-      } catch (err) {
-        handleCatch(err);
-      }
-    });
+    try {
+      const resData = await makeReq(
+        `/orders`,
+        { body: { ...newState } },
+        'POST'
+      );
+      console.log(`resData`, resData);
+      setActiveStep(3);
+      // * Clear Cart
+      resetCart();
+      setOrder(resData.order);
+      setUserOrders(resData.userOrders);
+    } catch (err) {
+      handleCatch(err);
+    }
     // handleNext();
   };
 

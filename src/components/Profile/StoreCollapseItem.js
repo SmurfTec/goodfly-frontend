@@ -18,19 +18,17 @@ import { ReactSVG } from 'react-svg';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 import { makeReq } from 'Utils/constants';
-import { AuthContext } from 'Contexts/AuthContext';
+import { StoreContext } from 'Contexts/StoreContext';
 
 const StoreCollapseItem = ({ order }) => {
   const classes = styles();
-  const { getMe } = useContext(AuthContext);
+  const { payOrder } = useContext(StoreContext);
   const [showPaypalBtns, toggleShowPaypalBtns] = UseToggle(false);
   // const { _id, status, orderItems } = order;
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded((st) => !st);
   };
-
-  const history = useHistory();
 
   return (
     <>
@@ -43,9 +41,7 @@ const StoreCollapseItem = ({ order }) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5'>
-            {order.orderItems
-              .slice(0, 3)
-              .map((el) => `${el.product.name}  `)}
+            {order.orderItems.slice(0, 3).map((el) => `${el.product.name}  `)}
           </Typography>
           <IconButton
             disableRipple
@@ -119,10 +115,7 @@ const StoreCollapseItem = ({ order }) => {
               >
                 <Button component='div'>
                   <Typography variant='h5'>Pay Order</Typography>
-                  <ReactSVG
-                    src={paypalSvg}
-                    onClick={toggleShowPaypalBtns}
-                  />
+                  <ReactSVG src={paypalSvg} onClick={toggleShowPaypalBtns} />
                 </Button>
               </Box>
             )}
@@ -136,7 +129,7 @@ const StoreCollapseItem = ({ order }) => {
                   onSuccess={async (details, data) => {
                     // console.log(`details`, details);
                     // console.log(`data`, data);
-
+                    payOrder(order._id);
                     // console.log(`order`, order);
                     const resData = await makeReq(
                       `/orders/pay/${order._id}`,
@@ -144,8 +137,6 @@ const StoreCollapseItem = ({ order }) => {
                       'PATCH'
                     );
                     // console.log(`resData`, resData);
-                    getMe();
-                    toast.success('Order Payed successfully');
                   }}
                 />
               </Box>

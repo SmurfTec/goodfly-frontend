@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import {
   Container,
@@ -30,6 +30,7 @@ import ProductCard from './ProductCard';
 import StoreSubNav from './StoreSubNav';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { StoreContext } from 'Contexts/StoreContext';
+import { AuthContext } from 'Contexts/AuthContext';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -82,10 +83,20 @@ function TabPanel(props) {
   );
 }
 
-const ClientStore = ({ match }) => {
+const StoreDetails = ({ match }) => {
   const classes = styles();
   const formClasses = useStyles();
-  const { addItemToCart } = useContext(StoreContext);
+
+  const [product, setProduct] = useState();
+  const [relatedProducts, setRelatedProducts] = useState();
+
+  const [noOfItem, setNoOfItem] = useState(1);
+  const [quantity, setQuantity] = useState(10);
+
+  const [tabValue, setTabValue] = React.useState(1);
+
+  const { addItemToCart, userOrders } = useContext(StoreContext);
+  const { user } = useContext(AuthContext);
 
   const { id } = match.params;
   const {
@@ -95,13 +106,20 @@ const ClientStore = ({ match }) => {
     register,
     reset,
   } = useForm();
-  const [product, setProduct] = useState();
-  const [relatedProjects, setRelatedProjects] = useState();
 
-  const [noOfItem, setNoOfItem] = useState(1);
-  const [quantity, setQuantity] = useState(10);
+  const canReview = useMemo(() => {
+    if (!userOrders) return false;
 
-  const [tabValue, setTabValue] = React.useState(1);
+    if (!product.reviews) return false;
+
+    let isFound =
+      !!userOrders.find(
+        (userOrder) =>
+          !!userOrder.orderItems.find((item) => item.product?._id === id)
+      ) || product?.reviews.find((el) => el.visitor._id === user._id);
+
+    return isFound;
+  }, [userOrders, product, user]);
 
   useEffect(() => {
     (async () => {
@@ -122,7 +140,7 @@ const ClientStore = ({ match }) => {
       try {
         const resData = await makeReq(`/products?category=${product.category}`);
 
-        setRelatedProjects(resData.products.filter((p) => p._id !== id));
+        setRelatedProducts(resData.products.filter((p) => p._id !== id));
       } catch (err) {
         handleCatch(err);
       }
@@ -137,22 +155,27 @@ const ClientStore = ({ match }) => {
     setTabValue(newValue);
   };
 
-  const submitFormData = async (data) => {
+  const submitReview = async (data) => {
     console.log('Form Data :', data);
-    reset({ commentRating: 1 });
-  };
-  const productClick = (e) => {
-    const { productid } = e.currentTarget.dataset;
+
+    try {
+      const resData = await makeReq(
+        `/products/${id}/review`,
+        {
+          body: {
+            ...data,
+          },
+        },
+        'POST'
+      );
+
+      setProduct((st) => ({ ...st, reviews: [...st.reviews, resData.review] }));
+    } catch (err) {
+      handleCatch(err);
+    }
+    reset({ rating: 1 });
   };
 
-  // const { id } = match.params;
-
-  // ! Get the product of required product id
-  // useEffect(() => {}, [id]);
-
-  const changeQuantity = (e) => {
-    setQuantity(e.target.value);
-  };
   const increaseNoOfItems = () => {
     setNoOfItem(noOfItem + 1);
   };
@@ -180,15 +203,15 @@ const ClientStore = ({ match }) => {
                           position: 'relative',
                           backgroundSize: 'contain',
                         }}
-                        image={product?.images?.[0]}
+                        image={product?.images?.[0]?.image}
                       />
                     </Card>
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Box>
                       <Grid container spacing={2}>
-                        {product.images.slice(1, 4).map((image) => (
-                          <Grid item xs={6} sm={3}>
+                        {product.images.slice(1, 4).map((el) => (
+                          <Grid item xs={6} sm={3} key={el._id}>
                             <Card
                               sx={{
                                 boxShadow: 'none',
@@ -200,7 +223,7 @@ const ClientStore = ({ match }) => {
                                   height: 100,
                                   position: 'relative',
                                 }}
-                                image={image}
+                                image={el.image}
                               />
                             </Card>
                           </Grid>
@@ -320,7 +343,7 @@ const ClientStore = ({ match }) => {
         </TabPanel>
         <TabPanel value={tabValue} index={1} dir='x-reverse'>
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={canReview ? 6 : 12}>
               {product ? (
                 <>
                   <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
@@ -334,67 +357,67 @@ const ClientStore = ({ match }) => {
                 <div className='loader'></div>
               )}
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography variant='subtitle1' sx={{ mt: 5, mb: 3 }}>
-                Add a review
-              </Typography>
-
-              <Typography variant='h5' sx={{ mb: 1 }}>
-                Your Rating
-              </Typography>
-              <form
-                id='formopinion'
-                onSubmit={handleSubmit((data) => submitFormData(data))}
-              >
-                <CustomRating
-                  name='commentRating'
-                  control={control}
-                  options={[1, 2, 3, 4, 5]}
-                />
-                <Typography variant='h5' sx={{ mt: 4, mb: 1 }}>
-                  Your Opinion
+            {canReview && (
+              <Grid item xs={12} sm={6}>
+                <Typography variant='subtitle1' sx={{ mt: 5, mb: 3 }}>
+                  Add a review
                 </Typography>
-                <Paper
-                  elevation={3}
-                  sx={{
-                    px: 2,
-                    py: 3,
-                    mt: 1,
-                    '& textarea': {
-                      resize: 'vertical',
-                    },
-                  }}
+
+                <Typography variant='h5' sx={{ mb: 1 }}>
+                  Your Rating
+                </Typography>
+                <form
+                  id='formopinion'
+                  onSubmit={handleSubmit((data) => submitReview(data))}
                 >
-                  <FormControl
-                    fullWidth
-                    error={Boolean(errors.opinionTextArea)}
+                  <CustomRating
+                    name='rating'
+                    control={control}
+                    options={[1, 2, 3, 4, 5]}
+                  />
+                  <Typography variant='h5' sx={{ mt: 4, mb: 1 }}>
+                    Your Opinion
+                  </Typography>
+                  <Paper
+                    elevation={3}
+                    sx={{
+                      px: 2,
+                      py: 3,
+                      mt: 1,
+                      '& textarea': {
+                        resize: 'vertical',
+                      },
+                    }}
                   >
-                    <textarea
-                      rows='15'
-                      className={`${formClasses.textInput} ${classes.textArea}`}
-                      {...register('opinionTextArea', {
-                        required: 'Write something about the product to submit',
-                      })}
-                      placeholder='Give your opinion about the product...'
-                    />
-                    {errors?.opinionTextArea?.type === 'required' && (
-                      <FormHelperText>
-                        {errors?.opinionTextArea?.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                </Paper>
-                <Button
-                  sx={{ mt: 4, minWidth: 150 }}
-                  type='submit'
-                  variant='contained'
-                  form='formopinion'
-                  color='primary'
-                >
-                  SUBMIT
-                </Button>
-              </form>
-            </Grid>
+                    <FormControl fullWidth error={Boolean(errors.comment)}>
+                      <textarea
+                        rows='15'
+                        className={`${formClasses.textInput} ${classes.textArea}`}
+                        {...register('comment', {
+                          required:
+                            'Write something about the product to submit',
+                        })}
+                        placeholder='Give your opinion about the product...'
+                      />
+                      {errors?.comment?.type === 'required' && (
+                        <FormHelperText>
+                          {errors?.comment?.message}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Paper>
+                  <Button
+                    sx={{ mt: 4, minWidth: 150 }}
+                    type='submit'
+                    variant='contained'
+                    form='formopinion'
+                    color='primary'
+                  >
+                    SUBMIT
+                  </Button>
+                </form>
+              </Grid>
+            )}
           </Grid>
         </TabPanel>
       </Box>
@@ -403,19 +426,9 @@ const ClientStore = ({ match }) => {
           Related Products
         </Typography>
         <CarouselLayout>
-          {/* {blogs ? (
-            blogs.map((blog) => (
-              <div key={blog._id} className={classes.carouselCard}>
-                <BlogCard blog={blog} handleClick={blogClick} />
-              </div>
-            ))
-          ) : (
-            <div className='loader'></div>
-          )} */}
-
-          {relatedProjects ? (
+          {relatedProducts ? (
             <div className={classes.carouselCard}>
-              {relatedProjects.map((product) => (
+              {relatedProducts.map((product) => (
                 <ProductCard product={product} key={product._id} />
               ))}
             </div>
@@ -428,4 +441,4 @@ const ClientStore = ({ match }) => {
   );
 };
 
-export default withRouter(ClientStore);
+export default withRouter(StoreDetails);

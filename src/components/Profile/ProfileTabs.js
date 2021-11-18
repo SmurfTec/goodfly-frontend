@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import SwipeableViews from 'react-swipeable-views';
@@ -10,6 +10,7 @@ import PersonalInfo from './PersonalInfo';
 import FavouritiesTab from './FavouritiesTab';
 import TripsTab from './TripsTabs';
 import PurchasesTab from './PurchasesTab';
+import { StoreContext } from 'Contexts/StoreContext';
 // ------------------------ //
 
 const TabPanel = (props) => {
@@ -81,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileTabs = ({ user }) => {
   const classes = useStyles();
+  const { userOrders } = useContext(StoreContext);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -144,7 +146,7 @@ const ProfileTabs = ({ user }) => {
           index={3}
           dir={theme.direction}
         >
-          <PurchasesTab orders={user.orders} purchases={user.Purchases} />
+          <PurchasesTab orders={userOrders} purchases={user.Purchases} />
         </TabPanel>
       </SwipeableViews>
     </div>
