@@ -103,7 +103,7 @@ const Checkout = () => {
 
                 console.log(`order`, order);
                 const resData = await makeReq(
-                  `/orders/${order._id}`,
+                  `/orders/pay/${order._id}`,
                   {},
                   'PATCH'
                 );
