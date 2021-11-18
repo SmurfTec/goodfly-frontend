@@ -43,7 +43,9 @@ const StoreCollapseItem = ({ order }) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5'>
-            {order.orderItems.slice(0, 3).map((el) => `${el.product.name}  `)}
+            {order.orderItems
+              .slice(0, 3)
+              .map((el) => `${el.product.name}  `)}
           </Typography>
           <IconButton
             disableRipple
@@ -75,7 +77,12 @@ const StoreCollapseItem = ({ order }) => {
             <Typography
               variant='subtitle2'
               color='textSecondary'
-              sx={{ fontStyle: 'italic', display: 'flex', columnGap: 3, mb: 3 }}
+              sx={{
+                fontStyle: 'italic',
+                display: 'flex',
+                columnGap: 3,
+                mb: 3,
+              }}
             >
               {/* <Box sx={{}}> */}
               <span>{item.product.name}</span>
@@ -112,7 +119,10 @@ const StoreCollapseItem = ({ order }) => {
               >
                 <Button component='div'>
                   <Typography variant='h5'>Pay Order</Typography>
-                  <ReactSVG src={paypalSvg} onClick={toggleShowPaypalBtns} />
+                  <ReactSVG
+                    src={paypalSvg}
+                    onClick={toggleShowPaypalBtns}
+                  />
                 </Button>
               </Box>
             )}
@@ -129,7 +139,7 @@ const StoreCollapseItem = ({ order }) => {
 
                     // console.log(`order`, order);
                     const resData = await makeReq(
-                      `/orders/${order._id}`,
+                      `/orders/pay/${order._id}`,
                       {},
                       'PATCH'
                     );

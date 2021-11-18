@@ -34,7 +34,10 @@ export const StoreProvider = withRouter(({ children, history }) => {
   // };
 
   const [products, setProducts] = useState();
-  const [cart, setCart, resetCart] = UseLocalStorage('cart', initialState);
+  const [cart, setCart, resetCart] = UseLocalStorage(
+    'cart',
+    initialState
+  );
   const [userOrders, setUserOrders] = useState();
   const [order, setOrder] = useState();
 
@@ -76,7 +79,9 @@ export const StoreProvider = withRouter(({ children, history }) => {
 
       // console.log(`cart.orderItems`, cart.orderItems);
 
-      let totalPrice = cart.orderItems.map((el) => el.price * el.quantity * 1);
+      let totalPrice = cart.orderItems.map(
+        (el) => el.price * el.quantity * 1
+      );
 
       totalPrice = totalPrice.reduce(addReducer);
       // console.log(`totalPrice`, totalPrice);
@@ -95,7 +100,9 @@ export const StoreProvider = withRouter(({ children, history }) => {
   const addItemToCart = (item, quantity) => {
     // console.log(`addItem`, item);
     // * If Item is Already in Cart , then increase quantity
-    const alreadyInCart = !!cart.orderItems.find((el) => el._id === item._id);
+    const alreadyInCart = !!cart.orderItems.find(
+      (el) => el._id === item._id
+    );
     // console.log(`new item`, {
     //   ...item,
     //   quantity,
