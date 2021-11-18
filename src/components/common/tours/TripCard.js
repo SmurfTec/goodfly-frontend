@@ -75,7 +75,8 @@ const TripCard = (props) => {
   } = props;
 
   const handleFavorite = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+
     e.stopPropagation();
 
     //  * If User NOT Logged In , goto Login Page

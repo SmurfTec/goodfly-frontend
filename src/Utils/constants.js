@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 // const API_BASE_URL = `http://localhost:7000/api`;
 
 // * Production URLs
-const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
-// const API_BASE_URL = `http://d998-119-73-113-182.ngrok.io/api`;
+// const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
+const API_BASE_URL = `https://259b-119-73-114-101.ngrok.io/api`;
 
 const handleCatch = (err) => {
   // console.log('**********');
@@ -15,11 +15,7 @@ const handleCatch = (err) => {
   toast.error(errMsg);
 };
 
-const makeReq = (
-  endpoint,
-  { body, ...customConfig } = {},
-  method = 'GET'
-) => {
+const makeReq = (endpoint, { body, ...customConfig } = {}, method = 'GET') => {
   const token = localStorage.getItem('jwt');
   const headers = { 'Content-Type': 'application/json' };
 
@@ -42,17 +38,15 @@ const makeReq = (
   }
 
   // console.log(`body`, body);
-  return fetch(`${API_BASE_URL}${endpoint}`, config).then(
-    async (res) => {
-      const data = await res.json();
-      // console.log(`data`, data);
-      if (res.ok) {
-        return data;
-      } else {
-        return Promise.reject(data);
-      }
+  return fetch(`${API_BASE_URL}${endpoint}`, config).then(async (res) => {
+    const data = await res.json();
+    // console.log(`data`, data);
+    if (res.ok) {
+      return data;
+    } else {
+      return Promise.reject(data);
     }
-  );
+  });
 };
 
 const countryCodes = [
@@ -345,5 +339,27 @@ const countryCodes = [
   { code: 'ZM', label: 'Zambia', phone: '260' },
   { code: 'ZW', label: 'Zimbabwe', phone: '263' },
 ];
+
+export const getMuiDateFormat = (givenDate) => {
+  let dateNow;
+  if (givenDate) {
+    dateNow = new Date(givenDate);
+  } else {
+    dateNow = new Date();
+  }
+  const year = dateNow.getFullYear(); // * Getting current year from the created Date object
+  const monthWithOffset = dateNow.getUTCMonth() + 1; // * January is 0 by default in JS. Offsetting +1 to fix date for calendar.
+  const month = // * Setting current Month number from current Date object
+    monthWithOffset.toString().length < 2 // * Checking if month is < 10 and pre-prending 0 to adjust for date input.
+      ? `0${monthWithOffset}`
+      : monthWithOffset;
+
+  const date =
+    dateNow.getUTCDate().toString().length < 2 // * Checking if date is < 10 and pre-prending 0 if not to adjust for date input.
+      ? `0${dateNow.getUTCDate()}`
+      : dateNow.getUTCDate();
+
+  return `${year}-${month}-${date}`; // * combining to format for defaultValue or value attribute of material <TextField>
+};
 
 export { API_BASE_URL, makeReq, handleCatch, countryCodes };
