@@ -20,7 +20,7 @@ import VoyageCard from './VoyageCard';
 import MalaysiaImg from 'Assets/img/malaysiaVoyage.jpg';
 import AlAqsaMosqueImg from 'Assets/img/alaqsamosque.jpg';
 import TailorMadeTripImg from 'Assets/img/tailormadeTrips.jpg';
-import TravelMapImg from 'Assets/img/travelmap.png';
+
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 import Skeleton from 'react-loading-skeleton';
@@ -29,6 +29,21 @@ import { Link } from 'react-router-dom';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Card from 'components/common/Carousel/CaourselCard';
 import GoogleMapReact from 'google-map-react';
+import v4 from 'uuid/dist/v4';
+
+const logos = [
+  {
+    _id: v4(),
+    image:
+      'https://image.shutterstock.com/image-photo/kiev-ukraine-march-31-2015-260nw-275940803.jpg',
+    alt: 'Nike image',
+  },
+  {
+    _id: v4(),
+    image: 'https://cdn.britannica.com/94/193794-050-0FB7060D/Adidas-logo.jpg',
+    alt: 'addidas image',
+  },
+];
 
 const Index = () => {
   const { tours } = useContext(ToursContext);
@@ -384,6 +399,30 @@ const Index = () => {
             </Box>
           </Grid>
         </Grid>
+        <Paper sx={{ marginTop: 3 }}>
+          <Typography textAlign='center' variant='h5' color='textSecondary'>
+            Our Partners
+          </Typography>
+          <Box
+            sx={{
+              marginTop: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '20px',
+            }}
+          >
+            {logos.map((logo) => (
+              <Box sx={{ height: '80px' }} key={logo._id}>
+                <img
+                  style={{ width: '100%', height: '100%' }}
+                  src={logo.image}
+                  alt={logo.alt}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Paper>
       </Container>
       {/* 
       <section className={classes.partnersSection}>

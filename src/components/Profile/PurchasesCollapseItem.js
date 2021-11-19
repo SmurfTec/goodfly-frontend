@@ -159,7 +159,7 @@ const PurchaseCollapseItem = (props) => {
         </Typography>
       );
     else if (['validated', 'schedule-inProgress'].includes(purchase.status)) {
-      const remAmount = purchase.trip.price - purchase.paidAmount;
+      const remAmount = purchase.totalAmount - purchase.paidAmount;
       return (
         <>
           <Typography
@@ -190,7 +190,12 @@ const PurchaseCollapseItem = (props) => {
               <Stepper purchase={purchase} />
             </Grid>
 
-            <Grid item sm={12} md={3}>
+            <Grid
+              item
+              sm={12}
+              md={3}
+              sx={{ display: 'flex', justifyContent: 'flex-end' }}
+            >
               <Typography
                 variant='h5'
                 style={{
@@ -231,8 +236,8 @@ const PurchaseCollapseItem = (props) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5' component='span'>
-            {purchase.trip.title.toUpperCase()} -{' '}
-            {new Date(purchase.departureDate).toDateString()} -
+            {purchase.trip ? purchase.trip.title.toUpperCase() : 'Custom Trip'}{' '}
+            - {new Date(purchase.departureDate).toDateString()} -
           </Typography>
           <Typography
             variant='subtitle1'
@@ -240,7 +245,7 @@ const PurchaseCollapseItem = (props) => {
             component='span'
             sx={{ fontStyle: 'italic' }}
           >
-            {purchase.trip.price}€
+            {purchase.totalAmount}€
           </Typography>
           <IconButton
             disableRipple
