@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 
 // * Production URLs
 const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
-// const API_BASE_URL = `https://8651-119-73-118-121.ngrok.io/api`;
+// const API_BASE_URL = `https://17ae-39-40-58-247.ngrok.io/api`;
 
 const handleCatch = (err) => {
   // console.log('**********');
   // console.log(`err`, err);
   let errMsg = 'Something Went Wrong';
-  if (err?.message) errMsg = err?.message;
+  if (err.message) errMsg = err.message;
   toast.error(errMsg);
 };
 
