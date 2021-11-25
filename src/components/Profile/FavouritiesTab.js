@@ -9,7 +9,6 @@ import TripCard from './FavouritiesTripCard';
 const FavouritiesTab = ({ trips }) => {
   return (
     <Container>
-      Favourities
       <Grid container spacing={4}>
         {trips?.map((card) => (
           <Grid item key={card._id} xs={12} sm={6} md={4}>

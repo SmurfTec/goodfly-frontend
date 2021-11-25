@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
-import GoogleMapReact from 'google-map-react';
 
 // * ---- MUI Stuff ----- * //
 import {
@@ -95,7 +94,6 @@ const images = [
   'https://imgur.com/IykTxJG.png',
   'https://imgur.com/CJbU0t0.png',
 ];
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const Index = () => {
   const theme = useTheme();
@@ -112,14 +110,6 @@ const Index = () => {
     message: '',
   };
   const [state, resetState, handleTxtChange] = UseInput(initialState);
-
-  const goodflyLocation = {
-    center: {
-      lat: 33.68,
-      lng: 73,
-    },
-    zoom: 11,
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -154,21 +144,20 @@ const Index = () => {
         </Hidden>
       </Grid>
       <Box
-      // square
-      // elevation={0}
-      // sx={{
-      //   padding: '20px 40px',
-      //   marginTop: '3rem',
-      //   backgroundColor: '#f2f2f2',
-      //   borderRadius: '15px',
-      // }}
+        square
+        elevation={0}
+        sx={{
+          padding: '20px 40px',
+          marginTop: '3rem',
+          backgroundColor: '#f2f2f2',
+          borderRadius: '15px',
+        }}
       >
         <Grid
           container
           spacing={4}
           sx={{
             padding: '30px 20px',
-            border: '1px solid #ccc',
             borderRadius: '10px',
           }}
         >
@@ -212,13 +201,14 @@ const Index = () => {
                     height: 180,
                   }}
                 >
-                  <GoogleMapReact
-                    // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-                    defaultCenter={goodflyLocation.center}
-                    defaultZoom={goodflyLocation.zoom}
-                  >
-                    <AnyReactComponent lat={33.68} lng={73} text='My Marker' />
-                  </GoogleMapReact>
+                  <iframe
+                    src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20945.283694899448!2d1.911903590271735!3d48.98850372757067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6928965bfe351%3A0x8a35de2c8d45b455!2s60%20Rue%20Maurice%20Bellonte%2C%2078130%20Les%20Mureaux%2C%20France!5e0!3m2!1sen!2s!4v1637830682120!5m2!1sen!2s'
+                    width='200'
+                    height='180'
+                    // style={{'border:0'}}
+                    allowfullscreen='true'
+                    loading='lazy'
+                  ></iframe>
                 </Box>
               </Box>
             </Box>

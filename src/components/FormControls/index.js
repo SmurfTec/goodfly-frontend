@@ -60,7 +60,7 @@ export const CustomSelect = ({
   );
 };
 export const CustomTextField = (props) => {
-  const { name, label, type, control } = props;
+  const { name, label, type, control, customValue } = props;
 
   return (
     <Controller
@@ -71,7 +71,7 @@ export const CustomTextField = (props) => {
       render={({ field: { onChange, value } }) => (
         <TextField
           onChange={onChange}
-          value={value}
+          value={customValue || value}
           variant='standard'
           label={label}
           name={name}

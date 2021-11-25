@@ -81,7 +81,7 @@ const TripCard = (props) => {
 
     //  * If User NOT Logged In , goto Login Page
     if (!user) history.push(`/auth/login?redirect=${location.pathname}`);
-    favouriteTrip(_id);
+    favouriteTrip(_id, () => {});
   };
 
   const handleUnFavorite = (e) => {
@@ -90,7 +90,7 @@ const TripCard = (props) => {
 
     //  * If User NOT Logged In , goto Login Page
     if (!user) history.push(`/auth/login?redirect=${location.pathname}}`);
-    else unFavouriteTrip(_id);
+    else unFavouriteTrip(_id, () => {});
   };
 
   const [isFavourite, setIsFavourite] = useState(false);

@@ -30,18 +30,45 @@ import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Card from 'components/common/Carousel/CaourselCard';
 import GoogleMapReact from 'google-map-react';
 import v4 from 'uuid/dist/v4';
+import logo2 from 'Assets/img/goodfly-logo.png';
+import homeImage from 'Assets/img/hourImage.jpg';
+import storeImage from 'Assets/img/goodflyStore.jpg';
+import smallLogo from 'Assets/img/gfcard.png';
+import partner1 from 'Assets/img/partner1.jpg';
+import partner2 from 'Assets/img/partner2.png';
+import partner3 from 'Assets/img/partner3.png';
+import partner4 from 'Assets/img/partner4.png';
+import partner5 from 'Assets/img/partner5.png';
 
 const logos = [
   {
     _id: v4(),
-    image:
-      'https://image.shutterstock.com/image-photo/kiev-ukraine-march-31-2015-260nw-275940803.jpg',
-    alt: 'Nike image',
+    image: partner1,
+    alt: 'partner1',
   },
+
   {
     _id: v4(),
-    image: 'https://cdn.britannica.com/94/193794-050-0FB7060D/Adidas-logo.jpg',
-    alt: 'addidas image',
+    image: partner2,
+    alt: 'partner2',
+  },
+
+  {
+    _id: v4(),
+    image: partner3,
+    alt: 'partner3',
+  },
+
+  {
+    _id: v4(),
+    image: partner4,
+    alt: 'partner4',
+  },
+
+  {
+    _id: v4(),
+    image: partner5,
+    alt: 'partner5',
   },
 ];
 
@@ -56,14 +83,6 @@ const Index = () => {
   const [flashSales, setFlashSales] = useState();
 
   const [email, setEmail] = useState('');
-
-  const goodflyLocation = {
-    center: {
-      lat: 33.68,
-      lng: 73,
-    },
-    zoom: 11,
-  };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -100,7 +119,6 @@ const Index = () => {
       handleCatch(err);
     }
   };
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
   return (
     <Page title='Goodfly | Home'>
@@ -237,6 +255,17 @@ const Index = () => {
               <Paper
                 className={`${classes.promoBigImg} ${classes.hajjOmraPromo}`}
               >
+                <img
+                  src={logo2}
+                  style={{
+                    width: 100,
+                    height: 101,
+                    position: 'absolute',
+                    top: '70%',
+                    left: '3%',
+                  }}
+                />
+
                 <div className={classes.hajjOmraPromoDesc}>
                   <Typography variant='h3' align='center' sx={{ mb: 2 }}>
                     Hajj 2021
@@ -332,14 +361,27 @@ const Index = () => {
         </Grid>
       </Container>
 
+      <img
+        src={homeImage}
+        style={{
+          width: '97vw',
+          margin: 'auto',
+          marginTop: '3rem',
+          maxWidth: 1800,
+        }}
+      />
+
       <Container sx={{ mt: 10 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+        <Box display='flex' justifyContent='center' style={{ gap: '100px' }}>
+          <Box style={{ flexBasis: '42%' }}>
             <Box className={classes.newsLetterSubs}>
               <Typography variant='h6'>
                 Receive the best offers <span>via the newsletter GOODFLY</span>
               </Typography>
-              <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
+              <Grid
+                container
+                sx={{ mt: 1, justifyContent: 'center', gap: '35px' }}
+              >
                 <Grid item xs={8} sm={7}>
                   <input
                     className={classes.textInput}
@@ -360,45 +402,66 @@ const Index = () => {
                 </Grid>
               </Grid>
             </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box className={classes.addressBox}>
-              <Box sx={{ display: 'flex' }}>
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant='h6' color='text.primary'>
-                    Locate us
-                  </Typography>
-                  <Typography
-                    variant='subtitle2'
-                    sx={{ mt: 1 }}
-                    color='text.primary'
-                  >
-                    GOODFLY Les Mureaux
-                  </Typography>
-                  <Typography variant='body2' color='text.primary'>
-                    60 Maurice Bellonte Street <br /> 78130 LES MUREAUX <br />{' '}
-                    contact@goodfly.fr <br />
-                    01 00 00 00 00
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    width: 200,
-                    height: 180,
+          </Box>
+          {/* <Grid item xs={0} sm={1}></Grid> */}
+          <Box className={classes.addressBox}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 20,
+              }}
+            >
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant='h6' color='text.primary'>
+                  Locate us
+                </Typography>
+                <Typography
+                  variant='subtitle2'
+                  sx={{ mt: 2 }}
+                  color='text.primary'
+                >
+                  GOODFLY Les Mureaux
+                </Typography>
+                <Typography variant='body2' color='text.primary'>
+                  60 Maurice Bellonte Street <br /> 78130 LES MUREAUX <br />{' '}
+                  contact@goodfly.fr <br />
+                  01 00 00 00 00
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <img src={smallLogo} style={{ margin: 'auto' }} />
+                <Typography
+                  variant='p'
+                  style={{
+                    color: '#000',
+                    fontSize: 14,
                   }}
                 >
-                  <GoogleMapReact
-                    // bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-                    defaultCenter={goodflyLocation.center}
-                    defaultZoom={goodflyLocation.zoom}
-                  >
-                    <AnyReactComponent lat={33.68} lng={73} text='My Marker' />
-                  </GoogleMapReact>
-                </Box>
+                  Locate on the map
+                </Typography>
+                <iframe
+                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20945.283694899448!2d1.911903590271735!3d48.98850372757067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6928965bfe351%3A0x8a35de2c8d45b455!2s60%20Rue%20Maurice%20Bellonte%2C%2078130%20Les%20Mureaux%2C%20France!5e0!3m2!1sen!2s!4v1637830682120!5m2!1sen!2s'
+                  width='100'
+                  height='100'
+                  // style={{'border:0'}}
+                  allowfullscreen='true'
+                  loading='lazy'
+                ></iframe>
               </Box>
             </Box>
-          </Grid>
-        </Grid>
+            <Box>
+              <img src={storeImage} style={{ width: '100%', height: '100%' }} />
+            </Box>
+          </Box>
+        </Box>
         <Paper sx={{ marginTop: 3 }}>
           <Typography textAlign='center' variant='h5' color='textSecondary'>
             Our Partners
@@ -413,9 +476,9 @@ const Index = () => {
             }}
           >
             {logos.map((logo) => (
-              <Box sx={{ height: '80px' }} key={logo._id}>
+              <Box sx={{ minHeight: '80px' }} key={logo._id}>
                 <img
-                  style={{ width: '100%', height: '100%' }}
+                  style={{ width: '100px', height: '70px' }}
                   src={logo.image}
                   alt={logo.alt}
                 />

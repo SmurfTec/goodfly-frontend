@@ -80,7 +80,11 @@ const PersonalInfo = () => {
 
   useEffect(() => {
     setAttachments(user?.attachments || []);
-    setState({ ...user, dateOfBirth: getMuiDateFormat(user.dateOfBirth) });
+    setState({
+      ...user,
+      dateOfBirth: getMuiDateFormat(user.dateOfBirth),
+      passportDateOfIssue: getMuiDateFormat(user.passportDateOfIssue),
+    });
   }, [user]);
 
   const handleChange = (e) => {
@@ -102,8 +106,8 @@ const PersonalInfo = () => {
           <FormLabel component='legend'>Civility</FormLabel>
           <RadioGroup
             aria-label='gender'
-            name='civility'
-            value={state.civility}
+            name='pronoun'
+            value={state.pronoun}
             onChange={handleChange}
             style={{
               display: 'flex',
@@ -112,17 +116,17 @@ const PersonalInfo = () => {
             }}
           >
             <FormControlLabel
-              value='mr'
+              value='Mr'
               control={<Radio size='small' />}
               label='Mr'
             />
             <FormControlLabel
-              value='mrs'
+              value='Mrs'
               control={<Radio size='small' />}
               label='Mrs'
             />
             <FormControlLabel
-              value='ms'
+              value='Ms'
               control={<Radio size='small' />}
               label='Miss'
             />
