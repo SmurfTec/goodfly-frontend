@@ -1,10 +1,11 @@
 import { toast } from 'react-toastify';
 
 // * Development URLs
-// const API_BASE_URL = `http://localhost:7000/api`;
+const API_BASE_URL = `http://localhost:7000/api`;
+const API_BASE_ORIGIN = `http://localhost:7000`;
 
 // * Production URLs
-const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
+// const API_BASE_URL = `https://goodfly-api.herokuapp.com/api`;
 // const API_BASE_URL = `https://17ae-39-40-58-247.ngrok.io/api`;
 
 const handleCatch = (err) => {
@@ -14,8 +15,11 @@ const handleCatch = (err) => {
   if (err.message) errMsg = err.message;
   toast.error(errMsg);
 };
-
-const makeReq = (endpoint, { body, ...customConfig } = {}, method = 'GET') => {
+const makeReq = (
+  endpoint,
+  { body, ...customConfig } = {},
+  method = 'GET'
+) => {
   const token = localStorage.getItem('jwt');
   const headers = { 'Content-Type': 'application/json' };
 
@@ -38,15 +42,17 @@ const makeReq = (endpoint, { body, ...customConfig } = {}, method = 'GET') => {
   }
 
   // console.log(`body`, body);
-  return fetch(`${API_BASE_URL}${endpoint}`, config).then(async (res) => {
-    const data = await res.json();
-    // console.log(`data`, data);
-    if (res.ok) {
-      return data;
-    } else {
-      return Promise.reject(data);
+  return fetch(`${API_BASE_URL}${endpoint}`, config).then(
+    async (res) => {
+      const data = await res.json();
+      // console.log(`data`, data);
+      if (res.ok) {
+        return data;
+      } else {
+        return Promise.reject(data);
+      }
     }
-  });
+  );
 };
 
 const countryCodes = [
@@ -362,4 +368,10 @@ export const getMuiDateFormat = (givenDate) => {
   return `${year}-${month}-${date}`; // * combining to format for defaultValue or value attribute of material <TextField>
 };
 
-export { API_BASE_URL, makeReq, handleCatch, countryCodes };
+export {
+  API_BASE_URL,
+  API_BASE_ORIGIN,
+  makeReq,
+  handleCatch,
+  countryCodes,
+};

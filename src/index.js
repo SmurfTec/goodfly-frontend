@@ -18,26 +18,29 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from 'Contexts/AuthContext';
 import { ToursProvider } from 'Contexts/ToursContext';
 import { StoreProvider } from 'Contexts/StoreContext';
+import { SocketProvider } from 'Contexts/SocketContext';
 
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
-      <ToursProvider>
-        <StoreProvider>
-          <ToastContainer
-            position='top-right'
-            autoClose={4000}
-            hideProgressBar
-            newestOnTop={true}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <App />
-        </StoreProvider>
-      </ToursProvider>
+      <SocketProvider>
+        <ToursProvider>
+          <StoreProvider>
+            <ToastContainer
+              position='top-right'
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop={true}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            <App />
+          </StoreProvider>
+        </ToursProvider>
+      </SocketProvider>
     </AuthProvider>
   </BrowserRouter>,
   document.getElementById('root')
