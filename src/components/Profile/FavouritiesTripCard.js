@@ -34,21 +34,12 @@ const TripCard = (props) => {
     return Math.round(differenceMs / ONE_DAY);
   }
 
-  const subtractDays = (date, days) => {
-    date.setDate(date.getDate() - days);
-    return date;
-  };
-
   const {
     _id,
     title,
-    noOfJourneys,
-    service,
-    desc,
     price,
     image,
     history,
-    country,
     startingDate,
     endingDate,
     boardType,

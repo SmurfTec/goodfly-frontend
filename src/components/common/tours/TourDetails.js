@@ -15,6 +15,7 @@ import {
   Tabs,
   Tab,
   Container,
+  Skeleton,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -38,6 +39,10 @@ import defaultUserImg from 'Assets/img/user1.png';
 import FormalitiesTab from './FormalitiesTab';
 import { AuthContext } from 'Contexts/AuthContext';
 
+import FavoriteIconFilled from '@material-ui/icons/Favorite';
+import FavoriteIconOutlined from '@material-ui/icons/FavoriteBorder';
+import { ToursContext } from 'Contexts/ToursContext';
+import UseToggle from 'Hooks/useToggle';
 // ------------------------------
 
 const TabPanel = (props) => {
@@ -61,6 +66,11 @@ const TabPanel = (props) => {
 };
 
 const TourDetails = ({ match, history, location }) => {
+  const { favouriteTrip, unFavouriteTrip, tours, getTripById } =
+    useContext(ToursContext);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isHandlingFavourite, toggleHandlingFavourite] = UseToggle(false);
+
   const classes = useStyles();
   const { user } = useContext(AuthContext);
   const { id } = match.params;
@@ -70,6 +80,11 @@ const TourDetails = ({ match, history, location }) => {
   const [tabValue, setTabValue] = React.useState(0);
 
   const [reviewValue, setReviewValue] = useState('');
+
+  useEffect(() => {
+    if (!!user?.favourities?.find((el) => el._id === id)) setIsFavourite(true);
+    else setIsFavourite(false);
+  }, [user, id]);
 
   const handleReviewChange = (e) => {
     setReviewValue(e.target.value);
@@ -81,19 +96,8 @@ const TourDetails = ({ match, history, location }) => {
     });
   };
   useEffect(() => {
-    (async () => {
-      try {
-        const resData = await makeReq(`/trips/${id}`);
-        console.log(`resData`, resData);
-        setTour(resData.trip);
-      } catch (err) {
-        handleCatch(err);
-        setTimeout(() => {
-          history.push('/tours/ethical');
-        }, 1500);
-      }
-    })();
-  }, [id]);
+    setTour(getTripById(id));
+  }, [id, tours]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -109,7 +113,7 @@ const TourDetails = ({ match, history, location }) => {
   };
 
   const tripReservation = () =>
-    user?.Purchases?.find((purchase) => purchase.trip._id === id);
+    user?.Purchases?.find((purchase) => purchase?.trip?._id === id);
 
   const isAlreadyPurchased = useMemo(() => {
     return !!tripReservation();
@@ -128,25 +132,50 @@ const TourDetails = ({ match, history, location }) => {
     );
   }, [isAlreadyPurchased]);
 
+  const handleFavorite = (e) => {
+    // e.preventDefault();
+    toggleHandlingFavourite();
+
+    e.stopPropagation();
+
+    //  * If User NOT Logged In , goto Login Page
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}`);
+    favouriteTrip(id, toggleHandlingFavourite);
+  };
+
+  const handleUnFavorite = (e) => {
+    toggleHandlingFavourite();
+    e.preventDefault();
+    e.stopPropagation();
+
+    //  * If User NOT Logged In , goto Login Page
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}}`);
+    else unFavouriteTrip(id, toggleHandlingFavourite);
+  };
+
   return (
     <div>
-      <Carousel
-        showThumbs={false}
-        animationHandler='fade'
-        swipeable={false}
-        className={classes.Carousel}
-      >
-        <div>
-          <img src={tour?.image} />
-        </div>
-        {tour?.stages.map((stage, index) =>
-          stage.images?.map((image, idx) => (
-            <div key={idx}>
-              <img src={image} />
-            </div>
-          ))
-        )}
-      </Carousel>
+      {tour ? (
+        <Carousel
+          showThumbs={false}
+          animationHandler='fade'
+          swipeable={false}
+          className={classes.Carousel}
+        >
+          <div>
+            <img src={tour?.image} />
+          </div>
+          {tour?.stages.map((stage, index) =>
+            stage.images?.map((image, idx) => (
+              <div key={idx}>
+                <img src={image} />
+              </div>
+            ))
+          )}
+        </Carousel>
+      ) : (
+        <></>
+      )}
       {tour ? (
         <Box>
           <Box className={classes.Grid1}>
@@ -154,7 +183,7 @@ const TourDetails = ({ match, history, location }) => {
               <Grid item xs={12} sm={7} className={classes.TourDetails}>
                 <Box padding={3}>
                   <Typography variant='h3' color='textSecondary' align='left'>
-                    {tour.country.toUpperCase()}
+                    {tour?.country.toUpperCase()}
                   </Typography>
                   <Box display='flex' alignItems='center'>
                     <Typography
@@ -241,7 +270,24 @@ const TourDetails = ({ match, history, location }) => {
                       borderRadius: 'unset',
                       borderBottomLeftRadius: 15,
                     }}
-                    endIcon={<FavoriteIcon />}
+                    disabled={isHandlingFavourite}
+                    onClick={isFavourite ? handleUnFavorite : handleFavorite}
+                    endIcon={
+                      isFavourite ? (
+                        <FavoriteIconFilled
+                          style={{
+                            color: '#fff',
+                          }}
+                        />
+                      ) : (
+                        <FavoriteIconOutlined
+                          style={{
+                            color: '#fff',
+                          }}
+                        />
+                      )
+                      // <FavoriteIcon />
+                    }
                   >
                     Favourite
                   </Button>

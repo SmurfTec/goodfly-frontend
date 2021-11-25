@@ -25,7 +25,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
     })();
   }, [user]);
 
-  const favouriteTrip = async (id) => {
+  const favouriteTrip = async (id, toggleHandlingFavourite) => {
     try {
       const resData = await makeReq(
         `/trips/${id}/addToFavourites`,
@@ -36,10 +36,12 @@ export const ToursProvider = withRouter(({ children, history }) => {
       setUser(resData.user);
     } catch (err) {
       handleCatch(err);
+    } finally {
+      toggleHandlingFavourite();
     }
   };
 
-  const unFavouriteTrip = async (id) => {
+  const unFavouriteTrip = async (id, toggleHandlingFavourite) => {
     try {
       const resData = await makeReq(
         `/trips/${id}/removeFromFavourites`,
@@ -50,6 +52,8 @@ export const ToursProvider = withRouter(({ children, history }) => {
       setUser(resData.user);
     } catch (err) {
       handleCatch(err);
+    } finally {
+      toggleHandlingFavourite();
     }
   };
 
@@ -62,10 +66,18 @@ export const ToursProvider = withRouter(({ children, history }) => {
     }
   };
 
+  const getTripById = (id) => tours?.find((el) => el._id === id);
+
   return (
     <ToursContext.Provider
       displayName='Tour Context'
-      value={{ tours, favouriteTrip, unFavouriteTrip, cancelReservation }}
+      value={{
+        tours,
+        favouriteTrip,
+        unFavouriteTrip,
+        cancelReservation,
+        getTripById,
+      }}
     >
       {children}
     </ToursContext.Provider>

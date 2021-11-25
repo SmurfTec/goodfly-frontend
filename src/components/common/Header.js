@@ -13,7 +13,7 @@ import ReactCountryFlag from 'react-country-flag';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 // import logo from 'Assets/img/airplane.svg';
-import logo from 'Assets/img/airplanesvg2.png';
+// import logo from 'Assets/img/airplanesvg2.png';
 import useStyles from 'Styles/Navbar';
 import { Box, Divider } from '@material-ui/core';
 import { withRouter, Link, NavLink } from 'react-router-dom';
@@ -27,6 +27,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AuthContext } from 'Contexts/AuthContext';
 import { AccountBox } from '@material-ui/icons';
 import v4 from 'uuid/dist/v4';
+import logo from 'Assets/img/logo.png';
 
 const mobileNavContent = [
   {
@@ -214,28 +215,14 @@ const Header = ({ history }) => {
   };
 
   const logoSection = (
-    <Typography
-      variant='h5'
-      noWrap
+    <img
+      src={logo}
       style={{
+        width: 160,
         cursor: 'pointer',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        minWidth: 160,
-        fontWeight: 900,
       }}
-      color='primary'
       onClick={() => history.push('/')}
-    >
-      GOODFLY
-      <img src={logo} style={{ height: 50 }} alt='logo' />
-      {/* <img
-        src='https://svg-clipart.com/svg/blue/Ha4TkHw-airplane-vector.svg'
-        style={{ width: 40, height: 50 }}
-        alt='logo'
-      /> */}
-    </Typography>
+    />
   );
 
   const mobileViewContent = (

@@ -53,6 +53,7 @@ const Attachments = ({
     toggleImageUploading();
     const selectedFile = e.target.files[0];
     const fileType = ['image/'];
+    console.log(`e.target.files[0].size`, e.target.files[0].size);
     try {
       console.log(`selectedFile.type`, selectedFile.type);
       if (selectedFile && selectedFile.type.includes(fileType)) {
@@ -85,11 +86,14 @@ const Attachments = ({
         };
       } else {
         toast.error('Only Image files are acceptable !');
+        toggleImageUploading();
       }
     } catch (err) {
       toast(
         err?.response?.data?.message || err.message || 'Something Went Wrong'
       );
+      toggleImageUploading();
+
       console.log(`err`, err);
     }
   };
@@ -98,6 +102,11 @@ const Attachments = ({
     <Box className={classes.mainBox}>
       <Typography variant='h3' style={{ width: '100%' }}>
         Attachments
+      </Typography>
+      <Typography variant='subtitle' style={{ width: '100%' }} component='h5'>
+        Max Size : 5MB
+        <br />
+        Extensions (jpg,jpeg,png,ico)
       </Typography>
 
       <Grid container spacing={3}>

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
-import PromoImage from 'Assets/img/PromoImg.jpg';
+import PromoImage from 'Assets/img/homeTour.jpg';
 import HajjImage from 'Assets/kaaba.jpg';
 
 const useStyles = makeStyles((theme) => ({
@@ -137,11 +137,15 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 0.3s ease',
   },
   addressBox: {
-    padding: theme.spacing(3, 3),
-    backgroundColor: theme.palette.grey[400],
+    padding: 20,
+    backgroundColor: '#E6E6E6',
     color: '#fff',
     borderRadius: 15,
     fontStyle: 'italic',
+    display: 'flex',
+    // gap: 30,
+    justifyContent: 'space-between',
+    flexBasis: '40%',
   },
   partnersSection: {
     marginTop: theme.spacing(9),

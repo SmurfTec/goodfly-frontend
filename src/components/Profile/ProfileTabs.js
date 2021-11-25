@@ -138,7 +138,13 @@ const ProfileTabs = ({ user }) => {
           index={2}
           dir={theme.direction}
         >
-          <TripsTab trips={user.Purchases} />
+          <TripsTab
+            trips={
+              user.Purchases?.filter(
+                (el) => el.status === 'reservation-paid'
+              ) || []
+            }
+          />
         </TabPanel>
         <TabPanel
           className={classes.TabPanel}
