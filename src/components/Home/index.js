@@ -28,7 +28,6 @@ import { ToursContext } from 'Contexts/ToursContext';
 import { Link } from 'react-router-dom';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import Card from 'components/common/Carousel/CaourselCard';
-import GoogleMapReact from 'google-map-react';
 import v4 from 'uuid/dist/v4';
 import logo2 from 'Assets/img/goodfly-logo.png';
 import homeImage from 'Assets/img/hourImage.jpg';

@@ -8,14 +8,16 @@ import {
   FormControl,
   FormHelperText,
 } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { CustomTextField } from 'components/FormControls';
 import Select from 'react-select';
 import { useStyles } from 'Styles/Form/FormStyles';
 import { dateBeforeToday } from 'Utils/formValidations';
+import { AuthContext } from 'Contexts/AuthContext';
 
-const StepOne = ({ changeTravelers, submitForm, data }) => {
+const StepOne = ({ handleChange, submitForm, data }) => {
+  const { user } = useContext(AuthContext);
   const {
     formState: { errors },
     control,
@@ -45,7 +47,9 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
   });
 
   useEffect(() => {
-    const subscriptions = watch((value) => changeTravelers(value.travelers));
+    const subscriptions = watch((value) =>
+      handleChange(value.travelers.value, value.reservationType.value)
+    );
     return () => subscriptions.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch]);
@@ -89,6 +93,7 @@ const StepOne = ({ changeTravelers, submitForm, data }) => {
                 label='First Name'
                 control={control}
                 type='text'
+                // customValue={customValue}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

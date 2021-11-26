@@ -94,7 +94,7 @@ const Reservations = () => {
       case 0:
         return (
           <Step1
-            changeTravelers={handleChangeTravelers}
+            handleChange={handleChange}
             submitForm={handleSubmit1}
             data={reservation}
           />
@@ -121,8 +121,13 @@ const Reservations = () => {
     }
   };
 
-  const handleChangeTravelers = (v) => {
-    setReservation((st) => ({ ...st, numOfTravellers: v.value }));
+  const handleChange = (travelers, reservationType) => {
+    console.log('handle Change Travellers');
+    setReservation((st) => ({
+      ...st,
+      numOfTravellers: travelers,
+      reservationType,
+    }));
   };
 
   const handleSubmit1 = (data) => {
@@ -278,7 +283,7 @@ const Reservations = () => {
                     {tour ? (
                       <TravelDetails
                         tour={tour}
-                        travelers={reservation.travelers.length}
+                        travelers={reservation.numOfTravellers}
                       />
                     ) : (
                       <Skeleton height={250} />

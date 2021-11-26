@@ -82,3 +82,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.simplebar-placeholder {
+  height: unset !important;
+}

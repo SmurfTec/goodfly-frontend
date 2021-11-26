@@ -81,6 +81,15 @@ export const AuthProvider = withRouter(({ children, history }) => {
       }
   };
 
+  const makeNotficationsAsRead = async () => {
+    try {
+      await makeReq('/users/read-my-notifications', {}, 'PATCH');
+    } catch (err) {
+      handleCatch(err);
+    }
+    console.log('makenotificationRead');
+  };
+
   return (
     <AuthContext.Provider
       displayName='Auth Context'
@@ -93,6 +102,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
         signInUser,
         updateMe,
         getMe,
+        makeNotficationsAsRead,
       }}
     >
       {children}

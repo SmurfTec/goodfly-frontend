@@ -28,6 +28,7 @@ import { AuthContext } from 'Contexts/AuthContext';
 import { AccountBox } from '@material-ui/icons';
 import v4 from 'uuid/dist/v4';
 import logo from 'Assets/img/logo.png';
+import NotificationsPopover from 'components/notify/NotificationsPopover';
 
 const mobileNavContent = [
   {
@@ -253,9 +254,12 @@ const Header = ({ history }) => {
         </IconButton>
       </NavLink>
       {user && (
-        <IconButton aria-label='logout' onClick={logoutUser}>
-          <ExitToAppIcon color='action' />
-        </IconButton>
+        <>
+          <IconButton aria-label='logout' onClick={logoutUser}>
+            <ExitToAppIcon color='action' />
+          </IconButton>
+          <NotificationsPopover />
+        </>
       )}
 
       <IconButton aria-label='toggleMenu' onClick={toggleMobileNav}>
@@ -446,18 +450,21 @@ const Header = ({ history }) => {
       </Link>
 
       {user ? (
-        <Typography
-          variant='p'
-          color='primary.dark'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-          onClick={logoutUser}
-        >
-          <ExitToAppIcon />
-          Logout
-        </Typography>
+        <>
+          <NotificationsPopover />
+          <Typography
+            variant='p'
+            color='primary.dark'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+            onClick={logoutUser}
+          >
+            <ExitToAppIcon />
+            Logout
+          </Typography>
+        </>
       ) : (
         <Typography
           variant='p'
