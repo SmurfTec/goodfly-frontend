@@ -15,6 +15,7 @@ import Select from 'react-select';
 import { useStyles } from 'Styles/Form/FormStyles';
 import { dateBeforeToday } from 'Utils/formValidations';
 import { AuthContext } from 'Contexts/AuthContext';
+import { getMuiDateFormat } from 'Utils/constants';
 
 const StepOne = ({ handleChange, submitForm, data }) => {
   const { user } = useContext(AuthContext);
@@ -25,14 +26,15 @@ const StepOne = ({ handleChange, submitForm, data }) => {
     handleSubmit,
     watch,
     getValues,
+    setValue,
   } = useForm({
     defaultValues: {
       reservationType: data.reservationType,
       firstName: data.firstName,
       lastName: data.lastName,
       address: data.address,
-      addionalAddress: data.addionalAddress,
-      postalcode: data.postalcode,
+      additionalAddress: data.additionalAddress,
+      postalCode: data.postalCode,
       city: data.city,
       country: data.country,
       phone: data.phone,
@@ -46,13 +48,46 @@ const StepOne = ({ handleChange, submitForm, data }) => {
     },
   });
 
+  const watchReservationType = watch('reservationType', 'selfReserve');
+  const watchTravlers = watch('travelers', 2);
+
   useEffect(() => {
-    const subscriptions = watch((value) =>
-      handleChange(value.travelers.value, value.reservationType.value)
-    );
+    const subscriptions = watch((value) => {
+      handleChange(value.travelers.value);
+    });
     return () => subscriptions.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch]);
+  }, [watchTravlers]);
+  useEffect(() => {
+    // console.log(`watchReservationType`, watchReservationType);
+    if (watchReservationType === 'selfReserve') {
+      setValue('firstName', user.firstName);
+      setValue('lastName', user.lastName);
+      setValue('address', user.address);
+      setValue('additionalAddress', user.additionalAddress);
+      setValue('dateOfBirth', getMuiDateFormat(user.dateOfBirth));
+      setValue('postalcode', user.postalCode);
+      setValue('city', user.city);
+      setValue('country', user.country);
+      setValue('email', user.email);
+      setValue('passportNumber', user.passportNumber);
+      setValue('phone', user.telephoneNumber);
+    } else {
+      setValue('firstName', '');
+      setValue('lastName', '');
+      setValue('address', '');
+      setValue('additionalAddress', '');
+      setValue('dateOfBirth', '');
+      setValue('postalcode', '');
+      setValue('city', '');
+      setValue('country', '');
+      setValue('email', '');
+      setValue('passportNumber', '');
+      setValue('phone', '');
+      setValue('passportNumber', '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchReservationType]);
 
   return (
     <>
@@ -90,6 +125,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={6}>
               <CustomTextField
                 name='firstName'
+                disabled={watchReservationType === 'selfReserve'}
                 label='First Name'
                 control={control}
                 type='text'
@@ -99,6 +135,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={6}>
               <CustomTextField
                 name='lastName'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Last Name'
                 control={control}
                 type='text'
@@ -107,6 +144,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={12}>
               <CustomTextField
                 name='address'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Address'
                 control={control}
                 type='text'
@@ -114,7 +152,8 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             </Grid>
             <Grid item xs={12} sm={12}>
               <CustomTextField
-                name='addionalAddress'
+                name='additionalAddress'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Additional Address'
                 control={control}
                 type='text'
@@ -123,6 +162,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={4}>
               <CustomTextField
                 name='postalcode'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Postal Code'
                 control={control}
                 type='number'
@@ -131,6 +171,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={4}>
               <CustomTextField
                 name='city'
+                disabled={watchReservationType === 'selfReserve'}
                 label='City'
                 control={control}
                 type='text'
@@ -139,6 +180,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={4}>
               <CustomTextField
                 name='country'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Country'
                 control={control}
                 type='text'
@@ -147,6 +189,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={6}>
               <CustomTextField
                 name='phone'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Mobile phone'
                 control={control}
                 type='number'
@@ -155,6 +198,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={6}>
               <CustomTextField
                 name='email'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Email'
                 control={control}
                 type='email'
@@ -171,6 +215,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
 
               <Controller
                 name='travelers'
+                // disabled={watchReservationType === 'selfReserve'}
                 control={control}
                 // defaultValue={{
                 //   value: 5,
@@ -211,6 +256,7 @@ const StepOne = ({ handleChange, submitForm, data }) => {
                     required: true,
                     validate: dateBeforeToday,
                   })}
+                  disabled={watchReservationType === 'selfReserve'}
                 />
                 {errors.dateOfBirth?.type === 'required' && (
                   <FormHelperText>Specify date of birth</FormHelperText>
@@ -226,9 +272,10 @@ const StepOne = ({ handleChange, submitForm, data }) => {
             <Grid item xs={12} sm={6}>
               <CustomTextField
                 name='passportNumber'
+                disabled={watchReservationType === 'selfReserve'}
                 label='Passport Number'
                 control={control}
-                type='number'
+                type='text'
               />
             </Grid>
           </Grid>

@@ -250,7 +250,7 @@ const TourDetails = ({ match, history, location }) => {
                         : `/auth/login?redirect=/tours/reservation/${id}`
                     }
                     onClick={handleLinkClick}
-                    disabled={isAlreadyPurchased}
+                    // disabled={isAlreadyPurchased}
                   >
                     Reserve
                   </Button>
@@ -353,7 +353,7 @@ const TourDetails = ({ match, history, location }) => {
                 <StagesTab stages={tour ? tour.stages : []} />
               </TabPanel>
               <TabPanel value={tabValue} index={1} dir='x-reverse'>
-                <FormalitiesTab></FormalitiesTab>
+                <FormalitiesTab formality={tour?.formality} />
               </TabPanel>
             </Box>
           </Box>

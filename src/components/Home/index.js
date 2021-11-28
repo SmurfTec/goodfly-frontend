@@ -91,21 +91,9 @@ const Index = () => {
   useEffect(() => {
     setFlashSales(tours?.filter((el) => el.sale)?.slice(0, 5));
 
-    setOffers(
-      tours
-        ?.filter(
-          (el) => el.category === 'ethical' || el.category === 'excursions'
-        )
-        ?.slice(0, 6)
-    );
+    setOffers(tours?.filter((el) => el.category === 'ethical')?.slice(0, 6));
 
-    setTourCards(
-      tours
-        ?.filter(
-          (el) => el.category === 'ethical' || el.category === 'excursions'
-        )
-        ?.slice(0, 3)
-    );
+    setTourCards(tours?.filter((el) => el.category === 'ethical')?.slice(0, 3));
   }, [tours]);
 
   const handleSubscribe = async () => {
@@ -371,8 +359,16 @@ const Index = () => {
       />
 
       <Container sx={{ mt: 10 }}>
-        <Box display='flex' justifyContent='center' style={{ gap: '100px' }}>
-          <Box style={{ flexBasis: '42%' }}>
+        <Box
+          display='flex'
+          justifyContent='center'
+          style={{
+            gap: '5%',
+            flexWrap: 'wrap',
+            rowGap: 40,
+          }}
+        >
+          <Box style={{ flexGrow: 1 }}>
             <Box className={classes.newsLetterSubs}>
               <Typography variant='h6'>
                 Receive the best offers <span>via the newsletter GOODFLY</span>
@@ -408,10 +404,17 @@ const Index = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                gap: 20,
+                // gap: '20px',
+                flexGrow: 1,
+                alignItems: 'center',
+                maxWidth: 320,
               }}
             >
-              <Box sx={{ flexGrow: 1 }}>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                }}
+              >
                 <Typography variant='h6' color='text.primary'>
                   Locate us
                 </Typography>
@@ -434,6 +437,7 @@ const Index = () => {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  flexGrow: 1,
                 }}
               >
                 <img src={smallLogo} style={{ margin: 'auto' }} />
@@ -456,7 +460,7 @@ const Index = () => {
                 ></iframe>
               </Box>
             </Box>
-            <Box>
+            <Box sx={{ flexGrow: 1 }}>
               <img src={storeImage} style={{ width: '100%', height: '100%' }} />
             </Box>
           </Box>
@@ -486,29 +490,6 @@ const Index = () => {
           </Box>
         </Paper>
       </Container>
-      {/* 
-      <section className={classes.partnersSection}>
-        <Typography variant='h4' align='center'>
-          Our partners
-        </Typography>
-
-        <Box
-          sx={{
-            mt: 2,
-            height: 100,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            '& img': {
-              marginInline: 10,
-            },
-          }}
-        >
-          <img with='50px' height='50px' src={Partner1} alt='img' />
-          <img with='50px' height='50px' src={Partner1} alt='img' />
-          <img with='50px' height='50px' src={Partner1} alt='img' />
-        </Box>
-      </section> */}
     </Page>
   );
 };

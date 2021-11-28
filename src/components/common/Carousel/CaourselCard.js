@@ -52,7 +52,7 @@ function CaourselCard({ title, description, image, _id, history }) {
         </CardMedia>
       </CardActionArea>
       <CardContent className={classes.cardContent}>
-        <Typography>{description}</Typography>
+        <Typography>{description.slice(0, 110)}...</Typography>
       </CardContent>
     </Card>
   );

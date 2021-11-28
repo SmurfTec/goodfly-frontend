@@ -4,7 +4,8 @@ import { Typography, Grid, IconButton, Box } from '@material-ui/core';
 import { styles } from 'Styles/Footer/FooterStyles';
 // import logo from 'Assets/img/airplane.svg';
 import payment from 'Assets/img/paymentIcons.png';
-import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
+import newLogo from 'Assets/img/newLogo.svg';
+import whiteLogo from 'Assets/img/whiteLogo.png';
 import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 import {
   aboutUs,
@@ -38,21 +39,8 @@ const Footer = () => {
         <Grid container spacing={2}>
           <Grid item xs={6} sm={3}>
             <section className={classes.gridContent}>
-              <Typography
-                variant='h5'
-                noWrap
-                className={classes.logoTitle}
-                onClick={() => history.push('/')}
-              >
-                GOODFLY
-                <FlightTakeoffIcon />
-                {/* <img
->>>>>>> master
-                     src={logo}
-                     style={{ width: 40, height: 50 }}
-                     alt='logo'
-                  /> */}
-              </Typography>
+              <img src={newLogo} style={{ maxWidth: 150 }} />
+
               <Typography
                 variant='subtitle1'
                 className={classes.contentTitle}
@@ -88,10 +76,7 @@ const Footer = () => {
             </section>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Typography
-              variant='subtitle1'
-              className={classes.contentTitle}
-            >
+            <Typography variant='subtitle1' className={classes.contentTitle}>
               Menu
             </Typography>
             {menu.map((a) => (
@@ -108,10 +93,7 @@ const Footer = () => {
           </Grid>
 
           <Grid item xs={6} sm={3}>
-            <Typography
-              variant='subtitle1'
-              className={classes.contentTitle}
-            >
+            <Typography variant='subtitle1' className={classes.contentTitle}>
               Practical Information
             </Typography>
             {practicalInfo.map((a) => (
@@ -135,11 +117,7 @@ const Footer = () => {
             </Typography>
 
             {reservations.map((a, index) => (
-              <Typography
-                key={a}
-                variant='subtitle2'
-                color='common.white'
-              >
+              <Typography key={a} variant='subtitle2' color='common.white'>
                 {a}
               </Typography>
             ))}
@@ -166,10 +144,7 @@ const Footer = () => {
             </Box>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Typography
-              variant='subtitle1'
-              className={classes.contentTitle}
-            >
+            <Typography variant='subtitle1' className={classes.contentTitle}>
               Quick Access
             </Typography>
             {quickAccess.map((a) => (
@@ -187,6 +162,7 @@ const Footer = () => {
                 </Link>
               </Typography>
             ))}
+            <img style={{ marginTop: 20 }} src={whiteLogo} />
           </Grid>
         </Grid>
       </footer>

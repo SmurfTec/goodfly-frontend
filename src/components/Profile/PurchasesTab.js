@@ -11,7 +11,7 @@ const PurchasesTab = ({ purchases, orders }) => {
 
   const orderDetails = (status) => {
     return orders
-      .filter((order) => order.status === status)
+      ?.filter((order) => order.status === status)
       .map((order) => (
         <Box>
           <StoreItem key={order?._id} order={order} />

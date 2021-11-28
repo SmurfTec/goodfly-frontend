@@ -12,6 +12,7 @@ import {
   Container,
   TextField,
   Button,
+  useTheme,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonalInfo = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const [
     attachments,
     setAttachments,
@@ -135,10 +137,17 @@ const PersonalInfo = () => {
         <Typography
           variant='p'
           fontWeight='bold'
-          style={{ display: 'flex', alignItems: 'center' }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            color: user?.isVerified
+              ? theme.palette.success.dark
+              : theme.palette.error.main,
+          }}
           size='small'
         >
-          Validate <CheckCircleOutlineOutlinedIcon />
+          {user?.isVerified ? 'Verified' : 'Not Verified'}{' '}
+          {user?.isVerified && <CheckCircleOutlineOutlinedIcon />}
         </Typography>
       </Box>
       <Box

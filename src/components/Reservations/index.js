@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
   Stepper,
@@ -19,6 +19,7 @@ import { useHistory, useParams, useLocation } from 'react-router-dom';
 import Page from 'components/common/Page';
 import Skeleton from 'react-loading-skeleton';
 import { handleCatch, makeReq } from 'Utils/constants';
+import { AuthContext } from 'Contexts/AuthContext';
 
 // const steps = ['Shipping address', 'Payment details'];
 
@@ -49,6 +50,7 @@ function getSteps() {
 
 const Reservations = () => {
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
 
   const initialState = {
     reservationType: 'selfReserve',
@@ -88,6 +90,40 @@ const Reservations = () => {
       }
     })();
   }, [id]);
+
+  // useEffect(() => {
+  //   if (reservation.reservationType === 'selfReserve')
+  //     setReservation((st) => ({
+  //       ...st,
+  //       firstName: user.firstName,
+  //       lastName: user.lastName,
+  //       address: user.address,
+  //       addionalAddress: user.addionalAddress,
+  //       dateOfBirth: user.dateOfBirth,
+  //       postalcode: user.postalcode,
+  //       city: user.city,
+  //       country: user.country,
+  //       email: user.email,
+  //       passportNumber: user.passportNumber,
+  //       phone: user.telephoneNumber,
+  //     }));
+  //   else {
+  //     setReservation((st) => ({
+  //       ...st,
+  //       firstName: '',
+  //       lastName: '',
+  //       address: '',
+  //       addionalAddress: '',
+  //       dateOfBirth: '',
+  //       postalcode: '',
+  //       city: '',
+  //       country: '',
+  //       email: '',
+  //       passportNumber: '',
+  //       phone: '',
+  //     }));
+  //   }
+  // }, [reservation.reservationType]);
 
   const getStepContent = (stepIndex) => {
     switch (stepIndex) {

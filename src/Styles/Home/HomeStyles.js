@@ -137,7 +137,9 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 0.3s ease',
   },
   addressBox: {
+    gap: 20,
     padding: 20,
+    flexGrow: 1,
     backgroundColor: '#E6E6E6',
     color: '#fff',
     borderRadius: 15,

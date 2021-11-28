@@ -110,13 +110,13 @@ const StoreDetails = ({ match }) => {
   const canReview = useMemo(() => {
     if (!userOrders) return false;
 
-    if (!product.reviews) return false;
+    if (!product?.reviews) return false;
 
     let isFound =
       !!userOrders.find(
         (userOrder) =>
           !!userOrder.orderItems.find((item) => item.product?._id === id)
-      ) || product?.reviews.find((el) => el.visitor._id === user._id);
+      ) || product?.reviews.find((el) => el.visitor?._id === user._id);
 
     return isFound;
   }, [userOrders, product, user]);

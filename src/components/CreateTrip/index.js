@@ -40,7 +40,7 @@ import {
 } from './DumyData';
 import { CustomSelect } from 'components/FormControls';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
-import { makeReq, handleCatch } from 'Utils/constants';
+import { makeReq, handleCatch, getMuiDateFormat } from 'Utils/constants';
 import { datePickerCheck } from 'Utils/datePickerCheck';
 import MuiAutoComplete from '../FormControls/MUIAutoComplete';
 import CountriesAutoComplete from '../FormControls/MUICountriesAutoComplete';
@@ -67,6 +67,7 @@ const AddTrip = () => {
   const methods = useForm();
   const watchFields = watch(['departureDate', 'desiredReturnOn', 'type']);
 
+  console.log('errors', errors);
   const removeExtraFields = (data, ...fields) => {
     Object.keys(data).forEach((key) => {
       if (!!fields?.find((el) => el === key)) {
@@ -167,7 +168,7 @@ const AddTrip = () => {
     //? Destructure the fields
     getReactSelectValue(data, ...reactSelectFields);
     //? Destructure the country code field
-    getCountryCode(data, 'countryCode');
+    // getCountryCode(data, 'countryCode');
     //? Destructure the country code fields
     getDestinations(data, 'destination');
 
@@ -869,13 +870,16 @@ const AddTrip = () => {
                         <Controller
                           name='pronoun'
                           control={control}
-                          defaultValue={clientCivility[0]}
+                          // defaultValue={user.pronoun}
                           render={({ field }) => (
                             <Select
                               {...field}
                               isSearchable={false}
                               placeholder='Civility'
                               options={clientCivility}
+                              isDisabled
+                              value={user.pronoun}
+                              // disabled
                             />
                           )}
                         />
@@ -884,17 +888,19 @@ const AddTrip = () => {
                       <Grid item xs={6} sm={4}>
                         <FormControl
                           fullWidth
-                          error={Boolean(errors.firstName)}
+                          error={Boolean(errors.firstName && !user.firstName)}
                         >
                           <input
                             className={classes.textInput}
                             {...register('firstName', {
-                              required: true,
+                              required: !user.firstName ? true : false,
                               maxLength: 50,
                             })}
                             placeholder=' First Name'
+                            value={user.firstName}
+                            disabled
                           />
-                          {errors.firstName && (
+                          {errors.firstName && !user.firstName && (
                             <FormHelperText>
                               Specify your first name
                             </FormHelperText>
@@ -902,16 +908,21 @@ const AddTrip = () => {
                         </FormControl>
                       </Grid>
                       <Grid item xs={6} sm={4}>
-                        <FormControl fullWidth error={Boolean(errors.lastName)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.lastName && !user.lastName)}
+                        >
                           <input
                             className={classes.textInput}
                             {...register('lastName', {
-                              required: true,
+                              required: !user.lastName ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='Last Name'
+                            value={user.lastName}
+                            disabled
                           />
-                          {errors.lastName && (
+                          {errors.lastName && !user.lastName && (
                             <FormHelperText>
                               Specify your last name
                             </FormHelperText>
@@ -921,16 +932,20 @@ const AddTrip = () => {
                       <Grid item xs={6} sm={4}>
                         <FormControl
                           fullWidth
-                          error={Boolean(errors.birthDate)}
+                          error={Boolean(
+                            errors.dateOfBirth && !user.dateOfBirth
+                          )}
                         >
                           <input
                             type='date'
                             className={classes.textInput}
-                            {...register('birthDate', {
-                              required: true,
+                            {...register('dateOfBirth', {
+                              required: !user.dateOfBirth ? true : false,
                             })}
+                            value={getMuiDateFormat(user.dateOfBirth)}
+                            disabled
                           />
-                          {errors.birthDate && (
+                          {errors.dateOfBirth && !user.dateOfBirth && (
                             <FormHelperText>
                               Specify your date of birth
                             </FormHelperText>
@@ -938,16 +953,21 @@ const AddTrip = () => {
                         </FormControl>
                       </Grid>
                       <Grid item xs={6} sm={8}>
-                        <FormControl fullWidth error={Boolean(errors.address)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.address) && !user.address}
+                        >
                           <input
                             className={classes.textInput}
                             {...register('address', {
-                              required: true,
+                              required: !user.address ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='Address'
+                            value={user.address}
+                            disabled
                           />
-                          {errors.address && (
+                          {errors.address && !user.address && (
                             <FormHelperText>
                               Specify your address
                             </FormHelperText>
@@ -956,71 +976,91 @@ const AddTrip = () => {
                       </Grid>
 
                       <Grid item xs={6} sm={4}>
-                        <FormControl fullWidth error={Boolean(errors.zipCode)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.postalCode) && !user.postalCode}
+                        >
                           <input
                             className={classes.textInput}
                             type='number'
-                            {...register('zipCode', {
-                              required: true,
+                            {...register('postalCode', {
+                              required: !user.postalCode ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='Zip Code'
+                            value={user.postalCode}
+                            disabled
                           />
-                          {errors.zipCode && (
+                          {errors.postalCode && !user.postalCode && (
                             <FormHelperText>Specify zip code</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
                       <Grid item xs={6} sm={4}>
-                        <FormControl fullWidth error={Boolean(errors.city)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.city) && !user.city}
+                        >
                           <input
                             className={classes.textInput}
                             type='text'
                             {...register('city', {
-                              required: true,
+                              required: !user.city ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='City'
+                            value={user.city}
+                            disabled
                           />
-                          {errors.city && (
+                          {errors.city && !user.city && (
                             <FormHelperText>Specify city</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
                       <Grid item xs={6} sm={4}>
-                        <FormControl fullWidth error={Boolean(errors.country)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.country) && !user.country}
+                        >
                           <input
                             className={classes.textInput}
                             type='text'
                             {...register('country', {
-                              required: true,
+                              required: !user.country ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='Country'
+                            value={user.country}
+                            disabled
                           />
-                          {errors.country && (
+                          {errors.country && !user.country && (
                             <FormHelperText>Specify country</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
                       <Grid item xs={6} sm={5}>
-                        <FormControl fullWidth error={Boolean(errors.email)}>
+                        <FormControl
+                          fullWidth
+                          error={Boolean(errors.email) && !user.email}
+                        >
                           <input
                             className={classes.textInput}
                             type='email'
                             {...register('email', {
-                              required: true,
+                              required: !user.email ? true : false,
                               maxLength: 50,
                             })}
                             placeholder='Email'
+                            value={user.email}
+                            disabled
                           />
-                          {errors.email && (
+                          {errors.email && !user.email && (
                             <FormHelperText>Specify email</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
 
-                      <Grid item xs={4} sm={3}>
+                      {/* <Grid item xs={4} sm={3}>
                         {/* <Controller
                       name='numberCode'
                       control={control}
@@ -1033,25 +1073,30 @@ const AddTrip = () => {
                           options={numberCode}
                         />
                       )}
-                    /> */}
+                    /> 
 
                         <MuiAutoComplete control={control} />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={6} sm={4}>
                         <FormControl
                           fullWidth
-                          error={Boolean(errors.phoneNumber)}
+                          error={
+                            Boolean(errors.telephoneNumber) &&
+                            !user.telephoneNumber
+                          }
                         >
                           <input
                             className={classes.textInput}
                             type='number'
-                            {...register('phoneNumber', {
-                              required: true,
+                            {...register('telephoneNumber', {
+                              required: !user.telephoneNumber ? true : false,
                               maxLength: 12,
                             })}
                             placeholder='Phone no'
+                            value={user.telephoneNumber}
+                            disabled
                           />
-                          {errors.phoneNumber && (
+                          {errors.telephoneNumber && !user.telephoneNumber && (
                             <FormHelperText>
                               Specify your phone no
                             </FormHelperText>

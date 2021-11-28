@@ -35,14 +35,14 @@ export const TravelDetails = ({ tour, travelers, formId }) => {
         <Box className={classes.box}>
           <span>
             <Typography variant='h5'>
-              {travelers} x {price}
+              {+travelers + 1} x {price}
             </Typography>
             <Typography variant='body1'>
-              vous et {travelers} voyageurs
+              vous et {+travelers} voyageurs
             </Typography>
           </span>
           <Typography variant='subtitle1'>
-            {parseInt(travelers) * parseFloat(price)}€
+            {parseInt(+travelers + 1) * parseFloat(price)}€
           </Typography>
         </Box>
         <Divider />

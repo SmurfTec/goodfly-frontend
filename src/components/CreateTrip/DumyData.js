@@ -153,12 +153,16 @@ export const timeToReachClient = [
 
 export const clientCivility = [
   {
-    value: 'sir',
-    label: 'Sir',
+    value: 'Mr',
+    label: 'Mr',
   },
   {
-    value: 'madam',
-    label: 'Madam',
+    value: 'Mrs',
+    label: 'Mrs',
+  },
+  {
+    value: 'Ms',
+    label: 'Ms',
   },
 ];
 

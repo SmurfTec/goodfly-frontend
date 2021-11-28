@@ -58,12 +58,15 @@ const PurchaseCollapseItem = (props) => {
   const handlePaymentSuccess = (updatedPurchase) => {
     togglePaymentOpen();
     console.log(`updatedPurchase._id`, updatedPurchase._id);
-    updateMe({
-      ...user,
-      Purchases: user.purchases.map((el) =>
-        el._id === updatedPurchase._id ? updatedPurchase : el
-      ),
-    });
+    updateMe(
+      {
+        ...user,
+        Purchases: user.purchases.map((el) =>
+          el._id === updatedPurchase._id ? updatedPurchase : el
+        ),
+      },
+      true
+    );
     console.log('updatedUser', {
       ...user,
       purchases: user.purchases.map((el) =>

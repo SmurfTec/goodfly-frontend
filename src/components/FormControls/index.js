@@ -60,7 +60,7 @@ export const CustomSelect = ({
   );
 };
 export const CustomTextField = (props) => {
-  const { name, label, type, control, customValue } = props;
+  const { name, label, type, control, customValue, disabled } = props;
 
   return (
     <Controller
@@ -78,6 +78,7 @@ export const CustomTextField = (props) => {
           type={type}
           fullWidth
           required
+          disabled={!!disabled}
         />
       )}
     />
