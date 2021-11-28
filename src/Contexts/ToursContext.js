@@ -14,7 +14,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
   useEffect(() => {
     (async () => {
       try {
-        const resData = await makeReq(`/trips`);
+        const resData = await makeReq(`/trips?upload=true`);
         // console.log(`resData`, resData);
 
         setTours(resData.trips);

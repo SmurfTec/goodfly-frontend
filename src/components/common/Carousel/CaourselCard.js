@@ -20,10 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
-    minHeight: 218,
+    // minHeight: 218,
+    height: 218,
+    overflow: 'hidden',
   },
   cardContent: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   cardTitle: {
     marginLeft: theme.spacing(2),

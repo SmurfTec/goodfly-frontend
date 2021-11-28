@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
+import storeImg from 'Assets/img/store.jpg';
 
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {
@@ -6,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: `url(https://www.lsretail.com/hubfs/BLOG_supermarket-retail-physical-store.jpg)`,
+    backgroundImage: `url(${storeImg})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',

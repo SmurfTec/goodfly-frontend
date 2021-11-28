@@ -8,7 +8,6 @@ import {
   Slider,
   Button,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -17,10 +16,7 @@ import { Box } from '@material-ui/system';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 // * ------------ //
 
-import Products from './StoreProducts';
-
 import useStyles from './styles';
-import { handleCatch, makeReq } from 'Utils/constants';
 import StoreProducts from './StoreProducts';
 import ProductCard from './ProductCard';
 import { StoreContext } from 'Contexts/StoreContext';
