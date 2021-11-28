@@ -93,7 +93,7 @@ const TripCard = (props) => {
               align='center'
             >
               {/* {new Date(returnDate) - new Date(departureDate)} */}
-              {boardType.toUpperCase()}
+              {boardType?.toUpperCase()}
             </Typography>
           </Box>
         </CardContent>

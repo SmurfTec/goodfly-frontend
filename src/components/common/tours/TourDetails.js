@@ -192,7 +192,9 @@ const TourDetails = ({ match, history, location }) => {
                       color='textSecondary'
                       marginRight={2}
                     >
-                      {new Date(tour.startingDate).toDateString()}
+                      {tour.startingDate
+                        ? new Date(tour.startingDate).toDateString()
+                        : 'Open Offer'}
                     </Typography>
                     <Rating
                       size='small'
