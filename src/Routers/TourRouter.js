@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 // * Tours --------------------- * //
 import EthicalTours from 'components/EthicalTours';
+import Promos from 'components/Promos';
 import ExcursionsTours from 'components/Excursions';
 import Destinations from 'components/Destinations';
 import DestinationsDetails from 'components/Destinations/Details';
@@ -27,6 +28,9 @@ const TourRouter = ({ match }) => {
 
       {/* Ethical Tours Page */}
       <Route exact path={match.url + '/ethical'} component={EthicalTours} />
+
+      {/* Promos Tours Page */}
+      <Route exact path={match.url + '/promos'} component={Promos} />
 
       {/* Excursions Tours */}
       <Route

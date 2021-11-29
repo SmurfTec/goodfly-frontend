@@ -55,7 +55,7 @@ const FlashPromos = ({ tours }) => {
           mb: 3,
         }}
       >
-        <img src={FlashRed} width='25px' height=' 25px' alt='White' />
+        <img src={FlashRed} width='25px' height='25px' alt='White' />
         <Typography
           variant='h3'
           sx={{
@@ -104,7 +104,7 @@ const FlashPromos = ({ tours }) => {
                         height='20px'
                         alt='White'
                       />
-                      <span>{data.duration}</span>
+                      <span>{data.duration} days</span>
                     </Box>
                   </Box>
                   <Typography variant='subtitle2'>{data.boardType}</Typography>
@@ -112,8 +112,8 @@ const FlashPromos = ({ tours }) => {
                 <Grid item xs={4} sm={4}>
                   <Card className={classes.priceCard} sx={{ px: 1, py: 1 }}>
                     <Typography variant='h4' align='center'>
-                      {/* <ArrowIcon size='small' sx={{ pt: 1 }} /> */}
-                      {data.price}
+                      <ArrowIcon size='small' sx={{ pt: 1 }} />
+                      {data.price} $
                     </Typography>
                   </Card>
                 </Grid>

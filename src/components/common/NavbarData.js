@@ -43,7 +43,7 @@ const NavbarData = [
     title: 'Blog',
   },
   {
-    path: '/promos',
+    path: '/tours/promos',
     title: 'Promos',
   },
   {

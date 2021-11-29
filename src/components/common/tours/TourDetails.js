@@ -125,7 +125,7 @@ const TourDetails = ({ match, history, location }) => {
     // * User's Purchase's Status must be reservation-paid
     // * And Trip's Ending Date must have been passed
     // % i.e Visitor can review if trip have been completed
-    const tripPurchase = tripReservation;
+    const tripPurchase = tripReservation();
     return (
       tripPurchase?.status === 'reservation-paid' &&
       new Date() > new Date(tour.endingDate)
