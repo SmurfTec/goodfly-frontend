@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 export const StoreContext = React.createContext();
 
 export const StoreProvider = withRouter(({ children, history }) => {
-  const { user, updateMe } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const initialState = {
     orderItems: [],
 
@@ -40,6 +40,8 @@ export const StoreProvider = withRouter(({ children, history }) => {
   const [cart, setCart, resetCart] = UseLocalStorage('cart', initialState);
   const [order, setOrder] = useState();
 
+  const [productCategories, setProductCategories] = useState([]);
+
   // * Get User Orders if he gets Logged In
   useEffect(() => {
     if (!user) return;
@@ -55,17 +57,31 @@ export const StoreProvider = withRouter(({ children, history }) => {
     })();
   }, [user]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/products`);
-        setProducts(res.data.products);
-      } catch (err) {
-        setProducts([]);
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/products`);
+      setProducts(res.data.products);
+    } catch (err) {
+      setProducts([]);
 
-        handleCatch(err);
-      }
-    })();
+      handleCatch(err);
+    }
+  };
+
+  const fetchProductCategories = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/products/category`);
+      setProductCategories(res.data.categories);
+    } catch (err) {
+      setProductCategories([]);
+
+      handleCatch(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchProductCategories();
   }, []);
 
   // useEffect(() => {
@@ -195,6 +211,7 @@ export const StoreProvider = withRouter(({ children, history }) => {
         userOrders,
         payOrder,
         setUserOrders,
+        productCategories,
       }}
     >
       {children}

@@ -298,9 +298,9 @@ const Header = ({ history }) => {
       <Box sx={{ my: 2 }}>
         {mobileNavContent.map((navContent) =>
           navContent.title === 'Logout' && !user ? (
-            <></>
+            <React.Fragment key={v4()}></React.Fragment>
           ) : navContent.title === 'Login' && user ? (
-            <> </>
+            <React.Fragment key={v4()}> </React.Fragment>
           ) : (
             <React.Fragment key={v4()}>
               <Typography

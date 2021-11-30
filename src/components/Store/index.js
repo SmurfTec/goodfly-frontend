@@ -25,7 +25,7 @@ import StoreSubNav from './StoreSubNav';
 
 const Index = () => {
   const classes = useStyles();
-  const { products } = useContext(StoreContext);
+  const { products, productCategories } = useContext(StoreContext);
 
   const [filteredProducts, setFilteredProducts] = useState();
   const [priceFilter, setPriceFilter] = useState([0, 1000]);
@@ -58,7 +58,7 @@ const Index = () => {
     // * Filter by Category
     if (productCategory !== 'all')
       newProducts = newProducts.filter(
-        (product) => product.category === productCategory
+        (product) => product.category._id === productCategory
       );
 
     console.log(`newProducts 1`, newProducts);
@@ -176,126 +176,14 @@ const Index = () => {
                       control={<Radio />}
                       label='All'
                     />
-                    <FormControlLabel
-                      value='Miscellaneous accessories'
-                      control={<Radio />}
-                      label='Miscellaneous accessories'
-                    />
-                    <FormControlLabel
-                      value='Aromatics, Spices and Herbs'
-                      control={<Radio />}
-                      label='Aromatics, Spices and Herbs'
-                    />
-                    <FormControlLabel
-                      value='Wellness & Health Articles'
-                      control={<Radio />}
-                      label='Wellness & Health Articles'
-                    />
-                    <FormControlLabel
-                      value='Biscuits & Cakes'
-                      control={<Radio />}
-                      label='Biscuits & Cakes'
-                    />
-                    <FormControlLabel
-                      value='Sweets & Confectionery'
-                      control={<Radio />}
-                      label='Sweets & Confectionery'
-                    />
-                    <FormControlLabel
-                      value='Gifts & Boxes'
-                      control={<Radio />}
-                      label='Gifts & Boxes'
-                    />
-                    <FormControlLabel
-                      value='Coffees & Cocoas'
-                      control={<Radio />}
-                      label='Coffees & Cocoas'
-                    />
-                    <FormControlLabel
-                      value='Cereals, Rice & Pasta'
-                      control={<Radio />}
-                      label='Cereals, Rice & Pasta'
-                    />
-                    <FormControlLabel
-                      value='Chocolates'
-                      control={<Radio />}
-                      label='Chocolates'
-                    />
-                    <FormControlLabel
-                      value='Home-made jams'
-                      control={<Radio />}
-                      label='Home-made jams'
-                    />
-                    <FormControlLabel
-                      value='Dates'
-                      control={<Radio />}
-                      label='Dates'
-                    />
-                    <FormControlLabel
-                      value='Droguerie'
-                      control={<Radio />}
-                      label='Droguerie'
-                    />
-                    <FormControlLabel
-                      value='Dried Fruits'
-                      control={<Radio />}
-                      label='Dried Fruits'
-                    />
-                    <FormControlLabel
-                      value='Essential oils'
-                      control={<Radio />}
-                      label='Essential oils'
-                    />
-                    <FormControlLabel
-                      value='Oils, Vinegars, & Seasonings'
-                      control={<Radio />}
-                      label='Oils, Vinegars, & Seasonings'
-                    />
-                    <FormControlLabel
-                      value='Juices, Lemonades & Syrups'
-                      control={<Radio />}
-                      label='Juices, Lemonades & Syrups'
-                    />
-                    <FormControlLabel
-                      value='Honey'
-                      control={<Radio />}
-                      label='Honey'
-                    />
-                    <FormControlLabel
-                      value='Promotional offers'
-                      control={<Radio />}
-                      label='Promotional offers'
-                    />
-                    <FormControlLabel
-                      value='Spreads'
-                      control={<Radio />}
-                      label='Spreads'
-                    />
-                    <FormControlLabel
-                      value='Canned products'
-                      control={<Radio />}
-                      label='Canned products'
-                    />
-                    <FormControlLabel
-                      value='Exceptional Products'
-                      control={<Radio />}
-                      label='Exceptional Products'
-                    />
-                    <FormControlLabel
-                      value='Sauces & Condiments'
-                      control={<Radio />}
-                      label='Sauces & Condiments'
-                    />
-                    <FormControlLabel
-                      value='Sugars, Salts & Peppers'
-                      control={<Radio />}
-                      label='Sugars, Salts & Peppers'
-                    />
-                    <FormControlLabel
-                      value='Teas & Infusions'
-                      control={<Radio />}
-                      label='Teas & Infusions'
-                    />
+                    {productCategories.map((cat) => (
+                      <FormControlLabel
+                        key={cat._id}
+                        value={cat._id}
+                        control={<Radio />}
+                        label={cat.name}
+                      />
+                    ))}
                   </RadioGroup>
                 </FormControl>
               </Box>

@@ -138,7 +138,9 @@ const StoreDetails = ({ match }) => {
 
     (async () => {
       try {
-        const resData = await makeReq(`/products?category=${product.category}`);
+        const resData = await makeReq(
+          `/products?category=${product.category._id}`
+        );
 
         setRelatedProducts(resData.products.filter((p) => p._id !== id));
       } catch (err) {

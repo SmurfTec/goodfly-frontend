@@ -25,7 +25,7 @@ const styles = makeStyles((theme) => ({
   card: {
     border: '2px solid #fff',
     backgroundColor: 'transparent',
-    borderBottomLeftRadius: 0,
+    borderTopLeftRadius: 0,
     maxWidth: 55,
   },
   priceCard: {
@@ -95,7 +95,7 @@ const FlashPromos = ({ tours }) => {
                 >
                   <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                     <Typography variant='subtitle1' sx={{ mr: 1 }}>
-                      {data.title}
+                      {data.country}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <img
@@ -107,7 +107,7 @@ const FlashPromos = ({ tours }) => {
                       <span>{data.duration} days</span>
                     </Box>
                   </Box>
-                  <Typography variant='subtitle2'>{data.boardType}</Typography>
+                  <Typography variant='h5'>{data.title}</Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <Card className={classes.priceCard} sx={{ px: 1, py: 1 }}>

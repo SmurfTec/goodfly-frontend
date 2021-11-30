@@ -14,12 +14,12 @@ const StoreSubNav = () => {
         alignItems: 'center',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography
-          variant='h4'
-          color='primary'
-          sx={{ fontWeight: 900 }}
-        >
+      <Box
+        sx={{ display: 'flex', alignItems: 'center' }}
+        component={Link}
+        to='/store'
+      >
+        <Typography variant='h4' color='primary' sx={{ fontWeight: 900 }}>
           GOODFLY
         </Typography>
         <Typography

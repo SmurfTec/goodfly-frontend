@@ -42,7 +42,7 @@ const ProductCard = ({ product, history }) => {
             {price}€
           </Typography>
           <Typography variant='subtitle1' color='text.secondary'>
-            {category}
+            {category && category.name}
           </Typography>
         </CardContent>
       </CardActionArea>
