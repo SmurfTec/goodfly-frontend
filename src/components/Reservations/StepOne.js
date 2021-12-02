@@ -16,6 +16,7 @@ import { useStyles } from 'Styles/Form/FormStyles';
 import { dateBeforeToday } from 'Utils/formValidations';
 import { AuthContext } from 'Contexts/AuthContext';
 import { getMuiDateFormat } from 'Utils/constants';
+import v4 from 'uuid/dist/v4';
 
 const StepOne = ({ handleChange, submitForm, data }) => {
   const { user } = useContext(AuthContext);
@@ -230,11 +231,12 @@ const StepOne = ({ handleChange, submitForm, data }) => {
                     placeholder='Travellers'
                     value={getValues('travelers')}
                     options={[
-                      { key: 11, value: 1, label: '1' },
-                      { key: 12, value: 2, label: '2' },
-                      { key: 13, value: 3, label: '3' },
-                      { key: 14, value: 4, label: '4' },
-                      { key: 15, value: 5, label: '5' },
+                      { key: v4(), value: 0, label: '0' },
+                      { key: v4(), value: 1, label: '1' },
+                      { key: v4(), value: 2, label: '2' },
+                      { key: v4(), value: 3, label: '3' },
+                      { key: v4(), value: 4, label: '4' },
+                      { key: v4(), value: 5, label: '5' },
                     ]}
                   />
                 )}

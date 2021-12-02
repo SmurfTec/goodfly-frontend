@@ -411,7 +411,7 @@ const Header = ({ history }) => {
       justifyContent='space-between'
       alignItems='center'
       flexGrow='1'
-      maxWidth={500}
+      maxWidth={550}
       columnGap={3}
     >
       <IconButton aria-label='language' onClick={handleLanguage}>

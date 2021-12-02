@@ -13,7 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
-import { Container, Skeleton } from '@material-ui/core';
+import { Button, Container, Skeleton } from '@material-ui/core';
 import { SocketContext } from 'Contexts/SocketContext';
 import v4 from 'uuid/dist/v4';
 import clsx from 'clsx';
@@ -23,16 +23,24 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-  chatection: {
+  chatSection: {
     width: '100%',
     height: '80vh',
     boxShadow: 'unset',
+    padding: 20,
+    background: '#f2f2f2',
   },
   headBG: {
     backgroundColor: '#e0e0e0',
   },
   borderRight500: {
     borderRight: '1px solid #e0e0e0',
+  },
+  searchField: {
+    '& .MuiInputBase-root': {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+    },
   },
   messageArea: {
     height: '70vh',
@@ -53,6 +61,12 @@ const useStyles = makeStyles({
     borderRadius: 20,
     marginBottom: '1rem',
     padding: 10,
+    '& p': {
+      fontSize: 12,
+    },
+    '& span': {
+      fontSize: 14,
+    },
   },
   myMessage: {
     marginLeft: 'auto',
@@ -91,21 +105,24 @@ const Chat = () => {
   return (
     <Container sx={{ paddingTop: 2 }}>
       <Grid container>
-        <Grid item xs={12}>
+        {/*  <Grid item xs={12}>
           <Typography variant='h5' className='header-message'>
             Chat
           </Typography>
-        </Grid>
+        </Grid>*/}
       </Grid>
-      <Grid container component={Paper} className={classes.chatection}>
+      <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
           <Divider />
-          <Grid item xs={12} style={{ padding: '10px' }}>
+          <Grid item xs={12} sx={{ margin: 1, marginLeft: 0 }}>
             <TextField
               id='outlined-basic-email'
               label='Search'
               variant='outlined'
               fullWidth
+              size='small'
+              sx={{ marginBottom: 2 }}
+              className={classes.searchField}
             />
           </Grid>
           <Divider />
@@ -158,7 +175,7 @@ const Chat = () => {
             )}
           </List>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={9} sx={{ backgroundColor: '#fff' }}>
           <List id='messageArea' className={classes.messageArea}>
             {chat?.messages &&
               chat.messages.map((message) => (
@@ -192,7 +209,7 @@ const Chat = () => {
                       <Grid item xs={12}>
                         <ListItemText
                           align={
-                            message.sender === 'goodfly' ? 'right' : 'left'
+                            message.sender !== 'goodfly' ? 'right' : 'left'
                           }
                           primary={message.text}
                         ></ListItemText>
@@ -231,7 +248,7 @@ const Chat = () => {
           </List>
           <Divider />
           {chat && (
-            <Grid container style={{ padding: '20px' }}>
+            <Grid container style={{ padding: '20px', alignItems: 'center' }}>
               <Grid item xs={11}>
                 <form id='messageForm' onSubmit={handleCreateMessage}>
                   <TextField
@@ -245,14 +262,16 @@ const Chat = () => {
                 </form>
               </Grid>
               <Grid xs={1} align='right'>
-                <Fab
+                <Button
                   color='primary'
                   aria-label='add'
                   type='submit'
                   form='messageForm'
+                  variant='contained'
+                  sx={{ marginLeft: 1 }}
                 >
                   <SendIcon />
-                </Fab>
+                </Button>
               </Grid>
             </Grid>
           )}
