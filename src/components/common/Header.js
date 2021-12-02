@@ -29,6 +29,7 @@ import { AccountBox } from '@material-ui/icons';
 import v4 from 'uuid/dist/v4';
 import logo from 'Assets/img/logo.png';
 import NotificationsPopover from 'components/notify/NotificationsPopover';
+import TelegramIcon from '@material-ui/icons/Telegram';
 
 const mobileNavContent = [
   {
@@ -242,6 +243,13 @@ const Header = ({ history }) => {
         />
       </IconButton>
       {user && (
+        <NavLink to='/chat'>
+          <IconButton aria-label='chat'>
+            <TelegramIcon color='action' />
+          </IconButton>
+        </NavLink>
+      )}
+      {user && (
         <NavLink to='/profile'>
           <IconButton aria-label='profile'>
             <PersonIcon color='action' />
@@ -420,6 +428,21 @@ const Header = ({ history }) => {
         />
       </IconButton>
       {languageMenu}
+      {user && (
+        <Link to='/chat'>
+          <Typography
+            variant='p'
+            color='primary.dark'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <TelegramIcon />
+            Messages
+          </Typography>
+        </Link>
+      )}
       {user && (
         <Link to='/profile'>
           <Typography

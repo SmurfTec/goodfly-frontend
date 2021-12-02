@@ -24,6 +24,7 @@ import Checkout from 'components/Store/Checkout';
 import Profile from 'components/Profile';
 import { GlobalClassesProvider } from 'Contexts/GlobalClasses';
 import ProtechtedRoute from 'Routers/ProtechtedRoute';
+import Chat from 'components/chat';
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -37,6 +38,7 @@ const App = () => {
           {!location.pathname.includes('/auth') && <Route component={Header} />}
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route path='/chat' component={Chat} />
             <Route path='/tours' component={TourRouter} />
             <ProtechtedRoute exact path='/profile' component={Profile} />
             <Route exact path='/store' component={Store} />

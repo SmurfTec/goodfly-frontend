@@ -2,13 +2,15 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import socketIo from 'socket.io-client';
 import { AuthContext } from './AuthContext';
-import { API_BASE_ORIGIN } from 'Utils/constants';
+import { API_BASE_ORIGIN, makeReq } from 'Utils/constants';
 
 export const SocketContext = createContext();
 
 export const SocketProvider = (props) => {
   const [socket, setSocket] = useState();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, token } = useContext(AuthContext);
+
+  const [chat, setChat] = useState();
 
   //* socket connection
   useEffect(() => {
@@ -46,10 +48,37 @@ export const SocketProvider = (props) => {
       console.log(`newUser`, newUser);
       setUser(newUser);
     });
+
+    socket.on('newMessage', ({ chatId, message, userId }) => {
+      console.log(`newMessage received :`, message);
+      console.log(`chatId :`, chatId);
+      console.log(`userId :`, userId);
+      // * Push New Message to that chat
+      if (userId === user._id)
+        setChat((st) => ({ messages: [...st.messages, message] }));
+    });
   }, [socket, user]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    (async () => {
+      const resData = await makeReq('/chat/me');
+      setChat(resData.chats);
+    })();
+  }, [user]);
+
+  const sendNewMessage = (msg, chatId) => {
+    console.log(`msg`, msg);
+    socket.emit('newMessage', { ...msg, token });
+    console.log(`chatId`, chatId);
+  };
+
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider
+      displayName='Socket Context'
+      value={{ socket, sendNewMessage, chat }}
+    >
       {props.children}
     </SocketContext.Provider>
   );
