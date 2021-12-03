@@ -91,40 +91,6 @@ const Reservations = () => {
     })();
   }, [id]);
 
-  // useEffect(() => {
-  //   if (reservation.reservationType === 'selfReserve')
-  //     setReservation((st) => ({
-  //       ...st,
-  //       firstName: user.firstName,
-  //       lastName: user.lastName,
-  //       address: user.address,
-  //       addionalAddress: user.addionalAddress,
-  //       dateOfBirth: user.dateOfBirth,
-  //       postalcode: user.postalcode,
-  //       city: user.city,
-  //       country: user.country,
-  //       email: user.email,
-  //       passportNumber: user.passportNumber,
-  //       phone: user.telephoneNumber,
-  //     }));
-  //   else {
-  //     setReservation((st) => ({
-  //       ...st,
-  //       firstName: '',
-  //       lastName: '',
-  //       address: '',
-  //       addionalAddress: '',
-  //       dateOfBirth: '',
-  //       postalcode: '',
-  //       city: '',
-  //       country: '',
-  //       email: '',
-  //       passportNumber: '',
-  //       phone: '',
-  //     }));
-  //   }
-  // }, [reservation.reservationType]);
-
   const getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:

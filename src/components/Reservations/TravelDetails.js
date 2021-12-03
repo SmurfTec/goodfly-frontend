@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Typography, Box, Paper, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
@@ -12,9 +12,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TravelDetails = ({ tour, travelers, formId }) => {
+export const TravelDetails = React.memo(({ tour, travelers }) => {
   const classes = useStyles();
   const { title, price, startingDate } = tour;
+
+  const calculatePrice = () => {
+    console.log('calculating price');
+    return parseInt(travelers) * parseFloat(price);
+  };
+
+  const totalPrice = useMemo(() => calculatePrice(), [price, travelers]);
+  // calculatePrice();
 
   return (
     <>
@@ -26,7 +34,9 @@ export const TravelDetails = ({ tour, travelers, formId }) => {
           <span>
             <Typography variant='h5'>{title}</Typography>
             <Typography variant='body1'>
-              {new Date(startingDate).toDateString()}
+              {startingDate
+                ? new Date(startingDate).toDateString()
+                : 'Open Offer'}
             </Typography>
           </span>
           <Typography variant='subtitle1'>{price}</Typography>
@@ -52,10 +62,11 @@ export const TravelDetails = ({ tour, travelers, formId }) => {
             {/* <Typography variant='body1'>dont TVA</Typography> */}
           </span>
           <Typography variant='subtitle1'>
-            {parseInt(travelers) * parseFloat(price)}€
+            {/* {parseInt(travelers) * parseFloat(price)}€ */}
+            {totalPrice}$
           </Typography>
         </Box>
       </Paper>
     </>
   );
-};
+});
