@@ -16,7 +16,7 @@ const styles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'stretch',
     backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing(2),
+    padding: 12,
     color: '#fff',
     [theme.breakpoints.up('sm')]: {
       minHeight: 420,
@@ -34,6 +34,7 @@ const styles = makeStyles((theme) => ({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
+    padding: 5,
   },
 }));
 
@@ -71,10 +72,10 @@ const FlashPromos = ({ tours }) => {
       </Box>
       {tours ? (
         <Paper elevation={0} className={classes.paper}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             {tours.map((data, i) => (
               <React.Fragment key={data._id}>
-                <Grid item xs={3} sm={3}>
+                <Grid item xs={2} sm={2}>
                   <Card className={classes.card}>
                     <Typography
                       variant='h3'
@@ -109,7 +110,7 @@ const FlashPromos = ({ tours }) => {
                   </Box>
                   <Typography variant='h5'>{data.title}</Typography>
                 </Grid>
-                <Grid item xs={4} sm={4}>
+                <Grid item xs={5} sm={5}>
                   <Card className={classes.priceCard} sx={{ px: 1, py: 1 }}>
                     <Typography variant='h4' align='center'>
                       <ArrowIcon size='small' sx={{ pt: 1 }} />

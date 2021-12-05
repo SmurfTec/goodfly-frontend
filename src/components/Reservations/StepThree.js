@@ -9,7 +9,7 @@ import {
   Button,
   Container,
 } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { CustomInputField } from 'components/FormControls';
 import { Box } from '@material-ui/system';
@@ -33,7 +33,10 @@ const StepThree = ({ tour, travelers, data }) => {
   } = useForm();
   const watchFields = watch();
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handeSubmitForm = async (formData) => {
+    setSubmitting(true);
     // console.log(`formData`, formData);
     data = { ...data, ...formData, trip: tour._id };
     // console.log(`data`, data);
@@ -57,6 +60,8 @@ const StepThree = ({ tour, travelers, data }) => {
       history.push('/tours/ethical');
     } catch (err) {
       handleCatch(err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -145,6 +150,7 @@ const StepThree = ({ tour, travelers, data }) => {
               type='submit'
               sx={{ mt: 3 }}
               fullWidth
+              disabled={submitting}
             >
               Finish Reservation
             </Button>

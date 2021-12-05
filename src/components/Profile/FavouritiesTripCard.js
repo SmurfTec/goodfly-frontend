@@ -50,6 +50,20 @@ const TripCard = (props) => {
     history.push(`/tours/details/${_id}`);
   };
 
+  const content = () => {
+    return startingDate && endingDate
+      ? `from ${new Date(startingDate).toLocaleDateString()} to 
+           ${new Date(endingDate).toLocaleDateString()}
+            `
+      : `Open Offer`;
+  };
+
+  const betweenDays = () => {
+    return startingDate && endingDate
+      ? `${days_between(new Date(endingDate), new Date(startingDate))} days`
+      : '';
+  };
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -93,9 +107,7 @@ const TripCard = (props) => {
               variant='subtitle2'
               style={{ minWidth: 190 }}
             >
-              {`from ${new Date(startingDate).toLocaleDateString()} to 
-           ${new Date(endingDate).toLocaleDateString()}
-            `}
+              {content()}
             </Typography>
             <Typography
               color='textSecondary'
@@ -103,8 +115,8 @@ const TripCard = (props) => {
               gutterBottom
               align='center'
             >
-              {days_between(new Date(endingDate), new Date(startingDate))}
-              {' Days '} {boardType}
+              {betweenDays()}
+              {/* {boardType} */}
             </Typography>
             <FavoriteIcon
               color='error'

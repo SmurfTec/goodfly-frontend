@@ -154,7 +154,7 @@ const mobileNavContent = [
     // info: [],
   },
   {
-    title: 'Promos',
+    title: 'Fresh Arrivals',
     to: '/tours/promos',
     // info: [],
   },

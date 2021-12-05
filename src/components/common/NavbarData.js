@@ -44,7 +44,7 @@ const NavbarData = [
   },
   {
     path: '/tours/promos',
-    title: 'Promos',
+    title: 'Fresh Arrivals',
   },
   {
     path: '/tours/create',

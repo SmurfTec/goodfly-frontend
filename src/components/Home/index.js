@@ -222,11 +222,11 @@ const Index = () => {
       </section>
 
       <Container sx={{ my: 12 }}>
-        <Grid container spacing={2} sx={{ mt: 10 }}>
-          <Grid item xs={12} sm={4} md={5} sx={{ position: 'relative' }}>
+        <Grid container spacing={1} sx={{ mt: 10 }}>
+          <Grid item xs={12} sm={5} md={5} sx={{ position: 'relative' }}>
             <FlashPromos tours={flashSales} />
           </Grid>
-          <Grid item xs={12} sm={8} md={7}>
+          <Grid item xs={12} sm={7} md={7}>
             <>
               <Typography
                 variant='h3'

@@ -26,16 +26,6 @@ const Promos = ({ location }) => {
   const globalClasses = useGlobalClasses();
 
   const [flashPromos, setFlashPromos] = useState();
-  const [tripType, setTripType] = useState('all');
-
-  const tripTypes = {
-    options: ['all', 'organic', 'organized'],
-    getOptionLabel: (option) => option,
-  };
-
-  const handleTripTypeChange = (event, value) => {
-    setTripType(value);
-  };
 
   const theme = useTheme();
   const styleProps = {
@@ -49,33 +39,8 @@ const Promos = ({ location }) => {
       return;
     }
 
-    setFlashPromos(
-      tours.filter((el) => el.isPromo && el.category === 'ethical')
-    );
+    setFlashPromos(tours.filter((el) => el.isPromo));
   }, [tours]);
-
-  useEffect(() => {
-    if (!tours) return;
-    if (tripType === 'all')
-      setFlashPromos(
-        tours.filter((el) => el.isPromo && el.category === 'ethical')
-      );
-    else
-      setFlashPromos(
-        tours?.filter(
-          (el) =>
-            el.isPromo &&
-            el.category === 'ethical' &&
-            el.subCategory === tripType
-        )
-      );
-  }, [tripType]);
-
-  useEffect(() => {
-    const query = new URLSearchParams(location.search).get('type');
-    if (!query) return;
-    if (tripTypes.options.includes(query.toLowerCase())) setTripType(query);
-  }, [location.search]);
 
   const classes = styles(styleProps);
 
@@ -150,14 +115,14 @@ const Promos = ({ location }) => {
   };
 
   return (
-    <Page title='GoodFly |  Ethical Tours'>
+    <Page title='GoodFly |  Fresh Arrivals'>
       <CssBaseline />
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <Banner
           imageUrl={ethicalImg}
-          bannerTitle='Ethical Tours'
+          bannerTitle='Fresh Arrivals'
           align='left'
         />
         <section className={classes.filter}>
@@ -170,27 +135,6 @@ const Promos = ({ location }) => {
           >
             Select a filter
           </Button>
-
-          <Autocomplete
-            {...tripTypes}
-            id='disable-clearable'
-            disableClearable
-            value={tripType}
-            onChange={handleTripTypeChange}
-            PaperComponent={({ children }) => (
-              <Paper color='primary'>{children}</Paper>
-            )}
-            clearOnEscape
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Filter by Type'
-                margin='normal'
-                size='small'
-                color='primary'
-              />
-            )}
-          />
 
           <Menu
             id='long-menu'

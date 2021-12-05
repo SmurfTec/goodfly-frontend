@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 // --------- MUI ----------- //
-import { Box, Typography } from '@material-ui/core';
+import { Box, Container, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import { Person as PersonIcon } from '@material-ui/icons';
 // ------------------------ //
@@ -16,7 +16,7 @@ const Index = () => {
 
   return (
     <Page title='Profile' description='Profile Page of User'>
-      <Box mb={5} mt={10} display='flex' alignItems='center'>
+      <Container mb={5} mt={10} display='flex' alignItems='center'>
         <Typography
           style={{
             display: 'flex',
@@ -41,8 +41,8 @@ const Index = () => {
         >
           {user?.loyaltyPoints} Points
         </Typography>
-      </Box>
-      <ProfileTabs user={user} />
+        <ProfileTabs user={user} />
+      </Container>
     </Page>
   );
 };
