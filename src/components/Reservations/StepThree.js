@@ -8,6 +8,7 @@ import {
   Divider,
   Button,
   Container,
+  TextField,
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -20,6 +21,7 @@ import { toast } from 'react-toastify';
 
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
+import UseInput from 'Hooks/useInput';
 
 const StepThree = ({ tour, travelers, data }) => {
   const { updateMe } = useContext(AuthContext);
@@ -32,6 +34,8 @@ const StepThree = ({ tour, travelers, data }) => {
     watch,
   } = useForm();
   const watchFields = watch();
+
+  const [couponVal, setCoupon] = useState('');
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,6 +69,10 @@ const StepThree = ({ tour, travelers, data }) => {
     }
   };
 
+  const handleCoupon = (e) => {
+    if (!couponVal) return;
+  };
+
   return (
     <form id='paymentChoice' onSubmit={handleSubmit(handeSubmitForm)}>
       <Container>
@@ -96,7 +104,7 @@ const StepThree = ({ tour, travelers, data }) => {
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <FormControlLabel
-                          value='fidelityPoints'
+                          value='loyalty-points'
                           control={<Radio />}
                           label='Pay with your GOODFLY Fidelity points'
                         />
@@ -109,14 +117,16 @@ const StepThree = ({ tour, travelers, data }) => {
                             }}
                           >
                             <Grid item xs={12} sm={6}>
-                              <CustomInputField
-                                name='loyalty-points'
-                                label='Coupon Code'
-                                type='text'
-                                register={register}
-                                errors={errors}
-                                errorMessage='Spacify your coupon code to get exclusive discount'
-                              />
+                              <form>
+                                <TextField
+                                  name='loyalty-points'
+                                  label='Coupon Code'
+                                  type='text'
+                                  errorMessage='Spacify your coupon code to get exclusive discount'
+                                  value={couponVal}
+                                  onChange={(e) => setCoupon(e.target.value)}
+                                />
+                              </form>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                               <Box
@@ -127,7 +137,11 @@ const StepThree = ({ tour, travelers, data }) => {
                                   justifyContent: 'flex-end',
                                 }}
                               >
-                                <Button variant='outlined' color='secondary'>
+                                <Button
+                                  variant='outlined'
+                                  color='secondary'
+                                  onClick={handleCoupon}
+                                >
                                   Apply Coupon
                                 </Button>
                               </Box>
@@ -142,7 +156,11 @@ const StepThree = ({ tour, travelers, data }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TravelDetails tour={tour} travelers={travelers} />
+            <TravelDetails
+              tour={tour}
+              travelers={travelers}
+              payment={watchFields?.['paymentType']}
+            />
             <Button
               form='paymentChoice'
               variant='contained'

@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Typography, Box, Paper, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { AuthContext } from 'Contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -12,16 +13,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TravelDetails = React.memo(({ tour, travelers }) => {
+export const TravelDetails = React.memo(({ tour, travelers, payment }) => {
   const classes = useStyles();
+  const { user } = useContext(AuthContext);
   const { title, price, startingDate } = tour;
 
   const calculatePrice = () => {
     console.log('calculating price');
-    return parseInt(travelers) * parseFloat(price);
+    let pointsDiscount = 0;
+    let expectedPrice = parseInt(travelers + 1) * parseFloat(price);
+    if (payment == 'loyalty-points') {
+      pointsDiscount = user?.loyaltyPoints || 0;
+    }
+    console.log(`expectedPrice`, expectedPrice);
+    console.log(`pointsDiscount`, pointsDiscount);
+    return expectedPrice - pointsDiscount;
   };
 
-  const totalPrice = useMemo(() => calculatePrice(), [price, travelers]);
+  const totalPrice = useMemo(
+    () => calculatePrice(),
+    [price, travelers, payment]
+  );
   // calculatePrice();
 
   return (
