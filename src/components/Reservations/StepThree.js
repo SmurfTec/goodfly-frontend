@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { CustomInputField } from 'components/FormControls';
 import { Box } from '@material-ui/system';
 import { TravelDetails } from './TravelDetails';
 import { removeKeyIncludingString } from 'Utils/objectMethods';
@@ -36,6 +35,7 @@ const StepThree = ({ tour, travelers, data }) => {
   const watchFields = watch();
 
   const [couponVal, setCoupon] = useState('');
+  const [promoDiscount, setPromoDiscount] = useState(0);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -51,7 +51,13 @@ const StepThree = ({ tour, travelers, data }) => {
     try {
       const resData = await makeReq(
         `/purchases`,
-        { body: { ...data, tripId: tour._id } },
+        {
+          body: {
+            ...data,
+            tripId: tour._id,
+            promoCode: (couponVal && promoDiscount > 0) || undefined,
+          },
+        },
         'POST'
       );
       // console.log(`resData`, resData);
@@ -61,16 +67,35 @@ const StepThree = ({ tour, travelers, data }) => {
 
       updateMe(resData.user, true);
 
-      history.push('/tours/ethical');
+      // history.push('/tours/ethical');
     } catch (err) {
       handleCatch(err);
+      setCoupon(0);
     } finally {
+      console.log('changing submitting');
       setSubmitting(false);
     }
   };
 
-  const handleCoupon = (e) => {
+  const handleCoupon = async () => {
     if (!couponVal) return;
+
+    if (promoDiscount > 0) {
+      setPromoDiscount(0);
+      setCoupon('');
+      return;
+    }
+
+    try {
+      const { discount } = await makeReq(
+        `/promos/apply`,
+        { body: { promoCode: couponVal } },
+        'POST'
+      );
+      setPromoDiscount(discount);
+    } catch (err) {
+      handleCatch(err);
+    }
   };
 
   return (
@@ -109,45 +134,46 @@ const StepThree = ({ tour, travelers, data }) => {
                           label='Pay with your GOODFLY Fidelity points'
                         />
 
-                        {watchFields?.['paymentType'] !== 'paypal' && (
-                          <Grid
-                            container
-                            sx={{
-                              mt: 4,
-                            }}
-                          >
-                            <Grid item xs={12} sm={6}>
-                              <form>
-                                <TextField
-                                  name='loyalty-points'
-                                  label='Coupon Code'
-                                  type='text'
-                                  errorMessage='Spacify your coupon code to get exclusive discount'
-                                  value={couponVal}
-                                  onChange={(e) => setCoupon(e.target.value)}
-                                />
-                              </form>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                              <Box
-                                sx={{
-                                  height: '100%',
-                                  display: 'flex',
-                                  alignItems: 'end',
-                                  justifyContent: 'flex-end',
-                                }}
-                              >
-                                <Button
-                                  variant='outlined'
-                                  color='secondary'
-                                  onClick={handleCoupon}
-                                >
-                                  Apply Coupon
-                                </Button>
-                              </Box>
-                            </Grid>
+                        <Grid
+                          container
+                          sx={{
+                            mt: 4,
+                          }}
+                        >
+                          <Grid item xs={12} sm={6}>
+                            <form>
+                              <TextField
+                                name='loyalty-points'
+                                label='Coupon Code'
+                                type='text'
+                                errorMessage='Spacify your coupon code to get exclusive discount'
+                                value={couponVal}
+                                onChange={(e) => setCoupon(e.target.value)}
+                                disabled={promoDiscount > 0}
+                              />
+                            </form>
                           </Grid>
-                        )}
+                          <Grid item xs={12} sm={6}>
+                            <Box
+                              sx={{
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'end',
+                                justifyContent: 'flex-end',
+                              }}
+                            >
+                              <Button
+                                variant='outlined'
+                                color='secondary'
+                                onClick={handleCoupon}
+                              >
+                                {promoDiscount > 0
+                                  ? 'Remove Coupon'
+                                  : 'Apply Coupon'}
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </RadioGroup>
@@ -160,6 +186,7 @@ const StepThree = ({ tour, travelers, data }) => {
               tour={tour}
               travelers={travelers}
               payment={watchFields?.['paymentType']}
+              promoDiscount={promoDiscount}
             />
             <Button
               form='paymentChoice'

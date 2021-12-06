@@ -14,7 +14,6 @@ import {
   reservations,
   quickAccess,
 } from './FooterItems';
-import { animateScroll as scroll } from 'react-scroll';
 
 //? Social media Icons
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -23,15 +22,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
 const Footer = () => {
-  const history = useHistory();
   const classes = styles();
-
-  const handleClick = () => {
-    scroll.scrollToTop({
-      duration: 1500,
-      delay: 100,
-    });
-  };
 
   return (
     <>
@@ -54,9 +45,7 @@ const Footer = () => {
                   variant='subtitle2'
                   className={classes.subContent}
                 >
-                  <Link to={a.url} onClick={handleClick}>
-                    {a.item}
-                  </Link>
+                  <Link to={a.url}>{a.item}</Link>
                 </Typography>
               ))}
               <section className={classes.icons}>
@@ -85,9 +74,7 @@ const Footer = () => {
                 variant='subtitle2'
                 className={classes.subContent}
               >
-                <Link to={a.url} onClick={handleClick}>
-                  {a.item}
-                </Link>
+                <Link to={a.url}>{a.item}</Link>
               </Typography>
             ))}
           </Grid>
@@ -102,9 +89,7 @@ const Footer = () => {
                 variant='subtitle2'
                 className={classes.subContent}
               >
-                <Link to={a.url} onClick={handleClick}>
-                  {a.item}
-                </Link>
+                <Link to={a.url}>{a.item}</Link>
               </Typography>
             ))}
 
@@ -157,9 +142,7 @@ const Footer = () => {
                 <ArrowIcon size='small' />
                 {'  '}
 
-                <Link to={a.url} onClick={handleClick}>
-                  {a.item}
-                </Link>
+                <Link to={a.url}>{a.item}</Link>
               </Typography>
             ))}
             <img style={{ marginTop: 20 }} src={whiteLogo} />

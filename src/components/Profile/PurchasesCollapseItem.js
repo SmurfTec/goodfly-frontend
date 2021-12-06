@@ -148,17 +148,11 @@ const PurchaseCollapseItem = (props) => {
   }, [purchase]);
 
   const paymentDetails = useMemo(() => {
-    // return (
-    //   <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
-    //     A member of the Goodfly team will get in touch with you very soon to set
-    //     up your payment schedule for this trip! a bit of patience
-    //   </Typography>
-    // );
     if (purchase.status === 'pre-reservation')
       return (
         <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
           A member of the Goodfly team will get in touch with you very soon to
-          set up your payment schedule for this trip! a bit of patience
+          set up your payment schedule for this trip! a bit of patience.
         </Typography>
       );
     else if (['validated', 'schedule-inProgress'].includes(purchase.status)) {
@@ -240,7 +234,11 @@ const PurchaseCollapseItem = (props) => {
         <Box className={classes.box}>
           <Typography variant='h5' component='span'>
             {purchase.trip ? purchase.trip.title.toUpperCase() : 'Custom Trip'}{' '}
-            - {new Date(purchase.departureDate).toDateString()} -
+            -{' '}
+            {purchase.departureDate
+              ? new Date(purchase.departureDate).toDateString()
+              : 'Open Offer'}{' '}
+            -
           </Typography>
           <Typography
             variant='subtitle1'

@@ -20,7 +20,6 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EuroIcon from '@material-ui/icons/Euro';
-import { animateScroll as scroll } from 'react-scroll';
 // --- //
 
 // Assets
@@ -89,12 +88,7 @@ const TourDetails = ({ match, history, location }) => {
   const handleReviewChange = (e) => {
     setReviewValue(e.target.value);
   };
-  const handleLinkClick = () => {
-    scroll.scrollToTop({
-      duration: 1000,
-      delay: 100,
-    });
-  };
+
   useEffect(() => {
     setTour(getTripById(id));
   }, [id, tours]);
@@ -251,7 +245,7 @@ const TourDetails = ({ match, history, location }) => {
                         ? `/tours/reservation/${id}`
                         : `/auth/login?redirect=/tours/reservation/${id}`
                     }
-                    onClick={handleLinkClick}
+
                     // disabled={isAlreadyPurchased}
                   >
                     Reserve
