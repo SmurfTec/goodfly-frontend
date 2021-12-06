@@ -88,9 +88,24 @@ const Checkout = () => {
           />
         );
       case 1:
-        return <Step2 validateStep={validateStep2} cart={cart} />;
+        return (
+          <Step2
+            validateStep={validateStep2}
+            cart={cart}
+            changeDeliveryMethod={(val) =>
+              setState((st) => ({ ...st, deliveryMethod: val }))
+            }
+          />
+        );
       case 2:
-        return <Step3 validateStep={validateStep3} cart={cart} />;
+        return (
+          <Step3
+            validateStep={validateStep3}
+            cart={cart}
+            deliveryMethod={state.deliveryMethod}
+            loyaltyPoints={user?.loyaltyPoints || 0}
+          />
+        );
 
       case 3:
         return (

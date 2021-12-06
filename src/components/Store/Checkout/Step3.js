@@ -2,13 +2,10 @@ import {
   Paper,
   Typography,
   RadioGroup,
-  FormControlLabel,
-  Radio,
   Grid,
   Divider,
   Button,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
@@ -17,31 +14,27 @@ import {
 import { Box } from '@material-ui/system';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
-import { isMethod } from '@babel/types';
+import { CustomInputField } from 'components/FormControls';
 import TotalBill from './TotalBill';
-import BankCardOption from './paymentStep/paymentOptions/BankCardOption';
 import BankTransferOption from './paymentStep/paymentOptions/BankTransferOption';
 import PaypalOption from './paymentStep/paymentOptions/PaypalOption';
 import LoyaltyPointsOption from './paymentStep/paymentOptions/LoyaltyPoints';
+import { handleCatch, makeReq } from 'Utils/constants';
 
-const Step3 = ({ validateStep, cart }) => {
+const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
 
   const values = ['card', 'bank', 'paypal', 'points'];
 
-  const bankCardInitial = {
-    cardNumber: '',
-    cardexpires: '',
-    cardNumber: '',
-  };
-  const [bankCardDetails, setBankCardDetails] = useState(bankCardInitial);
   const [postalAddress, setpostalAddress] = React.useState(
     'Lyon Librairie la bonne paye 50 rue delabarre 69008'
   );
   const watchPaymentOptions = watch('paymentMethod');
+  const [submitting, setSubmitting] = useState(false);
 
+  const [couponVal, setCoupon] = useState('');
+  const [promoDiscount, setPromoDiscount] = useState(0);
   const handleDialogOpen = () => {
     setDialog(true);
   };
@@ -56,7 +49,31 @@ const Step3 = ({ validateStep, cart }) => {
   };
 
   const travellersForm = (data) => {
-    validateStep(data);
+    validateStep({
+      ...data,
+      promoCode: couponVal && promoDiscount > 0 ? couponVal : undefined,
+    });
+  };
+
+  const handleCoupon = async () => {
+    if (!couponVal) return;
+
+    if (promoDiscount > 0) {
+      setPromoDiscount(0);
+      setCoupon('');
+      return;
+    }
+
+    try {
+      const { discount } = await makeReq(
+        `/promos/apply`,
+        { body: { promoCode: couponVal } },
+        'POST'
+      );
+      setPromoDiscount(discount);
+    } catch (err) {
+      handleCatch(err);
+    }
   };
 
   return (
@@ -83,10 +100,6 @@ const Step3 = ({ validateStep, cart }) => {
                 defaultValue={values[0]}
                 render={({ field }) => (
                   <RadioGroup {...field} row>
-                    <BankCardOption
-                      value={values[0]}
-                      currentValue={watchPaymentOptions}
-                    />
                     <BankTransferOption value={values[1]} />
                     <PaypalOption value={values[2]} />
                     <LoyaltyPointsOption value={values[3]} />
@@ -96,6 +109,31 @@ const Step3 = ({ validateStep, cart }) => {
                 )}
               />
             </form>
+
+            <Box display='flex' alignItems='center' gap='20px'>
+              <Box item xs={12} sm={6}>
+                <form>
+                  <TextField
+                    name='loyalty-points'
+                    label='Coupon Code'
+                    type='text'
+                    errorMessage='Spacify your coupon code to get exclusive discount'
+                    value={couponVal}
+                    onChange={(e) => setCoupon(e.target.value)}
+                    disabled={promoDiscount > 0}
+                  />
+                </form>
+              </Box>
+              <Box item xs={12} sm={6}>
+                <Button
+                  variant='outlined'
+                  color='secondary'
+                  onClick={handleCoupon}
+                >
+                  {promoDiscount > 0 ? 'Remove Coupon' : 'Apply Coupon'}
+                </Button>
+              </Box>
+            </Box>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5} sx={{ mt: -9 }}>
@@ -103,6 +141,9 @@ const Step3 = ({ validateStep, cart }) => {
             formName='formDelivery'
             cart={cart}
             paymentOption={watchPaymentOptions}
+            loyaltyPoints={loyaltyPoints}
+            deliveryMethod={deliveryMethod}
+            promoDiscount={promoDiscount || 0}
           />
         </Grid>
       </Grid>

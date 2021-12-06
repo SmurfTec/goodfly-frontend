@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Paper,
   Typography,
@@ -129,7 +129,7 @@ const addressContent = (control, isAddressDiff, formProps) => {
   );
 };
 
-const Step2 = ({ validateStep, cart }) => {
+const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
   const [isMapDialogOpen, toggleMapDialog] = useToggle(false);
@@ -139,6 +139,10 @@ const Step2 = ({ validateStep, cart }) => {
   );
   const watchDeliveryMethod = watch('deliveryMethod', deliveryMethods[0].value);
   const watchShippingAddress = watch('shippingAddress');
+
+  useEffect(() => {
+    changeDeliveryMethod(watchDeliveryMethod);
+  }, [watchDeliveryMethod]);
 
   const travellersForm = (data) => {
     validateStep(data);
@@ -250,7 +254,11 @@ const Step2 = ({ validateStep, cart }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={5} sx={{ mt: -9 }}>
-          <TotalBill formName='formDelivery' cart={cart} />
+          <TotalBill
+            formName='formDelivery'
+            cart={cart}
+            deliveryMethod={watchDeliveryMethod}
+          />
         </Grid>
       </Grid>
 

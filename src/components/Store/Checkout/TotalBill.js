@@ -1,8 +1,63 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Typography, Button, Box, Paper, Divider } from '@material-ui/core';
 import { makeReq } from 'Utils/constants';
 
-const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
+const BillingRow = ({ slug, amount }) => (
+  <Box
+    sx={{
+      mx: 2,
+      display: 'flex',
+      columnGap: 2,
+      justifyContent: 'space-between',
+    }}
+  >
+    <Typography variant='h5' color='textSecondary'>
+      {slug}
+    </Typography>
+    <Typography variant='h5' color='textSecondary'>
+      {amount || 0}$
+    </Typography>
+  </Box>
+);
+
+const TotalBill = ({
+  validateForm,
+  formName,
+  cart,
+  paymentOption,
+  deliveryMethod,
+  loyaltyPoints,
+  promoDiscount,
+  isSubmitting,
+}) => {
+  const deliveryPrice = useMemo(() => {
+    let amount = 0;
+
+    if (deliveryMethod === 'relay-point') amount += 240;
+    else if (deliveryMethod === 'home-delivery') amount += 540;
+
+    return amount;
+  }, [deliveryMethod]);
+
+  const totalPrice = useMemo(() => {
+    let amount = cart.total;
+    amount += +deliveryPrice || 0;
+
+    console.log(`amount`, amount);
+
+    if (paymentOption === 'points') {
+      let loyaltyDiscount = loyaltyPoints;
+      if (loyaltyDiscount > cart.total) loyaltyDiscount = cart.total;
+      amount -= loyaltyDiscount;
+    }
+
+    amount -= (amount * +promoDiscount || 0) / 100;
+
+    console.log(`amount`, amount);
+
+    return amount;
+  }, [paymentOption, cart.total, promoDiscount, deliveryPrice, loyaltyPoints]);
+
   return (
     <>
       <Typography variant='h4' sx={{ mt: 8 }}>
@@ -17,21 +72,26 @@ const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
             my: 3,
           }}
         >
-          <Box
-            sx={{
-              mx: 2,
-              display: 'flex',
-              columnGap: 2,
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant='h4' color='textSecondary'>
-              Subtotal
-            </Typography>
-            <Typography variant='h4' color='textSecondary'>
-              {cart.subTotal}
-            </Typography>
-          </Box>
+          <BillingRow slug='Subtotal' amount={cart.subTotal} />
+          <BillingRow slug='Delivery Charges' amount={deliveryPrice} />
+
+          <Divider sx={{ my: 3, mx: -3 }} />
+
+          <BillingRow
+            slug='LoyaltyPoints Discount'
+            amount={
+              paymentOption === 'points'
+                ? loyaltyPoints > cart.subTotal
+                  ? cart.subTotal
+                  : loyaltyPoints
+                : 0
+            }
+          />
+          <BillingRow
+            slug='PromoCode Discount'
+            amount={((cart.total + deliveryPrice) * promoDiscount) / 100}
+          />
+
           <Divider sx={{ my: 3, mx: -3 }} />
           <Box
             sx={{
@@ -45,11 +105,13 @@ const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
               Total
             </Typography>
             <Typography variant='h4' color='textSecondary'>
-              {cart.total}
+              {/* {cart.total + deliveryPrice}$ */}
+              {totalPrice}$
             </Typography>
           </Box>
         </Box>
       </Paper>
+
       {!formName ? (
         <Button
           variant='contained'
@@ -57,7 +119,7 @@ const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
           sx={{ mt: 3, minHeight: 70, fontSize: 20 }}
           fullWidth
           onClick={validateForm}
-          disabled={cart.orderItems.length === 0}
+          disabled={cart.orderItems.length === 0 || isSubmitting}
         >
           VALIDATE THE ORDER
         </Button>
@@ -69,8 +131,9 @@ const TotalBill = ({ validateForm, formName, cart, paymentOption }) => {
           color='primary'
           sx={{ mt: 3, minHeight: 70, fontSize: 20 }}
           fullWidth
+          disabled={!formName}
         >
-          VALIDATE THE ORDER
+          VALIDATE THE ORDER form waala
         </Button>
       )}
     </>

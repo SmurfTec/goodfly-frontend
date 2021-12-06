@@ -55,7 +55,7 @@ const StepThree = ({ tour, travelers, data }) => {
           body: {
             ...data,
             tripId: tour._id,
-            promoCode: (couponVal && promoDiscount > 0) || undefined,
+            promoCode: couponVal && promoDiscount > 0 ? couponVal : undefined,
           },
         },
         'POST'
