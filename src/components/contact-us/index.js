@@ -8,8 +8,6 @@ import {
   Typography,
   Grid,
   Button,
-  TextField,
-  Paper,
   Divider,
   Hidden,
 } from '@material-ui/core';

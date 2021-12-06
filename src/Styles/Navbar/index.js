@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
     minHeight: 50,
     paddingBlock: 10,
-
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
     cursor: 'pointer',
     '&:hover': {
       overflowX: 'auto',
@@ -54,9 +56,6 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: 'Avenir Next Condensed Demi Bold',
 
       fontWeight: 'bold',
-      [theme.breakpoints.down('md')]: {
-        display: 'none',
-      },
 
       [theme.breakpoints.up('lg')]: {
         padding: '8px 10px',

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Typography, Button } from '@material-ui/core';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
 

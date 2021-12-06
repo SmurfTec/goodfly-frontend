@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -10,13 +10,11 @@ import Dialog from '@material-ui/core/Dialog';
 import { blue, red } from '@material-ui/core/colors';
 import { PayPalButton } from 'react-paypal-button-v2';
 
-import CheckIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import uuid from 'uuid/dist/v4';
 import { DialogActions, DialogContent } from '@material-ui/core';
-import UseToggle from 'Hooks/useToggle';
-import { handleCatch, makeReq } from 'Utils/constants';
+import { makeReq } from 'Utils/constants';
 import { toast } from 'react-toastify';
 
 const useStyles = makeStyles({
