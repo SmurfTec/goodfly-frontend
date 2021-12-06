@@ -134,46 +134,48 @@ const StepThree = ({ tour, travelers, data }) => {
                           label='Pay with your GOODFLY Fidelity points'
                         />
 
-                        <Grid
-                          container
-                          sx={{
-                            mt: 4,
-                          }}
-                        >
-                          <Grid item xs={12} sm={6}>
-                            <form>
-                              <TextField
-                                name='loyalty-points'
-                                label='Coupon Code'
-                                type='text'
-                                errorMessage='Spacify your coupon code to get exclusive discount'
-                                value={couponVal}
-                                onChange={(e) => setCoupon(e.target.value)}
-                                disabled={promoDiscount > 0}
-                              />
-                            </form>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <Box
-                              sx={{
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'end',
-                                justifyContent: 'flex-end',
-                              }}
-                            >
-                              <Button
-                                variant='outlined'
-                                color='secondary'
-                                onClick={handleCoupon}
+                        {!tour.sale && (
+                          <Grid
+                            container
+                            sx={{
+                              mt: 4,
+                            }}
+                          >
+                            <Grid item xs={12} sm={6}>
+                              <form>
+                                <TextField
+                                  name='loyalty-points'
+                                  label='Coupon Code'
+                                  type='text'
+                                  errorMessage='Spacify your coupon code to get exclusive discount'
+                                  value={couponVal}
+                                  onChange={(e) => setCoupon(e.target.value)}
+                                  disabled={promoDiscount > 0}
+                                />
+                              </form>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <Box
+                                sx={{
+                                  height: '100%',
+                                  display: 'flex',
+                                  alignItems: 'end',
+                                  justifyContent: 'flex-end',
+                                }}
                               >
-                                {promoDiscount > 0
-                                  ? 'Remove Coupon'
-                                  : 'Apply Coupon'}
-                              </Button>
-                            </Box>
+                                <Button
+                                  variant='outlined'
+                                  color='secondary'
+                                  onClick={handleCoupon}
+                                >
+                                  {promoDiscount > 0
+                                    ? 'Remove Coupon'
+                                    : 'Apply Coupon'}
+                                </Button>
+                              </Box>
+                            </Grid>
                           </Grid>
-                        </Grid>
+                        )}
                       </Grid>
                     </Grid>
                   </RadioGroup>
