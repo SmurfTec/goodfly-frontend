@@ -162,7 +162,7 @@ const TourDetails = ({ match, history, location }) => {
           {tour?.stages.map((stage, index) =>
             stage.images?.map((image, idx) => (
               <div key={idx}>
-                <img src={image} />
+                <img src={image.src} />
               </div>
             ))
           )}

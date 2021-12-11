@@ -59,7 +59,18 @@ export const ToursProvider = withRouter(({ children, history }) => {
 
   const cancelReservation = async (reservationId) => {
     try {
-      await makeReq(`/purchases/${reservationId}/cancell`, {}, 'PATCH');
+      const resData = await makeReq(
+        `/purchases/${reservationId}/cancell`,
+        {},
+        'PATCH'
+      );
+      setUser((st) => ({
+        ...st,
+        Purchases: st.Purchases.map((el) =>
+          el._id === resData.purchase._id ? resData.purchase : el
+        ),
+      }));
+
       toast.info('Your Cancellation Request is Submitted !');
     } catch (err) {
       handleCatch(err);
