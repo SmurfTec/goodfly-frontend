@@ -45,7 +45,7 @@ const TripCard = (props) => {
         <CardMedia
           className={classes.media}
           image={image}
-          title='Contemplative Reptile'
+          title={title}
           onClick={handleClick}
         />
         <CardContent>

@@ -47,11 +47,7 @@ const TripCard = ({ tour, history }) => {
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={image}
-        title='Contemplative Reptile'
-      />
+      <CardMedia className={classes.media} image={image} title={title} />
       <CardContent>
         <Box onClick={handleClick}>
           <Box
