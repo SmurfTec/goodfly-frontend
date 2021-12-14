@@ -65,10 +65,16 @@ const TabPanel = (props) => {
 };
 
 const TourDetails = ({ match, history, location }) => {
-  const { favouriteTrip, unFavouriteTrip, tours, getTripById } =
-    useContext(ToursContext);
+  const {
+    favouriteTrip,
+    unFavouriteTrip,
+    tours,
+    getTripById,
+    manageSubscribe,
+  } = useContext(ToursContext);
   const [isFavourite, setIsFavourite] = useState(false);
   const [isHandlingFavourite, toggleHandlingFavourite] = UseToggle(false);
+  const [isHandleSubscription, toggleHandleSubscription] = UseToggle(false);
 
   const classes = useStyles();
   const { user } = useContext(AuthContext);
@@ -125,6 +131,25 @@ const TourDetails = ({ match, history, location }) => {
       new Date() > new Date(tour.endingDate)
     );
   }, [isAlreadyPurchased]);
+
+  const isSubscribed = useMemo(() => {
+    if (!tour || !user) return false;
+
+    let subscribed = false;
+    subscribed = !!tour.subscriptions.find((el) => el === user._id);
+
+    return subscribed;
+  }, [tour, user]);
+
+  const handleSubscribe = async () => {
+    if (!user) return history.push(`/auth/login?redirect=/tours/${id}`);
+    toggleHandleSubscription();
+    manageSubscribe(
+      id,
+      isSubscribed ? 'unsubscribe' : 'subscribe',
+      toggleHandleSubscription
+    );
+  };
 
   const handleFavorite = (e) => {
     // e.preventDefault();
@@ -249,6 +274,19 @@ const TourDetails = ({ match, history, location }) => {
                     // disabled={isAlreadyPurchased}
                   >
                     Reserve
+                  </Button>
+                  <Button
+                    variant='contained'
+                    style={{
+                      marginTop: '1rem',
+                      marginLeft: 20,
+                      paddingInline: 20,
+                      width: 200,
+                    }}
+                    onClick={handleSubscribe}
+                    disabled={isHandleSubscription}
+                  >
+                    {isSubscribed ? 'UnSubscribe' : 'Subscribe  '}
                   </Button>
                 </Box>
                 <Box

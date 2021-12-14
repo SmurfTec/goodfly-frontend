@@ -57,6 +57,23 @@ export const ToursProvider = withRouter(({ children, history }) => {
     }
   };
 
+  const manageSubscribe = async (id, action, toggleHandlingFavourite) => {
+    try {
+      const resData = await makeReq(
+        `/trips/${id}/${action}/${user._id}`,
+        {},
+        'PATCH'
+      );
+      // console.log(`resData`, resData);
+      setTours((st) => st.map((el) => (el._id === id ? resData.trip : el)));
+      toast.success('success');
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+      toggleHandlingFavourite();
+    }
+  };
+
   const cancelReservation = async (reservationId) => {
     try {
       const resData = await makeReq(
@@ -88,6 +105,7 @@ export const ToursProvider = withRouter(({ children, history }) => {
         unFavouriteTrip,
         cancelReservation,
         getTripById,
+        manageSubscribe,
       }}
     >
       {children}
