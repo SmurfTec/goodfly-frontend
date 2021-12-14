@@ -21,6 +21,8 @@ export const ToursProvider = withRouter(({ children, history }) => {
       } catch (err) {
         setTours([]);
         handleCatch(err);
+      } finally {
+        toggleIsFetching();
       }
     })();
   }, [user]);
