@@ -67,7 +67,9 @@ const StepThree = ({ tour, travelers, data }) => {
 
       updateMe(resData.user, true);
 
-      // history.push('/tours/ethical');
+      setTimeout(() => {
+        history.push('/profile');
+      }, 1500);
     } catch (err) {
       handleCatch(err);
       setCoupon(0);
