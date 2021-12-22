@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme, props) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     //   marginBottom: theme.spacing(4),
-    backgroundImage: (props) => `url(${props.image})`,
+    backgroundImage: (props) => `url(${props?.image})`,
     cursor: 'pointer',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -62,7 +62,7 @@ export default function MediaCard(props) {
   return (
     <Container className={classes.root} onClick={handleClick}>
       <section className={classes.title}>
-        <Typography variant='h4'>{mainHeading.toUpperCase()}</Typography>
+        <Typography variant='h4'>{mainHeading?.toUpperCase()}</Typography>
       </section>
     </Container>
   );

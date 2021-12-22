@@ -121,9 +121,9 @@ const Index = () => {
                 {tourCards ? (
                   tourCards.length > 0 && (
                     <FeaturedCard
-                      mainHeading={tourCards[0].title}
-                      image={tourCards[0].image}
-                      id={tourCards[0]._id}
+                      mainHeading={tourCards[0]?.title}
+                      image={tourCards[0]?.image}
+                      id={tourCards[0]?._id}
                     />
                   )
                 ) : (
@@ -134,9 +134,9 @@ const Index = () => {
                 {tourCards ? (
                   tourCards.length > 0 && (
                     <FeaturedCard
-                      mainHeading={tourCards[1].title}
-                      image={tourCards[1].image}
-                      id={tourCards[1]._id}
+                      mainHeading={tourCards[1]?.title}
+                      image={tourCards[1]?.image}
+                      id={tourCards[1]?._id}
                     />
                   )
                 ) : (
@@ -147,9 +147,9 @@ const Index = () => {
                 {tourCards ? (
                   tourCards.length > 0 && (
                     <FeaturedCard
-                      mainHeading={tourCards[2].title}
-                      image={tourCards[2].image}
-                      id={tourCards[2]._id}
+                      mainHeading={tourCards[2]?.title}
+                      image={tourCards[2]?.image}
+                      id={tourCards[2]?._id}
                     />
                   )
                 ) : (
