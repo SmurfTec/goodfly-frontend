@@ -35,6 +35,7 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 const useStyles = makeStyles((theme) => ({
   FormBox: {
     width: '100%',
+    padding: '1rem 3rem 1rem',
     '& input,textarea': {
       padding: '9px 20px',
       textAlign: 'left',
@@ -179,11 +180,19 @@ const Index = () => {
                 <Typography variant='h5'>
                   52 - 54 rue Maurice Bellonte
                 </Typography>
-                <Typography variant='h5'>78130 Les Mureaux</Typography>
-                <Typography variant='h5'>contact@goodﬂy.fr</Typography>
+                <Typography variant='h5'>
+                  78130 Les Mureaux
+                </Typography>
+                <Typography variant='h5'>
+                  contact@goodﬂy.fr
+                </Typography>
                 <Typography variant='h5'>01 34 74 19 39</Typography>
               </Box>
-              <Box display='flex' flexDirection='column' alignItems='center'>
+              <Box
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+              >
                 <Box>
                   <img
                     src='https://imgur.com/lIumYeR.png'
@@ -212,11 +221,20 @@ const Index = () => {
             </Box>
           </Grid>
           <Grid item xs={0} sm={6}>
-            <img src={images[0]} alt={'image'} style={{ height: 250 }} />
+            <img
+              src={images[0]}
+              alt={'image'}
+              style={{ height: 250 }}
+            />
           </Grid>
         </Grid>
         <Divider />
-        <Box mt={5} paddingTop={5} display='flex' justifyContent='center'>
+        <Box
+          mt={5}
+          paddingTop={5}
+          display='flex'
+          justifyContent='center'
+        >
           <Box className={classes.FormBox} fullWidth>
             <Typography variant='h4' sx={{ marginBottom: '2rem' }}>
               Contact Form
@@ -237,8 +255,7 @@ const Index = () => {
                 name='subject'
                 placeholder='What is the subject of your message'
                 style={{
-                  width: '80%',
-                  maxWidth: 350,
+                  width: '60%',
                 }}
               />
               <br />
@@ -247,8 +264,10 @@ const Index = () => {
                 flexDirection='row'
                 justifyContent='space-between'
                 mt={3}
+                style={{
+                  width: '60%',
+                }}
               >
-                {' '}
                 <input
                   required
                   onChange={handleTxtChange}
@@ -256,7 +275,9 @@ const Index = () => {
                   value={state.firstName}
                   name='firstName'
                   placeholder='First name'
-                  style={{ marginRight: 50 }}
+                  style={{
+                    width: '40%',
+                  }}
                 />
                 <input
                   required
@@ -265,6 +286,9 @@ const Index = () => {
                   value={state.lastName}
                   name='lastName'
                   placeholder='Last Name'
+                  style={{
+                    width: '40%',
+                  }}
                 />
               </Box>
               <Box
@@ -272,6 +296,9 @@ const Index = () => {
                 flexDirection='row'
                 justifyContent='space-between'
                 my={3}
+                style={{
+                  width: '60%',
+                }}
               >
                 <input
                   required
@@ -280,6 +307,9 @@ const Index = () => {
                   value={state.email}
                   name='email'
                   placeholder='Email Address'
+                  style={{
+                    width: '40%',
+                  }}
                 />
                 <input
                   required
@@ -288,6 +318,9 @@ const Index = () => {
                   value={state.telephone}
                   name='telephone'
                   placeholder='Telephone'
+                  style={{
+                    width: '40%',
+                  }}
                 />
               </Box>
               <textarea
@@ -295,15 +328,20 @@ const Index = () => {
                 value={state.message}
                 name='message'
                 placeholder='Message'
-                rows={5}
+                rows={10}
                 style={{
                   resize: 'vertical',
-                  width: '100%',
+                  width: '60%',
                 }}
                 onChange={handleTxtChange}
               />
               <br />
-              <Button variant='contained' color='primary' type='submit'>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                style={{ width: '20%' }}
+              >
                 Send
               </Button>
             </form>
@@ -312,7 +350,8 @@ const Index = () => {
       </Box>
       <Box className={classes.newsLetterSubs} my={3}>
         <Typography variant='h6'>
-          Receive the best offers <span>via the newsletter GOODFLY</span>
+          Receive the best offers{' '}
+          <span>via the newsletter GOODFLY</span>
         </Typography>
         <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
           <Grid item xs={9} sm={7}>
@@ -326,20 +365,27 @@ const Index = () => {
           </Grid>
           <Grid item xs={1} sm={1} />
           <Grid item xs={2} sm={3}>
-            <Button variant='contained' fullWidth onClick={handleSubscribe}>
+            <Button
+              variant='contained'
+              fullWidth
+              onClick={handleSubscribe}
+            >
               Send
             </Button>
           </Grid>
         </Grid>
       </Box>
       <Box mt={5} sx={{ marginInline: 'auto', textAlign: 'center' }}>
-        <Typography variant='h4'>FOLLOW GOODFLY ON SOCIAL MEDIA</Typography>
+        <Typography variant='h4'>
+          FOLLOW GOODFLY ON SOCIAL MEDIA
+        </Typography>
         <Box
           mt={1}
           display='flex'
           flexDirection='row'
           alignItems='center'
-          justifyContent='space-around'
+          justifyContent='center'
+          gap={5}
         >
           <ReactSVG src={fbSvg} />
           <ReactSVG src={instagramSvg} />

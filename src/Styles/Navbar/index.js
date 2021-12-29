@@ -28,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflowX: 'hidden',
     alignItems: 'center',
-
-    maxWidth: 1500,
+    // position: 'fixed',
+    // maxWidth: 1500,
     margin: '1rem auto',
     justifyContent: 'center',
 
     minHeight: 50,
     paddingBlock: 10,
+
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },
@@ -58,12 +59,15 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
 
       [theme.breakpoints.up('lg')]: {
-        padding: '8px 10px',
-        fontSize: 17,
+        padding: '6px 8px',
+        fontSize: 15,
       },
-      [theme.breakpoints.up(1600)]: {
-        padding: '8px 10px',
-        fontSize: 18,
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 12,
+      },
+      [theme.breakpoints.up('xl')]: {
+        padding: '9px 13px',
+        fontSize: 20,
       },
     },
   },

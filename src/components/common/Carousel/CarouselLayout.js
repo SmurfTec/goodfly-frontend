@@ -59,7 +59,12 @@ function CarouselLayout({ children, deviceType }) {
 
   return (
     <div className={classes.root}>
-      <Carousel {...settings} responsive={responsive}>
+      <Carousel
+        {...settings}
+        responsive={responsive}
+        infinite
+        autoPlay
+      >
         {children}
       </Carousel>
     </div>

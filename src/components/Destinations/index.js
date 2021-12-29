@@ -16,18 +16,35 @@ import Page from 'components/common/Page';
 
 const Destinations = () => {
   //    const classes = styles();
+
   const globalClasses = useGlobalClasses();
+
   return (
     <Page title='GoodFly |  Destinations'>
-      <Container sx={{ mb: 20 }} className={globalClasses.MainContainer}>
-        <Banner imageUrl={img} bannerTitle='Destinations' align='center' />
-        <Typography variant='h5' color='text.secondary' sx={{ mt: 4 }}>
-          Because there is no one way to travel: there are as many ways to
-          experience a trip as there are travelers.
+      <Container
+        sx={{ mb: 20 }}
+        className={globalClasses.MainContainer}
+      >
+        <Banner
+          imageUrl={img}
+          bannerTitle='Destinations'
+          align='center'
+        />
+        <Typography
+          variant='h5'
+          color='text.secondary'
+          sx={{ mt: 4 }}
+        >
+          Because there is no one way to travel: there are as many
+          ways to experience a trip as there are travelers.
         </Typography>
-        <Typography variant='h4' color='text.secondary' sx={{ mt: 2 }}>
-          Discover here all the destinations classified by continent and by
-          country.
+        <Typography
+          variant='h4'
+          color='text.secondary'
+          sx={{ mt: 2 }}
+        >
+          Discover here all the destinations classified by continent
+          and by country.
         </Typography>
         <Grid container sx={{ mt: 15 }} spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -55,10 +72,10 @@ const Destinations = () => {
         <Grid container sx={{ mt: 13 }}>
           <Grid item xs={12} sm={6}>
             <Typography variant='subtitle1' color='text.secondary'>
-              To help you see more clearly and achieve the trip of your dreams,
-              we offer on this page a series of destinations. It's up to you to
-              choose the one that will be closest to you and your desires of the
-              moment.
+              To help you see more clearly and achieve the trip of
+              your dreams, we offer on this page a series of
+              destinations. It's up to you to choose the one that will
+              be closest to you and your desires of the moment.
             </Typography>
             <Typography
               variant='subtitle1'
@@ -66,8 +83,8 @@ const Destinations = () => {
               sx={{ mt: 2 }}
             >
               Dream your next adventure with travelogues, stories from
-              elsewhere, great encounters, ideas for destinations and you will
-              only have to go from dream to reality ...
+              elsewhere, great encounters, ideas for destinations and
+              you will only have to go from dream to reality ...
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} align='center'>

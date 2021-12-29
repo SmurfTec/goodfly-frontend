@@ -325,7 +325,10 @@ const Header = ({ history }) => {
                 {navContent?.title === 'Logout' ? (
                   <a onClick={logoutUser}>{navContent?.title}</a>
                 ) : (
-                  <NavLink to={navContent?.to} sx={{ color: 'textSecondary' }}>
+                  <NavLink
+                    to={navContent?.to}
+                    sx={{ color: 'textSecondary' }}
+                  >
                     {navContent?.title}
                   </NavLink>
                 )}
@@ -333,7 +336,9 @@ const Header = ({ history }) => {
               {navContent?.info?.map((subContent) => (
                 <React.Fragment key={v4()}>
                   <Typography variant='subtitle1' sx={{ mb: 1 }}>
-                    <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
+                    <NavLink to={subContent?.route}>
+                      {subContent?.name}
+                    </NavLink>
                   </Typography>
                 </React.Fragment>
               ))}
@@ -412,7 +417,7 @@ const Header = ({ history }) => {
       alignItems='center'
       flexGrow='1'
       maxWidth={550}
-      columnGap={3}
+      columnGap={5}
     >
       <IconButton aria-label='language' onClick={handleLanguage}>
         <ReactCountryFlag
@@ -510,9 +515,13 @@ const Header = ({ history }) => {
       <AppBar position='fixed' className={classes.Appbar}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           {logoSection}
-          <Box className={classes.sectionMobile}>{mobileViewContent}</Box>
+          <Box className={classes.sectionMobile}>
+            {mobileViewContent}
+          </Box>
 
-          <Box className={classes.sectionDesktop}>{desktopViewContent}</Box>
+          <Box className={classes.sectionDesktop}>
+            {desktopViewContent}
+          </Box>
         </Toolbar>
       </AppBar>
 
