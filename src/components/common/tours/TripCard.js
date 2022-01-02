@@ -115,53 +115,73 @@ const TripCard = (props) => {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={handleClick}>
-        <CardMedia className={classes.cardMedia} image={image} title={title} />
+      <CardMedia className={classes.cardMedia} image={image} title={title} />
 
-        <div className={classes.cardoverlay}>
-          {/* this text should overlay the image */}
-          <Typography variant='h4' component='h2'>
-            {title.toUpperCase()}
-          </Typography>
-          <Typography variant='subtitle2' gutterBottom>
-            Starting From {price}
-          </Typography>
+      <div className={classes.cardoverlay}>
+        {/* this text should overlay the image */}
+        <Typography variant='h4' component='h2'>
+          {title.toUpperCase()}
+        </Typography>
+        <Typography variant='subtitle2' gutterBottom>
+          Starting From {price}
+        </Typography>
 
-          <Typography variant='subtitle2' style={{ minWidth: 190 }}>
-            {`from ${new Date(startingDate).toLocaleDateString()} to 
+        <Typography variant='subtitle2' style={{ minWidth: 190 }}>
+          {startingDate
+            ? `from ${new Date(startingDate).toLocaleDateString()} to 
            ${new Date(endingDate).toLocaleDateString()}
-            `}
-          </Typography>
-          <Typography variant='subtitle2' gutterBottom>
-            {Math.ceil(
-              Math.abs(new Date(endingDate) - new Date(startingDate)) /
-                1000 /
-                60 /
-                60 /
-                24
-            )}
-            {' Days '} {boardType}
-          </Typography>
-        </div>
+            `
+            : 'Open Offer'}
+        </Typography>
+        <Typography variant='subtitle2' gutterBottom>
+          {startingDate && (
+            <>
+              {Math.ceil(
+                Math.abs(new Date(endingDate) - new Date(startingDate)) /
+                  1000 /
+                  60 /
+                  60 /
+                  24
+              )}
+              {' Days '}
+            </>
+          )}{' '}
+          {boardType}
+        </Typography>
+        <Button
+          variant='contained'
+          onClick={handleClick}
+          style={{
+            backgroundColor: '#fff',
+            color: '#000',
+            width: 200,
+          }}
+          size='small'
+        >
+          {' '}
+          Discover{' '}
+        </Button>
+      </div>
 
-        <div className={classes.favIcon}>
-          {isFavourite ? (
-            <FavoriteIconFilled
-              style={{
-                color: '#fff',
-              }}
-              onClick={handleUnFavorite}
-            />
-          ) : (
-            <FavoriteIconOutlined
-              style={{
-                color: '#fff',
-              }}
-              onClick={handleFavorite}
-            />
-          )}
-        </div>
-      </CardActionArea>
+      <div className={classes.favIcon}>
+        {isFavourite ? (
+          <FavoriteIconFilled
+            style={{
+              color: '#fff',
+              cursor: 'pointer',
+            }}
+            onClick={handleUnFavorite}
+          />
+        ) : (
+          <FavoriteIconOutlined
+            style={{
+              color: '#fff',
+              cursor: 'pointer',
+            }}
+            onClick={handleFavorite}
+          />
+        )}
+      </div>
     </Card>
   );
 };

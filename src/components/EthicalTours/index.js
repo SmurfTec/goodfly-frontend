@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -18,8 +18,10 @@ import { Paper, TextField } from '@material-ui/core';
 import Banner from 'components/common/tours/Banner';
 import ethicalImg from 'Assets/img/ethical-main.png';
 import Page from 'components/common/Page';
+import PaginationBar from 'components/common/Pagination';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
+const TOURS_PER_PAGE = 12;
 
 const EthicalHome = ({ location }) => {
   const { tours } = useContext(ToursContext);
@@ -27,6 +29,20 @@ const EthicalHome = ({ location }) => {
 
   const [ethicalTours, setEthicalTours] = useState();
   const [tripType, setTripType] = useState('all');
+
+  // * Pagination
+  const [page, setPage] = React.useState(1);
+  const DataCount = useMemo(() => {
+    if (!ethicalTours) return;
+
+    // *  total pages  = (total ethicalTours / ethicalTours per page )+ 1
+    return Math.ceil(ethicalTours.length / TOURS_PER_PAGE);
+  }, [ethicalTours]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  // * ------------ *  //
 
   const tripTypes = {
     options: ['all', 'organic', 'organized'],
@@ -223,11 +239,17 @@ const EthicalHome = ({ location }) => {
         <Grid container spacing={4}>
           {ethicalTours ? (
             ethicalTours.length > 0 ? (
-              ethicalTours.map((tour) => (
-                <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                  <TripCard {...tour} />
-                </Grid>
-              ))
+              ethicalTours
+                ?.slice(
+                  (page - 1) * TOURS_PER_PAGE,
+                  (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+                )
+                .slice(0, 6)
+                .map((tour) => (
+                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                    <TripCard {...tour} />
+                  </Grid>
+                ))
             ) : (
               <Typography variant='h4'>No Tours Yet !</Typography>
             )
@@ -240,6 +262,28 @@ const EthicalHome = ({ location }) => {
         <div className={classes.spaceSection}>
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
+
+        <Grid container spacing={4}>
+          {ethicalTours
+            ?.slice(
+              (page - 1) * TOURS_PER_PAGE,
+              (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+            )
+            ?.slice(6)
+            .map((tour) => (
+              <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                <TripCard {...tour} />
+              </Grid>
+            ))}
+        </Grid>
+
+        {ethicalTours?.length > 0 && (
+          <PaginationBar
+            page={page}
+            count={DataCount}
+            onChange={handleChangePage}
+          />
+        )}
       </Container>
     </Page>
   );
