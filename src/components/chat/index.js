@@ -146,10 +146,9 @@ const Chat = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={'Goodfly Agent'}
-                  secondary={chat.messages[chat.messages.length - 1].text.slice(
-                    0,
-                    15
-                  )}
+                  secondary={chat.messages[
+                    chat.messages.length - 1
+                  ]?.text.slice(0, 15)}
                 />
                 <ListItemText
                   secondary={'08:55'}

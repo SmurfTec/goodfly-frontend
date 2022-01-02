@@ -91,13 +91,9 @@ const Index = () => {
   useEffect(() => {
     setFlashSales(tours?.filter((el) => el.sale)?.slice(0, 5));
 
-    setOffers(
-      tours?.filter((el) => el.category === 'ethical')?.slice(0, 6)
-    );
+    setOffers(tours?.filter((el) => el.category === 'ethical')?.slice(0, 6));
 
-    setTourCards(
-      tours?.filter((el) => el.category === 'ethical')?.slice(0, 3)
-    );
+    setTourCards(tours?.filter((el) => el.category === 'ethical')?.slice(0, 3));
   }, [tours]);
 
   const handleSubscribe = async () => {
@@ -120,17 +116,8 @@ const Index = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} className={classes.LeftGridItem}>
-            <Grid
-              container
-              spacing={2}
-              className={classes.TripCardsContainer}
-            >
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                className={classes.TripCards}
-              >
+            <Grid container spacing={2} className={classes.TripCardsContainer}>
+              <Grid item xs={12} sm={12} className={classes.TripCards}>
                 {tourCards ? (
                   tourCards.length > 0 && (
                     <FeaturedCard
@@ -180,9 +167,9 @@ const Index = () => {
               sx={{ my: 2, fontStyle: 'italic' }}
               align='center'
             >
-              Take advantage of the best offers on flights, boats,
-              trains, vehicle rentals and accommodation by signing up
-              to the <a href='/'>newsletters GOODFLY !</a>
+              Take advantage of the best offers on flights, boats, trains,
+              vehicle rentals and accommodation by signing up to the{' '}
+              <a href='/'>newsletters GOODFLY !</a>
             </Typography>
           </Grid>
         </Grid>
@@ -198,33 +185,26 @@ const Index = () => {
         {offers && offers.length > 0 && (
           <CarouselLayout>
             {offers?.map((offer) => (
-              <div
-                key={offer.id}
-                className={classes.carouselContainer}
-              >
+              <div key={offer.id} className={classes.carouselContainer}>
                 <Card {...offer} />
               </div>
             ))}
           </CarouselLayout>
         )}
       </Container>
-      <section
-        className={`${classes.promoBigImg} ${classes.travelPromo}`}
-      >
+      <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
         <div className={classes.promoContent}>
-          <Typography variant='h2'>
-            Travel made to measure !
-          </Typography>
+          <Typography variant='h2'>Travel made to measure !</Typography>
           <div className={classes.travelPromoDesc}>
             <Typography variant='subtitle1'>
-              The heart of our know-how is to be at your disposal to
-              imagine and design the trip of your dreams according to
-              your desires and principles.
+              The heart of our know-how is to be at your disposal to imagine and
+              design the trip of your dreams according to your desires and
+              principles.
               <br />
               <br />
-              Because understanding is above all knowing and will
-              accompany you throughout your journey. listen, a
-              dedicated advisor will follow your request
+              Because understanding is above all knowing and will accompany you
+              throughout your journey. listen, a dedicated advisor will follow
+              your request
             </Typography>
             <Box sx={{ textAlign: 'center' }}>
               <Button
@@ -248,13 +228,7 @@ const Index = () => {
 
       <Container sx={{ my: 12 }}>
         <Grid container spacing={1} sx={{ mt: 10 }}>
-          <Grid
-            item
-            xs={12}
-            sm={5}
-            md={5}
-            sx={{ position: 'relative' }}
-          >
+          <Grid item xs={12} sm={5} md={5} sx={{ position: 'relative' }}>
             <FlashPromos tours={flashSales} />
           </Grid>
           <Grid item xs={12} sm={7} md={7}>
@@ -285,24 +259,19 @@ const Index = () => {
                 />
 
                 <div className={classes.hajjOmraPromoDesc}>
-                  <Typography
-                    variant='h3'
-                    align='center'
-                    sx={{ mb: 2 }}
-                  >
+                  <Typography variant='h3' align='center' sx={{ mb: 2 }}>
                     Hajj 2021
                   </Typography>
                   <Typography variant='subtitle1'>
-                    Discover all of our offers for the 2021
-                    pilgrimage.
+                    Discover all of our offers for the 2021 pilgrimage.
                     <br />
-                    The GOODFLY team offers you several scholarships.
-                    formulas that will suit all Pilgrims are looked
-                    after by a staff that meets your expectations.
+                    The GOODFLY team offers you several scholarships. formulas
+                    that will suit all Pilgrims are looked after by a staff that
+                    meets your expectations.
                     <br />
-                    Explanations and clarifications of each religious
-                    rites. Visits of scholars and Departures possible
-                    from all over France.
+                    Explanations and clarifications of each religious rites.
+                    Visits of scholars and Departures possible from all over
+                    France.
                   </Typography>
                   <Box
                     sx={{
@@ -318,8 +287,7 @@ const Index = () => {
                         color: '#FFF',
                         mt: 2,
                         fontStyle: 'italic',
-                        boxShadow:
-                          'rgba(255, 255, 255, 1) 0px 0px 8px',
+                        boxShadow: 'rgba(255, 255, 255, 1) 0px 0px 8px',
                         border: 'none',
                       }}
                       component={Link}
@@ -408,8 +376,7 @@ const Index = () => {
           <Box style={{ flexGrow: 1 }}>
             <Box className={classes.newsLetterSubs}>
               <Typography variant='h6'>
-                Receive the best offers{' '}
-                <span>via the newsletter GOODFLY</span>
+                Receive the best offers <span>via the newsletter GOODFLY</span>
               </Typography>
               <Grid
                 container
@@ -464,8 +431,8 @@ const Index = () => {
                   GOODFLY Les Mureaux
                 </Typography>
                 <Typography variant='body2' color='text.primary'>
-                  60 Maurice Bellonte Street <br /> 78130 LES MUREAUX{' '}
-                  <br /> contact@goodfly.fr <br />
+                  60 Maurice Bellonte Street <br /> 78130 LES MUREAUX <br />{' '}
+                  contact@goodfly.fr <br />
                   01 00 00 00 00
                 </Typography>
               </Box>
@@ -499,15 +466,12 @@ const Index = () => {
               </Box>
             </Box>
             <Box sx={{ flexGrow: 1 }}>
-              <img
-                src={storeImage}
-                style={{ width: '100%', height: '100%' }}
-              />
+              <img src={storeImage} style={{ width: '100%', height: '100%' }} />
             </Box>
           </Box>
         </Box>
       </Container>
-      <Paper sx={{ marginTop: 8, backgroundColor: '#f2f2f2' }}>
+      <Paper sx={{ mt: 2, mb: 2, backgroundColor: '#f2f2f2' }}>
         <Typography
           textAlign='center'
           variant='h5'
