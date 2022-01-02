@@ -24,6 +24,7 @@ import { GlobalClassesProvider } from 'Contexts/GlobalClasses';
 import ProtechtedRoute from 'Routers/ProtechtedRoute';
 import Chat from 'components/chat';
 import ScrollToTop from 'Utils/scrollToTop';
+import { Box } from '@material-ui/core';
 
 const App = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
             {!location.pathname.includes('/auth') && (
               <Route component={Header} />
             )}
+            <Box mt='40px' />
             <Switch>
               <Route exact path='/' component={Home} />
               <Route path='/chat' component={Chat} />

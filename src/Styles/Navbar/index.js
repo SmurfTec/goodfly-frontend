@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     // position: 'fixed',
     // maxWidth: 1500,
-    margin: '1rem auto',
+    marginInline: 'auto',
     justifyContent: 'center',
 
     minHeight: 50,
-    paddingBlock: 10,
+    paddingTop: 10,
 
     [theme.breakpoints.down('md')]: {
       display: 'none',
