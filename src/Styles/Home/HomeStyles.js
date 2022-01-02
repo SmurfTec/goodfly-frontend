@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
   promoBigImg: {
     width: '100%',
+    marginInline: 'auto',
     display: 'flex',
     alignItems: 'center',
     backgroundPosition: 'center',
@@ -160,7 +161,8 @@ const useStyles = makeStyles((theme) => ({
   },
   carouselContainer: {
     display: 'block',
-    padding: 10,
+    // padding: 10,
+    marginRight: 10,
     height: '100%',
     '& .MuiPaper-root': {
       boxShadow: 'rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px',

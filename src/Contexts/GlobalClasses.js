@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         paddingInline: '5vw',
         /* max-width: 1052px; */
         width: '87vw',
+
         paddingInline: 'unset',
       },
       [theme.breakpoints.up('lg')]: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainFeaturedPost: {
     position: 'relative',
+    maxWidth: 'unset',
     //   backgroundColor: theme.palette.grey[800],
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,

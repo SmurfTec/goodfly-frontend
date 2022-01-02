@@ -25,6 +25,25 @@ import ProtechtedRoute from 'Routers/ProtechtedRoute';
 import Chat from 'components/chat';
 import ScrollToTop from 'Utils/scrollToTop';
 import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiContainer-root': {
+      // padding: 0,
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: '87vw',
+        marginInline: 'auto',
+        paddingInline: 0,
+      },
+    },
+  },
+}));
+
+const Wrapper = ({ children }) => {
+  const classes = useStyles();
+  return <div className={classes.root}>{children}</div>;
+};
 
 const App = () => {
   const location = useLocation();
@@ -34,29 +53,35 @@ const App = () => {
       <ThemeConfig>
         <ScrollToTop>
           <GlobalClassesProvider>
-            {!location.pathname.includes('/auth') && (
-              <Route component={Header} />
-            )}
-            <Box mt='40px' />
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/chat' component={Chat} />
-              <Route path='/tours' component={TourRouter} />
-              <ProtechtedRoute exact path='/profile' component={Profile} />
-              <Route exact path='/store' component={Store} />
-              <Route exact path='/store/cart' component={Checkout} />
-              <Route exact path='/store/product/:id' component={StoreDetails} />
-              <Route exact path='/blogs' component={ClientBlog} />
-              <Route exact path='/blogs/:id' component={BlogDetails} />
+            <Wrapper>
+              {!location.pathname.includes('/auth') && (
+                <Route component={Header} />
+              )}
+              <Box mt='40px' />
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/chat' component={Chat} />
+                <Route path='/tours' component={TourRouter} />
+                <ProtechtedRoute exact path='/profile' component={Profile} />
+                <Route exact path='/store' component={Store} />
+                <Route exact path='/store/cart' component={Checkout} />
+                <Route
+                  exact
+                  path='/store/product/:id'
+                  component={StoreDetails}
+                />
+                <Route exact path='/blogs' component={ClientBlog} />
+                <Route exact path='/blogs/:id' component={BlogDetails} />
 
-              <Route exact path='/contact-us' component={ContactUs} />
-              <Route path='/auth' component={AuthRouter} />
-              <Route exact path='/logout' component={Logout} />
-              <Redirect from='*' to='/' />
-            </Switch>
-            {!location.pathname.includes('/auth') && (
-              <Route component={Footer} />
-            )}
+                <Route exact path='/contact-us' component={ContactUs} />
+                <Route path='/auth' component={AuthRouter} />
+                <Route exact path='/logout' component={Logout} />
+                <Redirect from='*' to='/' />
+              </Switch>
+              {!location.pathname.includes('/auth') && (
+                <Route component={Footer} />
+              )}
+            </Wrapper>
           </GlobalClassesProvider>
         </ScrollToTop>
       </ThemeConfig>

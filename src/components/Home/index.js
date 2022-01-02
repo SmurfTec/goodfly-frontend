@@ -192,39 +192,41 @@ const Index = () => {
           </CarouselLayout>
         )}
       </Container>
-      <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
-        <div className={classes.promoContent}>
-          <Typography variant='h2'>Travel made to measure !</Typography>
-          <div className={classes.travelPromoDesc}>
-            <Typography variant='subtitle1'>
-              The heart of our know-how is to be at your disposal to imagine and
-              design the trip of your dreams according to your desires and
-              principles.
-              <br />
-              <br />
-              Because understanding is above all knowing and will accompany you
-              throughout your journey. listen, a dedicated advisor will follow
-              your request
-            </Typography>
-            <Box sx={{ textAlign: 'center' }}>
-              <Button
-                variant='outlined'
-                color='primary'
-                sx={{
-                  mt: 2,
-                  fontStyle: 'italic',
-                  border: '1px solid black',
-                  color: 'black',
-                }}
-                component={Link}
-                to='/tours/create'
-              >
-                Ask for a quote
-              </Button>
-            </Box>
+      <Container disableGutters>
+        <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
+          <div className={classes.promoContent}>
+            <Typography variant='h2'>Travel made to measure !</Typography>
+            <div className={classes.travelPromoDesc}>
+              <Typography variant='subtitle1'>
+                The heart of our know-how is to be at your disposal to imagine
+                and design the trip of your dreams according to your desires and
+                principles.
+                <br />
+                <br />
+                Because understanding is above all knowing and will accompany
+                you throughout your journey. listen, a dedicated advisor will
+                follow your request
+              </Typography>
+              <Box sx={{ textAlign: 'center' }}>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  sx={{
+                    mt: 2,
+                    fontStyle: 'italic',
+                    border: '1px solid black',
+                    color: 'black',
+                  }}
+                  component={Link}
+                  to='/tours/create'
+                >
+                  Ask for a quote
+                </Button>
+              </Box>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </Container>
 
       <Container sx={{ my: 12 }}>
         <Grid container spacing={1} sx={{ mt: 10 }}>
@@ -353,16 +355,16 @@ const Index = () => {
         </Grid>
       </Container>
 
-      <img
-        src={homeImage}
-        style={{
-          width: '97vw',
-          margin: 'auto',
-          marginTop: '3rem',
-          maxWidth: 1800,
-        }}
-      />
-
+      <Container disableGutters>
+        <img
+          src={homeImage}
+          style={{
+            margin: 'auto',
+            marginTop: '3rem',
+            width: '100%',
+          }}
+        />
+      </Container>
       <Container sx={{ mt: 10 }}>
         <Box
           display='flex'
@@ -471,38 +473,40 @@ const Index = () => {
           </Box>
         </Box>
       </Container>
-      <Paper sx={{ mt: 2, mb: 2, backgroundColor: '#f2f2f2' }}>
-        <Typography
-          textAlign='center'
-          variant='h5'
-          color='textSecondary'
-          sx={{ padding: '1rem 1rem 0rem' }}
-        >
-          Our Partners
-        </Typography>
-        <Box
-          sx={{
-            marginTop: 2,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '50px',
-          }}
-        >
-          {logos.map((logo) => (
-            <Box
-              sx={{ minHeight: '80px', padding: '1rem 0rem 2rem ' }}
-              key={logo._id}
-            >
-              <img
-                style={{ width: '100px', height: '70px' }}
-                src={logo.image}
-                alt={logo.alt}
-              />
-            </Box>
-          ))}
-        </Box>
-      </Paper>
+      <Container>
+        <Paper sx={{ mt: 2, mb: 2, backgroundColor: '#f2f2f2' }}>
+          <Typography
+            textAlign='center'
+            variant='h5'
+            color='textSecondary'
+            sx={{ padding: '1rem 1rem 0rem' }}
+          >
+            Our Partners
+          </Typography>
+          <Box
+            sx={{
+              marginTop: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '50px',
+            }}
+          >
+            {logos.map((logo) => (
+              <Box
+                sx={{ minHeight: '80px', padding: '1rem 0rem 2rem ' }}
+                key={logo._id}
+              >
+                <img
+                  style={{ width: '100px', height: '70px' }}
+                  src={logo.image}
+                  alt={logo.alt}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Paper>
+      </Container>
     </Page>
   );
 };

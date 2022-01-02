@@ -107,7 +107,7 @@ const Index = () => {
     <Page title='GoodFly |  Store'>
       <div>
         <Box className={classes.root}>
-          <Box className={classes.mainFeaturedPost}>
+          <Box className={globalClasses.mainFeaturedPost}>
             <section className={classes.title}>
               <Typography variant='h3'>
                 GOODFLY STORE

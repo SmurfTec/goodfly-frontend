@@ -25,13 +25,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   nav: {
+    flexBasis: '100%',
     display: 'flex',
     overflowX: 'hidden',
     alignItems: 'center',
     // position: 'fixed',
     // maxWidth: 1500,
     marginInline: 'auto',
-    justifyContent: 'center',
+    maxWidth: '93vw',
+    justifyContent: 'space-around',
 
     minHeight: 50,
     paddingTop: 10,

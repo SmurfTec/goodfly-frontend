@@ -38,7 +38,7 @@ const Banner = (props) => {
 
   return (
     <div className={globalClasses.heroContent}>
-      <Container className={classes.mainFeaturedPost}>
+      <Container className={globalClasses.mainFeaturedPost}>
         <section className={classes.title}>
           <Typography variant='h3'>{props.bannerTitle}</Typography>
         </section>
