@@ -180,19 +180,11 @@ const Index = () => {
                 <Typography variant='h5'>
                   52 - 54 rue Maurice Bellonte
                 </Typography>
-                <Typography variant='h5'>
-                  78130 Les Mureaux
-                </Typography>
-                <Typography variant='h5'>
-                  contact@goodﬂy.fr
-                </Typography>
+                <Typography variant='h5'>78130 Les Mureaux</Typography>
+                <Typography variant='h5'>contact@goodﬂy.fr</Typography>
                 <Typography variant='h5'>01 34 74 19 39</Typography>
               </Box>
-              <Box
-                display='flex'
-                flexDirection='column'
-                alignItems='center'
-              >
+              <Box display='flex' flexDirection='column' alignItems='center'>
                 <Box>
                   <img
                     src='https://imgur.com/lIumYeR.png'
@@ -221,20 +213,11 @@ const Index = () => {
             </Box>
           </Grid>
           <Grid item xs={0} sm={6}>
-            <img
-              src={images[0]}
-              alt={'image'}
-              style={{ height: 250 }}
-            />
+            <img src={images[0]} alt={'image'} style={{ height: 250 }} />
           </Grid>
         </Grid>
         <Divider />
-        <Box
-          mt={5}
-          paddingTop={5}
-          display='flex'
-          justifyContent='center'
-        >
+        <Box mt={5} paddingTop={5} display='flex' justifyContent='center'>
           <Box className={classes.FormBox} fullWidth>
             <Typography variant='h4' sx={{ marginBottom: '2rem' }}>
               Contact Form
@@ -246,7 +229,7 @@ const Index = () => {
             >
               Contact GODDFLY by email
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
               <input
                 required
                 onChange={handleTxtChange}
@@ -266,6 +249,7 @@ const Index = () => {
                 mt={3}
                 style={{
                   width: '60%',
+                  marginInline: 'auto',
                 }}
               >
                 <input
@@ -298,6 +282,7 @@ const Index = () => {
                 my={3}
                 style={{
                   width: '60%',
+                  marginInline: 'auto',
                 }}
               >
                 <input
@@ -350,8 +335,7 @@ const Index = () => {
       </Box>
       <Box className={classes.newsLetterSubs} my={3}>
         <Typography variant='h6'>
-          Receive the best offers{' '}
-          <span>via the newsletter GOODFLY</span>
+          Receive the best offers <span>via the newsletter GOODFLY</span>
         </Typography>
         <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
           <Grid item xs={9} sm={7}>
@@ -365,20 +349,14 @@ const Index = () => {
           </Grid>
           <Grid item xs={1} sm={1} />
           <Grid item xs={2} sm={3}>
-            <Button
-              variant='contained'
-              fullWidth
-              onClick={handleSubscribe}
-            >
+            <Button variant='contained' fullWidth onClick={handleSubscribe}>
               Send
             </Button>
           </Grid>
         </Grid>
       </Box>
-      <Box mt={5} sx={{ marginInline: 'auto', textAlign: 'center' }}>
-        <Typography variant='h4'>
-          FOLLOW GOODFLY ON SOCIAL MEDIA
-        </Typography>
+      <Box mt={5} mb={5} sx={{ marginInline: 'auto', textAlign: 'center' }}>
+        <Typography variant='h4'>FOLLOW GOODFLY ON SOCIAL MEDIA</Typography>
         <Box
           mt={1}
           display='flex'

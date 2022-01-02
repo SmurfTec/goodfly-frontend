@@ -259,7 +259,7 @@ const EthicalHome = ({ location }) => {
         </Grid>
 
         {/* Space Container */}
-        <div className={classes.spaceSection}>
+        <div className={globalClasses.spaceSection}>
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
 

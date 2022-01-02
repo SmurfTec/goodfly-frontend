@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 // * ----- MUI STUFF------ //
 import {
@@ -15,6 +15,7 @@ import {
 import { Box } from '@material-ui/system';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 // * ------------ //
+import PaginationBar from 'components/common/Pagination';
 
 import useStyles from './styles';
 import StoreProducts from './StoreProducts';
@@ -22,10 +23,14 @@ import ProductCard from './ProductCard';
 import { StoreContext } from 'Contexts/StoreContext';
 import Page from 'components/common/Page';
 import StoreSubNav from './StoreSubNav';
+import useGlobalClasses from 'Hooks/useGlobalClasses';
+
+const TOURS_PER_PAGE = 12;
 
 const Index = () => {
   const classes = useStyles();
   const { products, productCategories } = useContext(StoreContext);
+  const globalClasses = useGlobalClasses();
 
   const [filteredProducts, setFilteredProducts] = useState();
   const [priceFilter, setPriceFilter] = useState([0, 1000]);
@@ -34,11 +39,30 @@ const Index = () => {
   const [productCategory, setProductCategory] = useState(1);
 
   const handlePriceSort = (event) => {
-    setProductSort(event.target.value * 1);
+    let newProducts = products;
+    const newValue = event.target.value * 1;
+    setProductSort(newValue);
+    // * Sort Price
+    newProducts = newProducts.sort((a, b) =>
+      a.price >= b.price ? newValue : -newValue
+    );
+    setFilteredProducts(newProducts);
   };
 
   const handlePriceCategory = (event) => {
+    let newProducts = products;
+    console.log(`newProducts`, newProducts);
     setProductCategory(event.target.value);
+    // * Make Temp products
+
+    // * Filter by Category
+    if (event.target.value !== 'all')
+      newProducts = newProducts.filter(
+        (product) => product.category._id === event.target.value
+      );
+    console.log(`newProducts1`, newProducts);
+
+    setFilteredProducts(newProducts);
   };
 
   const handlePriceFilterChange = (event, newValue) => {
@@ -55,28 +79,29 @@ const Index = () => {
     // * Make Temp products
     let newProducts = products;
 
-    // * Filter by Category
-    if (productCategory !== 'all')
-      newProducts = newProducts.filter(
-        (product) => product.category._id === productCategory
-      );
-
-    console.log(`newProducts 1`, newProducts);
-
     // * Filter Price by Value
     newProducts = newProducts.filter(
       (product) =>
         product.price >= priceFilter[0] && product.price <= priceFilter[1]
     );
 
-    // * Sort Price
-    newProducts = newProducts.sort((a, b) =>
-      a.price >= b.price ? productSort : -productSort
-    );
-
     console.log(`newProducts`, newProducts);
     setFilteredProducts(newProducts);
   };
+
+  // * Pagination
+  const [page, setPage] = React.useState(1);
+  const DataCount = useMemo(() => {
+    if (!filteredProducts) return;
+
+    // *  total pages  = (total filteredProducts / filteredProducts per page )+ 1
+    return Math.ceil(filteredProducts.length / TOURS_PER_PAGE);
+  }, [filteredProducts]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  // * ------------ *  //
 
   return (
     <Page title='GoodFly |  Store'>
@@ -191,15 +216,30 @@ const Index = () => {
             <Grid item xs={1} sm={1}></Grid>
             <Grid item xs={6} sm={8}>
               <Grid container spacing={4}>
-                {filteredProducts?.map((product) => (
-                  <Grid item xs={12} sm={4} key={product._id}>
-                    <ProductCard product={product} />
-                  </Grid>
-                ))}
+                {filteredProducts
+                  ?.slice(
+                    (page - 1) * TOURS_PER_PAGE,
+                    (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+                  )
+
+                  ?.map((product) => (
+                    <Grid item xs={12} sm={4} key={product._id}>
+                      <ProductCard product={product} />
+                    </Grid>
+                  ))}
               </Grid>
+              {filteredProducts?.length > 0 && (
+                <PaginationBar
+                  page={page}
+                  count={DataCount}
+                  onChange={handleChangePage}
+                />
+              )}
             </Grid>
           </Grid>
-          <Box marginTop={15}></Box>
+          <div className={globalClasses.spaceSection}>
+            <Typography variant='h5'>PUB SPACE</Typography>
+          </div>
           <Grid container spacing={4}>
             {products?.slice(0, 4).map((product) => (
               <Grid item xs={6} sm={3} key={product._id}>

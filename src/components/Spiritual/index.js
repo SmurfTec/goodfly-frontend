@@ -1,12 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useMemo } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
 import TripCard from './TripCard';
 import { styles } from 'Styles/FlashSale/FlashSaleStyles';
 import TuneIcon from '@material-ui/icons/Tune';
@@ -19,6 +17,9 @@ import Page from 'components/common/Page';
 import { useLocation, useHistory } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Paper, TextField } from '@material-ui/core';
+import PaginationBar from 'components/common/Pagination';
+
+const TOURS_PER_PAGE = 12;
 
 const SpiritualHome = () => {
   const location = useLocation();
@@ -42,6 +43,20 @@ const SpiritualHome = () => {
   }, [tours]);
 
   const classes = styles(styleProps);
+
+  // * Pagination
+  const [page, setPage] = React.useState(1);
+  const DataCount = useMemo(() => {
+    if (!spiritualTours) return;
+
+    // *  total pages  = (total spiritualTours / spiritualTours per page )+ 1
+    return Math.ceil(spiritualTours.length / TOURS_PER_PAGE);
+  }, [spiritualTours]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  // * ------------ *  //
 
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -184,11 +199,17 @@ const SpiritualHome = () => {
         <Grid container spacing={4}>
           {spiritualTours ? (
             spiritualTours.length > 0 ? (
-              spiritualTours.map((tour) => (
-                <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                  <TripCard tour={tour} />
-                </Grid>
-              ))
+              spiritualTours
+                ?.slice(
+                  (page - 1) * TOURS_PER_PAGE,
+                  (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+                )
+                .slice(0, 6)
+                .map((tour) => (
+                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                    <TripCard tour={tour} />
+                  </Grid>
+                ))
             ) : (
               <Box mt={5}>
                 <Typography variant='h4'>No Tours Yet !</Typography>
@@ -200,9 +221,31 @@ const SpiritualHome = () => {
         </Grid>
 
         {/* Space Container */}
-        <div className={classes.spaceSection}>
+        <div className={globalClasses.spaceSection}>
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
+
+        <Grid container spacing={4}>
+          {spiritualTours
+            ?.slice(
+              (page - 1) * TOURS_PER_PAGE,
+              (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+            )
+            ?.slice(6)
+            .map((tour) => (
+              <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                <TripCard tour={tour} />
+              </Grid>
+            ))}
+        </Grid>
+
+        {spiritualTours?.length > 0 && (
+          <PaginationBar
+            page={page}
+            count={DataCount}
+            onChange={handleChangePage}
+          />
+        )}
       </Container>
     </Page>
   );

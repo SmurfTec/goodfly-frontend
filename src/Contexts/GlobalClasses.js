@@ -44,6 +44,15 @@ const useStyles = makeStyles((theme) => ({
     textShadow: '0px 0px 5px rgba(0,0,0,0.38)',
     textTransform: 'uppercase',
   },
+  spaceSection: {
+    backgroundColor: '#e6e6e6',
+    minHeight: 200,
+    margin: '100px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
 }));
 
 export const GlobalClassesContext = React.createContext();

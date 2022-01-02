@@ -18,9 +18,7 @@ export const styles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     backgroundImage: (styleProps) =>
       `url(${
-        styleProps.location.pathname.includes('flash')
-          ? flashImg
-          : ethicalImg
+        styleProps.location.pathname.includes('flash') ? flashImg : ethicalImg
       })`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -52,15 +50,7 @@ export const styles = makeStyles((theme) => ({
     bottom: 20,
     left: 65,
   },
-  spaceSection: {
-    backgroundColor: '#e6e6e6',
-    minHeight: 200,
-    margin: '100px 0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-  },
+
   filter: {
     paddingLeft: 20,
     display: 'flex',

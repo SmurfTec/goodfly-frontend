@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { withRouter } from 'react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -19,8 +19,10 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 import flashImg from 'Assets/img/flash-sale.png';
 import Banner from 'components/common/tours/Banner';
 import Page from 'components/common/Page';
+import PaginationBar from 'components/common/Pagination';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
+const TOURS_PER_PAGE = 12;
 
 const FlashSale = ({ location }) => {
   const theme = useTheme();
@@ -106,6 +108,20 @@ const FlashSale = ({ location }) => {
     setAnchorEl(null);
   };
 
+  // * Pagination
+  const [page, setPage] = React.useState(1);
+  const DataCount = useMemo(() => {
+    if (!flashSales) return;
+
+    // *  total pages  = (total flashSales / flashSales per page )+ 1
+    return Math.ceil(flashSales.length / TOURS_PER_PAGE);
+  }, [flashSales]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  // * ------------ *  //
+
   return (
     <Page title='GoodFly |  Flash Sales'>
       <CssBaseline />
@@ -159,11 +175,17 @@ const FlashSale = ({ location }) => {
         <Grid container spacing={4}>
           {flashSales ? (
             flashSales.length > 0 ? (
-              flashSales.map((tour) => (
-                <Grid item key={tour._id} xs={12} sm={6} md={4}>
-                  <FlashCard {...tour} />
-                </Grid>
-              ))
+              flashSales
+                ?.slice(
+                  (page - 1) * TOURS_PER_PAGE,
+                  (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+                )
+                .slice(0, 6)
+                .map((tour) => (
+                  <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                    <FlashCard {...tour} />
+                  </Grid>
+                ))
             ) : (
               <Box mt={5}>
                 <Typography variant='h4'>
@@ -177,9 +199,31 @@ const FlashSale = ({ location }) => {
         </Grid>
 
         {/* Space Container */}
-        <div className={classes.spaceSection}>
+        <div className={globalClasses.spaceSection}>
           <Typography variant='h5'>PUB SPACE</Typography>
         </div>
+
+        <Grid container spacing={4}>
+          {flashSales
+            ?.slice(
+              (page - 1) * TOURS_PER_PAGE,
+              (page - 1) * TOURS_PER_PAGE + TOURS_PER_PAGE
+            )
+            ?.slice(6)
+            .map((tour) => (
+              <Grid item key={tour._id} xs={12} sm={6} md={4}>
+                <FlashCard {...tour} />
+              </Grid>
+            ))}
+        </Grid>
+
+        {flashSales?.length > 0 && (
+          <PaginationBar
+            page={page}
+            count={DataCount}
+            onChange={handleChangePage}
+          />
+        )}
       </Container>
     </Page>
   );
