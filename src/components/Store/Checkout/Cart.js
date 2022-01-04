@@ -1,14 +1,6 @@
-import {
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-  Box,
-} from '@material-ui/core';
+import { Divider, Grid, Paper, Typography, Box } from '@material-ui/core';
 import React from 'react';
-import StoreNav from '../StoreSubNav';
 import CartItem from './CartItem';
-import LoyaltyImg from 'Assets/img/loyaltyCard.jpg';
 import { styles } from 'Styles/Cart/CartItemStyles';
 import TotalBill from './TotalBill';
 
@@ -22,15 +14,12 @@ const Cart = ({
   const classes = styles();
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid item xs={12} sm={12} md={7}>
           <Typography variant='h4' sx={{ mt: 8 }}>
             Your Basket
           </Typography>
-          <Paper
-            elevation={0}
-            sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}
-          >
+          <Paper elevation={0} sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}>
             <Box
               sx={{
                 my: 2,

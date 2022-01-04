@@ -287,7 +287,7 @@ const StoreDetails = ({ match }) => {
                       color='text.secondary'
                       sx={{ mt: 1 }}
                     >
-                      {product.price}
+                      {product.price} €
                     </Typography>
                     <Typography variant='h5' sx={{ mt: 1 }}>
                       Origin : {product.region}

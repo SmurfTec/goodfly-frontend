@@ -15,7 +15,7 @@ const BillingRow = ({ slug, amount }) => (
       {slug}
     </Typography>
     <Typography variant='h5' color='textSecondary'>
-      {amount || 0}$
+      {amount || 0} €
     </Typography>
   </Box>
 );
@@ -29,6 +29,7 @@ const TotalBill = ({
   loyaltyPoints,
   promoDiscount,
   isSubmitting,
+  usePoints,
 }) => {
   const deliveryPrice = useMemo(() => {
     let amount = 0;
@@ -45,7 +46,8 @@ const TotalBill = ({
 
     console.log(`amount`, amount);
 
-    if (paymentOption === 'points') {
+    // if (paymentOption === 'points') {
+    if (usePoints === true) {
       let loyaltyDiscount = loyaltyPoints;
       if (loyaltyDiscount > cart.total) loyaltyDiscount = cart.total;
       amount -= loyaltyDiscount;
@@ -56,7 +58,14 @@ const TotalBill = ({
     console.log(`amount`, amount);
 
     return amount;
-  }, [paymentOption, cart.total, promoDiscount, deliveryPrice, loyaltyPoints]);
+  }, [
+    paymentOption,
+    cart.total,
+    promoDiscount,
+    deliveryPrice,
+    loyaltyPoints,
+    usePoints,
+  ]);
 
   return (
     <>
@@ -80,7 +89,7 @@ const TotalBill = ({
           <BillingRow
             slug='LoyaltyPoints Discount'
             amount={
-              paymentOption === 'points'
+              usePoints === true
                 ? loyaltyPoints > cart.subTotal
                   ? cart.subTotal
                   : loyaltyPoints
@@ -105,8 +114,8 @@ const TotalBill = ({
               Total
             </Typography>
             <Typography variant='h4' color='textSecondary'>
-              {/* {cart.total + deliveryPrice}$ */}
-              {totalPrice}$
+              {/* {cart.total + deliveryPrice} € */}
+              {totalPrice} €
             </Typography>
           </Box>
         </Box>
@@ -133,7 +142,7 @@ const TotalBill = ({
           fullWidth
           disabled={!formName}
         >
-          VALIDATE THE ORDER form waala
+          VALIDATE THE ORDER
         </Button>
       )}
     </>

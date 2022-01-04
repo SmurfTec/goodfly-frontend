@@ -65,20 +65,20 @@ export const TravelDetails = React.memo(
                   : 'Open Offer'}
               </Typography>
             </span>
-            <Typography variant='subtitle2'>{price}</Typography>
+            <Typography variant='subtitle2'>{price} €</Typography>
           </Box>
           <Divider />
           <Box className={classes.box}>
             <span>
               <Typography variant='h5'>
-                {+travelers + 1} x {price}
+                {+travelers + 1} x {price} €
               </Typography>
               <Typography variant='body1'>
                 vous et {+travelers} voyageurs
               </Typography>
             </span>
             <Typography variant='subtitle2'>
-              {parseInt(+travelers + 1) * parseFloat(price)}€
+              {parseInt(+travelers + 1) * parseFloat(price)} €
             </Typography>
           </Box>
           <Divider />
@@ -91,7 +91,7 @@ export const TravelDetails = React.memo(
             </span>
             <Typography variant='body1'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
-              {totalPrice[0]}$
+              {totalPrice[0]} €
             </Typography>
           </Box>
           <Box className={classes.box}>
@@ -103,7 +103,7 @@ export const TravelDetails = React.memo(
             </span>
             <Typography variant='body1'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
-              {totalPrice[4]}$
+              {totalPrice[4]} €
             </Typography>
           </Box>
           <Box className={classes.box}>
@@ -115,7 +115,7 @@ export const TravelDetails = React.memo(
             </span>
             <Typography variant='body1'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
-              {totalPrice[1]}$
+              {totalPrice[1]} €
             </Typography>
           </Box>
           <Box className={classes.box}>
@@ -127,7 +127,7 @@ export const TravelDetails = React.memo(
             </span>
             <Typography variant='body1'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
-              {totalPrice[2]}$
+              {totalPrice[2]} €
             </Typography>
           </Box>
           <Divider />
@@ -138,7 +138,7 @@ export const TravelDetails = React.memo(
             </span>
             <Typography variant='h4'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
-              {totalPrice[3]}$
+              {totalPrice[3]} €
             </Typography>
           </Box>
         </Paper>

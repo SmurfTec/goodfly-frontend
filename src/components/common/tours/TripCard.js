@@ -123,7 +123,7 @@ const TripCard = (props) => {
           {title.toUpperCase()}
         </Typography>
         <Typography variant='subtitle2' gutterBottom>
-          Starting From {price}
+          Starting From {price} €
         </Typography>
 
         <Typography variant='subtitle2' style={{ minWidth: 190 }}>

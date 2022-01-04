@@ -126,6 +126,7 @@ const StoreCollapseItem = ({ order }) => {
                   options={{
                     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
                     disableFunding: 'credit',
+                    currency: 'EUR',
                   }}
                   onSuccess={async (details, data) => {
                     // console.log(`details`, details);

@@ -73,7 +73,7 @@ const TripCard = ({ tour, history }) => {
               align='center'
               color='error'
             >
-              {price}
+              {price} €
             </Typography>
           </Box>
           <Typography

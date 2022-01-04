@@ -39,7 +39,7 @@ const ProductCard = ({ product, history }) => {
             {name}
           </Typography>
           <Typography gutterBottom variant='subtitle1' sx={{ fontWeight: 900 }}>
-            {price}€
+            {price} €
           </Typography>
           <Typography variant='subtitle1' color='text.secondary'>
             {category && category.name}

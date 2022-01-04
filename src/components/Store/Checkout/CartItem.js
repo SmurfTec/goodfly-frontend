@@ -20,8 +20,7 @@ function ShoppingCartItem({
   removeItemFromCart,
 }) {
   const classes = styles();
-  const { images, price, _id, name, category, quantity, subTotal } =
-    product;
+  const { images, price, _id, name, category, quantity, subTotal } = product;
 
   return (
     <div className={classes.item}>
@@ -86,7 +85,7 @@ function ShoppingCartItem({
         className={classes.totalPrice}
         align='right'
       >
-        {price}€
+        {price} €
       </Typography>
       <Typography
         variant='subtitle1'

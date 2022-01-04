@@ -24,8 +24,6 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
 
-import UseToggle from 'Hooks/useToggle';
-
 const StepThree = ({ tour, travelers, data }) => {
   const { updateMe } = useContext(AuthContext);
   const history = useHistory();

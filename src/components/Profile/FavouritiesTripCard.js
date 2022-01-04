@@ -98,7 +98,7 @@ const TripCard = (props) => {
                 align='center'
                 color='error'
               >
-                {price}
+                {price} €
               </Typography>
             </Box>
             <Typography

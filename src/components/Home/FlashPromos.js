@@ -114,7 +114,7 @@ const FlashPromos = ({ tours }) => {
                   <Card className={classes.priceCard} sx={{ px: 1, py: 1 }}>
                     <Typography variant='h4' align='center'>
                       <ArrowIcon size='small' sx={{ pt: 1 }} />
-                      {data.price} $
+                      {data.price} €
                     </Typography>
                   </Card>
                 </Grid>

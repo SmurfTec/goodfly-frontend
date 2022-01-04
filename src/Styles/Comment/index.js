@@ -7,6 +7,9 @@ const styles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
+    '& .MuiAvatar-img': {
+      objectFit: 'contain',
+    },
   },
   gridDate: {
     display: 'flex',

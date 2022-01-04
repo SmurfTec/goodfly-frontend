@@ -10,6 +10,9 @@ import {
   DialogContentText,
   DialogActions,
   TextField,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import React, { useState } from 'react';
@@ -24,6 +27,7 @@ import { handleCatch, makeReq } from 'Utils/constants';
 const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
+  const [usePoints, setUsePoints] = useState(false);
 
   const values = ['card', 'bank', 'paypal', 'points'];
 
@@ -102,7 +106,23 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                   <RadioGroup {...field} row>
                     <BankTransferOption value={values[1]} />
                     <PaypalOption value={values[2]} />
-                    <LoyaltyPointsOption value={values[3]} />
+                    {/* <LoyaltyPointsOption value={values[3]} /> */}
+
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={usePoints}
+                            onChange={(e) => {
+                              console.log('onchanges called');
+                              console.log('e.target.checked', e.target.checked);
+                              setUsePoints(e.target.checked);
+                            }}
+                          />
+                        }
+                        label='use your GOODFLY Fidelity points'
+                      />
+                    </FormGroup>
 
                     <Divider sx={{ my: 3, width: '100%' }} />
                   </RadioGroup>
@@ -151,6 +171,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
             loyaltyPoints={loyaltyPoints}
             deliveryMethod={deliveryMethod}
             promoDiscount={promoDiscount || 0}
+            usePoints={usePoints}
           />
         </Grid>
       </Grid>

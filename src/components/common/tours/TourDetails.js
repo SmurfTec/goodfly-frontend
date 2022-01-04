@@ -342,6 +342,7 @@ const TourDetails = ({ match, history, location }) => {
                     {tour.sale && new Date(tour.saleExpires) >= new Date()
                       ? tour.price - (tour.price * tour.discount) / 100
                       : tour.price}
+                    €
                   </Button>
                 </Box>
               </Grid>

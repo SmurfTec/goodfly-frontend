@@ -2,13 +2,11 @@ import { Paper, Avatar, Grid, Typography, Rating } from '@material-ui/core';
 import React from 'react';
 import { Box } from '@material-ui/system';
 import styles from 'Styles/Comment';
-import { CustomRating } from 'components/FormControls';
-import { useForm } from 'react-hook-form';
 
 const Comment = (props) => {
   const classes = styles();
   console.log(props);
-  const { visitor, createdAt, description, rating } = props;
+  const { visitor, createdAt, comment, rating } = props;
 
   return (
     <Paper
@@ -56,7 +54,7 @@ const Comment = (props) => {
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography variant='body1' color='text.primary' sx={{ mt: 3 }}>
-            {description}
+            {comment}
           </Typography>
         </Grid>
       </Grid>

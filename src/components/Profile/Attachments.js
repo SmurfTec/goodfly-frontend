@@ -1,17 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Grid, Typography, Box, CardMedia, Button } from '@material-ui/core';
-import { Add, PlusOne } from '@material-ui/icons';
+import {
+  Grid,
+  Typography,
+  Box,
+  CardMedia,
+  Button,
+  Switch,
+} from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 import UseToggle from 'Hooks/useToggle';
 import LoadingOverlay from 'react-loading-overlay';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import { makeStyles } from '@material-ui/styles';
-import useArray from 'Hooks/useArray';
 import v4 from 'uuid/dist/v4';
+import { purple } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
+  Switch: {
+    color: `${theme.palette.common.white} !important`,
+
+    '&$checked + $track': {
+      opacity: '1 !important',
+      backgroundColor: `${theme.palette.success.main} !important`,
+    },
+  },
+  checked: {
+    opacity: '1 !important',
+    color: `${theme.palette.common.white} !important`,
+  },
+  track: {
+    opacity: '1 !important',
+    backgroundColor: `${theme.palette.error.main} !important`,
+  },
   mainBox: {
     backgroundColor: '#f2f2f2',
     borderRadius: '10px',
@@ -35,14 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Attachments = ({
-  attachments,
-  pushAttachment,
-  removeAttachment,
-  handleModify,
-  changeInput,
-  user,
-}) => {
+const Attachments = ({ attachments, pushAttachment, removeAttachment }) => {
   const classes = useStyles();
 
   const [isImageUploading, toggleImageUploading] = UseToggle(false);
@@ -126,12 +142,26 @@ const Attachments = ({
                     alignItems: 'center',
                   }}
                 >
-                  <Button
-                    onClick={removeAttachment.bind(this, attachment._id)}
-                    style={{ color: 'red' }}
-                  >
-                    Delete
-                  </Button>
+                  {!attachment.isVerified && (
+                    <Button
+                      onClick={removeAttachment.bind(this, attachment._id)}
+                      style={{ color: 'red' }}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                  <Switch
+                    classes={{
+                      switchBase: classes.Switch,
+                      checked: classes.checked,
+                      track: classes.track,
+                    }}
+                    checked={attachment.isVerified}
+                    disabled
+                    inputProps={{
+                      'aria-label': 'controlled',
+                    }}
+                  />
                 </Box>
               </div>
             ))}

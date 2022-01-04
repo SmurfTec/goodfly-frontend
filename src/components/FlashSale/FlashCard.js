@@ -123,10 +123,10 @@ const FlashCard = (props) => {
             </section>
             <section className={classes.amountContent}>
               <Typography variant='h4' className={classes.DiscountPrice}>
-                {price} $
+                {price} €
               </Typography>
               <Typography variant='h4' className={classes.Price}>
-                {price - (price * discount) / 100} $
+                {price - (price * discount) / 100} €
               </Typography>
             </section>
           </section>

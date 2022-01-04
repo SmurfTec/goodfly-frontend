@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
   chatSection: {
     width: '100%',
-    height: '80vh',
+    height: '100%',
     boxShadow: 'unset',
     padding: 20,
     background: '#f2f2f2',
@@ -103,7 +103,7 @@ const Chat = () => {
   };
 
   return (
-    <Container sx={{ paddingTop: 2 }}>
+    <Container sx={{ mt: -2, mb: 3 }}>
       <Grid container>
         {/*  <Grid item xs={12}>
           <Typography variant='h5' className='header-message'>

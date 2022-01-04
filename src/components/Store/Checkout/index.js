@@ -115,6 +115,7 @@ const Checkout = () => {
               options={{
                 clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
                 disableFunding: 'credit',
+                currency: 'EUR',
               }}
               onSuccess={async (details, data) => {
                 payOrder(order._id, '/store');
@@ -201,7 +202,7 @@ const Checkout = () => {
 
   return (
     <Page title='GoodFly |  Checkout'>
-      <Container sx={{ mt: 8 }}>
+      <Container sx={{ mt: 8, mb: 2 }}>
         {activeStep > 0 && activeStep < 3 && (
           <>
             <Box className={classes.backButton} onClick={handleBack}>
