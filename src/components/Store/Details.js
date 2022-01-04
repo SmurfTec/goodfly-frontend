@@ -13,6 +13,7 @@ import {
   Paper,
   FormControl,
   FormHelperText,
+  Skeleton,
 } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import LoyaltyImg from 'Assets/img/loyaltyCard.jpg';
@@ -33,6 +34,7 @@ import { StoreContext } from 'Contexts/StoreContext';
 import { AuthContext } from 'Contexts/AuthContext';
 import Lightbox from 'react-image-lightbox';
 import UseToggle from 'Hooks/useToggle';
+import v4 from 'uuid/dist/v4';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -386,7 +388,7 @@ const StoreDetails = ({ match }) => {
               {product ? (
                 <>
                   <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
-                    {product.reviews.length} reviews for this product
+                    {product.reviews.length || 'No'} reviews for this product
                   </Typography>
                   {product.reviews.map((review) => (
                     <CommentsTab {...review} />
@@ -460,21 +462,33 @@ const StoreDetails = ({ match }) => {
           </Grid>
         </TabPanel>
       </Box>
-      <Box sx={{ mt: 17 }}>
-        <Typography variant='h4' fullWidth align='center' sx={{ my: 6 }}>
+      <Box sx={{ mt: 17, mb: 2 }}>
+        <Typography variant='h4' fullWidth align='center' sx={{ my: 3 }}>
           Related Products
         </Typography>
-        <CarouselLayout>
-          {relatedProducts ? (
-            <div className={classes.carouselCard}>
-              {relatedProducts.map((product) => (
-                <ProductCard product={product} key={product._id} />
-              ))}
-            </div>
+        {relatedProducts ? (
+          relatedProducts.length > 0 ? (
+            <CarouselLayout>
+              <div className={classes.carouselCard}>
+                {relatedProducts.map((product) => (
+                  <ProductCard product={product} key={product._id} />
+                ))}
+              </div>
+            </CarouselLayout>
           ) : (
-            <div className='loader'></div>
-          )}
-        </CarouselLayout>
+            <Typography variant='body1' align='center'>
+              No Results
+            </Typography>
+          )
+        ) : (
+          <CarouselLayout>
+            {Array(8)
+              .fill()
+              .map(() => (
+                <Skeleton key={v4()} variant='react' height={200} width={200} />
+              ))}
+          </CarouselLayout>
+        )}
       </Box>
     </Container>
   );

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     // color: '#B033fa',
     boxShadow: 'none',
     paddingBlock: 5,
-    zIndex: 1,
+    zIndex: 2,
   },
   grow: {
     flexGrow: 1,

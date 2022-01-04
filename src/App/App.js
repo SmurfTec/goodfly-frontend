@@ -57,7 +57,7 @@ const App = () => {
               {!location.pathname.includes('/auth') && (
                 <Route component={Header} />
               )}
-              <Box mt='40px' />
+              {!location.pathname.includes('auth') && <Box mt='40px' />}
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/chat' component={Chat} />
