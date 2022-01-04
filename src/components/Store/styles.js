@@ -27,10 +27,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     paddingLeft: 40,
     paddingTop: 10,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   description: {
     position: 'absolute',
-    top: '50%',
+    top: '65%',
     left: '10%',
     transform: 'translate(-10%, -50% )',
   },

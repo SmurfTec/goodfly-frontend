@@ -36,7 +36,9 @@ const FlashSale = ({ location }) => {
       return;
     }
 
-    setFlashSales(tours.filter((el) => el.sale));
+    setFlashSales(
+      tours.filter((el) => el.sale && new Date(el.saleExpires) >= new Date())
+    );
   }, [tours]);
 
   const classes = styles({ location: location, theme: theme });

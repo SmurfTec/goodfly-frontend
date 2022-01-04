@@ -124,7 +124,14 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                   />
                 </form>
               </Box>
-              <Box item xs={12} sm={6}>
+              <Box
+                item
+                xs={12}
+                sm={6}
+                style={{
+                  alignItems: 'center',
+                }}
+              >
                 <Button
                   variant='outlined'
                   color='secondary'

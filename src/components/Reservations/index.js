@@ -20,6 +20,7 @@ import Page from 'components/common/Page';
 import Skeleton from 'react-loading-skeleton';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { AuthContext } from 'Contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 // const steps = ['Shipping address', 'Payment details'];
 
@@ -53,7 +54,7 @@ const Reservations = () => {
   const { user } = useContext(AuthContext);
 
   const initialState = {
-    reservationType: 'selfReserve',
+    type: 'selfReserve',
     firstName: '',
     lastName: '',
     address: '',
@@ -73,9 +74,14 @@ const Reservations = () => {
   const [defaultStep2Values, setDefaultStep2Values] = useState();
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [isErrors, setIsErrors] = useState(false);
   const steps = getSteps();
   const history = useHistory();
   const location = useLocation();
+
+  const handleClick = () => {
+    if (isErrors) toast.error('Update your profile');
+  };
 
   useEffect(() => {
     //// console.log(`id`, id);
@@ -99,6 +105,7 @@ const Reservations = () => {
             handleChange={handleChange}
             submitForm={handleSubmit1}
             data={reservation}
+            sendErrors={(val) => setIsErrors(val)}
           />
         );
       case 1:
@@ -123,17 +130,19 @@ const Reservations = () => {
     }
   };
 
-  const handleChange = (travelers, reservationType) => {
+  const handleChange = (travelers, type) => {
     console.log('handle Change Travellers');
     setReservation((st) => ({
       ...st,
       numOfTravellers: travelers,
-      reservationType,
+      type,
     }));
   };
 
   const handleSubmit1 = (data) => {
-    handleNext();
+    console.log(`data`, data);
+    if (data.travelers.value === 0) setActiveStep(2);
+    else handleNext();
     //// console.log(data);
     setReservation((st) => ({
       ...data,
@@ -205,7 +214,8 @@ const Reservations = () => {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (reservation.numOfTravellers === 0) setActiveStep(0);
+    else setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleReset = () => {
@@ -292,6 +302,7 @@ const Reservations = () => {
                     )}
                     <Button
                       form='form1'
+                      onClick={handleClick}
                       variant='contained'
                       color='primary'
                       type='submit'

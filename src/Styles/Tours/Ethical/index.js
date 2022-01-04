@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   },
   Grid1: {
     width: '95%',
-    margin: '3rem auto',
+    margin: '1rem auto',
   },
   TourDetails: {
     backgroundColor: '#fafafa',
@@ -67,7 +67,7 @@ export default makeStyles((theme) => ({
   },
   Review: {
     backgroundColor: '#fff',
-    padding: '40px 20px',
+    paddingInline: '20px',
     marginBottom: '2rem',
     borderRadius: 15,
     border: '1px solid #ccc',

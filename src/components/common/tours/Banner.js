@@ -34,11 +34,11 @@ export const styles = makeStyles((theme) => ({
 const Banner = (props) => {
   const classes = styles(props);
   const { noAdvisor } = props;
-  const globalClasses = useGlobalClasses();
+  const globalClasses = useGlobalClasses(props);
 
   return (
     <div className={globalClasses.heroContent}>
-      <Container className={globalClasses.mainFeaturedPost}>
+      <Container className={classes.mainFeaturedPost}>
         <section className={classes.title}>
           <Typography variant='h3'>{props.bannerTitle}</Typography>
         </section>

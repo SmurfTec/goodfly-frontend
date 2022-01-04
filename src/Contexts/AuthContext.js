@@ -65,6 +65,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
 
   const updateMe = async (updatedUser, onlyInContext) => {
     if (onlyInContext) {
+      console.log(`updatedUser1`, updatedUser);
       setUser({ ...user, ...updatedUser });
     } else
       try {

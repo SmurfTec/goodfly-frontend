@@ -66,6 +66,7 @@ export default function PaymentDialog(props) {
             amount={payment.amount}
             options={{
               clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
+              disableFunding: 'credit',
             }}
             onSuccess={async (details, data) => {
               console.log(`details`, details);

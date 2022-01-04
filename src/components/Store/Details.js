@@ -31,11 +31,16 @@ import StoreSubNav from './StoreSubNav';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { StoreContext } from 'Contexts/StoreContext';
 import { AuthContext } from 'Contexts/AuthContext';
+import Lightbox from 'react-image-lightbox';
+import UseToggle from 'Hooks/useToggle';
 
 const styles = makeStyles((theme) => ({
   root: {
     '& h1, h2, h3, h4, h5': {
       textTransform: 'capitalize',
+    },
+    '& .MuiCardMedia-root': {
+      cursor: 'pointer',
     },
   },
   tabs: {
@@ -92,6 +97,9 @@ const StoreDetails = ({ match }) => {
 
   const [noOfItem, setNoOfItem] = useState(1);
   const [quantity, setQuantity] = useState(10);
+  const [photoIndex, setphotoIndex] = useState(0);
+  const [images, setImages] = useState([]);
+  const [isOpen, toggleOpen] = UseToggle(false);
 
   const [tabValue, setTabValue] = React.useState(1);
 
@@ -147,6 +155,7 @@ const StoreDetails = ({ match }) => {
         handleCatch(err);
       }
     })();
+    setImages(product.images.map((el) => el.image));
   }, [product]);
 
   const handleAddToCart = () => {
@@ -185,11 +194,35 @@ const StoreDetails = ({ match }) => {
     setNoOfItem(noOfItem - 1);
   };
 
+  const handleImageClick = (e) => {
+    const { image } = e.currentTarget.dataset;
+
+    console.log(`image`, image);
+
+    toggleOpen();
+  };
+
   return (
     <Container sx={{ mt: 5 }} className={classes.root}>
       <StoreSubNav />
 
       {/* //! BreadCrumbs */}
+
+      {product && isOpen && (
+        <Lightbox
+          mainSrc={images[photoIndex]}
+          // mainSrc={images[0]}
+          nextSrc={images[(photoIndex + 1) % images.length]}
+          prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+          onCloseRequest={toggleOpen}
+          onMovePrevRequest={() =>
+            setphotoIndex((st) => (st + images.length - 1) % images.length)
+          }
+          onMoveNextRequest={() =>
+            setphotoIndex((st) => (st + 1) % images.length)
+          }
+        />
+      )}
 
       <Box sx={{ mt: 6 }}>
         {product ? (
@@ -206,6 +239,8 @@ const StoreDetails = ({ match }) => {
                           backgroundSize: 'contain',
                         }}
                         image={product?.images?.[0]?.image}
+                        data-image={product?.images?.[0]?.image}
+                        onClick={handleImageClick}
                       />
                     </Card>
                   </Grid>
@@ -226,6 +261,8 @@ const StoreDetails = ({ match }) => {
                                   position: 'relative',
                                 }}
                                 image={el.image}
+                                data-image={el.image}
+                                onClick={handleImageClick}
                               />
                             </Card>
                           </Grid>

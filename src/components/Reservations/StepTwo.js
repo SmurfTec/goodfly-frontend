@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import {
@@ -21,6 +21,10 @@ const StepTwo = ({ data, submitForm, defaultStep2Values }) => {
 
   const watchAllFields = watch();
   // console.log('All Fields :', watchAllFields?.['emailRadio-1']);
+
+  // useEffect(() => {
+  //   if (data.numOfTravellers === 0) submitForm(data);
+  // }, [data]);
 
   return (
     <form id='formTravellers' onSubmit={handleSubmit(submitForm)}>

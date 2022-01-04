@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     // color: '#B033fa',
     boxShadow: 'none',
     paddingBlock: 5,
+    zIndex: 1,
   },
   grow: {
     flexGrow: 1,
@@ -62,9 +63,12 @@ const useStyles = makeStyles((theme) => ({
 
       [theme.breakpoints.up('lg')]: {
         padding: '6px 8px',
-        fontSize: 15,
+        fontSize: 17,
       },
       [theme.breakpoints.down('lg')]: {
+        fontSize: 15,
+      },
+      [theme.breakpoints.down(1200)]: {
         fontSize: 12,
       },
       [theme.breakpoints.up('xl')]: {

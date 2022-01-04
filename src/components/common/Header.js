@@ -41,8 +41,16 @@ const mobileNavContent = [
         route: '/tours/ethical?type=organized',
       },
       {
-        name: 'Organic Trips',
+        name: `Organic And Eco Travel "wwoof"`,
         route: '/tours/ethical?type=organic',
+      },
+      {
+        name: 'Train Trips',
+        route: '/tours/ethical?type=train',
+      },
+      {
+        name: 'Cruises',
+        route: '/tours/ethical?type=cruises',
       },
     ],
   },

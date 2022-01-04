@@ -16,10 +16,11 @@ import Page from 'components/common/Page';
 
 import { useLocation, useHistory } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Paper, TextField } from '@material-ui/core';
+import { Menu, MenuItem, Paper, TextField } from '@material-ui/core';
 import PaginationBar from 'components/common/Pagination';
 
 const TOURS_PER_PAGE = 12;
+const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const SpiritualHome = () => {
   const location = useLocation();
@@ -58,10 +59,70 @@ const SpiritualHome = () => {
   };
   // * ------------ *  //
 
+  //? Filter Item selected
+  const filterSelected = (e) => {
+    //? Got the selected filter value, uncomment below line
+    const { filter } = e.currentTarget.dataset;
+    // console.log(filter);
+
+    switch (filter.toLowerCase()) {
+      case 'price': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) => (a.price > b.price ? -1 : 1));
+          return sortedTours;
+        });
+        break;
+      }
+      case 'duration': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) => (a.duration > b.duration ? -1 : 1));
+          return sortedTours;
+        });
+        break;
+      }
+      case 'date': {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            new Date(a.startingDate) > new Date(b.startingDate) ? -1 : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+      default: {
+        setSpiritualTours((st) => {
+          let sortedTours = st;
+          sortedTours.sort((a, b) =>
+            a.reviews.length > 0 &&
+            a.reviews?.reduce((x, y) => 0 + y.rating) * 1 >
+              b.reviews.length >
+              0 &&
+            b.reviews?.reduce((x, y) => 0 + y.rating) * 1
+              ? -1
+              : 1
+          );
+          return sortedTours;
+        });
+        break;
+      }
+    }
+
+    setAnchorEl(null);
+  };
+
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tripType, setTripType] = useState('all');
+  //? Filter Menu State
+  const open = Boolean(anchorEl);
 
+  //? Closing filter menu
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const tripTypes = {
     options: ['all', 'hajj', 'omra', 'combine-hajj-omra', 'al-quds'],
     getOptionLabel: (option) => option,
@@ -179,6 +240,24 @@ const SpiritualHome = () => {
                 />
               )}
             />
+            <Menu
+              id='long-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              // MenuListProps={{ onMouseLeave: handleClose }}
+            >
+              {options.map((option, index) => (
+                <MenuItem
+                  key={index}
+                  data-filter={option}
+                  onClick={filterSelected}
+                >
+                  {option}
+                </MenuItem>
+              ))}
+            </Menu>
           </section>
         </div>
         {/* End hero unit */}

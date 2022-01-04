@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TravelDetails = React.memo(
-  ({ tour, travelers, payment, promoDiscount = 0 }) => {
+  ({ tour, travelers, payment, promoDiscount = 0, usePoints }) => {
     const classes = useStyles();
     const { user } = useContext(AuthContext);
     const { title, price, startingDate } = tour;
@@ -23,7 +23,7 @@ export const TravelDetails = React.memo(
       console.log('calculating price');
       let pointsDiscount = 0;
       let expectedPrice = parseInt(travelers + 1) * parseFloat(price);
-      if (payment == 'loyalty-points') {
+      if (usePoints === true) {
         pointsDiscount = user?.loyaltyPoints || 0;
       }
       console.log(`expectedPrice`, expectedPrice);
@@ -31,11 +31,16 @@ export const TravelDetails = React.memo(
 
       let couponDiscount = Math.round((promoDiscount * expectedPrice) / 100);
 
+      let saleDiscount = 0;
+      if (tour.sale && new Date(tour.saleExpires) >= new Date())
+        saleDiscount = (tour.price * tour.discount) / 100;
+
       return [
         expectedPrice,
         pointsDiscount,
         couponDiscount,
-        expectedPrice - pointsDiscount - couponDiscount,
+        expectedPrice - pointsDiscount - couponDiscount - saleDiscount,
+        saleDiscount,
       ];
     };
 
@@ -87,6 +92,18 @@ export const TravelDetails = React.memo(
             <Typography variant='body1'>
               {/* {parseInt(travelers) * parseFloat(price)}€ */}
               {totalPrice[0]}$
+            </Typography>
+          </Box>
+          <Box className={classes.box}>
+            <span>
+              <Typography variant='h6' fontWeight='normal'>
+                Flash Sale Discount
+              </Typography>
+              {/* <Typography variant='body1'>dont TVA</Typography> */}
+            </span>
+            <Typography variant='body1'>
+              {/* {parseInt(travelers) * parseFloat(price)}€ */}
+              {totalPrice[4]}$
             </Typography>
           </Box>
           <Box className={classes.box}>

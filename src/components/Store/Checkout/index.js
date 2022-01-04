@@ -114,6 +114,7 @@ const Checkout = () => {
               amount={order.total}
               options={{
                 clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
+                disableFunding: 'credit',
               }}
               onSuccess={async (details, data) => {
                 payOrder(order._id, '/store');

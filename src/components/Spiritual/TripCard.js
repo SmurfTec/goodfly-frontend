@@ -82,9 +82,11 @@ const TripCard = ({ tour, history }) => {
             variant='subtitle2'
             style={{ minWidth: 190 }}
           >
-            {`from ${new Date(startingDate).toDateString()} to 
-           ${new Date(endingDate).toDateString()}
-            `}
+            {startingDate
+              ? `from ${new Date(startingDate).toLocaleDateString()} to 
+           ${new Date(endingDate).toLocaleDateString()}
+            `
+              : 'Open Offer'}
           </Typography>
           <Typography
             color='textSecondary'
@@ -92,10 +94,19 @@ const TripCard = ({ tour, history }) => {
             gutterBottom
             align='center'
           >
-            {Math.ceil(
-              Math.abs(endingDate - startingDate) / 1000 / 60 / 60 / 24
-            )}
-            {' Days '} {boardType}
+            {startingDate && (
+              <>
+                {Math.ceil(
+                  Math.abs(new Date(endingDate) - new Date(startingDate)) /
+                    1000 /
+                    60 /
+                    60 /
+                    24
+                )}
+                {' Days '}
+              </>
+            )}{' '}
+            {boardType}
           </Typography>
           <Rating
             name='read-only'

@@ -46,7 +46,7 @@ const Details = ({ match, history }) => {
   }, [name, tours]);
 
   const handleClickBack = () => {
-    history.goBack();
+    history.push('/tours/destinations');
   };
 
   // * Pagination

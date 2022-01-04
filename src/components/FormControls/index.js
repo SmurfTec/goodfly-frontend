@@ -60,14 +60,15 @@ export const CustomSelect = ({
   );
 };
 export const CustomTextField = (props) => {
-  const { name, label, type, control, customValue, disabled } = props;
+  const { name, label, type, control, customValue, disabled, noRequire } =
+    props;
 
   return (
     <Controller
       name={name}
       control={control}
       defaultValue=''
-      rules={{ required: `${label} required` }}
+      rules={!noRequire && { required: `${label} required` }}
       render={({ field: { onChange, value } }) => (
         <TextField
           onChange={onChange}
@@ -77,7 +78,7 @@ export const CustomTextField = (props) => {
           name={name}
           type={type}
           fullWidth
-          required
+          required={noRequire ? false : true}
           disabled={!!disabled}
         />
       )}

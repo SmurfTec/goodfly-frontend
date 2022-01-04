@@ -24,6 +24,8 @@ import { StoreContext } from 'Contexts/StoreContext';
 import Page from 'components/common/Page';
 import StoreSubNav from './StoreSubNav';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import { useHistory } from 'react-router-dom';
+import SearchBar from 'components/common/Search';
 
 const TOURS_PER_PAGE = 12;
 
@@ -31,12 +33,26 @@ const Index = () => {
   const classes = useStyles();
   const { products, productCategories } = useContext(StoreContext);
   const globalClasses = useGlobalClasses();
+  const [searchVal, setSearchVal] = useState('');
 
   const [filteredProducts, setFilteredProducts] = useState();
   const [priceFilter, setPriceFilter] = useState([0, 1000]);
 
   const [productSort, setProductSort] = useState(1);
   const [productCategory, setProductCategory] = useState(1);
+  const history = useHistory();
+
+  const [search, setSearch] = React.useState('');
+
+  const handleSearchChange = (e) => {
+    let newVal = e.target.value;
+    setSearch(newVal);
+    setFilteredProducts(
+      products?.filter((el) =>
+        el.name.toLowerCase().includes(newVal.toLowerCase())
+      )
+    );
+  };
 
   const handlePriceSort = (event) => {
     let newProducts = products;
@@ -63,6 +79,10 @@ const Index = () => {
     console.log(`newProducts1`, newProducts);
 
     setFilteredProducts(newProducts);
+  };
+  const handleSearch = () => {
+    console.log(`searchVal`, searchVal);
+    history.push(`?q=${searchVal}`);
   };
 
   const handlePriceFilterChange = (event, newValue) => {
@@ -107,13 +127,18 @@ const Index = () => {
     <Page title='GoodFly |  Store'>
       <div>
         <Box className={classes.root}>
-          <Box className={globalClasses.mainFeaturedPost}>
+          <Box className={classes.mainFeaturedPost}>
             <section className={classes.title}>
               <Typography variant='h3'>
                 GOODFLY STORE
                 <FlashOnIcon sx={{ marginLeft: 2 }} />
               </Typography>
+              <SearchBar
+                search={search}
+                handleSearchChange={handleSearchChange}
+              />
             </section>
+
             <section className={classes.description}>
               <Typography variant='h3'>Discover our range</Typography>
               <Typography variant='h3'>Ethical Products</Typography>

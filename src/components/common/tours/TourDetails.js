@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useMemo,
-} from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import { withRouter, Link } from 'react-router-dom';
@@ -78,10 +73,8 @@ const TourDetails = ({ match, history, location }) => {
     manageSubscribe,
   } = useContext(ToursContext);
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isHandlingFavourite, toggleHandlingFavourite] =
-    UseToggle(false);
-  const [isHandleSubscription, toggleHandleSubscription] =
-    UseToggle(false);
+  const [isHandlingFavourite, toggleHandlingFavourite] = UseToggle(false);
+  const [isHandleSubscription, toggleHandleSubscription] = UseToggle(false);
 
   const classes = useStyles();
   const { user } = useContext(AuthContext);
@@ -94,8 +87,7 @@ const TourDetails = ({ match, history, location }) => {
   const [reviewValue, setReviewValue] = useState('');
 
   useEffect(() => {
-    if (!!user?.favourities?.find((el) => el._id === id))
-      setIsFavourite(true);
+    if (!!user?.favourities?.find((el) => el._id === id)) setIsFavourite(true);
     else setIsFavourite(false);
   }, [user, id]);
 
@@ -128,7 +120,7 @@ const TourDetails = ({ match, history, location }) => {
   }, [id, user]);
 
   const canUserReview = useMemo(() => {
-    if (!isAlreadyPurchased) return;
+    if (!isAlreadyPurchased || !tour) return;
 
     // * User's Purchase's Status must be reservation-paid
     // * And Trip's Ending Date must have been passed
@@ -150,8 +142,7 @@ const TourDetails = ({ match, history, location }) => {
   }, [tour, user]);
 
   const handleSubscribe = async () => {
-    if (!user)
-      return history.push(`/auth/login?redirect=/tours/${id}`);
+    if (!user) return history.push(`/auth/login?redirect=/tours/${id}`);
     toggleHandleSubscription();
     manageSubscribe(
       id,
@@ -167,8 +158,7 @@ const TourDetails = ({ match, history, location }) => {
     e.stopPropagation();
 
     //  * If User NOT Logged In , goto Login Page
-    if (!user)
-      history.push(`/auth/login?redirect=${location.pathname}`);
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}`);
     favouriteTrip(id, toggleHandlingFavourite);
   };
 
@@ -178,8 +168,7 @@ const TourDetails = ({ match, history, location }) => {
     e.stopPropagation();
 
     //  * If User NOT Logged In , goto Login Page
-    if (!user)
-      history.push(`/auth/login?redirect=${location.pathname}}`);
+    if (!user) history.push(`/auth/login?redirect=${location.pathname}}`);
     else unFavouriteTrip(id, toggleHandlingFavourite);
   };
 
@@ -212,18 +201,9 @@ const TourDetails = ({ match, history, location }) => {
         <Box>
           <Box className={classes.Grid1}>
             <Grid container>
-              <Grid
-                item
-                xs={12}
-                sm={7}
-                className={classes.TourDetails}
-              >
+              <Grid item xs={12} sm={7} className={classes.TourDetails}>
                 <Box padding={3}>
-                  <Typography
-                    variant='h3'
-                    color='textSecondary'
-                    align='left'
-                  >
+                  <Typography variant='h3' color='textSecondary' align='left'>
                     {tour?.country.toUpperCase()}
                   </Typography>
                   <Box display='flex' alignItems='center'>
@@ -241,15 +221,13 @@ const TourDetails = ({ match, history, location }) => {
                       size='small'
                       name='simple-controlled'
                       value={tour?.rating || 5}
-                      onChange={(event, newValue) => {
-                        setRatingValue(newValue);
-                      }}
+                      readOnly
+                      // onChange={(event, newValue) => {
+                      //   setRatingValue(newValue);
+                      // }}
                     />
                   </Box>
-                  <Box
-                    className={classes.TourDescription}
-                    marginTop={1}
-                  >
+                  <Box className={classes.TourDescription} marginTop={1}>
                     <Typography
                       style={{
                         borderRight: '1px solid #999999',
@@ -330,9 +308,7 @@ const TourDetails = ({ match, history, location }) => {
                       borderBottomLeftRadius: 15,
                     }}
                     disabled={isHandlingFavourite}
-                    onClick={
-                      isFavourite ? handleUnFavorite : handleFavorite
-                    }
+                    onClick={isFavourite ? handleUnFavorite : handleFavorite}
                     endIcon={
                       isFavourite ? (
                         <FavoriteIconFilled
@@ -363,29 +339,21 @@ const TourDetails = ({ match, history, location }) => {
                     endIcon={<EuroIcon />}
                     component={'div'}
                   >
-                    {tour.price}
+                    {tour.sale && new Date(tour.saleExpires) >= new Date()
+                      ? tour.price - (tour.price * tour.discount) / 100
+                      : tour.price}
                   </Button>
                 </Box>
               </Grid>
               <Grid item xs={0} sm={1} md={1}></Grid>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                md={3}
-                className={classes.RightGrid}
-              >
+              <Grid item xs={12} sm={4} md={3} className={classes.RightGrid}>
                 <Box padding={1} textAlign='center'>
                   <Typography variant='h5'>
                     YOUR GOODFLY ONLINE ADVISOR
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography
-                    variant='p'
-                    align='center'
-                    component='h5'
-                  >
+                  <Typography variant='p' align='center' component='h5'>
                     Call a member of our agency directly at
                   </Typography>
                 </Box>
@@ -410,16 +378,12 @@ const TourDetails = ({ match, history, location }) => {
                 <Tab
                   label='Route'
                   className={
-                    tabValue === 0
-                      ? classes.ActiveTab
-                      : classes.InActiveTab
+                    tabValue === 0 ? classes.ActiveTab : classes.InActiveTab
                   }
                 />
                 <Tab
                   className={
-                    tabValue === 1
-                      ? classes.ActiveTab
-                      : classes.InActiveTab
+                    tabValue === 1 ? classes.ActiveTab : classes.InActiveTab
                   }
                   label='Formalities'
                 />
@@ -466,9 +430,7 @@ const TourDetails = ({ match, history, location }) => {
                           src={review.user.photo || defaultUserImg}
                           alt='user image'
                         />
-                        <Typography variant='h5'>
-                          {review.user.name}
-                        </Typography>
+                        <Typography variant='h5'>{review.user.name}</Typography>
                       </Box>
                       <Box className={classes.ReviewInfo}>
                         <Rating
@@ -552,9 +514,8 @@ const TourDetails = ({ match, history, location }) => {
                       fontSize: 20,
                     }}
                   >
-                    At w3schools.com you will learn how to make a
-                    website. They offer free tutorials in all web
-                    development technologies.
+                    At w3schools.com you will learn how to make a website. They
+                    offer free tutorials in all web development technologies.
                   </textarea>
 
                   <Button

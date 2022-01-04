@@ -58,21 +58,15 @@ const PurchaseCollapseItem = (props) => {
   const handlePaymentSuccess = (updatedPurchase) => {
     togglePaymentOpen();
     console.log(`updatedPurchase._id`, updatedPurchase._id);
-    updateMe(
-      {
-        ...user,
-        Purchases: user.purchases.map((el) =>
-          el._id === updatedPurchase._id ? updatedPurchase : el
-        ),
-      },
-      true
-    );
-    console.log('updatedUser', {
+    let updatedUser = {
       ...user,
-      purchases: user.purchases.map((el) =>
+      Purchases: user.Purchases.map((el) =>
         el._id === updatedPurchase._id ? updatedPurchase : el
       ),
-    });
+    };
+
+    console.log(`updatedUser`, updatedUser);
+    updateMe(updatedUser, true);
   };
   const cancelResButton = (
     <Button
@@ -123,6 +117,11 @@ const PurchaseCollapseItem = (props) => {
     }
     //? After full payment by the user or after successful reservation.
     else if (purchase.status === 'reservation-paid') {
+      let maxCancellationDate = new Date(
+        subtractDays(new Date(purchase.departureDate), 45)
+      );
+
+      if (maxCancellationDate < new Date()) return <></>;
       return (
         <>
           <Typography
@@ -138,9 +137,7 @@ const PurchaseCollapseItem = (props) => {
             align='center'
           >
             Cancellation possible until{' '}
-            {new Date(
-              subtractDays(new Date(purchase.departureDate), 14)
-            ).toLocaleDateString()}
+            {maxCancellationDate.toLocaleDateString()}
           </Typography>
         </>
       );

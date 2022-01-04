@@ -9,6 +9,9 @@ import {
   Button,
   Container,
   TextField,
+  FormGroup,
+  Checkbox,
+  x,
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -20,7 +23,8 @@ import { toast } from 'react-toastify';
 
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
-import UseInput from 'Hooks/useInput';
+
+import UseToggle from 'Hooks/useToggle';
 
 const StepThree = ({ tour, travelers, data }) => {
   const { updateMe } = useContext(AuthContext);
@@ -36,6 +40,7 @@ const StepThree = ({ tour, travelers, data }) => {
 
   const [couponVal, setCoupon] = useState('');
   const [promoDiscount, setPromoDiscount] = useState(0);
+  const [usePoints, setUsePoints] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -56,6 +61,7 @@ const StepThree = ({ tour, travelers, data }) => {
             ...data,
             tripId: tour._id,
             promoCode: couponVal && promoDiscount > 0 ? couponVal : undefined,
+            useLoyaltyPoints: usePoints ? true : undefined,
           },
         },
         'POST'
@@ -123,66 +129,80 @@ const StepThree = ({ tour, travelers, data }) => {
                         <FormControlLabel
                           value='paypal'
                           control={<Radio />}
-                          label='Paypal'
+                          label='Pay by Paypal'
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormControlLabel
+                          value='card'
+                          control={<Radio />}
+                          label='I want to pay by Card'
                         />
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <Divider />
                       </Grid>
-                      <Grid item xs={12} sm={12}>
-                        <FormControlLabel
-                          value='loyalty-points'
-                          control={<Radio />}
-                          label='Pay with your GOODFLY Fidelity points'
-                        />
-
-                        {!tour.sale && (
-                          <Grid
-                            container
-                            sx={{
-                              mt: 4,
-                            }}
-                          >
-                            <Grid item xs={12} sm={6}>
-                              <form>
-                                <TextField
-                                  name='loyalty-points'
-                                  label='Coupon Code'
-                                  type='text'
-                                  errorMessage='Spacify your coupon code to get exclusive discount'
-                                  value={couponVal}
-                                  onChange={(e) => setCoupon(e.target.value)}
-                                  disabled={promoDiscount > 0}
-                                />
-                              </form>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                              <Box
-                                sx={{
-                                  height: '100%',
-                                  display: 'flex',
-                                  alignItems: 'end',
-                                  justifyContent: 'flex-end',
-                                }}
-                              >
-                                <Button
-                                  variant='outlined'
-                                  color='secondary'
-                                  onClick={handleCoupon}
-                                >
-                                  {promoDiscount > 0
-                                    ? 'Remove Coupon'
-                                    : 'Apply Coupon'}
-                                </Button>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        )}
-                      </Grid>
                     </Grid>
                   </RadioGroup>
                 )}
               />
+              <Grid item xs={12} sm={12}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={usePoints}
+                        onChange={(e) => {
+                          console.log('onchanges called');
+                          console.log('e.target.checked', e.target.checked);
+                          setUsePoints(e.target.checked);
+                        }}
+                      />
+                    }
+                    label='use your GOODFLY Fidelity points'
+                  />
+                </FormGroup>
+                {!(tour.sale && new Date(tour.saleExpires) >= new Date()) && (
+                  <Grid
+                    container
+                    sx={{
+                      mt: 4,
+                    }}
+                  >
+                    <Grid item xs={12} sm={6}>
+                      <form>
+                        <TextField
+                          name='loyalty-points'
+                          label='Coupon Code'
+                          type='text'
+                          errorMessage='Spacify your coupon code to get exclusive discount'
+                          value={couponVal}
+                          onChange={(e) => setCoupon(e.target.value)}
+                          disabled={promoDiscount > 0}
+                        />
+                      </form>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'flex-end',
+                        }}
+                      >
+                        <Button
+                          variant='outlined'
+                          color='secondary'
+                          onClick={handleCoupon}
+                        >
+                          {promoDiscount > 0 ? 'Remove Coupon' : 'Apply Coupon'}
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                )}
+              </Grid>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -190,6 +210,7 @@ const StepThree = ({ tour, travelers, data }) => {
               tour={tour}
               travelers={travelers}
               payment={watchFields?.['paymentType']}
+              usePoints={usePoints}
               promoDiscount={promoDiscount}
             />
             <Button
