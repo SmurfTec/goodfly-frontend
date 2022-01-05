@@ -20,9 +20,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
   const classes = styles();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -37,7 +39,7 @@ const Footer = () => {
                 className={classes.contentTitle}
                 sx={{ mt: 5 }}
               >
-                About Us
+                {t('ABOUT US')}
               </Typography>
               {aboutUs.map((a) => (
                 <Typography
@@ -45,7 +47,7 @@ const Footer = () => {
                   variant='subtitle2'
                   className={classes.subContent}
                 >
-                  <Link to={a.url}>{a.item}</Link>
+                  <Link to={a.url}>{t(a.item)}</Link>
                 </Typography>
               ))}
               <section className={classes.icons}>
@@ -66,7 +68,7 @@ const Footer = () => {
           </Grid>
           <Grid item xs={6} sm={3}>
             <Typography variant='subtitle1' className={classes.contentTitle}>
-              Menu
+              {t('Menu').toUpperCase()}
             </Typography>
             {menu.map((a) => (
               <Typography
@@ -74,14 +76,14 @@ const Footer = () => {
                 variant='subtitle2'
                 className={classes.subContent}
               >
-                <Link to={a.url}>{a.item}</Link>
+                <Link to={a.url}>{t(a.item)}</Link>
               </Typography>
             ))}
           </Grid>
 
           <Grid item xs={6} sm={3}>
             <Typography variant='subtitle1' className={classes.contentTitle}>
-              Practical Information
+              {t('PRACTICAL INFORMATION')}
             </Typography>
             {practicalInfo.map((a) => (
               <Typography
@@ -89,7 +91,7 @@ const Footer = () => {
                 variant='subtitle2'
                 className={classes.subContent}
               >
-                <Link to={a.url}>{a.item}</Link>
+                <Link to={a.url}>{t(a.item)}</Link>
               </Typography>
             ))}
 
@@ -98,12 +100,12 @@ const Footer = () => {
               className={classes.contentTitle}
               sx={{ mt: 3 }}
             >
-              Reservations by Phone
+              {t('RESERVATIONS BY PHONE')}
             </Typography>
 
             {reservations.map((a, index) => (
               <Typography key={a} variant='subtitle2' color='common.white'>
-                {a}
+                {t(a)}
               </Typography>
             ))}
             <Typography
@@ -111,7 +113,7 @@ const Footer = () => {
               className={classes.contentTitle}
               sx={{ mt: 3 }}
             >
-              Secure Payment
+              {t('SECURE PAYMENT')}
             </Typography>
             <Box
               sx={{
@@ -130,7 +132,7 @@ const Footer = () => {
           </Grid>
           <Grid item xs={6} sm={3}>
             <Typography variant='subtitle1' className={classes.contentTitle}>
-              Quick Access
+              {t('QUICK ACCESS')}
             </Typography>
             {quickAccess.map((a) => (
               <Typography
@@ -142,7 +144,7 @@ const Footer = () => {
                 <ArrowIcon size='small' />
                 {'  '}
 
-                <Link to={a.url}>{a.item}</Link>
+                <Link to={a.url}>{t(a.item)}</Link>
               </Typography>
             ))}
             <img style={{ marginTop: 20 }} src={whiteLogo} />

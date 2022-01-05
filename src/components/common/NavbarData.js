@@ -32,11 +32,11 @@ const NavbarData = [
   },
   {
     path: '/hotels',
-    title: 'Hotels and accommodations',
+    title: 'Hotels & Accommodations',
   },
   {
     path: '/tours/flash-sales',
-    title: ' Flash Sales',
+    title: 'Flash Sales',
   },
   {
     path: '/blogs',

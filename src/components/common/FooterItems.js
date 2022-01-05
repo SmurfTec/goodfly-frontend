@@ -9,30 +9,30 @@ export const aboutUs = [
 ];
 
 export const menu = [
-  { item: 'Ethical travel', url: '/tours/ethical' },
+  { item: 'Ethical Travel', url: '/tours/ethical' },
   { item: 'Spiritual Journeys', url: '/tours/spiritual' },
-  { item: 'Excurtions & circuits ', url: '/tours/excursions' },
+  { item: 'Excursions & Circuits', url: '/tours/excursions' },
   { item: 'Destinations', url: '/tours/destinations' },
   { item: 'Store', url: '/store' },
   { item: 'Blog', url: '/blogs' },
   { item: 'Contact Us', url: '/contact-us' },
   { item: 'Ticketing', url: '/' },
-  { item: 'Hotels & Accomodations', url: '/' },
+  { item: 'Hotels & Accommodations', url: '/' },
   { item: 'Flash Sales', url: '/tours/flash-sales' },
   { item: 'Promos', url: '/' },
   { item: 'I create my trip', url: '/tours/create' },
 ];
 
 export const practicalInfo = [
-  { item: 'Flight Paln', url: '/' },
+  { item: 'Flight Plan', url: '/' },
   { item: 'Privacy Policy', url: '/' },
   { item: 'Legal Notice', url: '/' },
   { item: 'Terms of Sales', url: '/' },
 ];
 
 export const reservations = [
-  'Monday to Saturday from 9 a.m. to 12:30 p.m. and from 2 p.m. to 7 p.m.',
-  'Sunday from 9 a.m. to 12:30 p.m.',
+  'Monday to Saturday from 9 a.m. to 12:30 p.m. and from 2 p.m. to 7 p.m. Sunday from 9 a.m. to 12:30 p.m.',
+  // 'Sunday from 9 a.m. to 12:30 p.m.',
 ];
 
 export const quickAccess = [
@@ -40,8 +40,8 @@ export const quickAccess = [
   { item: 'The Cheapest Flights', url: '/' },
   { item: 'The Most Popular Destinations', url: '/' },
   { item: 'Spectacular Destinations', url: '/' },
-  { item: 'Omra 2021 offers', url: '/' },
-  { item: 'Hajj 2021 offers', url: '/' },
+  { item: 'Omra 2021 Offers', url: '/' },
+  { item: 'Hajj 2021 Offers', url: '/' },
   { item: 'Latest Traveler Reviews', url: '/' },
   { item: 'The Next Offers in Studies', url: '/' },
 ];

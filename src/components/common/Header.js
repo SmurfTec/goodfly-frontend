@@ -30,6 +30,8 @@ import v4 from 'uuid/dist/v4';
 import logo from 'Assets/img/logo.png';
 import NotificationsPopover from 'components/notify/NotificationsPopover';
 import TelegramIcon from '@material-ui/icons/Telegram';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const mobileNavContent = [
   {
@@ -197,6 +199,8 @@ const Header = ({ history }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, logoutUser } = useContext(AuthContext);
+  const { t } = useTranslation();
+
   // const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const [lang, setLang] = useState('GB');
@@ -216,6 +220,10 @@ const Header = ({ history }) => {
 
   const selectedLang = (e) => {
     const { myValue } = e.currentTarget.dataset;
+    const { code } = e.currentTarget.dataset;
+    console.log(`code`, code);
+
+    i18next.changeLanguage(code);
     setLang(myValue);
     setAnchorEl(null);
   };
@@ -232,6 +240,7 @@ const Header = ({ history }) => {
         cursor: 'pointer',
       }}
       onClick={() => history.push('/')}
+      alt=''
     />
   );
 
@@ -362,7 +371,7 @@ const Header = ({ history }) => {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      <MenuItem data-my-value='GB' onClick={selectedLang}>
+      <MenuItem data-my-value='GB' data-code='en' onClick={selectedLang}>
         <ListItemIcon>
           <ReactCountryFlag
             className='emojiFlag'
@@ -378,7 +387,7 @@ const Header = ({ history }) => {
         </ListItemIcon>
         <ListItemText primary='English' />
       </MenuItem>
-      <MenuItem data-my-value='SA' onClick={selectedLang}>
+      <MenuItem data-my-value='SA' data-code='ar' onClick={selectedLang}>
         <ListItemIcon>
           <ReactCountryFlag
             className='emojiFlag'
@@ -394,7 +403,7 @@ const Header = ({ history }) => {
         </ListItemIcon>
         <ListItemText primary='Arabic' />
       </MenuItem>
-      <MenuItem data-my-value='FR' onClick={selectedLang}>
+      <MenuItem data-my-value='FR' data-code='fr' onClick={selectedLang}>
         <ListItemIcon>
           <ReactCountryFlag
             className='emojiFlag'

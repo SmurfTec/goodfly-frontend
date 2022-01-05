@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import './App.css';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
@@ -27,6 +27,11 @@ import ScrollToTop from 'Utils/scrollToTop';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import cookies from 'js-cookie';
+import { languages } from 'Utils/constants';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiContainer-root': {
@@ -47,6 +52,15 @@ const Wrapper = ({ children }) => {
 
 const App = () => {
   const location = useLocation();
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    // console.log('Setting page stuff');
+    document.body.dir = currentLanguage.dir || 'ltr';
+    document.title = t('app_title');
+  }, [currentLanguage, t]);
 
   return (
     <div className='App'>
