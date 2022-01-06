@@ -205,7 +205,7 @@ const Index = () => {
                     width='200'
                     height='180'
                     // style={{'border:0'}}
-                    allowfullscreen='true'
+                    allowFullScreen='true'
                     loading='lazy'
                   ></iframe>
                 </Box>

@@ -151,6 +151,7 @@ const AddTrip = () => {
   const watchFlexibleDates = watch('isFlexibleDates', 'no');
 
   const submitFormData = async (data) => {
+    console.log(`data`, data);
     //? Remove null or empty fields from data
     removeEmptyNullFields(data);
     //? Remove fields based on type dropdown select
@@ -170,7 +171,7 @@ const AddTrip = () => {
     //? Destructure the country code field
     // getCountryCode(data, 'countryCode');
     //? Destructure the country code fields
-    getDestinations(data, 'destination');
+    if (data.destination) getDestinations(data, 'destination');
 
     try {
       const resData = await makeReq(
