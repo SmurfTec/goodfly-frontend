@@ -36,7 +36,7 @@ function ShoppingCartItem({
       <Card sx={{ boxShadow: 'none' }}>
         <CardMedia
           sx={{ height: 50, position: 'relative', width: 50 }}
-          image={images[0].url}
+          image={images?.[0]?.url}
           title={name}
         />
       </Card>

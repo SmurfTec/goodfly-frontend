@@ -3,6 +3,8 @@ import React from 'react';
 import CartItem from './CartItem';
 import { styles } from 'Styles/Cart/CartItemStyles';
 import TotalBill from './TotalBill';
+import Back from '@material-ui/icons/ArrowBackIos';
+import { Link, useHistory } from 'react-router-dom';
 
 const Cart = ({
   validateStep,
@@ -12,10 +14,15 @@ const Cart = ({
   removeItemFromCart,
 }) => {
   const classes = styles();
+  const history = useHistory();
   return (
     <>
       <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid item xs={12} sm={12} md={7}>
+          <Box display='flex' onClick={() => history.push('/store')}>
+            <Back fontSize='small' />
+            <Typography variant='subtitle2'>Back to Store</Typography>
+          </Box>
           <Typography variant='h4' sx={{ mt: 8 }}>
             Your Basket
           </Typography>
