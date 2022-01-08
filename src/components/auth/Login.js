@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 import useStyles from './Styles';
 import img1 from 'Assets/img/authbg.png';
@@ -8,9 +10,11 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { API_BASE_URL } from 'Utils/constants';
+import { API_BASE_URL, handleCatch } from 'Utils/constants';
 import { AuthContext } from 'Contexts/AuthContext';
 import Page from 'components/common/Page';
+import { Google } from '@mui/icons-material';
+import { Facebook } from '@material-ui/icons';
 
 const Login = ({ location, history }) => {
   const classes = useStyles();
@@ -61,6 +65,53 @@ const Login = ({ location, history }) => {
     setState((st) => ({ ...st, [e.target.name]: e.target.value }));
   };
 
+  const responseFacebook = async (response) => {
+    console.log(response);
+
+    if (response.error) return;
+
+    const token = response.tokenObj.access_token;
+    const { name, email, imageUrl } = response.profileObj;
+
+    console.log(`email`, email);
+
+    // try {
+    //   const res = await axios.post(`${API_BASE_URL}/auth/socialLogin`, {
+    //     name,
+    //     email,
+    //     socialType: 'google',
+    //     photo: imageUrl,
+    //   });
+
+    //   signInUser(res.data.token, res.data.user);
+    // } catch (err) {
+    //   handleCatch(err);
+    // }
+  };
+  const responseGoogle = async (response) => {
+    console.log(response);
+
+    if (response.error) return;
+
+    const token = response.tokenObj.access_token;
+    const { name, email, imageUrl } = response.profileObj;
+
+    console.log(`email`, email);
+
+    try {
+      const res = await axios.post(`${API_BASE_URL}/auth/socialLogin`, {
+        name,
+        email,
+        socialType: 'google',
+        photo: imageUrl,
+      });
+
+      signInUser(res.data.token, res.data.user);
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
+
   return (
     <Page title='GoodFly |  Login'>
       <div className={classes.Wrapper}>
@@ -71,6 +122,39 @@ const Login = ({ location, history }) => {
             <Typography variant='h4' color='primary' align='center'>
               GOODFLY
             </Typography>
+          </Box>
+          <Box>
+            <FacebookLogin
+              // appId={process.env.REACT_APP_FACEBOOKID}
+              appId={'933403190884273'}
+              autoLoad={false}
+              fields='name,email,picture'
+              // onClick={componentClicked}
+              callback={responseFacebook}
+              icon={<Facebook />}
+              size='small'
+              cssClass='facebookBtn'
+              textButton='Facebook'
+            />
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLECLIENTID}
+              buttonText='Google'
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+              icon={false}
+              render={(renderProps) => (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  startIcon={<Google />}
+                >
+                  Google
+                </Button>
+              )}
+            />
           </Box>
           <form className={classes.Form} onSubmit={handleSubmit}>
             <Typography variant='h5' color='textSecondary'>
