@@ -70,23 +70,21 @@ const Login = ({ location, history }) => {
 
     if (response.error) return;
 
-    const token = response.tokenObj.access_token;
-    const { name, email, imageUrl } = response.profileObj;
+    const { name, email, picture } = response;
 
     console.log(`email`, email);
 
-    // try {
-    //   const res = await axios.post(`${API_BASE_URL}/auth/socialLogin`, {
-    //     name,
-    //     email,
-    //     socialType: 'google',
-    //     photo: imageUrl,
-    //   });
+    try {
+      const res = await axios.post(`${API_BASE_URL}/auth/socialLogin`, {
+        name,
+        email,
+        socialType: 'facebook',
+      });
 
-    //   signInUser(res.data.token, res.data.user);
-    // } catch (err) {
-    //   handleCatch(err);
-    // }
+      signInUser(res.data.token, res.data.user);
+    } catch (err) {
+      handleCatch(err);
+    }
   };
   const responseGoogle = async (response) => {
     console.log(response);
