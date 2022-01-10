@@ -50,8 +50,10 @@ import { useHistory } from 'react-router';
 import { AuthContext } from 'Contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import Page from 'components/common/Page';
+import { useTranslation } from 'react-i18next';
 
 const AddTrip = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
   const { user } = useContext(AuthContext);
@@ -199,14 +201,14 @@ const AddTrip = () => {
         />
         <Box sx={{ fontStyle: 'italic', mt: 7 }}>
           <Typography variant='h5' color='text.secondary'>
-            The heart of our know-how is to be at your disposal to imagine and
-            design the trip of your dreams according to your desires and your
-            principles.
+            {t(
+              'The heart of our know-how is to be at your disposal to imagine and design the trip of your dreams according to your desires and your principles.'
+            )}
           </Typography>
           <Typography variant='h5' sx={{ mt: 3 }} color='text.secondary'>
-            Because understanding is above all knowing how to listen, a
-            dedicated advisor will follow your request and accompany you
-            throughout your trip ...
+            {t(
+              'Because understanding is above all knowing how to listen, a dedicated advisor will follow your request and accompany you throughout your trip ...'
+            )}
           </Typography>
         </Box>
         {!user ? (
@@ -219,7 +221,7 @@ const AddTrip = () => {
             }}
           >
             <Typography variant='h5' sx={{ marginBottom: 1 }}>
-              You have to Login to Create a Trip
+              {t('You have to Login to Create a Trip')}
             </Typography>
             <Box>
               <Button
@@ -229,7 +231,7 @@ const AddTrip = () => {
                 component={Link}
                 to='/auth/login?redirect=/tours/create'
               >
-                Login
+                {t('Login')}
               </Button>
               <Button
                 variant='contained'
@@ -237,42 +239,47 @@ const AddTrip = () => {
                 component={Link}
                 to='/auth/signup?redirect=/tours/create'
               >
-                Signup
+                {t('SignUp')}
               </Button>
             </Box>
           </Paper>
         ) : (
           <Paper elevation={0} className={classes.paper}>
             <Typography variant='subtitle1'>
-              Describe to us as precisely as possible the trip you would like:
+              {t(
+                'Describe to us as precisely as possible the trip you would like:'
+              )}
             </Typography>
             <Typography variant='subtitle1'>
-              stages, desires, routes, activities, excursions, circuits, centers
-              of interest etc ...
+              {t(
+                'stages, desires, routes, activities, excursions, circuits, centers of interest etc ...'
+              )}
             </Typography>
 
             <Typography variant='subtitle1' sx={{ mt: 2 }}>
-              The information you give us allows us to best respond to your
-              request.
+              {t(
+                'The information you give us allows us to best respond to your request.'
+              )}
             </Typography>
             <Typography variant='subtitle1' sx={{ mt: 2 }}>
-              In any case, we will deepen your project together by phone and
-              email.
+              {t(
+                'In any case, we will deepen your project together by phone and email.'
+              )}
             </Typography>
             <FormProvider {...methods}>
               <form onSubmit={handleSubmit((data) => submitFormData(data))}>
                 <Grid container sx={{ mt: 6 }} spacing={2}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant='subtitle1' color='text.secondary'>
-                      Tell us about your project
+                      {t('Tell us about your project')}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <CustomSelect
                       name='numOfParticipants'
                       control={control}
-                      message='Specify no of Participants'
-                      placeholder='Participants'
+                      message={t('Specify no of Participants')}
+                      placeholder={t('Participants')}
                       options={participants}
                       errors={errors}
                     />
@@ -281,8 +288,8 @@ const AddTrip = () => {
                     <CustomSelect
                       name='type'
                       control={control}
-                      message='Specify group type'
-                      placeholder='You will be'
+                      message={t('Specify group type')}
+                      placeholder={t('You will be')}
                       options={type}
                       errors={errors}
                     />
@@ -292,8 +299,8 @@ const AddTrip = () => {
                       <CustomSelect
                         name='type2'
                         control={control}
-                        message='Choose occasion'
-                        placeholder='Couple occasion'
+                        message={t('Choose occasion')}
+                        placeholder={t('Couple occasion')}
                         options={type2}
                         errors={errors}
                       />
@@ -304,8 +311,8 @@ const AddTrip = () => {
                       <CustomSelect
                         name='groupType'
                         control={control}
-                        message='Choose occasion'
-                        placeholder=' Group occasion'
+                        message={t('Choose occasion')}
+                        placeholder={t('Group occasion')}
                         options={groupType}
                         errors={errors}
                       />
@@ -318,8 +325,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfAdults'
                           control={control}
-                          message='Specify no of adults'
-                          placeholder='No of Adults'
+                          message={t('Specify no of adults')}
+                          placeholder={t('No of Adults')}
                           options={random}
                           errors={errors}
                           preConfition={watchFields[2]?.value === 'friends'}
@@ -329,8 +336,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfAdolescents'
                           control={control}
-                          message='Specify no of adolescents'
-                          placeholder='Adolescents'
+                          message={t('Specify no of adolescents')}
+                          placeholder={t('Adolescents')}
                           options={random}
                           errors={errors}
                         />
@@ -339,8 +346,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfChildren'
                           control={control}
-                          message='Specify no of children'
-                          placeholder='No of Children'
+                          message={t('Specify no of children')}
+                          placeholder={t('No of Children')}
                           options={random}
                           errors={errors}
                         />
@@ -349,8 +356,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfBabies'
                           control={control}
-                          message='Specify no of babies'
-                          placeholder='No of Babies'
+                          message={t('Specify no of babies')}
+                          placeholder={t('No of Babies')}
                           options={random}
                           errors={errors}
                         />
@@ -377,7 +384,7 @@ const AddTrip = () => {
                   </Grid>
                   <Grid item xs={12} sm={12} sx={{ mt: 5 }}>
                     <Typography variant='subtitle1' color='text.secondary'>
-                      Have you already set the travel dates?
+                      {t('Have you already set the travel dates?')}
                     </Typography>
                     <Controller
                       name='isTravelDates'
@@ -388,12 +395,12 @@ const AddTrip = () => {
                           <FormControlLabel
                             value='yes'
                             control={<Radio />}
-                            label='Yes'
+                            label={t('Yes')}
                           />
                           <FormControlLabel
                             value='no'
                             control={<Radio />}
-                            label='No'
+                            label={t('No')}
                           />
                         </RadioGroup>
                       )}
@@ -416,7 +423,7 @@ const AddTrip = () => {
                             color='text.secondary'
                             sx={{ mt: 2, mb: 1, mx: 0 }}
                           >
-                            Desired departure on
+                            {t('Desired departure on')}
                           </Typography>
                           <input
                             type='date'
@@ -428,12 +435,12 @@ const AddTrip = () => {
 
                           {datePickerCheck(watchFields[0]) && (
                             <FormHelperText>
-                              Please select today date or any future date
+                              {t('Please select today date or any future date')}
                             </FormHelperText>
                           )}
                           {errors.departureDate && (
                             <FormHelperText>
-                              Select desired departure date
+                              {t('Select desired departure date')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -453,7 +460,7 @@ const AddTrip = () => {
                             color='text.secondary'
                             sx={{ mt: 2, mb: 1, mx: 0 }}
                           >
-                            Desired return on
+                            {t('Desired return on')}
                           </Typography>
                           <input
                             type='date'
@@ -464,12 +471,12 @@ const AddTrip = () => {
                           />
                           {datePickerCheck(watchFields[1]) && (
                             <FormHelperText>
-                              Please select any future date
+                              {t('Please select any future date')}
                             </FormHelperText>
                           )}
                           {errors.desiredReturnOn && (
                             <FormHelperText>
-                              Select desired return date
+                              {t('Select desired return date')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -482,7 +489,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      Flexible Dates
+                      {t('Flexible Dates')}
                     </Typography>
 
                     <Controller
@@ -494,12 +501,12 @@ const AddTrip = () => {
                           <FormControlLabel
                             value='yes'
                             control={<Radio />}
-                            label='Yes'
+                            label={t('Yes')}
                           />
                           <FormControlLabel
                             value='no'
                             control={<Radio />}
-                            label='No'
+                            label={t('No')}
                           />
                         </RadioGroup>
                       )}
@@ -514,7 +521,7 @@ const AddTrip = () => {
                           color='text.secondary'
                           sx={{ mb: 1 }}
                         >
-                          Which year would you like to travel?
+                          {t('Which year would you like to travel?')}
                         </Typography>
 
                         <Controller
@@ -525,7 +532,7 @@ const AddTrip = () => {
                             <Select
                               {...field}
                               isSearchable={false}
-                              placeholder='Travel Year'
+                              placeholder={t('Travel Year')}
                               options={travelYear}
                             />
                           )}
@@ -537,7 +544,7 @@ const AddTrip = () => {
                           color='text.secondary'
                           sx={{ mb: 1 }}
                         >
-                          Which month would you like to travel?
+                          {t('Which month would you like to travel?')}
                         </Typography>
                         <Controller
                           name='month'
@@ -547,7 +554,7 @@ const AddTrip = () => {
                             <Select
                               {...field}
                               isSearchable={false}
-                              placeholder='Travel Month'
+                              placeholder={t('Travel Month')}
                               options={travelMonth}
                             />
                           )}
@@ -559,7 +566,7 @@ const AddTrip = () => {
                           color='text.secondary'
                           sx={{ mb: 1 }}
                         >
-                          The desired duration?
+                          {t('The desired duration?')}
                         </Typography>
 
                         <Controller
@@ -570,7 +577,7 @@ const AddTrip = () => {
                             <Select
                               {...field}
                               isSearchable={false}
-                              placeholder='Desired Duration'
+                              placeholder={t('Desired Duration')}
                               options={desiredDuration}
                             />
                           )}
@@ -584,7 +591,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      What type of flight would you like?
+                      {t('What type of flight would you like?')}
                     </Typography>
                     <Controller
                       name='flightsType'
@@ -594,7 +601,7 @@ const AddTrip = () => {
                         <Select
                           {...field}
                           isSearchable={false}
-                          placeholder='Type Of Flight'
+                          placeholder={t('Type Of Flight')}
                           options={flightType}
                         />
                       )}
@@ -606,8 +613,9 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 2 }}
                     >
-                      What theme and / or type of trip would you like? (several
-                      choices possible)
+                      {t(
+                        'What theme and / or type of trip would you like? (several choices possible)'
+                      )}
                     </Typography>
 
                     <Controller
@@ -622,7 +630,7 @@ const AddTrip = () => {
                                 <FormControlLabel
                                   value={theme.value}
                                   control={<Radio />}
-                                  label={theme.label}
+                                  label={t(theme.label)}
                                   key={idx}
                                 />
                               </Grid>
@@ -631,13 +639,15 @@ const AddTrip = () => {
                               <FormControlLabel
                                 value='otherTheme'
                                 control={<Radio />}
-                                label='Other'
+                                label={`${t('other')
+                                  .slice(0, 1)
+                                  .toUpperCase()}${t('other').slice(1)}`}
                               />
                             </Grid>
                             <Grid item xs={12} sm={8}>
                               <input
                                 className={classes.textInput}
-                                placeholder='(specify)'
+                                placeholder={`(${t('specify')})`}
                                 type='text'
                               />
                             </Grid>
@@ -652,8 +662,9 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 2 }}
                     >
-                      What type of accommodation would you like? (several
-                      choices possible)
+                      {t(
+                        'What type of accommodation would you like? (several choices possible)'
+                      )}
                     </Typography>
 
                     <Controller
@@ -678,7 +689,7 @@ const AddTrip = () => {
                                 <FormControlLabel
                                   value={accomodation.value}
                                   control={<Radio />}
-                                  label={accomodation.label}
+                                  label={t(accomodation.label)}
                                 />
                               </Grid>
                             ))}
@@ -686,13 +697,15 @@ const AddTrip = () => {
                               <FormControlLabel
                                 value='otherTheme'
                                 control={<Radio />}
-                                label='Other'
+                                label={`${t('other')
+                                  .slice(0, 1)
+                                  .toUpperCase()}${t('other').slice(1)}`}
                               />
                             </Grid>
                             <Grid item xs={8} sm={8}>
                               <input
                                 className={classes.textInput}
-                                placeholder='(specify)'
+                                placeholder={`(${t('specify')})`}
                                 type='text'
                               />
                             </Grid>
@@ -707,7 +720,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      For meals would you like?
+                      {t('For meals would you like?')}
                     </Typography>
 
                     <Controller
@@ -718,7 +731,7 @@ const AddTrip = () => {
                         <Select
                           {...field}
                           isSearchable={false}
-                          placeholder='Type Of Meals'
+                          placeholder={t('Type Of Meals')}
                           options={meals}
                         />
                       )}
@@ -730,7 +743,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      Transport on site?
+                      {t('Transport on site?')}
                     </Typography>
                     <Controller
                       name='transportOnSite'
@@ -740,7 +753,7 @@ const AddTrip = () => {
                         <Select
                           {...field}
                           isSearchable={false}
-                          placeholder='Transport on Site'
+                          placeholder={t('Transport on Site')}
                           options={transportOnSite}
                         />
                       )}
@@ -752,8 +765,9 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      Would you like to be accompanied by a guide during your
-                      trip?
+                      {t(
+                        'Would you like to be accompanied by a guide during your trip?'
+                      )}
                     </Typography>
                     <Controller
                       name='guideAccompany'
@@ -763,7 +777,7 @@ const AddTrip = () => {
                         <Select
                           {...field}
                           isSearchable={false}
-                          placeholder='Guide'
+                          placeholder={t('Guide')}
                           options={guideAccompained}
                         />
                       )}
@@ -779,7 +793,9 @@ const AddTrip = () => {
                         color='text.secondary'
                         sx={{ mb: 1 }}
                       >
-                        Global budget in euros per person for this trip? (about)
+                        {t(
+                          'Global budget in euros per person for this trip? (about)'
+                        )}
                       </Typography>
                       <input
                         className={classes.textInput}
@@ -788,11 +804,13 @@ const AddTrip = () => {
                           required: true,
                           maxLength: 15,
                         })}
-                        placeholder='specify'
+                        placeholder={`(${t('specify')})`}
                       />
                       {errors.budgetPerPerson && (
                         <FormHelperText>
-                          Specify the global budget per person for this trip
+                          {t(
+                            'Specify the global budget per person for this trip'
+                          )}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -813,7 +831,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      Your desires
+                      {t('Your desires')}
                     </Typography>
 
                     <textarea
@@ -821,7 +839,9 @@ const AddTrip = () => {
                       className={classes.textInput}
                       // name='clientDesires'
                       {...register('desires')}
-                      placeholder='Describe to us as precisely as possible the trip you would like: stages, desires, itineraries, activities, excursions, circuits, centers of interest etc ...'
+                      placeholder={t(
+                        'Describe to us as precisely as possible the trip you would like: stages, desires, itineraries, activities, excursions, circuits, centers of interest etc ...'
+                      )}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} sx={{ mt: 6 }}>
@@ -833,7 +853,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      When is the best time to reach you by phone?
+                      {t('When is the best time to reach you by phone?')}
                     </Typography>
                     <Controller
                       name='phoneTime'
@@ -850,7 +870,7 @@ const AddTrip = () => {
                               key={time.value}
                               value={time.value}
                               control={<Radio />}
-                              label={time.label}
+                              label={t(time.label)}
                             />
                           ))}
                         </RadioGroup>
@@ -863,7 +883,7 @@ const AddTrip = () => {
                       color='text.secondary'
                       sx={{ mb: 1 }}
                     >
-                      Your Contact Details
+                      {t('Your Contact Details')}
                     </Typography>
 
                     <Grid container spacing={2}>
@@ -876,7 +896,7 @@ const AddTrip = () => {
                             <Select
                               {...field}
                               isSearchable={false}
-                              placeholder='Civility'
+                              placeholder={t('Civility')}
                               options={clientCivility}
                               isDisabled
                               value={user.pronoun}
@@ -897,13 +917,13 @@ const AddTrip = () => {
                               required: !user.firstName ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder=' First Name'
+                            placeholder={t('First Name')}
                             value={user.firstName}
                             disabled
                           />
                           {errors.firstName && !user.firstName && (
                             <FormHelperText>
-                              Specify your first name
+                              {t('Specify your first name')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -919,13 +939,13 @@ const AddTrip = () => {
                               required: !user.lastName ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='Last Name'
+                            placeholder={t('Last Name')}
                             value={user.lastName}
                             disabled
                           />
                           {errors.lastName && !user.lastName && (
                             <FormHelperText>
-                              Specify your last name
+                              {t('Specify your last name')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -948,7 +968,7 @@ const AddTrip = () => {
                           />
                           {errors.dateOfBirth && !user.dateOfBirth && (
                             <FormHelperText>
-                              Specify your date of birth
+                              {t('Specify your date of birth')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -964,13 +984,13 @@ const AddTrip = () => {
                               required: !user.address ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='Address'
+                            placeholder={t('Address')}
                             value={user.address}
                             disabled
                           />
                           {errors.address && !user.address && (
                             <FormHelperText>
-                              Specify your address
+                              {t('Specify your address')}
                             </FormHelperText>
                           )}
                         </FormControl>
@@ -988,12 +1008,14 @@ const AddTrip = () => {
                               required: !user.postalCode ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='Zip Code'
+                            placeholder={t('Zip Code')}
                             value={user.postalCode}
                             disabled
                           />
                           {errors.postalCode && !user.postalCode && (
-                            <FormHelperText>Specify zip code</FormHelperText>
+                            <FormHelperText>
+                              {t('Specify zip code')}
+                            </FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -1009,12 +1031,12 @@ const AddTrip = () => {
                               required: !user.city ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='City'
+                            placeholder={t('City')}
                             value={user.city}
                             disabled
                           />
                           {errors.city && !user.city && (
-                            <FormHelperText>Specify city</FormHelperText>
+                            <FormHelperText>{t('Specify city')}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -1030,7 +1052,7 @@ const AddTrip = () => {
                               required: !user.country ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='Country'
+                            placeholder={t('Country')}
                             value={user.country}
                             disabled
                           />
@@ -1051,7 +1073,7 @@ const AddTrip = () => {
                               required: !user.email ? true : false,
                               maxLength: 50,
                             })}
-                            placeholder='Email'
+                            placeholder={t('Email')}
                             value={user.email}
                             disabled
                           />
@@ -1093,7 +1115,7 @@ const AddTrip = () => {
                               required: !user.telephoneNumber ? true : false,
                               maxLength: 12,
                             })}
-                            placeholder='Phone no'
+                            placeholder={t('Phone no')}
                             value={user.telephoneNumber}
                             disabled
                           />
@@ -1109,13 +1131,15 @@ const AddTrip = () => {
                   <Grid item xs={12} sm={12} sx={{ mt: 3 }}>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label='I would like to receive the GOODFLY newsletter'
+                      label={t(
+                        'I would like to receive the GOODFLY newsletter'
+                      )}
                       {...register('subscribeNewsLetter')}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
                     <Button variant='contained' color='primary' type='submit'>
-                      Submit
+                      {t('Submit')}
                     </Button>
                   </Grid>
                 </Grid>

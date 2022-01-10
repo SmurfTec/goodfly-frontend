@@ -51,6 +51,25 @@ const makeReq = (endpoint, { body, ...customConfig } = {}, method = 'GET') => {
   });
 };
 
+export const languages = [
+  {
+    code: 'fr',
+    name: 'Français',
+    country_code: 'FR',
+  },
+  {
+    code: 'en',
+    name: 'English',
+    country_code: 'GB',
+  },
+  {
+    code: 'ar',
+    name: 'العربية',
+    dir: 'rtl',
+    country_code: 'SA',
+  },
+];
+
 const countryCodes = [
   { code: 'AD', label: 'Andorra', phone: '376' },
   { code: 'AE', label: 'United Arab Emirates', phone: '971' },

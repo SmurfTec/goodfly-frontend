@@ -13,9 +13,13 @@ import {
 
 import useStyles from 'Styles/Navbar';
 import NavbarData from './NavbarData';
+// import { languages } from 'Utils/constants';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = ({ location }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   const ethicalToursMenu = usePopupState({
     variant: 'popover',
     popupId: 'Ethical Trips',
@@ -59,10 +63,11 @@ const Navbar = ({ location }) => {
                     color: '#fa0f0c',
                   }}
                 >
-                  {navItem.title}
+                  {console.log(`object`, navItem.title)}
+                  {t(navItem.title)}
                 </NavLink>
               ) : (
-                <>{navItem.title}</>
+                <> {t(navItem.title)}</>
               )}
             </Typography>
             {navItem.menuItems && (
@@ -92,8 +97,10 @@ const Navbar = ({ location }) => {
                     style={{ textAlign: 'center' }}
                   >
                     <MenuItem>
-                      {menuItem.slice(0, 1).toUpperCase()}
-                      {menuItem.slice(1)}
+                      {t(menuItem).slice(0, 1).toUpperCase()}
+                      {t(menuItem).slice(1)}
+                      {/* {menuItem.slice(0, 1).toUpperCase()}
+                      {menuItem.slice(1)} */}
                     </MenuItem>
                   </Link>
                 ))}
