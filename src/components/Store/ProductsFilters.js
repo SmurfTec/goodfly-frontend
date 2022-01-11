@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 // * ------------ //
 import { makeStyles } from '@material-ui/styles';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   PriceSlider: {
@@ -43,6 +44,7 @@ const ProductsFilters = React.memo(
 
     const [productSort, setProductSort] = useState(1);
     const [productCategory, setProductCategory] = useState(1);
+    const { t } = useTranslation();
 
     const classes = useStyles();
 
@@ -100,7 +102,7 @@ const ProductsFilters = React.memo(
       <Grid item xs={6} sm={3}>
         <Box>
           <Typography id='range-slider' gutterBottom>
-            Filter by Price
+            {`${t('Filter by')} ${t('Price')}`}
           </Typography>
           <Slider
             value={priceFilter}
@@ -128,13 +130,15 @@ const ProductsFilters = React.memo(
               className={classes.Input}
               onClick={applyFilter}
             >
-              FILTER
+              {t('FILTER')}
             </Button>
           </Box>
         </Box>
         <Box marginTop={5}>
           <FormControl component='fieldset' className={classes.Input}>
-            <Typography variant='h5'>Sort By Price</Typography>
+            <Typography variant='h5'>{`${t('Sort By')} ${t(
+              'Price'
+            )}`}</Typography>
             <RadioGroup
               aria-label='sort'
               name='sortPrice'
@@ -144,26 +148,32 @@ const ProductsFilters = React.memo(
               <FormControlLabel
                 value={1}
                 control={<Radio />}
-                label='Ascending'
+                label={t('Ascending')}
               />
               <FormControlLabel
                 value={-1}
                 control={<Radio />}
-                label='Descending'
+                label={t('Descending')}
               />
             </RadioGroup>
           </FormControl>
         </Box>
         <Box marginTop={5}>
           <FormControl component='fieldset' className={classes.Input}>
-            <Typography variant='h5'>Sort By Category</Typography>
+            <Typography variant='h5'>{`${t('Sort By')} ${t(
+              'Category'
+            )}`}</Typography>
             <RadioGroup
               aria-label='sort'
               name='sortCategory'
               value={productCategory}
               onChange={handlePriceCategory}
             >
-              <FormControlLabel value='all' control={<Radio />} label='All' />
+              <FormControlLabel
+                value='all'
+                control={<Radio />}
+                label={t('All')}
+              />
               {productCategories
                 ? productCategories.map((cat) => (
                     <FormControlLabel

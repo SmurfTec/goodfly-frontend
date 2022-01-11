@@ -17,6 +17,7 @@ import { ConfirmDialogBox, PaymentDialog } from 'dialogs';
 import { ToursContext } from 'Contexts/ToursContext';
 import { daysBetween } from 'Utils/datePickerCheck';
 import { AuthContext } from 'Contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const PurchaseCollapseItem = (props) => {
   const { cancelReservation } = useContext(ToursContext);
@@ -28,6 +29,7 @@ const PurchaseCollapseItem = (props) => {
   const [latestUnpaidPayment, setLatestUnpaidPayment] = useState();
   const { purchase } = props;
   const [expanded, setExpanded] = React.useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!purchase) return;
@@ -76,7 +78,7 @@ const PurchaseCollapseItem = (props) => {
       fullWidth
       disabled={daysBetween(new Date(), new Date(purchase.departureDate)) <= 14}
     >
-      I want to cancel
+      {t('I Want To Cancel')}
     </Button>
   );
 
@@ -109,7 +111,7 @@ const PurchaseCollapseItem = (props) => {
             fullWidth
             onClick={handlePay}
           >
-            To Pay
+            {t('To Pay')}
           </Button>
           {cancelResButton}
         </>
@@ -136,7 +138,7 @@ const PurchaseCollapseItem = (props) => {
             component='span'
             align='center'
           >
-            Cancellation possible until{' '}
+            {t('Cancellation possible until ')}
             {maxCancellationDate.toLocaleDateString()}
           </Typography>
         </>
@@ -148,8 +150,9 @@ const PurchaseCollapseItem = (props) => {
     if (purchase.status === 'pre-reservation')
       return (
         <Typography variant='subtitle2' component='span' sx={{ color: 'red' }}>
-          A member of the Goodfly team will get in touch with you very soon to
-          set up your payment schedule for this trip! a bit of patience.
+          {t(
+            'A member of the Goodfly team will get in touch with you very soon to set up your payment schedule for this trip! a bit of patience.'
+          )}
         </Typography>
       );
     else if (['validated', 'schedule-inProgress'].includes(purchase.status)) {
@@ -162,7 +165,7 @@ const PurchaseCollapseItem = (props) => {
             sx={{ color: 'red', mb: 2 }}
             align='center'
           >
-            remaining to pay for this trip : {remAmount}€
+            {t('remaining to pay for this trip')} : {remAmount}€
           </Typography>
           <Stepper purchase={purchase} />
         </>
@@ -177,7 +180,7 @@ const PurchaseCollapseItem = (props) => {
             sx={{ color: 'red', mb: 2 }}
             align='center'
           >
-            remaining to pay for this trip : {remAmount}€
+            {t('remaining to pay for this trip')} : {remAmount}€
           </Typography>
           <Grid container spacing={2}>
             <Grid item sm={12} md={9}>
@@ -201,7 +204,7 @@ const PurchaseCollapseItem = (props) => {
                   borderRadius: 10,
                 }}
               >
-                Congratulations! Your Trip is Reserved
+                {t('Congratulations!')} {t('Your Trip is Reserved')}
               </Typography>
             </Grid>
           </Grid>
@@ -210,11 +213,11 @@ const PurchaseCollapseItem = (props) => {
     } else
       return (
         <Typography variant='h5' color='info'>
-          Your Trip is in{' '}
+          {t('Your Trip is in')}{' '}
           <span style={{ color: theme.palette.warning.main }}>
-            "{purchase.status}"
+            "{t(purchase.status)}"
           </span>{' '}
-          Status !
+          {t('Status')} !
         </Typography>
       );
   }, [purchase]);
@@ -230,11 +233,13 @@ const PurchaseCollapseItem = (props) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5' component='span'>
-            {purchase.trip ? purchase.trip.title.toUpperCase() : 'Custom Trip'}{' '}
+            {purchase.trip
+              ? purchase.trip.title.toUpperCase()
+              : t('Custom Trip')}{' '}
             -{' '}
             {purchase.departureDate
               ? new Date(purchase.departureDate).toDateString()
-              : 'Open Offer'}{' '}
+              : t('Open Offer')}{' '}
             -
           </Typography>
           <Typography
@@ -257,7 +262,7 @@ const PurchaseCollapseItem = (props) => {
           </IconButton>
         </Box>
         <Typography variant='subtitle2' component='span' color='textSecondary'>
-          Timeline
+          {t('Timeline')}
         </Typography>
       </Box>
       <Collapse
@@ -279,13 +284,13 @@ const PurchaseCollapseItem = (props) => {
       <ConfirmDialogBox
         open={isCancelOpen}
         toggleDialog={toggleCancelOpen}
-        dialogTitle='Cancel this Reservation ?'
+        dialogTitle={`${t('Cancel this Reservation')}?`}
         success={handleCancell}
       />
       <PaymentDialog
         open={isPaymentOpen}
         toggleDialog={togglePaymentOpen}
-        dialogTitle='Make Payment for this Trip'
+        dialogTitle={t('Make Payment for this Trip')}
         success={handlePaymentSuccess}
         payment={latestUnpaidPayment}
         purchaseId={purchase._id}

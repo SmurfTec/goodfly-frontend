@@ -11,6 +11,7 @@ import { ToursContext } from 'Contexts/ToursContext';
 import { toast } from 'react-toastify';
 import PaginationBar from 'components/common/Pagination';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import { useTranslation } from 'react-i18next';
 const TOURS_PER_PAGE = 12;
 
 const allowedNames = [
@@ -27,6 +28,7 @@ const Details = ({ match, history }) => {
   const globalClasses = useGlobalClasses();
 
   const [regionalTours, setRegionalTours] = useState();
+  const { t } = useTranslation();
   const { name } = match.params;
 
   useEffect(() => {
@@ -65,7 +67,7 @@ const Details = ({ match, history }) => {
 
   return (
     <Container>
-      <Banner imageUrl={img} bannerTitle='Destinations' align='center' />
+      <Banner imageUrl={img} bannerTitle={t('Destinations')} align='center' />
       <Typography
         variant='h3'
         color='text.secondary'
@@ -77,7 +79,7 @@ const Details = ({ match, history }) => {
           style={{ cursor: 'pointer' }}
           onClick={handleClickBack}
         />
-        {name.toUpperCase()}
+        {t(name).toUpperCase()}
       </Typography>
       <Grid container spacing={4} mb={2}>
         {regionalTours ? (
@@ -95,7 +97,9 @@ const Details = ({ match, history }) => {
               ))
           ) : (
             <Box mt={10}>
-              <Typography variant='h4'>No Tours for this Region !</Typography>
+              <Typography variant='h4'>
+                {t('No Tours for this Region')} !
+              </Typography>
             </Box>
           )
         ) : (

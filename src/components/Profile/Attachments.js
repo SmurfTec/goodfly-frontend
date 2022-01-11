@@ -17,6 +17,7 @@ import CarouselLayout from 'components/common/Carousel/CarouselLayout';
 import { makeStyles } from '@material-ui/styles';
 import v4 from 'uuid/dist/v4';
 import { purple } from '@material-ui/core/colors';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   Switch: {
@@ -62,6 +63,7 @@ const Attachments = ({ attachments, pushAttachment, removeAttachment }) => {
   const classes = useStyles();
 
   const [isImageUploading, toggleImageUploading] = UseToggle(false);
+  const { t } = useTranslation();
   const [uploadingText, setUploadingText] = useState('Uploading Image...');
 
   const handleImage = async (e) => {
@@ -117,12 +119,12 @@ const Attachments = ({ attachments, pushAttachment, removeAttachment }) => {
   return (
     <Box className={classes.mainBox}>
       <Typography variant='h3' style={{ width: '100%' }}>
-        Attachments
+        {t('Attachments')}
       </Typography>
       <Typography variant='subtitle' style={{ width: '100%' }} component='h5'>
-        Max Size : 5MB
+        {t('Max Size')} : 5MB
         <br />
-        Extensions (jpg,jpeg,png,ico)
+        {t('Extensions')} (jpg,jpeg,png,ico)
       </Typography>
 
       <Grid container spacing={3}>
@@ -147,7 +149,7 @@ const Attachments = ({ attachments, pushAttachment, removeAttachment }) => {
                       onClick={removeAttachment.bind(this, attachment._id)}
                       style={{ color: 'red' }}
                     >
-                      Delete
+                      {t('Delete')}
                     </Button>
                   )}
                   <Switch
@@ -208,7 +210,7 @@ const Attachments = ({ attachments, pushAttachment, removeAttachment }) => {
                       </Box>
                       <Box style={{ textAlign: 'center' }}>
                         <Typography style={{ color: '#fff' }}>
-                          Upload Document
+                          {t('Upload Document')}
                         </Typography>
                       </Box>
                     </Box>

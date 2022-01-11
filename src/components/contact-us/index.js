@@ -31,6 +31,7 @@ import { makeReq, handleCatch } from 'Utils/constants';
 import { toast } from 'react-toastify';
 
 import useGlobalClasses from 'Hooks/useGlobalClasses';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   FormBox: {
@@ -109,6 +110,7 @@ const Index = () => {
     message: '',
   };
   const [state, resetState, handleTxtChange] = UseInput(initialState);
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -189,9 +191,10 @@ const Index = () => {
                   <img
                     src='https://imgur.com/lIumYeR.png'
                     style={{ margin: 'auto' }}
+                    alt=''
                   />
                   <Typography variant='h6' fontWeight='normal'>
-                    Locate on the map
+                    {t('Locate on the map')}
                   </Typography>
                 </Box>
                 <Box
@@ -207,27 +210,28 @@ const Index = () => {
                     // style={{'border:0'}}
                     allowFullScreen='true'
                     loading='lazy'
+                    title='map'
                   ></iframe>
                 </Box>
               </Box>
             </Box>
           </Grid>
           <Grid item xs={0} sm={6}>
-            <img src={images[0]} alt={'image'} style={{ height: 250 }} />
+            <img src={images[0]} alt='' style={{ height: 250 }} />
           </Grid>
         </Grid>
         <Divider />
         <Box mt={5} paddingTop={5} display='flex' justifyContent='center'>
           <Box className={classes.FormBox} fullWidth>
             <Typography variant='h4' sx={{ marginBottom: '2rem' }}>
-              Contact Form
+              {t('Contact Form')}
             </Typography>
             <Typography
               variant='h6'
               sx={{ marginBottom: '2rem' }}
               fontWeight='bold'
             >
-              Contact GODDFLY by email
+              {t('Contact GOODFLY by email')}
             </Typography>
             <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
               <input
@@ -236,7 +240,9 @@ const Index = () => {
                 type='text'
                 value={state.subject}
                 name='subject'
-                placeholder='What is the subject of your message'
+                placeholder={t(
+                  'What is the subject of your message'
+                ).toLowerCase()}
                 style={{
                   width: '60%',
                 }}
@@ -258,7 +264,7 @@ const Index = () => {
                   type='text'
                   value={state.firstName}
                   name='firstName'
-                  placeholder='First name'
+                  placeholder={t('First Name').toLowerCase()}
                   style={{
                     width: '40%',
                   }}
@@ -269,7 +275,7 @@ const Index = () => {
                   type='text'
                   value={state.lastName}
                   name='lastName'
-                  placeholder='Last Name'
+                  placeholder={t('Last Name').toLowerCase()}
                   style={{
                     width: '40%',
                   }}
@@ -291,7 +297,7 @@ const Index = () => {
                   type='email'
                   value={state.email}
                   name='email'
-                  placeholder='Email Address'
+                  placeholder={t('Email Address').toLowerCase()}
                   style={{
                     width: '40%',
                   }}
@@ -302,7 +308,7 @@ const Index = () => {
                   type='tel'
                   value={state.telephone}
                   name='telephone'
-                  placeholder='Telephone'
+                  placeholder={t('Telephone').toLowerCase()}
                   style={{
                     width: '40%',
                   }}
@@ -312,7 +318,7 @@ const Index = () => {
                 type='text'
                 value={state.message}
                 name='message'
-                placeholder='Message'
+                placeholder={t('Message').toLowerCase()}
                 rows={10}
                 style={{
                   resize: 'vertical',
@@ -327,7 +333,7 @@ const Index = () => {
                 type='submit'
                 style={{ width: '20%' }}
               >
-                Send
+                {t('Send')}
               </Button>
             </form>
           </Box>
@@ -335,14 +341,15 @@ const Index = () => {
       </Box>
       <Box className={classes.newsLetterSubs} my={3}>
         <Typography variant='h6'>
-          Receive the best offers <span>via the newsletter GOODFLY</span>
+          {t('Receive the best offers')}{' '}
+          <span>{t('via the newsletter GOODFLY')}</span>
         </Typography>
         <Grid container sx={{ mt: 1, justifyContent: 'center' }}>
           <Grid item xs={9} sm={7}>
             <input
               className={classes.textInput}
               type='text'
-              placeholder='Enter your e-mail address here'
+              placeholder={t('Enter Your Email Address Here')}
               value={email}
               onChange={handleEmailChange}
             />
@@ -350,13 +357,15 @@ const Index = () => {
           <Grid item xs={1} sm={1} />
           <Grid item xs={2} sm={3}>
             <Button variant='contained' fullWidth onClick={handleSubscribe}>
-              Send
+              {t('Send')}
             </Button>
           </Grid>
         </Grid>
       </Box>
       <Box mt={5} mb={5} sx={{ marginInline: 'auto', textAlign: 'center' }}>
-        <Typography variant='h4'>FOLLOW GOODFLY ON SOCIAL MEDIA</Typography>
+        <Typography variant='h4'>
+          {t('FOLLOW GOODFLY ON SOCIAL MEDIA')}
+        </Typography>
         <Box
           mt={1}
           display='flex'

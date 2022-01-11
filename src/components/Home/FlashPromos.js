@@ -10,6 +10,7 @@ import ArrowIcon from '@material-ui/icons/ArrowForwardIos';
 
 import Skeleton from 'react-loading-skeleton';
 import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme) => ({
   paper: {
@@ -40,6 +41,7 @@ const styles = makeStyles((theme) => ({
 
 const FlashPromos = ({ tours }) => {
   const history = useHistory();
+  const { t } = useTranslation();
   const classes = styles();
   const handleClick = (e) => {
     const { id } = e.currentTarget.dataset;
@@ -66,7 +68,7 @@ const FlashPromos = ({ tours }) => {
           align='center'
           color='text.secondary'
         >
-          Flash Sales
+          {t('Flash Sales')}
         </Typography>
         <img src={FlashRed} width='25px' height=' 25px' alt='White' />
       </Box>

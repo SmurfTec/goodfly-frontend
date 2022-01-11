@@ -13,6 +13,7 @@ import CheckIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import uuid from 'uuid/dist/v4';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {},
@@ -40,6 +41,7 @@ const useStyles = makeStyles({
 export default function DeletePaletteConfirm(props) {
   const { open, toggleDialog, dialogTitle, success } = props;
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Dialog
@@ -58,7 +60,7 @@ export default function DeletePaletteConfirm(props) {
               <CheckIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary='Yes' />
+          <ListItemText primary={t('Yes')} />
         </ListItem>
 
         <ListItem button onClick={toggleDialog} key={uuid()}>
@@ -67,7 +69,7 @@ export default function DeletePaletteConfirm(props) {
               <CancelIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary='Cancel' />
+          <ListItemText primary={t('Cancel')} />
         </ListItem>
       </List>
     </Dialog>

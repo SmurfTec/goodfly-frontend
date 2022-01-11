@@ -19,11 +19,13 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 import { makeReq } from 'Utils/constants';
 import { StoreContext } from 'Contexts/StoreContext';
+import { useTranslation } from 'react-i18next';
 
 const StoreCollapseItem = ({ order }) => {
   const classes = styles();
   const { payOrder } = useContext(StoreContext);
   const [showPaypalBtns, toggleShowPaypalBtns] = UseToggle(false);
+  const { t } = useTranslation();
   // const { _id, status, orderItems } = order;
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -58,7 +60,7 @@ const StoreCollapseItem = ({ order }) => {
           variant='subtitle2'
           color={order.status === 'unpaid' ? 'error' : 'success'}
         >
-          {order.status}
+          {t(order.status)}
         </Typography>
       </Box>
       <Collapse
@@ -102,9 +104,15 @@ const StoreCollapseItem = ({ order }) => {
                 columnGap: 3,
               }}
             >
-              <span>Subtotal : {order.subTotal}€</span>
-              <span>Shipping Charges : {order.deliveryCharges}€</span>
-              <span>Total : {order.total}€</span>
+              <span>
+                {t('Subtotal')} : {order.subTotal}€
+              </span>
+              <span>
+                {t('Shipping Charges')} : {order.deliveryCharges}€
+              </span>
+              <span>
+                {t('Total')} : {order.total}€
+              </span>
             </Box>
             {order.status === 'unpaid' && (
               <Box
@@ -114,7 +122,7 @@ const StoreCollapseItem = ({ order }) => {
                 alignItems='center'
               >
                 <Button component='div'>
-                  <Typography variant='h5'>Pay Order</Typography>
+                  <Typography variant='h5'>{t('Pay Order')}</Typography>
                   <ReactSVG src={paypalSvg} onClick={toggleShowPaypalBtns} />
                 </Button>
               </Box>

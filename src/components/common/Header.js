@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -32,10 +32,12 @@ import NotificationsPopover from 'components/notify/NotificationsPopover';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import cookies from 'js-cookie';
+import { languages } from 'Utils/constants';
 
 const mobileNavContent = [
   {
-    title: 'Ethical travel',
+    title: 'Ethical Travel',
     to: '/tours/ethical',
     info: [
       {
@@ -43,7 +45,7 @@ const mobileNavContent = [
         route: '/tours/ethical?type=organized',
       },
       {
-        name: `Organic And Eco Travel "wwoof"`,
+        name: `Organic And Eco Travel 'wwoof'`,
         route: '/tours/ethical?type=organic',
       },
       {
@@ -57,23 +59,23 @@ const mobileNavContent = [
     ],
   },
   {
-    title: 'Spiritual journeys',
+    title: 'Spiritual Journeys',
     to: '/tours/spiritual',
     info: [
       {
-        name: 'Hajj',
+        name: 'hajj',
         route: '/tours/spiritual?type=hajj',
       },
       {
-        name: 'Omra',
+        name: 'omra',
         route: '/tours/spiritual?type=omra',
       },
       {
-        name: 'Al-Quds',
+        name: 'al-quds',
         route: '/tours/spiritual?type=al-quds',
       },
       {
-        name: 'Combined Omra / Al-Quds',
+        name: 'Combined Hajj / Omra',
         route: '/tours/spiritual?type=combine-hajj-omra',
       },
     ],
@@ -97,27 +99,27 @@ const mobileNavContent = [
     to: '/tours/destinations',
     info: [
       {
-        name: 'Africa',
+        name: 'africa',
         route: '/tours/destinations/africa',
       },
       {
-        name: 'Asia',
+        name: 'asia',
         route: '/tours/destinations/asia',
       },
       {
-        name: 'Europe',
+        name: 'europe',
         route: '/tours/destinations/europe',
       },
       {
-        name: 'America',
+        name: 'america',
         route: '/tours/destinations/america',
       },
       {
-        name: 'Oceania',
+        name: 'oceania',
         route: '/tours/destinations/oceania',
       },
       {
-        name: 'Polar-Islands',
+        name: 'polar-lands',
         route: '/tours/destinations/polar-lands',
       },
     ],
@@ -131,13 +133,13 @@ const mobileNavContent = [
         route: '/',
       },
       {
-        name: 'Vehicles Rental',
+        name: 'Vehicle Rental',
         route: '/',
       },
     ],
   },
   {
-    title: 'Hotels and Accommodation',
+    title: 'Hotels & Accommodations',
     to: '/',
     info: [
       {
@@ -169,7 +171,7 @@ const mobileNavContent = [
     // info: [],
   },
   {
-    title: 'I Create My Trip',
+    title: 'I create my trip',
     to: '/tours/create',
     // info: [],
   },
@@ -203,7 +205,15 @@ const Header = ({ history }) => {
 
   // const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [openMobileNav, setOpenMobileNav] = useState(false);
-  const [lang, setLang] = useState('GB');
+  const [lang, setLang] = useState(null);
+
+  useEffect(() => {
+    const currentLanguageCode = cookies.get('i18next') || 'en';
+    setLang(currentLanguageCode);
+    setLang(
+      languages.find((el) => el.code === currentLanguageCode).country_code
+    );
+  }, [lang]);
 
   const toggleMobileNav = () => {
     setOpenMobileNav((st) => !st);
@@ -340,17 +350,21 @@ const Header = ({ history }) => {
                 }}
               >
                 {navContent?.title === 'Logout' ? (
-                  <a onClick={logoutUser}>{navContent?.title}</a>
+                  <a onClick={logoutUser}>{t(navContent?.title)}</a>
                 ) : (
                   <NavLink to={navContent?.to} sx={{ color: 'textSecondary' }}>
-                    {navContent?.title}
+                    {t(navContent?.title)}
                   </NavLink>
                 )}
               </Typography>
               {navContent?.info?.map((subContent) => (
                 <React.Fragment key={v4()}>
                   <Typography variant='subtitle1' sx={{ mb: 1 }}>
-                    <NavLink to={subContent?.route}>{subContent?.name}</NavLink>
+                    <NavLink to={subContent?.route}>
+                      {/* {t(subContent?.name.toLowerCase())} */}
+                      {t(subContent?.name).slice(0, 1).toUpperCase()}
+                      {t(subContent?.name).slice(1)}
+                    </NavLink>
                   </Typography>
                 </React.Fragment>
               ))}
@@ -456,7 +470,7 @@ const Header = ({ history }) => {
             }}
           >
             <TelegramIcon />
-            Messages
+            {t('Messages')}
           </Typography>
         </Link>
       )}
@@ -471,7 +485,7 @@ const Header = ({ history }) => {
             }}
           >
             <PersonIcon />
-            Profile
+            {t('Profile')}
           </Typography>
         </Link>
       )}
@@ -485,7 +499,7 @@ const Header = ({ history }) => {
           }}
         >
           <PhoneIcon />
-          Contact Us
+          {t('Contact Us')}
         </Typography>
       </Link>
 
@@ -502,7 +516,7 @@ const Header = ({ history }) => {
             onClick={logoutUser}
           >
             <ExitToAppIcon />
-            Logout
+            {t('Logout')}
           </Typography>
         </>
       ) : (
@@ -516,7 +530,7 @@ const Header = ({ history }) => {
           onClick={handleLogin}
         >
           <AccountBox />
-          Login
+          {t('Login')}
         </Typography>
       )}
     </Box>

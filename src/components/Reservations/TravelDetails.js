@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo } from 'react';
 import { Typography, Box, Paper, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { AuthContext } from 'Contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export const TravelDetails = React.memo(
   ({ tour, travelers, payment, promoDiscount = 0, usePoints }) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { user } = useContext(AuthContext);
     const { title, price, startingDate } = tour;
 
@@ -53,7 +55,7 @@ export const TravelDetails = React.memo(
     return (
       <>
         <Typography variant='h4' sx={{ mb: 4.5 }}>
-          Total
+          {t('Total')}
         </Typography>
         <Paper elevation={0} sx={{ px: 1, py: 2, backgroundColor: '#fafafa' }}>
           <Box className={classes.box}>
@@ -62,7 +64,7 @@ export const TravelDetails = React.memo(
               <Typography variant='body1'>
                 {startingDate
                   ? new Date(startingDate).toDateString()
-                  : 'Open Offer'}
+                  : t('Open Offer')}
               </Typography>
             </span>
             <Typography variant='subtitle2'>{price} €</Typography>
@@ -74,7 +76,8 @@ export const TravelDetails = React.memo(
                 {+travelers + 1} x {price} €
               </Typography>
               <Typography variant='body1'>
-                vous et {+travelers} voyageurs
+                {t('You and other travellers', { travelers })}
+                {/* vous et {+travelers} voyageurs */}
               </Typography>
             </span>
             <Typography variant='subtitle2'>
@@ -85,7 +88,7 @@ export const TravelDetails = React.memo(
           <Box className={classes.box}>
             <span>
               <Typography variant='h6' fontWeight='normal'>
-                Estimasted Total TTC
+                {t('Estimasted Total TTC')}
               </Typography>
               {/* <Typography variant='body1'>dont TVA</Typography> */}
             </span>
@@ -97,7 +100,7 @@ export const TravelDetails = React.memo(
           <Box className={classes.box}>
             <span>
               <Typography variant='h6' fontWeight='normal'>
-                Flash Sale Discount
+                {t('Flash Sale Discount')}
               </Typography>
               {/* <Typography variant='body1'>dont TVA</Typography> */}
             </span>
@@ -109,7 +112,7 @@ export const TravelDetails = React.memo(
           <Box className={classes.box}>
             <span>
               <Typography variant='h6' fontWeight='normal'>
-                Loyalty Points Discount
+                {t('Loyalty Points Discount')}
               </Typography>
               {/* <Typography variant='body1'>dont TVA</Typography> */}
             </span>
@@ -121,7 +124,7 @@ export const TravelDetails = React.memo(
           <Box className={classes.box}>
             <span>
               <Typography variant='h6' fontWeight='normal'>
-                Coupon Code Discount
+                {t('Coupon Code Discount')}
               </Typography>
               {/* <Typography variant='body1'>dont TVA</Typography> */}
             </span>
@@ -133,7 +136,7 @@ export const TravelDetails = React.memo(
           <Divider />
           <Box className={classes.box}>
             <span>
-              <Typography variant='h4'>Grand Total</Typography>
+              <Typography variant='h4'>{t('Grand Total')}</Typography>
               {/* <Typography variant='body1'>dont TVA</Typography> */}
             </span>
             <Typography variant='h4'>

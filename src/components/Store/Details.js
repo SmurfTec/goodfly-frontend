@@ -35,6 +35,7 @@ import { AuthContext } from 'Contexts/AuthContext';
 import Lightbox from 'react-image-lightbox';
 import UseToggle from 'Hooks/useToggle';
 import v4 from 'uuid/dist/v4';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -95,6 +96,7 @@ const StoreDetails = ({ match }) => {
   const formClasses = useStyles();
 
   const [product, setProduct] = useState();
+  const { t } = useTranslation();
   const [relatedProducts, setRelatedProducts] = useState();
 
   const [noOfItem, setNoOfItem] = useState(1);
@@ -290,7 +292,7 @@ const StoreDetails = ({ match }) => {
                       {product.price} €
                     </Typography>
                     <Typography variant='h5' sx={{ mt: 1 }}>
-                      Origin : {product.region}
+                      {t('Origin')} : {product.region}
                     </Typography>
                     <Typography variant='body1' sx={{ mt: 3 }}>
                       {product.description.slice(0, 238)}
@@ -346,7 +348,7 @@ const StoreDetails = ({ match }) => {
                       sx={{ mt: 3 }}
                       onClick={handleAddToCart}
                     >
-                      ADD TO CART
+                      {t('ADD TO CART')}
                     </Button>
                   </div>
                 )
@@ -370,12 +372,12 @@ const StoreDetails = ({ match }) => {
           className={classes.tabs}
         >
           <Tab
-            label='Description'
+            label={t('Description')}
             className={tabValue === 0 ? classes.ActiveTab : classes.InActiveTab}
           />
           <Tab
             className={tabValue === 1 ? classes.ActiveTab : classes.InActiveTab}
-            label='Comments'
+            label={t('Comments')}
           />
         </Tabs>
         <TabPanel value={tabValue} index={0} dir='x'>
@@ -388,7 +390,8 @@ const StoreDetails = ({ match }) => {
               {product ? (
                 <>
                   <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
-                    {product.reviews.length || 'No'} reviews for this product
+                    {product.reviews.length || t('No')}{' '}
+                    {t('reviews for this product')}
                   </Typography>
                   {product.reviews.map((review) => (
                     <CommentsTab {...review} />
@@ -401,11 +404,11 @@ const StoreDetails = ({ match }) => {
             {canReview && (
               <Grid item xs={12} sm={6}>
                 <Typography variant='subtitle1' sx={{ mt: 5, mb: 3 }}>
-                  Add a review
+                  {t('Add a review')}
                 </Typography>
 
                 <Typography variant='h5' sx={{ mb: 1 }}>
-                  Your Rating
+                  {t('Your Rating')}
                 </Typography>
                 <form
                   id='formopinion'
@@ -417,7 +420,7 @@ const StoreDetails = ({ match }) => {
                     options={[1, 2, 3, 4, 5]}
                   />
                   <Typography variant='h5' sx={{ mt: 4, mb: 1 }}>
-                    Your Opinion
+                    {t('Your Opinion')}
                   </Typography>
                   <Paper
                     elevation={3}
@@ -435,10 +438,13 @@ const StoreDetails = ({ match }) => {
                         rows='15'
                         className={`${formClasses.textInput} ${classes.textArea}`}
                         {...register('comment', {
-                          required:
-                            'Write something about the product to submit',
+                          required: t(
+                            'Write something about the product to submit'
+                          ),
                         })}
-                        placeholder='Give your opinion about the product...'
+                        placeholder={t(
+                          'Give your opinion about the product...'
+                        )}
                       />
                       {errors?.comment?.type === 'required' && (
                         <FormHelperText>
@@ -454,7 +460,7 @@ const StoreDetails = ({ match }) => {
                     form='formopinion'
                     color='primary'
                   >
-                    SUBMIT
+                    {t('SUBMIT')}
                   </Button>
                 </form>
               </Grid>
@@ -464,7 +470,7 @@ const StoreDetails = ({ match }) => {
       </Box>
       <Box sx={{ mt: 17, mb: 2 }}>
         <Typography variant='h4' fullWidth align='center' sx={{ my: 3 }}>
-          Related Products
+          {t('Related Products')}
         </Typography>
         {relatedProducts ? (
           relatedProducts.length > 0 ? (
@@ -477,7 +483,7 @@ const StoreDetails = ({ match }) => {
             </CarouselLayout>
           ) : (
             <Typography variant='body1' align='center'>
-              No Results
+              {t('No Results')}
             </Typography>
           )
         ) : (

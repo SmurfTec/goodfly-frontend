@@ -23,11 +23,13 @@ import BankTransferOption from './paymentStep/paymentOptions/BankTransferOption'
 import PaypalOption from './paymentStep/paymentOptions/PaypalOption';
 import LoyaltyPointsOption from './paymentStep/paymentOptions/LoyaltyPoints';
 import { handleCatch, makeReq } from 'Utils/constants';
+import { useTranslation } from 'react-i18next';
 
 const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
   const [usePoints, setUsePoints] = useState(false);
+  const { t } = useTranslation();
 
   const values = ['card', 'bank', 'paypal', 'points'];
 
@@ -85,7 +87,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
       <Grid container sx={{ mt: 5 }} spacing={2}>
         <Grid item xs={12} sm={12} md={7}>
           <Typography variant='subtitle1' color='textSecondary'>
-            Choose the payment method
+            {t('Choose the payment method')}
           </Typography>
 
           <Paper
@@ -120,7 +122,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                             }}
                           />
                         }
-                        label='use your GOODFLY Fidelity points'
+                        label={t('use your GOODFLY Fidelity points')}
                       />
                     </FormGroup>
 
@@ -135,9 +137,11 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                 <form>
                   <TextField
                     name='loyalty-points'
-                    label='Coupon Code'
+                    label={t('Coupon Code')}
                     type='text'
-                    errorMessage='Spacify your coupon code to get exclusive discount'
+                    errorMessage={t(
+                      'Specify your coupon code to get exclusive discount'
+                    )}
                     value={couponVal}
                     onChange={(e) => setCoupon(e.target.value)}
                     disabled={promoDiscount > 0}
@@ -157,7 +161,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                   color='secondary'
                   onClick={handleCoupon}
                 >
-                  {promoDiscount > 0 ? 'Remove Coupon' : 'Apply Coupon'}
+                  {promoDiscount > 0 ? t('Remove Coupon') : t('Apply Coupon')}
                 </Button>
               </Box>
             </Box>

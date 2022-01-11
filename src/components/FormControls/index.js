@@ -31,6 +31,7 @@ export const CustomSelect = ({
   placeholder,
   options,
   errors,
+  getOptionLabel,
 }) => {
   return (
     <>
@@ -39,15 +40,28 @@ export const CustomSelect = ({
           rules={{
             required: `${message}`,
           }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              isSearchable={false}
-              placeholder={placeholder}
-              options={options}
-              styles={colourStyles}
-            />
-          )}
+          render={({ field }) =>
+            getOptionLabel ? (
+              <Select
+                {...field}
+                isSearchable={false}
+                placeholder={placeholder}
+                options={options}
+                getOptionLabel={getOptionLabel}
+                // getOptionLabel={}
+                styles={colourStyles}
+              />
+            ) : (
+              <Select
+                {...field}
+                isSearchable={false}
+                placeholder={placeholder}
+                options={options}
+                // getOptionLabel={}
+                styles={colourStyles}
+              />
+            )
+          }
           control={control}
           name={name}
         />
@@ -127,7 +141,7 @@ export const CustomDatePicker = (props) => {
       {/* {errors?.[name] && <FormHelperText>{errorMessage}</FormHelperText>} */}
 
       {errors?.[name]?.type === 'required' && (
-        <FormHelperText>Specify date of birth</FormHelperText>
+        <FormHelperText>{errorMessage}</FormHelperText>
       )}
       {console.log(errors?.[name]?.type)}
       {errors?.[name]?.type === 'validate' && (

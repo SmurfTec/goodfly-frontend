@@ -16,6 +16,7 @@ import { Box } from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import v4 from 'uuid/dist/v4';
 import { useTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -113,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PaymentSteppers({ purchase }) {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   const theme = useTheme();
 
   return (
@@ -142,7 +143,7 @@ export default function PaymentSteppers({ purchase }) {
                 }}
               >
                 {/* {payment.title} */}
-                {`Payment ${idx + 1}`}
+                {`${t('Payment')} ${idx + 1}`}
               </Typography>
               {payment.isPaid ? (
                 <Typography
@@ -151,11 +152,13 @@ export default function PaymentSteppers({ purchase }) {
                     color: theme.palette.success.main,
                   }}
                 >
-                  Paid On {new Date(payment.paidDate).toLocaleDateString()}
+                  {t('Paid On')}{' '}
+                  {new Date(payment.paidDate).toLocaleDateString()}
                 </Typography>
               ) : (
                 <Typography variant='body1' color='error'>
-                  Deadline {new Date(payment.deadline).toLocaleDateString()}
+                  {t('Deadline')}{' '}
+                  {new Date(payment.deadline).toLocaleDateString()}
                 </Typography>
               )}
             </StepLabel>

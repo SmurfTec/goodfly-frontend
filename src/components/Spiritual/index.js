@@ -13,6 +13,7 @@ import Banner from 'components/common/tours/Banner';
 import { ToursContext } from 'Contexts/ToursContext';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
+import { useTranslation } from 'react-i18next';
 
 import { useLocation, useHistory } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -116,6 +117,7 @@ const SpiritualHome = () => {
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tripType, setTripType] = useState('all');
+  const { t } = useTranslation();
   //? Filter Menu State
   const open = Boolean(anchorEl);
 
@@ -125,7 +127,7 @@ const SpiritualHome = () => {
   };
   const tripTypes = {
     options: ['all', 'hajj', 'omra', 'combine-hajj-omra', 'al-quds'],
-    getOptionLabel: (option) => option,
+    getOptionLabel: (option) => t(option),
   };
 
   const handleTripTypeChange = (event, value) => {
@@ -196,7 +198,7 @@ const SpiritualHome = () => {
   };
 
   return (
-    <Page title='GoodFly |  Spiritual Tours'>
+    <Page title={`GoodFly |  ${t('Spiritual Tours')}`}>
       <CssBaseline />
 
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
@@ -205,7 +207,9 @@ const SpiritualHome = () => {
             imageUrl={
               'https://m.hziegler.com/hza-resized-images/articles/hajj/mecca-at-night_450x300.jpg'
             }
-            bannerTitle={`${currentTab === 1 ? 'Omra' : 'Hajj'} Offers`}
+            bannerTitle={`${currentTab === 1 ? t('omra') : t('hajj')} ${t(
+              'Offers'
+            )}`}
             align='center'
           />
 
@@ -217,7 +221,7 @@ const SpiritualHome = () => {
               onClick={filterMenuOpen}
               sx={{ cursor: 'pointer' }}
             >
-              Select a filter
+              {t('Select A Filter')}
             </Button>
 
             <Autocomplete
@@ -233,7 +237,7 @@ const SpiritualHome = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label='Filter by Type'
+                  label={t('Filter by Type')}
                   margin='normal'
                   size='small'
                   color='primary'
@@ -254,7 +258,7 @@ const SpiritualHome = () => {
                   data-filter={option}
                   onClick={filterSelected}
                 >
-                  {option}
+                  {t(option)}
                 </MenuItem>
               ))}
             </Menu>
@@ -262,7 +266,7 @@ const SpiritualHome = () => {
         </div>
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
-          Do you have a few days ahead of you? Découvrez les ventes
+          {t('Do you have a few days ahead of you? Discover the sales')}
         </Typography>
         <Typography
           variant='h5'
@@ -272,7 +276,7 @@ const SpiritualHome = () => {
             marginBottom: '2rem',
           }}
         >
-          Flash GOODFLY : les plans dernière minute à prix cassés.
+          {t('Flash GOODFLY : last minute plans at knockdown prices.')}
         </Typography>
         {/* Upper GridView */}
         <Grid container spacing={4}>
@@ -291,7 +295,7 @@ const SpiritualHome = () => {
                 ))
             ) : (
               <Box mt={5}>
-                <Typography variant='h4'>No Tours Yet !</Typography>
+                <Typography variant='h4'>{t('No Tours Yet')} !</Typography>
               </Box>
             )
           ) : (

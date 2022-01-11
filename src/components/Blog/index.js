@@ -12,6 +12,7 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 import Banner from 'components/common/tours/Banner';
 import PaginationBar from 'components/common/Pagination';
+import { useTranslation } from 'react-i18next';
 
 const TOURS_PER_PAGE = 12;
 
@@ -19,6 +20,7 @@ const ClientBlog = () => {
   const classes = styles();
   const history = useHistory();
   const globalClasses = useGlobalClasses();
+  const { t } = useTranslation();
 
   const [blogs, setBlogs] = useState();
 
@@ -55,11 +57,11 @@ const ClientBlog = () => {
   // * ------------ *  //
 
   return (
-    <Page title='GoodFly | Blogs'>
+    <Page title={`GoodFly | ${t('Blogs')}`}>
       <Container className={globalClasses.MainContainer}>
         <Banner
           imageUrl={BannerImg}
-          bannerTitle='Blogs'
+          bannerTitle={t('Blogs')}
           align='left'
           noAdvisor
         />
@@ -79,7 +81,7 @@ const ClientBlog = () => {
                     </Grid>
                   ))
               ) : (
-                <Typography variant='h5'>No Blogs Available</Typography>
+                <Typography variant='h5'>{t('No Blogs Available')}</Typography>
               )
             ) : (
               <div className='loader'></div>
@@ -107,7 +109,7 @@ const ClientBlog = () => {
                     </Grid>
                   ))
               ) : (
-                <Typography variant='h5'>No Blogs Available</Typography>
+                <Typography variant='h5'>{t('No Blogs Available')}</Typography>
               )
             ) : (
               <div className='loader'></div>

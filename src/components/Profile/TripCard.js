@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { Button, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { Link, withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 
 const TripCard = (props) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const {
     noOfJourneys,
@@ -82,7 +84,9 @@ const TripCard = (props) => {
               variant='subtitle2'
               style={{ minWidth: 190 }}
             >
-              {`From ${new Date(departureDate).toLocaleDateString()} To 
+              {`${t('from')} ${new Date(
+                departureDate
+              ).toLocaleDateString()} ${t('to')} 
            ${new Date(returnDate).toLocaleDateString()}
             `}
             </Typography>

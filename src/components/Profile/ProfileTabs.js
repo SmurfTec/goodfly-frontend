@@ -11,9 +11,13 @@ import FavouritiesTab from './FavouritiesTab';
 import TripsTab from './TripsTabs';
 import PurchasesTab from './PurchasesTab';
 import { StoreContext } from 'Contexts/StoreContext';
+import { useTranslation } from 'react-i18next';
+
 // ------------------------ //
 
 const TabPanel = (props) => {
+  const { t } = useTranslation();
+
   const { children, value, index, ...other } = props;
 
   return (
@@ -85,6 +89,7 @@ const ProfileTabs = ({ user }) => {
   const { userOrders } = useContext(StoreContext);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const { t } = useTranslation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -105,10 +110,10 @@ const ProfileTabs = ({ user }) => {
           variant='fullWidth'
           aria-label='full width tabs example'
         >
-          <Tab label='Personal Informations' {...a11yProps(0)} />
-          <Tab label='My Favourities' {...a11yProps(1)} />
-          <Tab label='My Trips' {...a11yProps(2)} />
-          <Tab label='My Purchases' {...a11yProps(2)} />
+          <Tab label={t('Personal Informations')} {...a11yProps(0)} />
+          <Tab label={t('My Favourites')} {...a11yProps(1)} />
+          <Tab label={t('My Trips')} {...a11yProps(2)} />
+          <Tab label={t('My Purchases')} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews

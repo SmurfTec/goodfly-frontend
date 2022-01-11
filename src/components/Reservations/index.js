@@ -21,6 +21,7 @@ import Skeleton from 'react-loading-skeleton';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { AuthContext } from 'Contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 // const steps = ['Shipping address', 'Payment details'];
 
@@ -78,6 +79,7 @@ const Reservations = () => {
   const steps = getSteps();
   const history = useHistory();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (isErrors) toast.error('Update your profile');
@@ -241,42 +243,50 @@ const Reservations = () => {
     //console.log(`activeStep`, activeStep);
     switch (activeStep) {
       case 0:
-        return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
+        return (
+          <Typography variant='subtitle2'>
+            {`${t('Back to')} ${t('Offers Page')}`}
+          </Typography>
+        );
 
       case 1:
         return (
           <Typography variant='subtitle2'>
-            Back to Client Reservation{' '}
+            {`${t('Back to')} ${t('Client Reservation')}`}
           </Typography>
         );
 
       case 2:
         return (
           <Typography variant='subtitle2'>
-            Back to Travellers Booking{' '}
+            {`${t('Back to')} ${t('Travellers Booking')}`}
           </Typography>
         );
 
       default:
-        return <Typography variant='subtitle2'>Back to Offers Page</Typography>;
+        return (
+          <Typography variant='subtitle2'>
+            {`${t('Back to')} ${t('Offers Page')}`}
+          </Typography>
+        );
     }
   };
 
   return (
-    <Page title='GoodFly | Trip Reservation'>
+    <Page title={`GoodFly | ${t('Trip Reservation')}`}>
       <Container sx={{ mb: 4, mt: 7 }}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel>{t(label)}</StepLabel>
             </Step>
           ))}
         </Stepper>
         <div>
           {activeStep === steps.length ? (
             <div>
-              <Typography>All steps completed</Typography>
-              <Button onClick={handleReset}>Reset</Button>
+              <Typography>{t('All steps completed')}</Typography>
+              <Button onClick={handleReset}>{t('Reset')}</Button>
             </div>
           ) : (
             <>
@@ -309,7 +319,9 @@ const Reservations = () => {
                       sx={{ mt: 3 }}
                       fullWidth
                     >
-                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                      {activeStep === steps.length - 1
+                        ? t('Finish')
+                        : t('Next')}
                     </Button>
                   </Grid>
                 )}

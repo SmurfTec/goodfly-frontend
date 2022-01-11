@@ -1,13 +1,10 @@
 import React from 'react';
 
-import {
-  Grid,
-  Box,
-  FormControlLabel,
-  Radio,
-} from '@material-ui/core';
+import { Grid, Box, FormControlLabel, Radio } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const BankTransferOption = ({ value }) => {
+  const { t } = useTranslation();
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={4}>
@@ -22,7 +19,7 @@ const BankTransferOption = ({ value }) => {
         >
           <FormControlLabel
             value={value}
-            label='Bank Transfer'
+            label={t('Bank Transfer')}
             control={<Radio />}
           />
         </Box>

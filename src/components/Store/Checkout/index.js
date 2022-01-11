@@ -14,6 +14,7 @@ import { AuthContext } from 'Contexts/AuthContext';
 import Page from 'components/common/Page';
 import { handleCatch, makeReq } from 'Utils/constants';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles((theme) => ({
   backButton: {
     width: 'fit-content',
@@ -199,16 +200,17 @@ const Checkout = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const { t } = useTranslation();
 
   return (
-    <Page title='GoodFly |  Checkout'>
+    <Page title={`GoodFly |  ${t('Checkout')}`}>
       <Container sx={{ mt: 8, mb: 2 }}>
         {activeStep > 0 && activeStep < 3 && (
           <>
             <Box className={classes.backButton} onClick={handleBack}>
               <Back fontSize='small' />
               <Typography variant='subtitle2'>
-                Back to {steps[activeStep]}
+                {t('Back to')} {t(steps[activeStep])}
               </Typography>
             </Box>
           </>

@@ -17,6 +17,7 @@ import { dateBeforeToday } from 'Utils/formValidations';
 import { AuthContext } from 'Contexts/AuthContext';
 import { getMuiDateFormat } from 'Utils/constants';
 import v4 from 'uuid/dist/v4';
+import { useTranslation } from 'react-i18next';
 
 const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
   const { user } = useContext(AuthContext);
@@ -51,6 +52,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
 
   const watchType = watch('type', 'selfReserve');
   const watchTravlers = watch('travelers', 2);
+  const { t } = useTranslation();
 
   useEffect(() => {
     console.log(`errors`, errors);
@@ -117,13 +119,13 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <FormControlLabel
                 value='selfReserve'
                 control={<Radio />}
-                label='I reserve for me'
+                label={t('I reserve for me')}
               />
 
               <FormControlLabel
                 value='reserveForAnother'
                 control={<Radio />}
-                label='I reserve for another person'
+                label={t('I reserve for another person')}
               />
             </RadioGroup>
           )}
@@ -134,7 +136,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='firstName'
                 disabled={watchType === 'selfReserve'}
-                label='First Name'
+                label={t('First Name')}
                 control={control}
                 type='text'
                 // customValue={customValue}
@@ -144,7 +146,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='lastName'
                 disabled={watchType === 'selfReserve'}
-                label='Last Name'
+                label={t('Last Name')}
                 control={control}
                 type='text'
               />
@@ -153,7 +155,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='address'
                 disabled={watchType === 'selfReserve'}
-                label='Address'
+                label={t('Address')}
                 control={control}
                 type='text'
               />
@@ -162,7 +164,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='additionalAddress'
                 disabled={watchType === 'selfReserve'}
-                label='Additional Address'
+                label={t('Additional Address')}
                 control={control}
                 type='text'
                 noRequire
@@ -172,7 +174,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='postalcode'
                 disabled={watchType === 'selfReserve'}
-                label='Postal Code'
+                label={t('Postal Code')}
                 control={control}
                 type='number'
               />
@@ -181,7 +183,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='city'
                 disabled={watchType === 'selfReserve'}
-                label='City'
+                label={t('City')}
                 control={control}
                 type='text'
               />
@@ -190,7 +192,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='country'
                 disabled={watchType === 'selfReserve'}
-                label='Country'
+                label={t('Country')}
                 control={control}
                 type='text'
               />
@@ -199,7 +201,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='phone'
                 disabled={watchType === 'selfReserve'}
-                label='Mobile phone'
+                label={t('Mobile phone')}
                 control={control}
                 type='number'
               />
@@ -208,7 +210,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='email'
                 disabled={watchType === 'selfReserve'}
-                label='Email'
+                label={t('Email')}
                 control={control}
                 type='email'
               />
@@ -219,7 +221,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
                 color='text.secondary'
                 sx={{ mt: 2, mb: 1 }}
               >
-                Addtional Travellers
+                {t('Additional Travellers')}
               </Typography>
 
               <Controller
@@ -236,7 +238,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
                   <Select
                     {...field}
                     isSearchable={false}
-                    placeholder='Travellers'
+                    placeholder={t('Travellers')}
                     value={getValues('travelers')}
                     options={[
                       { key: v4(), value: 0, label: '0' },
@@ -257,7 +259,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
                   color='text.secondary'
                   sx={{ mt: 2, mb: 1 }}
                 >
-                  Date Of Birth
+                  {t('Date Of Birth')}
                 </Typography>
                 <input
                   type='date'
@@ -269,11 +271,13 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
                   disabled={watchType === 'selfReserve'}
                 />
                 {errors.dateOfBirth?.type === 'required' && (
-                  <FormHelperText>Specify date of birth</FormHelperText>
+                  <FormHelperText>
+                    {t('Specify your date of birth')}
+                  </FormHelperText>
                 )}
                 {errors.dateOfBirth?.type === 'validate' && (
                   <FormHelperText>
-                    Date of birth must be before today
+                    {t('Date of birth must be before today')}
                   </FormHelperText>
                 )}
               </FormControl>
@@ -283,7 +287,7 @@ const StepOne = ({ handleChange, submitForm, data, sendErrors }) => {
               <CustomTextField
                 name='passportNumber'
                 disabled={watchType === 'selfReserve'}
-                label='Passport Number'
+                label={t('Passport Number')}
                 control={control}
                 type='text'
               />

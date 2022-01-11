@@ -11,7 +11,6 @@ import {
   TextField,
   FormGroup,
   Checkbox,
-  x,
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -23,6 +22,7 @@ import { toast } from 'react-toastify';
 
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from 'Contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const StepThree = ({ tour, travelers, data }) => {
   const { updateMe } = useContext(AuthContext);
@@ -35,6 +35,7 @@ const StepThree = ({ tour, travelers, data }) => {
     watch,
   } = useForm();
   const watchFields = watch();
+  const { t } = useTranslation();
 
   const [couponVal, setCoupon] = useState('');
   const [promoDiscount, setPromoDiscount] = useState(0);
@@ -110,7 +111,7 @@ const StepThree = ({ tour, travelers, data }) => {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
             <Typography variant='subtitle2' sx={{ mb: 4, mt: 2, pl: 2 }}>
-              Choose your payment method
+              {t('Choose your payment method')}
             </Typography>
             <Paper
               elevation={0}
@@ -127,14 +128,14 @@ const StepThree = ({ tour, travelers, data }) => {
                         <FormControlLabel
                           value='paypal'
                           control={<Radio />}
-                          label='Pay by Paypal'
+                          label={`${t('Pay by')} PAYPAL`}
                         />
                       </Grid>
                       <Grid item xs={12} sm={12}>
                         <FormControlLabel
                           value='card'
                           control={<Radio />}
-                          label='I want to pay by Card'
+                          label={t('I want to pay by Card')}
                         />
                       </Grid>
                       <Grid item xs={12} sm={12}>
@@ -157,7 +158,7 @@ const StepThree = ({ tour, travelers, data }) => {
                         }}
                       />
                     }
-                    label='use your GOODFLY Fidelity points'
+                    label={t('use your GOODFLY Fidelity points')}
                   />
                 </FormGroup>
                 {!(tour.sale && new Date(tour.saleExpires) >= new Date()) && (
@@ -171,9 +172,9 @@ const StepThree = ({ tour, travelers, data }) => {
                       <form>
                         <TextField
                           name='loyalty-points'
-                          label='Coupon Code'
+                          label={t('Coupon Code')}
                           type='text'
-                          errorMessage='Spacify your coupon code to get exclusive discount'
+                          errorMessage='Specify your coupon code to get exclusive discount'
                           value={couponVal}
                           onChange={(e) => setCoupon(e.target.value)}
                           disabled={promoDiscount > 0}
@@ -194,7 +195,9 @@ const StepThree = ({ tour, travelers, data }) => {
                           color='secondary'
                           onClick={handleCoupon}
                         >
-                          {promoDiscount > 0 ? 'Remove Coupon' : 'Apply Coupon'}
+                          {promoDiscount > 0
+                            ? t('Remove Coupon')
+                            : t('Apply Coupon')}
                         </Button>
                       </Box>
                     </Grid>
@@ -220,7 +223,7 @@ const StepThree = ({ tour, travelers, data }) => {
               fullWidth
               disabled={submitting}
             >
-              Finish Reservation
+              {t('Finish Reservation')}
             </Button>
           </Grid>
         </Grid>

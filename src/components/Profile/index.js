@@ -9,13 +9,15 @@ import { Person as PersonIcon } from '@material-ui/icons';
 import Page from 'components/common/Page';
 import ProfileTabs from './ProfileTabs';
 import { AuthContext } from 'Contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const Index = () => {
   const { user } = useContext(AuthContext);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
-    <Page title='Profile' description='Profile Page of User'>
+    <Page title={t('Profile')} description='Profile Page of User'>
       <Container mb={5} mt={10} display='flex' alignItems='center'>
         <Typography
           style={{

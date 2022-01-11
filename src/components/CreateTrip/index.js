@@ -192,11 +192,11 @@ const AddTrip = () => {
   };
 
   return (
-    <Page title='Create a Trip'>
+    <Page title={t('Create a Trip')}>
       <Container className={globalClasses.MainContainer}>
         <Banner
           imageUrl={img}
-          bannerTitle='I CREATE MY TRIP   '
+          bannerTitle={t('I create my trip')}
           align='center'
         />
         <Box sx={{ fontStyle: 'italic', mt: 7 }}>
@@ -278,7 +278,7 @@ const AddTrip = () => {
                     <CustomSelect
                       name='numOfParticipants'
                       control={control}
-                      message={t('Specify no of Participants')}
+                      message={t('Specify No Of Participants')}
                       placeholder={t('Participants')}
                       options={participants}
                       errors={errors}
@@ -288,9 +288,10 @@ const AddTrip = () => {
                     <CustomSelect
                       name='type'
                       control={control}
-                      message={t('Specify group type')}
+                      message={t('Specify Group Type')}
                       placeholder={t('You will be')}
                       options={type}
+                      getOptionLabel={(type) => t(type.label)}
                       errors={errors}
                     />
                   </Grid>
@@ -299,9 +300,10 @@ const AddTrip = () => {
                       <CustomSelect
                         name='type2'
                         control={control}
-                        message={t('Choose occasion')}
-                        placeholder={t('Couple occasion')}
+                        message={t('Choose Occasion')}
+                        placeholder={t('Couple Occasion')}
                         options={type2}
+                        getOptionLabel={(type2) => t(type2.label)}
                         errors={errors}
                       />
                     </Grid>
@@ -311,9 +313,10 @@ const AddTrip = () => {
                       <CustomSelect
                         name='groupType'
                         control={control}
-                        message={t('Choose occasion')}
-                        placeholder={t('Group occasion')}
+                        message={t('Choose Occasion')}
+                        placeholder={t('Group Occasion')}
                         options={groupType}
+                        getOptionLabel={(groupType) => t(groupType.label)}
                         errors={errors}
                       />
                     </Grid>
@@ -325,8 +328,9 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfAdults'
                           control={control}
-                          message={t('Specify no of adults')}
-                          placeholder={t('No of Adults')}
+                          getOptionLabel={(random) => t(random.label)}
+                          message={t('Specify No Of Adults')}
+                          placeholder={t('No Of Adults')}
                           options={random}
                           errors={errors}
                           preConfition={watchFields[2]?.value === 'friends'}
@@ -336,8 +340,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfAdolescents'
                           control={control}
-                          message={t('Specify no of adolescents')}
-                          placeholder={t('Adolescents')}
+                          message={t('Specify No Of Adolescents')}
+                          placeholder={t('No Of Adolescents')}
                           options={random}
                           errors={errors}
                         />
@@ -346,8 +350,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfChildren'
                           control={control}
-                          message={t('Specify no of children')}
-                          placeholder={t('No of Children')}
+                          message={`${t('Specify')} ${t('No Of Children')}`}
+                          placeholder={t('No Of Children')}
                           options={random}
                           errors={errors}
                         />
@@ -356,8 +360,8 @@ const AddTrip = () => {
                         <CustomSelect
                           name='numOfBabies'
                           control={control}
-                          message={t('Specify no of babies')}
-                          placeholder={t('No of Babies')}
+                          message={t('Specify No Of Babies')}
+                          placeholder={t('No Of Babies')}
                           options={random}
                           errors={errors}
                         />
@@ -579,6 +583,11 @@ const AddTrip = () => {
                               isSearchable={false}
                               placeholder={t('Desired Duration')}
                               options={desiredDuration}
+                              getOptionLabel={(desiredDuration) =>
+                                `${desiredDuration.label.split(' ')[0]} ${t(
+                                  desiredDuration.label.split(' ')[1]
+                                )}`
+                              }
                             />
                           )}
                         />
@@ -603,6 +612,7 @@ const AddTrip = () => {
                           isSearchable={false}
                           placeholder={t('Type Of Flight')}
                           options={flightType}
+                          getOptionLabel={(flightType) => t(flightType.label)}
                         />
                       )}
                     />
@@ -733,6 +743,7 @@ const AddTrip = () => {
                           isSearchable={false}
                           placeholder={t('Type Of Meals')}
                           options={meals}
+                          getOptionLabel={(meals) => t(meals.label)}
                         />
                       )}
                     />
@@ -753,8 +764,11 @@ const AddTrip = () => {
                         <Select
                           {...field}
                           isSearchable={false}
-                          placeholder={t('Transport on Site')}
+                          placeholder={t('Transport on site')}
                           options={transportOnSite}
+                          getOptionLabel={(transportOnSite) =>
+                            t(transportOnSite.label)
+                          }
                         />
                       )}
                     />
@@ -779,6 +793,9 @@ const AddTrip = () => {
                           isSearchable={false}
                           placeholder={t('Guide')}
                           options={guideAccompained}
+                          getOptionLabel={(guideAccompained) =>
+                            t(guideAccompained.label)
+                          }
                         />
                       )}
                     />
@@ -900,6 +917,9 @@ const AddTrip = () => {
                               options={clientCivility}
                               isDisabled
                               value={user.pronoun}
+                              getOptionLabel={(clientCivility) =>
+                                t(clientCivility.label)
+                              }
                               // disabled
                             />
                           )}
@@ -1057,7 +1077,9 @@ const AddTrip = () => {
                             disabled
                           />
                           {errors.country && !user.country && (
-                            <FormHelperText>Specify country</FormHelperText>
+                            <FormHelperText>
+                              {t('Specify country')}
+                            </FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -1078,7 +1100,9 @@ const AddTrip = () => {
                             disabled
                           />
                           {errors.email && !user.email && (
-                            <FormHelperText>Specify email</FormHelperText>
+                            <FormHelperText>
+                              {t('Specify email')}
+                            </FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -1121,7 +1145,7 @@ const AddTrip = () => {
                           />
                           {errors.telephoneNumber && !user.telephoneNumber && (
                             <FormHelperText>
-                              Specify your phone no
+                              {t('Specify your phone no')}
                             </FormHelperText>
                           )}
                         </FormControl>

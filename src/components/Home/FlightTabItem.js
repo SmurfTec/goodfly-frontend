@@ -14,9 +14,11 @@ import {
   CustomDatePicker,
   CustomSelect,
 } from 'components/FormControls';
+import { useTranslation } from 'react-i18next';
 
 const TabItem = () => {
   const classes = usestyles();
+  const { t } = useTranslation();
   const {
     formState: { errors },
     register,
@@ -54,7 +56,7 @@ const TabItem = () => {
           onClick={setSelectedOption}
           sx={{ marginRight: 3 }}
         >
-          Round Trip
+          {t('Round Trip')}
           <span
             className={`${classes.slider} ${
               tripOption === 0 && classes.selectedOption
@@ -67,7 +69,7 @@ const TabItem = () => {
           className={classes.tabItem}
           onClick={setSelectedOption}
         >
-          One Way Ticket
+          {t('One Way Ticket')}
           <span
             className={`${classes.slider} ${
               tripOption === 1 && classes.selectedOption
@@ -80,44 +82,44 @@ const TabItem = () => {
           <Grid item xs={12} sm={6}>
             <CustomInputField
               name='departure'
-              label='Departure'
+              label={t('Departure')}
               type='text'
+              placeholder={t('Departure').toLowerCase()}
               register={register}
               errors={errors}
-              errorMessage='Where are we going from?'
+              errorMessage={`${t('Where are we going from')}?`}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <CustomInputField
               name='destination'
-              label='Destination'
+              label={t('Destination')}
+              placeholder={t('Destination').toLowerCase()}
               type='text'
               register={register}
               errors={errors}
-              errorMessage='Where are we going ?'
+              errorMessage={`${t('Where are we going')}?`}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <CustomDatePicker
               type='date'
-              label='To Go'
+              label={t('To Go')}
               name='togoDate'
               errors={errors}
-              errorMessage='Specify the date on which you want to go'
+              errorMessage={t('Specify the date on which you want to go')}
               register={register}
             />
           </Grid>
           {tripOption === 0 && (
             <Grid item xs={12} sm={6}>
-              <FormControl
-                fullWidth
-                error={Boolean(errors.returnDate)}
-              >
+              <FormControl fullWidth error={Boolean(errors.returnDate)}>
                 <Typography variant='body2' sx={{ mb: 1 }}>
-                  Return
+                  {t('Return')}
                 </Typography>
                 <input
                   type='date'
+                  style={{ marginBottom: 0 }}
                   className={classes.textInput}
                   {...register('returnDate', {
                     required: tripOption === 0,
@@ -126,7 +128,7 @@ const TabItem = () => {
 
                 {errors.returnDate && (
                   <FormHelperText>
-                    Specify your return date
+                    {t('Specify your return date')}
                   </FormHelperText>
                 )}
               </FormControl>
@@ -134,12 +136,12 @@ const TabItem = () => {
           )}
 
           <Grid item xs={12} sm={6}>
-            <label className={classes.label}>Passengers</label>
+            <label className={classes.label}>{t('Passengers')}</label>
             <CustomSelect
               name='noOfPassengers'
               control={control}
-              message='Specify no of Passengers'
-              placeholder='Passengers'
+              message={t('Specify no of Passengers')}
+              placeholder={t('Passengers')}
               options={[
                 { value: '1', label: '1' },
                 { value: '2', label: '2' },
@@ -168,11 +170,11 @@ const TabItem = () => {
                 />
               )}
             />
-            <label>Direct flights only</label>
+            <label>{t('Direct flights only')}</label>
           </Grid>
           <Grid item sx={{ marginTop: 2 }} sm={12}>
             <Button variant='contained' color='primary' type='submit'>
-              Start a reseach
+              {t('Start a Research')}
             </Button>
           </Grid>
         </Grid>

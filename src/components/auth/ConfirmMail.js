@@ -9,9 +9,11 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from 'Utils/constants';
 import Page from 'components/common/Page';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmMail = ({ match, history }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const { token } = match.params;
 
   const [authenticating, setAuthenticating] = useState(true);

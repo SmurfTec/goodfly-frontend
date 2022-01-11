@@ -12,6 +12,7 @@ import { withRouter } from 'react-router-dom';
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIconFilled from '@material-ui/icons/Favorite';
 import FavoriteIconOutlined from '@material-ui/icons/FavoriteBorder';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 
 const TripCard = ({ tour, history }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const {
     _id,
@@ -103,7 +105,7 @@ const TripCard = ({ tour, history }) => {
                     60 /
                     24
                 )}
-                {' Days '}
+                {` ${t('Days')} `}
               </>
             )}{' '}
             {boardType}
@@ -129,7 +131,7 @@ const TripCard = ({ tour, history }) => {
           style={{ borderRadius: 0, paddingInline: 30 }}
           onClick={handleClick}
         >
-          Find Out More
+          {t('Find Out More')}
         </Button>
       </CardActions>
     </Card>

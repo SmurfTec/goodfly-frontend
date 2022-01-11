@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import relayPoints from './relayPointsData';
 import Button from '@material-ui/core/Button';
+import { useTranslation } from 'react-i18next';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -207,11 +208,12 @@ const MapBox = () => {
       center: [-77.007481, 38.876516],
     });
   };
+  const { t } = useTranslation();
 
   return (
     <div>
       <Button variant='contained' onClick={changeCenter}>
-        Change Center
+        {t('Change Center')}
       </Button>
       <div ref={mapContainer} className='map-container' />
     </div>

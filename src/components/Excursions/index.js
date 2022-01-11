@@ -19,6 +19,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Paper, TextField } from '@material-ui/core';
 import Banner from 'components/common/tours/Banner';
 import Page from 'components/common/Page';
+import { useTranslation } from 'react-i18next';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
@@ -27,6 +28,7 @@ const ExcursionaHome = ({ location }) => {
   const globalClasses = useGlobalClasses();
   const [excursionTours, setExcursionTours] = useState();
   const [tripType, setTripType] = React.useState('organized');
+  const { t } = useTranslation();
   const theme = useTheme();
   const styleProps = {
     location,
@@ -50,7 +52,7 @@ const ExcursionaHome = ({ location }) => {
 
   const defaultProps = {
     options: ['all', 'excursion', 'circuit'],
-    getOptionLabel: (option) => option,
+    getOptionLabel: (option) => t(option),
   };
 
   useEffect(() => {
@@ -133,12 +135,16 @@ const ExcursionaHome = ({ location }) => {
   };
 
   return (
-    <Page title='GoodFly |  Excursions'>
+    <Page title={`GoodFly |  ${t('Excursions')}`}>
       <CssBaseline />
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
-        <Banner imageUrl={ethicalImg} bannerTitle='Excursions' align='left' />
+        <Banner
+          imageUrl={ethicalImg}
+          bannerTitle={t('Excursions')}
+          align='left'
+        />
 
         <section className={classes.filter}>
           <Button
@@ -146,7 +152,7 @@ const ExcursionaHome = ({ location }) => {
             startIcon={<TuneIcon />}
             onClick={filterMenuOpen}
           >
-            Select a filter
+            {t('Select A Filter')}
           </Button>
 
           <Autocomplete
@@ -162,7 +168,7 @@ const ExcursionaHome = ({ location }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label='Filter by Type'
+                label={t('Filter by Type')}
                 margin='normal'
                 size='small'
                 color='primary'
@@ -183,7 +189,7 @@ const ExcursionaHome = ({ location }) => {
                 data-filter={option}
                 onClick={filterSelected}
               >
-                {option}
+                {t(option)}
               </MenuItem>
             ))}
           </Menu>
@@ -191,7 +197,7 @@ const ExcursionaHome = ({ location }) => {
 
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
-          Do you have a few days ahead of you? Découvrez les ventes
+          {t('Do you have a few days ahead of you? Discover the sales')}
         </Typography>
         <Typography
           variant='h5'
@@ -201,7 +207,7 @@ const ExcursionaHome = ({ location }) => {
             marginBottom: '2rem',
           }}
         >
-          Flash GOODFLY : les plans dernière minute à prix cassés.
+          {t('Flash GOODFLY : last minute plans at knockdown prices.')}
         </Typography>
         {/* Upper GridView */}
         <Grid container spacing={4}>
@@ -213,7 +219,7 @@ const ExcursionaHome = ({ location }) => {
                 </Grid>
               ))
             ) : (
-              <Typography variant='h4'>No Tours Yet !</Typography>
+              <Typography variant='h4'>{t('No Tours Yet')} !</Typography>
             )
           ) : (
             <div className='loader'></div>

@@ -38,6 +38,7 @@ import partner2 from 'Assets/img/partner2.png';
 import partner3 from 'Assets/img/partner3.png';
 import partner4 from 'Assets/img/partner4.png';
 import partner5 from 'Assets/img/partner5.png';
+import { useTranslation } from 'react-i18next';
 
 const logos = [
   {
@@ -80,6 +81,7 @@ const Index = () => {
   const [tourCards, setTourCards] = useState();
 
   const [flashSales, setFlashSales] = useState();
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState('');
 
@@ -108,7 +110,7 @@ const Index = () => {
   };
 
   return (
-    <Page title='Goodfly | Home'>
+    <Page title={`Goodfly | ${t('Home')}`}>
       <Container
         sx={{ my: 2 }}
         // className={classes.root}
@@ -167,9 +169,10 @@ const Index = () => {
               sx={{ my: 2, fontStyle: 'italic' }}
               align='center'
             >
-              Take advantage of the best offers on flights, boats, trains,
-              vehicle rentals and accommodation by signing up to the{' '}
-              <a href='/'>newsletters GOODFLY !</a>
+              {t(
+                'Take advantage of the best offers on flights, boats, trains, vehicle rentals and accommodation by signing up to the'
+              )}{' '}
+              <a href='/'>{`${t('newsletters')} GOODFLY !`}</a>
             </Typography>
           </Grid>
         </Grid>
@@ -180,7 +183,7 @@ const Index = () => {
           align='center'
           color='text.secondary'
         >
-          Explore our latest organized trips
+          {t('Explore our latest organized trips')}
         </Typography>
         {offers && offers.length > 0 && (
           <CarouselLayout>
@@ -195,17 +198,19 @@ const Index = () => {
       <Container disableGutters>
         <section className={`${classes.promoBigImg} ${classes.travelPromo}`}>
           <div className={classes.promoContent}>
-            <Typography variant='h2'>Travel made to measure !</Typography>
+            <Typography variant='h2'>
+              {t('Travel made to measure')} !
+            </Typography>
             <div className={classes.travelPromoDesc}>
               <Typography variant='subtitle1'>
-                The heart of our know-how is to be at your disposal to imagine
-                and design the trip of your dreams according to your desires and
-                principles.
+                {t(
+                  'The heart of our know-how is to be at your disposal to imagine and design the trip of your dreams according to your desires and principles.'
+                )}
                 <br />
                 <br />
-                Because understanding is above all knowing and will accompany
-                you throughout your journey. listen, a dedicated advisor will
-                follow your request
+                {t(
+                  'Because understanding is above all knowing and will accompany you throughout your journey. listen, a dedicated advisor will follow your request'
+                )}
               </Typography>
               <Box sx={{ textAlign: 'center' }}>
                 <Button
@@ -220,7 +225,7 @@ const Index = () => {
                   component={Link}
                   to='/tours/create'
                 >
-                  Ask for a quote
+                  {t('Ask For A Quote')}
                 </Button>
               </Box>
             </div>
@@ -244,7 +249,7 @@ const Index = () => {
                 align='center'
                 color='text.secondary'
               >
-                Now is the time to book!
+                {t('Now is the time to book')}!
               </Typography>
               <Paper
                 className={`${classes.promoBigImg} ${classes.hajjOmraPromo}`}
@@ -258,22 +263,23 @@ const Index = () => {
                     top: '70%',
                     left: '3%',
                   }}
+                  alt=''
                 />
 
                 <div className={classes.hajjOmraPromoDesc}>
                   <Typography variant='h3' align='center' sx={{ mb: 2 }}>
-                    Hajj 2021
+                    {`${t('hajj').toUpperCase()} 2021`}
                   </Typography>
                   <Typography variant='subtitle1'>
-                    Discover all of our offers for the 2021 pilgrimage.
+                    {t('Discover all of our offers for the 2021 pilgrimage.')}
                     <br />
-                    The GOODFLY team offers you several scholarships. formulas
-                    that will suit all Pilgrims are looked after by a staff that
-                    meets your expectations.
+                    {t(
+                      'The GOODFLY team offers you several scholarships. formulas that will suit all Pilgrims are looked after by a staff that meets your expectations.'
+                    )}
                     <br />
-                    Explanations and clarifications of each religious rites.
-                    Visits of scholars and Departures possible from all over
-                    France.
+                    {t(
+                      'Explanations and clarifications of each religious rites. Visits of scholars and Departures possible from all over France.'
+                    )}
                   </Typography>
                   <Box
                     sx={{
@@ -295,7 +301,7 @@ const Index = () => {
                       component={Link}
                       to={`/tours/spiritual?type=hajj`}
                     >
-                      see the offers
+                      {t('See the offers')}
                     </Button>
                   </Box>
                 </div>
@@ -326,7 +332,7 @@ const Index = () => {
             sx={{ mb: 1, fontStyle: 'italic' }}
             color='text.secondary'
           >
-            types of trips to discover with GOODFLY!
+            {t('types of trips to discover with GOODFLY')}!
           </Typography>
         </Box>
 
@@ -335,21 +341,21 @@ const Index = () => {
             <VoyageCard
               image={MalaysiaImg}
               url='/tours/ethical?type=organic'
-              title='Organized Trips'
+              title={t('Organized Trips')}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <VoyageCard
               image={AlAqsaMosqueImg}
               url='/tours/spiritual'
-              title='Spiritual Travels'
+              title={t('Spiritual Travels')}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <VoyageCard
               image={TailorMadeTripImg}
               url='/tours/create'
-              title='Create Trips'
+              title={t('Create Trips')}
             />
           </Grid>
         </Grid>
@@ -363,6 +369,7 @@ const Index = () => {
             marginTop: '3rem',
             width: '100%',
           }}
+          alt=''
         />
       </Container>
       <Container sx={{ mt: 10 }}>
@@ -378,7 +385,8 @@ const Index = () => {
           <Box style={{ flexGrow: 1 }}>
             <Box className={classes.newsLetterSubs}>
               <Typography variant='h6'>
-                Receive the best offers <span>via the newsletter GOODFLY</span>
+                {t('Receive the best offers')}{' '}
+                <span>{t('via the newsletter GOODFLY')}</span>
               </Typography>
               <Grid
                 container
@@ -388,7 +396,7 @@ const Index = () => {
                   <input
                     className={classes.textInput}
                     type='text'
-                    placeholder='Enter your e-mail address here'
+                    placeholder={t('Enter Your Email Address Here')}
                     value={email}
                     onChange={handleEmailChange}
                   />
@@ -399,7 +407,7 @@ const Index = () => {
                     fullWidth
                     onClick={handleSubscribe}
                   >
-                    Send
+                    {t('Send')}
                   </Button>
                 </Grid>
               </Grid>
@@ -447,7 +455,7 @@ const Index = () => {
                   flexGrow: 1,
                 }}
               >
-                <img src={smallLogo} style={{ margin: 'auto' }} />
+                <img src={smallLogo} style={{ margin: 'auto' }} alt='' />
                 <Typography
                   variant='p'
                   style={{
@@ -455,7 +463,7 @@ const Index = () => {
                     fontSize: 14,
                   }}
                 >
-                  Locate on the map
+                  {t('Locate on the map')}
                 </Typography>
                 <iframe
                   src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20945.283694899448!2d1.911903590271735!3d48.98850372757067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6928965bfe351%3A0x8a35de2c8d45b455!2s60%20Rue%20Maurice%20Bellonte%2C%2078130%20Les%20Mureaux%2C%20France!5e0!3m2!1sen!2s!4v1637830682120!5m2!1sen!2s'
@@ -464,11 +472,16 @@ const Index = () => {
                   // style={{'border:0'}}
                   allowFullScreen='true'
                   loading='lazy'
+                  title='map'
                 ></iframe>
               </Box>
             </Box>
             <Box sx={{ flexGrow: 1 }}>
-              <img src={storeImage} style={{ width: '100%', height: '100%' }} />
+              <img
+                src={storeImage}
+                style={{ width: '100%', height: '100%' }}
+                alt=''
+              />
             </Box>
           </Box>
         </Box>
@@ -481,7 +494,7 @@ const Index = () => {
             color='textSecondary'
             sx={{ padding: '1rem 1rem 0rem' }}
           >
-            Our Partners
+            {t('Our Partners')}
           </Typography>
           <Box
             sx={{

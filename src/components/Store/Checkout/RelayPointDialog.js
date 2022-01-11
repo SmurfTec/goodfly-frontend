@@ -19,6 +19,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useForm } from 'react-hook-form';
 // import {MapBox1 as MapBox} from './MapBox';
 import { MapBox2 as MapBox } from './MapBox';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +69,8 @@ const RelayPointDialog = ({ open, closeDialog }) => {
   };
 
   const validatePostalCode = () => {};
+  const { t } = useTranslation();
+
   return (
     <Dialog
       fullWidth
@@ -79,7 +82,7 @@ const RelayPointDialog = ({ open, closeDialog }) => {
       className={classes.root}
     >
       <DialogTitle sx={{ display: 'flex' }}>
-        Choose your relay point
+        {t('Choose your relay point')}
         <Close
           style={{
             marginLeft: 'auto',
@@ -105,14 +108,14 @@ const RelayPointDialog = ({ open, closeDialog }) => {
                       maxLength: 10,
                       minLength: 5,
                     })}
-                    placeholder='Postal Code'
+                    placeholder={t('Postal Code')}
                   />
                   {errors.postalCode && (
-                    <FormHelperText>Postal Code</FormHelperText>
+                    <FormHelperText>{t('Postal Code')}</FormHelperText>
                   )}
                 </FormControl>
                 <Button variant='contained' color='primary' type='submit'>
-                  Validate
+                  {t('Validate')}
                 </Button>
               </Box>
             </form>
@@ -124,10 +127,10 @@ const RelayPointDialog = ({ open, closeDialog }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog} color='primary'>
-          Close
+          {t('Close')}
         </Button>
         <Button color='primary' type='submit'>
-          Modify
+          {t('Modify')}
         </Button>
       </DialogActions>
     </Dialog>

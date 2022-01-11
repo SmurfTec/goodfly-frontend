@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  Grid,
-  Box,
-  FormControlLabel,
-  Radio,
-} from '@material-ui/core';
+import { Grid, Box, FormControlLabel, Radio } from '@material-ui/core';
 
 import paypalSvg from 'Assets/svg/paypal.svg';
 import { ReactSVG } from 'react-svg';
@@ -26,11 +21,7 @@ const PaypalOption = ({ value }) => {
             },
           }}
         >
-          <FormControlLabel
-            value={value}
-            label='Paypal'
-            control={<Radio />}
-          />
+          <FormControlLabel value={value} label='Paypal' control={<Radio />} />
           <ReactSVG src={paypalSvg} />
         </Box>
       </Grid>

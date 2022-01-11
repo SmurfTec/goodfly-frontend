@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const MediaCard = (props) => {
   const { imageUrl, title, history } = props;
   const classes = useStyles(props);
+  const { t } = useTranslation();
 
   const handleClick = () => {
     history.push(`/tours/destinations/${title}`);
@@ -55,7 +57,9 @@ const MediaCard = (props) => {
   return (
     <Container className={classes.root} onClick={handleClick}>
       <section className={classes.title}>
-        <Typography variant='h2'>{title}</Typography>
+        <Typography variant='h2'>
+          {`${t(title).slice(0, 1).toUpperCase()}${t(title).slice(1)}`}
+        </Typography>
       </section>
     </Container>
   );

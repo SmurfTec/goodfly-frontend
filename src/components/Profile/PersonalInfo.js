@@ -26,6 +26,7 @@ import {
 import { AuthContext } from 'Contexts/AuthContext';
 import Attachments from './Attachments';
 import useArray from 'Hooks/useArray';
+import { useTranslation } from 'react-i18next';
 import { getMuiDateFormat } from 'Utils/constants';
 // ------------------------ //
 
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const PersonalInfo = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const { t } = useTranslation();
   const [
     attachments,
     setAttachments,
@@ -78,6 +80,7 @@ const PersonalInfo = () => {
     instagramProfile: '',
     twitterProfile: '',
     snapChatProfile: '',
+    pronoun: 'Mr',
   });
 
   useEffect(() => {
@@ -90,6 +93,7 @@ const PersonalInfo = () => {
   }, [user]);
 
   const handleChange = (e) => {
+    console.log(`e.target.value`, e.target.value);
     setState((st) => ({ ...st, [e.target.name]: e.target.value }));
   };
 
@@ -105,7 +109,7 @@ const PersonalInfo = () => {
           size='small'
           className={classes.FormControl}
         >
-          <FormLabel component='legend'>Civility</FormLabel>
+          <FormLabel component='legend'>{t('Civility')}</FormLabel>
           <RadioGroup
             aria-label='gender'
             name='pronoun'
@@ -120,17 +124,17 @@ const PersonalInfo = () => {
             <FormControlLabel
               value='Mr'
               control={<Radio size='small' />}
-              label='Mr'
+              label={t('Mr')}
             />
             <FormControlLabel
               value='Mrs'
               control={<Radio size='small' />}
-              label='Mrs'
+              label={t('Mrs')}
             />
             <FormControlLabel
               value='Ms'
               control={<Radio size='small' />}
-              label='Miss'
+              label={t('Ms')}
             />
           </RadioGroup>
         </FormControl>
@@ -146,7 +150,7 @@ const PersonalInfo = () => {
           }}
           size='small'
         >
-          {user?.isVerified ? 'Verified' : 'Not Verified'}{' '}
+          {user?.isVerified ? t('Verified') : t('Not Verified')}{' '}
           {user?.isVerified && <CheckCircleOutlineOutlinedIcon />}
         </Typography>
       </Box>
@@ -161,7 +165,7 @@ const PersonalInfo = () => {
           value={state.firstName}
           onChange={handleChange}
           id='standard-basic'
-          label='First Name'
+          label={t('First Name')}
           variant='standard'
         />
         <TextField
@@ -169,7 +173,7 @@ const PersonalInfo = () => {
           value={state.lastName}
           onChange={handleChange}
           id='standard-basic'
-          label='Last Name'
+          label={t('Last Name')}
           variant='standard'
         />
         <TextField
@@ -177,7 +181,7 @@ const PersonalInfo = () => {
           value={state.spouseName}
           onChange={handleChange}
           id='standard-basic'
-          label='Spouse Name'
+          label={t('Spouse Name')}
           variant='standard'
         />
       </Box>
@@ -194,7 +198,7 @@ const PersonalInfo = () => {
           value={state.email}
           onChange={handleChange}
           id='standard-basic'
-          label='Email'
+          label={t('Email')}
           variant='standard'
         />{' '}
         <TextField
@@ -202,7 +206,7 @@ const PersonalInfo = () => {
           value={state.telephoneNumber}
           onChange={handleChange}
           id='standard-basic'
-          label='Telephone Number'
+          label={t('Telephone')}
           variant='standard'
           type='number'
         />
@@ -211,7 +215,7 @@ const PersonalInfo = () => {
           value={state.telephoneLineNumber}
           onChange={handleChange}
           id='standard-basic'
-          label='Landline Telephone'
+          label={t('Landline Telephone')}
           variant='standard'
           type='number'
         />
@@ -228,7 +232,7 @@ const PersonalInfo = () => {
             value={state.address}
             onChange={handleChange}
             id='standard-basic'
-            label='Address'
+            label={t('Address')}
             variant='standard'
             fullWidth
           />
@@ -239,7 +243,7 @@ const PersonalInfo = () => {
             value={state.additionalAddress}
             onChange={handleChange}
             id='standard-basic'
-            label='Additional Address'
+            label={t('Additional Address')}
             variant='standard'
             fullWidth
           />
@@ -259,7 +263,7 @@ const PersonalInfo = () => {
             value={state.postalCode}
             onChange={handleChange}
             id='standard-basic'
-            label='Postal Code'
+            label={t('Postal Code')}
             variant='standard'
             type='number'
             style={{ marginRight: 50 }}
@@ -269,7 +273,7 @@ const PersonalInfo = () => {
             value={state.city}
             onChange={handleChange}
             id='standard-basic'
-            label='City'
+            label={t('City')}
             variant='standard'
           />
         </Box>
@@ -279,7 +283,7 @@ const PersonalInfo = () => {
             value={state.country}
             onChange={handleChange}
             id='standard-basic'
-            label='Country'
+            label={t('Country')}
             variant='standard'
             fullWidth
           />
@@ -299,7 +303,7 @@ const PersonalInfo = () => {
             value={state.dateOfBirth}
             onChange={handleChange}
             id='standard-basic'
-            label='Date of Birth'
+            label={t('Date Of Birth')}
             variant='standard'
             style={{ marginRight: 50 }}
             type='date'
@@ -309,7 +313,7 @@ const PersonalInfo = () => {
             value={state.nationality}
             onChange={handleChange}
             id='standard-basic'
-            label='Nationality'
+            label={t('Nationality')}
             variant='standard'
           />
         </Box>
@@ -328,7 +332,7 @@ const PersonalInfo = () => {
             value={state.passportNumber}
             onChange={handleChange}
             id='standard-basic'
-            label='Passport Number'
+            label={t('Passport Number')}
             variant='standard'
             style={{ marginRight: 50 }}
           />
@@ -337,7 +341,7 @@ const PersonalInfo = () => {
             value={state.passportDateOfIssue}
             onChange={handleChange}
             id='standard-basic'
-            label='Passport Date Of Issue'
+            label={t('Passport Date of Issue')}
             variant='standard'
             type='date'
           />
@@ -348,7 +352,7 @@ const PersonalInfo = () => {
             value={state.passportPlaceOfIssue}
             onChange={handleChange}
             id='standard-basic'
-            label='Passport Place Of Issue'
+            label={t('Passport Place of Issue')}
             variant='standard'
           />
         </Box>
@@ -423,7 +427,7 @@ const PersonalInfo = () => {
         }}
         onClick={handleSave}
       >
-        Save
+        {t('Save')}
       </Button>
     </Container>
   );

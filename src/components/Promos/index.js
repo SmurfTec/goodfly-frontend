@@ -18,12 +18,14 @@ import { Paper, TextField } from '@material-ui/core';
 import Banner from 'components/common/tours/Banner';
 import ethicalImg from 'Assets/img/ethical-main.png';
 import Page from 'components/common/Page';
+import { useTranslation } from 'react-i18next';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 
 const Promos = ({ location }) => {
   const { tours } = useContext(ToursContext);
   const globalClasses = useGlobalClasses();
+  const { t } = useTranslation();
 
   const [flashPromos, setFlashPromos] = useState();
 
@@ -115,14 +117,14 @@ const Promos = ({ location }) => {
   };
 
   return (
-    <Page title='GoodFly |  Fresh Arrivals'>
+    <Page title={`GoodFly |  ${t('Fresh Arrivals')}`}>
       <CssBaseline />
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <Banner
           imageUrl={ethicalImg}
-          bannerTitle='Fresh Arrivals'
+          bannerTitle={t('Fresh Arrivals')}
           align='left'
         />
         <section className={classes.filter}>
@@ -133,7 +135,7 @@ const Promos = ({ location }) => {
             onClick={filterMenuOpen}
             sx={{ cursor: 'pointer' }}
           >
-            Select a filter
+            {t('Select A Filter')}
           </Button>
 
           <Menu
@@ -150,7 +152,7 @@ const Promos = ({ location }) => {
                 data-filter={option}
                 onClick={filterSelected}
               >
-                {option}
+                {t(option)}
               </MenuItem>
             ))}
           </Menu>
@@ -158,7 +160,7 @@ const Promos = ({ location }) => {
 
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
-          Do you have a few days ahead of you? Découvrez les ventes
+          {t('Do you have a few days ahead of you? Discover the sales')}
         </Typography>
         <Typography
           variant='h5'
@@ -168,7 +170,7 @@ const Promos = ({ location }) => {
             marginBottom: '2rem',
           }}
         >
-          Flash GOODFLY : les plans dernière minute à prix cassés.
+          {t('Flash GOODFLY : last minute plans at knockdown prices.')}
         </Typography>
         {/* Upper GridView */}
         <Grid container spacing={4}>
@@ -180,7 +182,7 @@ const Promos = ({ location }) => {
                 </Grid>
               ))
             ) : (
-              <Typography variant='h4'>No Tours Yet !</Typography>
+              <Typography variant='h4'>{t('No Tours Yet')} !</Typography>
             )
           ) : (
             <div className='loader'></div>

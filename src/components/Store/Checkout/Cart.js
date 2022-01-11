@@ -5,6 +5,7 @@ import { styles } from 'Styles/Cart/CartItemStyles';
 import TotalBill from './TotalBill';
 import Back from '@material-ui/icons/ArrowBackIos';
 import { Link, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Cart = ({
   validateStep,
@@ -15,16 +16,20 @@ const Cart = ({
 }) => {
   const classes = styles();
   const history = useHistory();
+  const { t } = useTranslation();
+
   return (
     <>
       <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid item xs={12} sm={12} md={7}>
           <Box display='flex' onClick={() => history.push('/store')}>
             <Back fontSize='small' />
-            <Typography variant='subtitle2'>Back to Store</Typography>
+            <Typography variant='subtitle2'>{`${t('Back to')} ${t(
+              'Store'
+            )}`}</Typography>
           </Box>
           <Typography variant='h4' sx={{ mt: 8 }}>
-            Your Basket
+            {t('Your Basket')}
           </Typography>
           <Paper elevation={0} sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}>
             <Box
@@ -43,27 +48,27 @@ const Cart = ({
                     variant='subtitle1'
                     className={classes.descriptionHeader}
                   >
-                    Product
+                    {t('Product')}
                   </Typography>
                   <Typography
                     variant='subtitle1'
                     className={classes.quantityHeader}
                   >
-                    Quantity
+                    {t('Quantity')}
                   </Typography>
                   <Typography
                     variant='subtitle1'
                     align='right'
                     className={classes.priceHeader}
                   >
-                    Price
+                    {t('Price')}
                   </Typography>
                   <Typography
                     variant='subtitle1'
                     align='right'
                     className={classes.priceHeader}
                   >
-                    Sub-total
+                    {t('Sub-total')}
                   </Typography>
                 </>
               )}
@@ -85,7 +90,7 @@ const Cart = ({
               })
             ) : (
               <Typography variant='h5'>
-                You Have NO Products on the cart
+                {t('You Have NO Products on the cart')}
               </Typography>
             )}
           </Paper>

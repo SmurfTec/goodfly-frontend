@@ -13,6 +13,7 @@ import {
   CardMedia,
   CardContent,
 } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { Phone, WhatsApp } from '@material-ui/icons';
 // * ------------------- * //
 
@@ -49,6 +50,7 @@ const styles = makeStyles((theme) => ({
 
 const ContactCard = ({ image }) => {
   const classes = styles();
+  const { t } = useTranslation();
 
   return (
     <Card className={classes.card} component='div'>
@@ -67,12 +69,12 @@ const ContactCard = ({ image }) => {
             color: '#fff',
           }}
         >
-          Contact Us
+          {t('Contact Us')}
         </Typography>
         <Grid container>
           <Grid item xs={6} align='center'>
             <Typography variant='h5' gutterBottom>
-              Call the GoodFly Agency
+              {t('Call the GoodFly Agency')}
             </Typography>
             <Button variant='contained' color='primary' startIcon={<Phone />}>
               01 34 74 19 39
@@ -80,7 +82,7 @@ const ContactCard = ({ image }) => {
           </Grid>
           <Grid item xs={6} align='center'>
             <Typography variant='h5' gutterBottom>
-              Contact GoodFly via whatsapp
+              {t('Contact the GoodFly via Whatsapp')}
             </Typography>
             <Button
               variant='contained'

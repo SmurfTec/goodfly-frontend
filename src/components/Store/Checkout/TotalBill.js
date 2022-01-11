@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Typography, Button, Box, Paper, Divider } from '@material-ui/core';
 import { makeReq } from 'Utils/constants';
+import { useTranslation } from 'react-i18next';
 
 const BillingRow = ({ slug, amount }) => (
   <Box
@@ -67,10 +68,11 @@ const TotalBill = ({
     usePoints,
   ]);
 
+  const { t } = useTranslation();
   return (
     <>
       <Typography variant='h4' sx={{ mt: 8 }}>
-        Basket total
+        {t('Basket total')}
       </Typography>
       <Paper elevation={0} sx={{ backgroundColor: '#fafafa', p: 2, mt: 3 }}>
         <Box
@@ -81,13 +83,13 @@ const TotalBill = ({
             my: 3,
           }}
         >
-          <BillingRow slug='Subtotal' amount={cart.subTotal} />
-          <BillingRow slug='Delivery Charges' amount={deliveryPrice} />
+          <BillingRow slug={t('Subtotal')} amount={cart.subTotal} />
+          <BillingRow slug={t('Delivery Charges')} amount={deliveryPrice} />
 
           <Divider sx={{ my: 3, mx: -3 }} />
 
           <BillingRow
-            slug='LoyaltyPoints Discount'
+            slug={t('LoyaltyPoints Discount')}
             amount={
               usePoints === true
                 ? loyaltyPoints > cart.subTotal
@@ -97,7 +99,7 @@ const TotalBill = ({
             }
           />
           <BillingRow
-            slug='PromoCode Discount'
+            slug={t('PromoCode Discount')}
             amount={((cart.total + deliveryPrice) * promoDiscount) / 100}
           />
 
@@ -111,7 +113,7 @@ const TotalBill = ({
             }}
           >
             <Typography variant='h4' color='textSecondary'>
-              Total
+              {t('Total')}
             </Typography>
             <Typography variant='h4' color='textSecondary'>
               {/* {cart.total + deliveryPrice} € */}
@@ -130,7 +132,7 @@ const TotalBill = ({
           onClick={validateForm}
           disabled={cart.orderItems.length === 0 || isSubmitting}
         >
-          VALIDATE THE ORDER
+          {t('VALIDATE THE ORDER')}
         </Button>
       ) : (
         <Button
@@ -142,7 +144,7 @@ const TotalBill = ({
           fullWidth
           disabled={!formName}
         >
-          VALIDATE THE ORDER
+          {t('VALIDATE THE ORDER')}
         </Button>
       )}
     </>

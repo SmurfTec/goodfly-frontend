@@ -19,6 +19,7 @@ import Banner from 'components/common/tours/Banner';
 import ethicalImg from 'Assets/img/ethical-main.png';
 import Page from 'components/common/Page';
 import PaginationBar from 'components/common/Pagination';
+import { useTranslation } from 'react-i18next';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 const TOURS_PER_PAGE = 12;
@@ -46,7 +47,7 @@ const EthicalHome = ({ location }) => {
 
   const tripTypes = {
     options: ['all', 'organic', 'organized'],
-    getOptionLabel: (option) => option,
+    getOptionLabel: (option) => t(option),
   };
 
   const handleTripTypeChange = (event, value) => {
@@ -90,6 +91,8 @@ const EthicalHome = ({ location }) => {
 
   //? Filter Menu State
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { t } = useTranslation();
+
   const open = Boolean(anchorEl);
 
   //? Closing filter menu
@@ -159,14 +162,14 @@ const EthicalHome = ({ location }) => {
   };
 
   return (
-    <Page title='GoodFly |  Ethical Tours'>
+    <Page title={`GoodFly |  ${t('Ethical Tours')}`}>
       <CssBaseline />
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
         <Banner
           imageUrl={ethicalImg}
-          bannerTitle='Ethical Tours'
+          bannerTitle={t('Ethical Tours')}
           align='left'
         />
         <section className={classes.filter}>
@@ -177,7 +180,7 @@ const EthicalHome = ({ location }) => {
             onClick={filterMenuOpen}
             sx={{ cursor: 'pointer' }}
           >
-            Select a filter
+            {t('Select A Filter')}
           </Button>
 
           <Autocomplete
@@ -193,7 +196,7 @@ const EthicalHome = ({ location }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label='Filter by Type'
+                label={t('Filter by Type')}
                 margin='normal'
                 size='small'
                 color='primary'
@@ -215,7 +218,7 @@ const EthicalHome = ({ location }) => {
                 data-filter={option}
                 onClick={filterSelected}
               >
-                {option}
+                {t(option)}
               </MenuItem>
             ))}
           </Menu>
@@ -223,7 +226,7 @@ const EthicalHome = ({ location }) => {
 
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
-          Do you have a few days ahead of you? Découvrez les ventes
+          {t('Do you have a few days ahead of you? Discover the sales')}
         </Typography>
         <Typography
           variant='h5'
@@ -233,7 +236,7 @@ const EthicalHome = ({ location }) => {
             marginBottom: '2rem',
           }}
         >
-          Flash GOODFLY : les plans dernière minute à prix cassés.
+          {t('Flash GOODFLY : last minute plans at knockdown prices.')}
         </Typography>
         {/* Upper GridView */}
         <Grid container spacing={4}>
@@ -251,7 +254,7 @@ const EthicalHome = ({ location }) => {
                   </Grid>
                 ))
             ) : (
-              <Typography variant='h4'>No Tours Yet !</Typography>
+              <Typography variant='h4'>{t('No Tours Yet')} !</Typography>
             )
           ) : (
             <div className='loader'></div>

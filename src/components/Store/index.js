@@ -15,11 +15,13 @@ import StoreSubNav from './StoreSubNav';
 import useGlobalClasses from 'Hooks/useGlobalClasses';
 import SearchBar from 'components/common/Search';
 import StoreProducts from './StoreProducts';
+import { useTranslation } from 'react-i18next';
 
 const Index = () => {
   const classes = useStyles();
   const { products, productCategories } = useContext(StoreContext);
   const globalClasses = useGlobalClasses();
+  const { t } = useTranslation();
 
   const [search, setSearch] = React.useState('');
 
@@ -29,12 +31,13 @@ const Index = () => {
   };
 
   return (
-    <Page title='GoodFly |  Store'>
+    <Page title={`GoodFly |  ${t('Store')}`}>
       <div>
         <Box className={classes.root}>
           <Box className={classes.mainFeaturedPost}>
             <section className={classes.title}>
               <Typography variant='h3'>
+                {/* {`GOODFLY ${t('Store').toUpperCase()}`} */}
                 GOODFLY STORE
                 <FlashOnIcon sx={{ marginLeft: 2 }} />
               </Typography>
@@ -45,8 +48,8 @@ const Index = () => {
             </section>
 
             <section className={classes.description}>
-              <Typography variant='h3'>Discover our range</Typography>
-              <Typography variant='h3'>Ethical Products</Typography>
+              <Typography variant='h3'>{t('Discover our range')}</Typography>
+              <Typography variant='h3'>{t('Ethical Products')}</Typography>
             </section>
           </Box>
         </Box>

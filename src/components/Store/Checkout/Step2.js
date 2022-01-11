@@ -15,6 +15,7 @@ import { CustomRadioGroup, CustomInputField } from 'components/FormControls';
 import TotalBill from './TotalBill';
 import useToggle from 'Hooks/useToggle';
 import RelayPointDialog from './RelayPointDialog';
+import { useTranslation } from 'react-i18next';
 
 const deliveryMethods = [
   {
@@ -40,7 +41,7 @@ const deliveryMethods = [
   },
 ];
 
-const relaypointContent = (handleClick, postalAddress) => {
+const relaypointContent = (handleClick, postalAddress, t) => {
   return (
     <Box sx={{ mt: 4, mb: 2, display: 'flex', flexWrap: 'nowrap' }}>
       <Typography variant='subtitle1' sx={{ maxWidth: 250, mx: 1 }}>
@@ -52,27 +53,27 @@ const relaypointContent = (handleClick, postalAddress) => {
         sx={{ minWidth: 90 }}
         onClick={handleClick}
       >
-        Modify
+        {t('Modify')}
       </Button>
     </Box>
   );
 };
-const addressContent = (control, isAddressDiff, formProps) => {
+const addressContent = (control, isAddressDiff, formProps, t) => {
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant='subtitle1' color='textSecondary' sx={{ mb: 1 }}>
-        Shipping Address
+        {t('Shipping Address')}
       </Typography>
       <CustomRadioGroup
         name='shippingAddress'
         control={control}
         options={[
           {
-            label: 'Identical to the delivery address',
+            label: t('Identical to delivery address'),
             value: 'identical',
           },
           {
-            label: 'Use a different Shipping address',
+            label: t('Use a different Shipping address'),
             value: 'different',
           },
         ]}
@@ -89,39 +90,39 @@ const addressContent = (control, isAddressDiff, formProps) => {
         >
           <CustomInputField
             name='address'
-            label='Address'
+            label={t('Address')}
             type='text'
             register={formProps?.register}
             errors={formProps?.errors}
-            errorMessage='address is required'
-            placeholder='Address'
+            errorMessage={t('address is required')}
+            placeholder={t('Address')}
           />
           <CustomInputField
             name='city'
-            label='City'
+            label={t('City')}
             type='text'
             register={formProps?.register}
             errors={formProps?.errors}
-            errorMessage='city is required'
-            placeholder='City'
+            errorMessage={t('city is required')}
+            placeholder={t('City')}
           />
           <CustomInputField
             name='country'
-            label='Country'
+            label={t('Country')}
             type='text'
             register={formProps?.register}
             errors={formProps?.errors}
-            errorMessage='country is required'
-            placeholder='Country'
+            errorMessage={t('country is required')}
+            placeholder={t('Country')}
           />
           <CustomInputField
             name='postalCode'
-            label='Postal Code'
+            label={t('Postal Code')}
             type='text'
             register={formProps?.register}
             errors={formProps?.errors}
-            errorMessage='postalCode is required'
-            placeholder='Postal Code'
+            errorMessage={t('postalCode is required')}
+            placeholder={t('Postal Code')}
           />
         </Box>
       )}
@@ -130,6 +131,8 @@ const addressContent = (control, isAddressDiff, formProps) => {
 };
 
 const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
+  const { t } = useTranslation();
+
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
   const [isMapDialogOpen, toggleMapDialog] = useToggle(false);
@@ -148,6 +151,11 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
     validateStep(data);
   };
 
+  const transDelivery = (m) => {
+    let b = m.split(' ').pop();
+    let c = m.split(b)[0];
+    return `${t(c.trim())} ${b}`;
+  };
   const handleRelayPoint = (relayPoint) => {
     // console.log(`relayPoint`, relayPoint);
     toggleMapDialog();
@@ -158,7 +166,7 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
       <Grid container sx={{ mt: 5 }} spacing={2}>
         <Grid item xs={12} sm={12} md={7}>
           <Typography variant='subtitle1' color='textSecondary'>
-            Choose the delivery method
+            {t('Choose the delivery method')}
           </Typography>
 
           <Paper
@@ -194,7 +202,7 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
                                 <FormControlLabel
                                   key={singleOption.value}
                                   value={`${singleOption.value}`}
-                                  label={singleOption.label}
+                                  label={t(singleOption.label)}
                                   control={<Radio />}
                                 />
                               </Box>
@@ -212,7 +220,11 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
                                 variant='subtitle2'
                                 color='textSecondary'
                               >
-                                {singleOption.scheduledDelivery}
+                                {/* {t(singleOption.scheduledDelivery)} */}
+
+                                {t(
+                                  transDelivery(singleOption.scheduledDelivery)
+                                )}
                               </Typography>
                             </Grid>
                             <Grid item xs={12} sm={2}>
@@ -226,7 +238,8 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
                               <>
                                 {relaypointContent(
                                   toggleMapDialog,
-                                  postalAddress
+                                  postalAddress,
+                                  t
                                 )}
                                 <Divider sx={{ my: 2, width: '100%' }} />
                               </>
@@ -235,10 +248,15 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
                             // watchDeliveryMethod !==
                             //   deliveryMethods[2].value && (
                             <Box sx={{ mt: 2 }}>
-                              {addressContent(control, watchShippingAddress, {
-                                register,
-                                errors,
-                              })}
+                              {addressContent(
+                                control,
+                                watchShippingAddress,
+                                {
+                                  register,
+                                  errors,
+                                },
+                                t
+                              )}
                             </Box>
                           )}
                           {i < deliveryMethods.length - 1 && (

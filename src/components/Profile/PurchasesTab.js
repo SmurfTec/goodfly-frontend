@@ -5,9 +5,11 @@ import StoreItem from './StoreCollapseItem';
 import PurchaseItem from './PurchasesCollapseItem';
 import { orders, purchases } from './DummyData';
 import { StoreContext } from 'Contexts/StoreContext';
+import { useTranslation } from 'react-i18next';
 
 const PurchasesTab = ({ purchases, orders }) => {
   // const {orders,products} = useContext(StoreContext)
+  const { t } = useTranslation();
 
   const orderDetails = (status) => {
     return orders
@@ -33,16 +35,16 @@ const PurchasesTab = ({ purchases, orders }) => {
 
   return (
     <Container sx={{ my: 3, minHeight: 550 }}>
-      <CollapseHeader title='My Purchases' subTitle='GOODFLY'>
+      <CollapseHeader title={t('My Purchases')} subTitle='GOODFLY'>
         {purchaseDetails()}
       </CollapseHeader>
-      <CollapseHeader title='My Orders' subTitle='GOODFLYSTORE'>
+      <CollapseHeader title={t('My Orders')} subTitle='GOODFLYSTORE'>
         <Typography
           variant='subtitle1'
           color='textSecondary'
           sx={{ mb: 2, textTransform: 'capitalize' }}
         >
-          Completed Orders
+          {`${t('Completed')} ${t('Orders')}`}
         </Typography>
         {orderDetails('paid')}
 
@@ -51,7 +53,7 @@ const PurchasesTab = ({ purchases, orders }) => {
           color='textSecondary'
           sx={{ mb: 2, mt: 6, textTransform: 'capitalize' }}
         >
-          Current Orders
+          {`${t('Current')} ${t('Orders')}`}
         </Typography>
         {orderDetails('unpaid')}
       </CollapseHeader>

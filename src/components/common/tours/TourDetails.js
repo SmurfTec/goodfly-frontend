@@ -42,6 +42,7 @@ import FavoriteIconFilled from '@material-ui/icons/Favorite';
 import FavoriteIconOutlined from '@material-ui/icons/FavoriteBorder';
 import { ToursContext } from 'Contexts/ToursContext';
 import UseToggle from 'Hooks/useToggle';
+import { useTranslation } from 'react-i18next';
 // ------------------------------
 
 const TabPanel = (props) => {
@@ -75,6 +76,7 @@ const TourDetails = ({ match, history, location }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [isHandlingFavourite, toggleHandlingFavourite] = UseToggle(false);
   const [isHandleSubscription, toggleHandleSubscription] = UseToggle(false);
+  const { t } = useTranslation();
 
   const classes = useStyles();
   const { user } = useContext(AuthContext);
@@ -215,7 +217,7 @@ const TourDetails = ({ match, history, location }) => {
                     >
                       {tour.startingDate
                         ? new Date(tour.startingDate).toDateString()
-                        : 'Open Offer'}
+                        : t('Open Offer')}
                     </Typography>
                     <Rating
                       size='small'
@@ -246,7 +248,7 @@ const TourDetails = ({ match, history, location }) => {
                         align='left'
                         style={{ fontWeight: 600 }}
                       >
-                        Included services
+                        {t('Included services')}
                       </Typography>
                       <ul
                         style={{
@@ -276,7 +278,7 @@ const TourDetails = ({ match, history, location }) => {
 
                     // disabled={isAlreadyPurchased}
                   >
-                    Reserve
+                    {t('Reserve')}
                   </Button>
                   <Button
                     variant='contained'
@@ -289,7 +291,7 @@ const TourDetails = ({ match, history, location }) => {
                     onClick={handleSubscribe}
                     disabled={isHandleSubscription}
                   >
-                    {isSubscribed ? 'UnSubscribe' : 'Subscribe  '}
+                    {isSubscribed ? t('UnSubscribe') : t('Subscribe')}
                   </Button>
                 </Box>
                 <Box
@@ -326,7 +328,7 @@ const TourDetails = ({ match, history, location }) => {
                       // <FavoriteIcon />
                     }
                   >
-                    Favourite
+                    {t('Favourite')}
                   </Button>
                   <Button
                     variant='contained'
@@ -350,12 +352,12 @@ const TourDetails = ({ match, history, location }) => {
               <Grid item xs={12} sm={4} md={3} className={classes.RightGrid}>
                 <Box padding={1} textAlign='center'>
                   <Typography variant='h5'>
-                    YOUR GOODFLY ONLINE ADVISOR
+                    {t('YOUR GOODFLY ONLINE ADVISOR')}
                   </Typography>
                 </Box>
                 <Box>
                   <Typography variant='p' align='center' component='h5'>
-                    Call a member of our agency directly at
+                    {t('Call a member of our agency directly at')}
                   </Typography>
                 </Box>
                 <Box>
@@ -373,11 +375,10 @@ const TourDetails = ({ match, history, location }) => {
                 textColor='primary'
                 centered
                 variant='fullWidth'
-                indicatorColor=''
                 className={classes.Tabs}
               >
                 <Tab
-                  label='Route'
+                  label={t('Route')}
                   className={
                     tabValue === 0 ? classes.ActiveTab : classes.InActiveTab
                   }
@@ -386,7 +387,7 @@ const TourDetails = ({ match, history, location }) => {
                   className={
                     tabValue === 1 ? classes.ActiveTab : classes.InActiveTab
                   }
-                  label='Formalities'
+                  label={t('Formalities')}
                 />
               </Tabs>
               <TabPanel value={tabValue} index={0} dir='x'>
@@ -400,7 +401,7 @@ const TourDetails = ({ match, history, location }) => {
 
           <Container className={classes.Reviews}>
             <Typography variant='h6' color='textPrimary'>
-              Reviews {`(${tour?.reviews?.length || 0})`}
+              {t('Reviews')} {`(${tour?.reviews?.length || 0})`}
             </Typography>
             <Grid container>
               <Grid
@@ -475,10 +476,10 @@ const TourDetails = ({ match, history, location }) => {
                   }}
                 >
                   <Typography variant='h6' fontWeight='bold'>
-                    Add a Review
+                    {t('Add a Review')}
                   </Typography>
                   <Typography variant='h4' fontWeight='bold'>
-                    Vote Now
+                    {t('Vote Now')}
                   </Typography>
                   <Rating
                     // size='small'
@@ -498,7 +499,7 @@ const TourDetails = ({ match, history, location }) => {
                     component='label'
                     htmlFor='review'
                   >
-                    Your Opinion
+                    {t('Your Opinion')}
                   </Typography>
                   {/* <label for='w3review'>Review of W3Schools:</label> */}
                   <textarea
@@ -507,7 +508,7 @@ const TourDetails = ({ match, history, location }) => {
                     rows='4'
                     cols='50'
                     value={reviewValue}
-                    placeholder='Review'
+                    placeholder={t('Review')}
                     onChange={handleReviewChange}
                     style={{
                       width: '100%',
@@ -524,7 +525,7 @@ const TourDetails = ({ match, history, location }) => {
                     color='primary'
                     onClick={handleReview}
                   >
-                    Submit
+                    {t('Submit')}
                   </Button>
                 </Grid>
               )}

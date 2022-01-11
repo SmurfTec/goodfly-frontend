@@ -23,8 +23,10 @@ import useGlobalClasses from 'Hooks/useGlobalClasses';
 import Page from 'components/common/Page';
 import { AuthContext } from 'Contexts/AuthContext';
 import parse from 'html-react-parser';
+import { useTranslation } from 'react-i18next';
 
 const BlogDetails = ({ match, history, location }) => {
+  const { t } = useTranslation();
   const globalClasses = useGlobalClasses();
   const { user } = useContext(AuthContext);
   const classes = useStyles();
@@ -153,14 +155,14 @@ const BlogDetails = ({ match, history, location }) => {
                 color='text.primary'
                 align='center'
               >
-                Comments {blog.comments.length}
+                {t('Comments')} {blog.comments.length}
               </Typography>
               <Typography
                 variant='subtitle1'
                 color='text.secondary'
                 sx={{ mt: 3 }}
               >
-                {blog.comments.length} comments for this article
+                {blog.comments.length} {t('comments for this article')}
               </Typography>
               <Box sx={{ mt: 4 }}>
                 {blog.comments.map((comment) => (
@@ -173,7 +175,7 @@ const BlogDetails = ({ match, history, location }) => {
               <Box sx={{ mt: 6 }}>
                 <Typography variant='subtitle2'>Add a comment</Typography>
                 <Typography variant='subtitle1' sx={{ mt: 4 }}>
-                  Your comment
+                  {t('Your comment')}
                 </Typography>
                 <form
                   id='formComment'
@@ -190,11 +192,13 @@ const BlogDetails = ({ match, history, location }) => {
                         {...register('commentTextArea', {
                           required: 'Write your comment to submit',
                         })}
-                        placeholder='Write something about the blog post...'
+                        placeholder={t(
+                          'Write something about the blog post...'
+                        )}
                       />
                       {errors?.commentTextArea?.type === 'required' && (
                         <FormHelperText>
-                          {errors?.commentTextArea?.message}
+                          {t(errors?.commentTextArea?.message)}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -206,14 +210,14 @@ const BlogDetails = ({ match, history, location }) => {
                     form='formComment'
                     color='primary'
                   >
-                    SEND
+                    {t('SEND')}
                   </Button>
                 </form>
               </Box>
             </Paper>
             <Box sx={{ mt: 17 }}>
               <Typography variant='h4' fullWidth align='center' sx={{ my: 6 }}>
-                Latest Articles Online
+                {t('Latest Articles Online')}
               </Typography>
               <CarouselLayout>
                 {blogs ? (

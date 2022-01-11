@@ -20,6 +20,7 @@ import flashImg from 'Assets/img/flash-sale.png';
 import Banner from 'components/common/tours/Banner';
 import Page from 'components/common/Page';
 import PaginationBar from 'components/common/Pagination';
+import { useTranslation } from 'react-i18next';
 
 const options = ['Price', 'Date', 'Duration', 'Best Score'];
 const TOURS_PER_PAGE = 12;
@@ -29,6 +30,7 @@ const FlashSale = ({ location }) => {
   const globalClasses = useGlobalClasses();
   const { tours } = useContext(ToursContext);
   const [flashSales, setFlashSales] = useState();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!tours || !tours.length === 0) {
@@ -125,19 +127,23 @@ const FlashSale = ({ location }) => {
   // * ------------ *  //
 
   return (
-    <Page title='GoodFly |  Flash Sales'>
+    <Page title={`GoodFly |  ${t('Flash Sales')}`}>
       <CssBaseline />
 
       {/* Hero unit */}
       <Container className={globalClasses.MainContainer} maxWidth='lg'>
-        <Banner imageUrl={flashImg} bannerTitle='Flash Sales' align='left' />
+        <Banner
+          imageUrl={flashImg}
+          bannerTitle={t('Flash Sales')}
+          align='left'
+        />
         <section className={classes.filter}>
           <Button
             variant='outlined'
             startIcon={<TuneIcon />}
             onClick={filterMenuOpen}
           >
-            Select a filter
+            {t('Select A Filter')}
           </Button>
 
           <Menu
@@ -153,7 +159,7 @@ const FlashSale = ({ location }) => {
                 data-filter={option}
                 onClick={filterSelected}
               >
-                {option}
+                {t(option)}
               </MenuItem>
             ))}
           </Menu>
@@ -161,7 +167,7 @@ const FlashSale = ({ location }) => {
 
         {/* End hero unit */}
         <Typography variant='h5' color='textSecondary' align='left'>
-          Do you have a few days ahead of you? Découvrez les ventes
+          {t('Do you have a few days ahead of you? Discover the sales')}
         </Typography>
         <Typography
           variant='h5'
@@ -171,7 +177,7 @@ const FlashSale = ({ location }) => {
             marginBottom: '2rem',
           }}
         >
-          Flash GOODFLY : les plans dernière minute à prix cassés.
+          {t('Flash GOODFLY : last minute plans at knockdown prices.')}
         </Typography>
         {/* Upper GridView */}
         <Grid container spacing={4}>
@@ -191,7 +197,7 @@ const FlashSale = ({ location }) => {
             ) : (
               <Box mt={5}>
                 <Typography variant='h4'>
-                  No Flash Sales Available Now !
+                  {t('No Flash Sales Available Now')} !
                 </Typography>
               </Box>
             )

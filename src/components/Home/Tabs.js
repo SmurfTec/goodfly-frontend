@@ -15,10 +15,8 @@ import HotelIcon from '@material-ui/icons/Apartment';
 import VehicleIcon from '@material-ui/icons/DriveEta';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
-import {
-  CustomInputField,
-  CustomDatePicker,
-} from 'components/FormControls';
+import { CustomInputField, CustomDatePicker } from 'components/FormControls';
+import { useTranslation } from 'react-i18next';
 
 const selectStyles = {
   option: (styles, { isSelected }) => {
@@ -69,6 +67,7 @@ function a11yProps(index) {
 export default function ScrollableTabsButtonAuto() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { t } = useTranslation();
   // const [tripOption, setTripOption] = React.useState(0);
   const {
     formState: { errors },
@@ -117,17 +116,9 @@ export default function ScrollableTabsButtonAuto() {
           scrollButtons='auto'
           aria-label='scrollable auto tabs example'
         >
-          <Tab
-            label='Flight'
-            {...a11yProps(0)}
-            icon={<FlightIcon />}
-          />
-          <Tab label='Hotel' {...a11yProps(1)} icon={<HotelIcon />} />
-          <Tab
-            label='Vehicle'
-            {...a11yProps(2)}
-            icon={<VehicleIcon />}
-          />
+          <Tab label={t('Flight')} {...a11yProps(0)} icon={<FlightIcon />} />
+          <Tab label={t('Hotel')} {...a11yProps(1)} icon={<HotelIcon />} />
+          <Tab label={t('Vehicle')} {...a11yProps(2)} icon={<VehicleIcon />} />
         </Tabs>
       </AppBar>
       <TabPanel className={classes.TabPanel} value={value} index={0}>
@@ -140,7 +131,7 @@ export default function ScrollableTabsButtonAuto() {
             data-option='roundTrip'
             className={classes.tabItem}
           >
-            Where do you stay ?
+            {t('Where do you stay')} ?
           </Typography>
         </section>
         <form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -148,38 +139,38 @@ export default function ScrollableTabsButtonAuto() {
             <Grid item xs={12} sm={12}>
               <CustomInputField
                 name='destination'
-                label='Destination'
+                label={t('Destination')}
                 type='text'
                 register={register}
                 errors={errors}
-                errorMessage='Specify name of city or hotel'
-                placeholder='Name of hotel or city'
+                errorMessage={t('Specify name of city or hotel')}
+                placeholder={t('Name of hotel or city')}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <CustomDatePicker
                 type='date'
-                label='Check-in'
+                label={t('Check-in')}
                 name='chkInDate'
                 errors={errors}
-                errorMessage='Specify the check in date'
+                errorMessage={t('Specify the check in date')}
                 register={register}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <CustomDatePicker
                 type='date'
-                label='Check-Out'
+                label={t('Check-Out')}
                 name='chkOutDate'
                 errors={errors}
-                errorMessage='Specify the check out date'
+                errorMessage={t('Specify the check out date')}
                 register={register}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
               <>
                 <Typography variant='body2' sx={{ mt: 2, mb: 1 }}>
-                  Passengers
+                  {t('Passengers')}
                 </Typography>
 
                 <Controller
@@ -187,29 +178,29 @@ export default function ScrollableTabsButtonAuto() {
                   control={control}
                   defaultValue={{
                     value: '1 room, 1 adult only',
-                    label: '1 room, 1 adult only',
+                    label: t('1 room, 1 adult only'),
                   }}
                   render={({ field }) => (
                     <Select
                       {...field}
                       isSearchable={false}
-                      placeholder='Passengers'
+                      placeholder={t('Passengers')}
                       styles={selectStyles}
                       options={[
                         {
                           key: 11,
                           value: '1 room, 1 adult only',
-                          label: '1 room, 1 adult only',
+                          label: t('1 room, 1 adult only'),
                         },
                         {
                           key: 12,
                           value: '1 room, 2 adults only',
-                          label: '1 room, 2 adults only',
+                          label: t('1 room, 2 adults only'),
                         },
                         {
                           key: 13,
                           value: '2 rooms, 4 adults',
-                          label: '2 room, 4 adults',
+                          label: t('2 rooms, 4 adults only'),
                         },
                       ]}
                     />
@@ -218,12 +209,8 @@ export default function ScrollableTabsButtonAuto() {
               </>
             </Grid>
             <Grid item sx={{ marginTop: 2 }} xs={12}>
-              <Button
-                variant='contained'
-                color='primary'
-                type='submit'
-              >
-                Search Hotels
+              <Button variant='contained' color='primary' type='submit'>
+                {t('Search Hotels')}
               </Button>
             </Grid>
           </Grid>
@@ -236,7 +223,7 @@ export default function ScrollableTabsButtonAuto() {
             data-option='roundTrip'
             className={classes.tabItem}
           >
-            Vehicle Rental for any type of Trip
+            {t('Vehicle Rental for any type of Trip')}
           </Typography>
         </section>
         <form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -275,23 +262,25 @@ export default function ScrollableTabsButtonAuto() {
             <Grid item xs={12} sm={6}>
               <CustomInputField
                 name='pickupLocation'
-                label='Pickup location'
+                label={t('Pickup location')}
                 type='text'
                 register={register}
                 errors={errors}
-                errorMessage='Specify your pickup location (airport or city)'
-                placeholder='City or Airport'
+                errorMessage={t(
+                  'Specify your pickup location (airport or city)'
+                )}
+                placeholder={t('City or Airport')}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <CustomInputField
                 name='dropOffLocation'
-                label='Drop Off location'
+                label={t('Drop Off location')}
                 type='text'
                 register={register}
                 errors={errors}
-                errorMessage='Specify your dropoff location hotel etc'
-                placeholder='Hotel or any location'
+                errorMessage={t('Specify your dropoff location hotel etc')}
+                placeholder={t('Hotel or any location')}
               />
             </Grid>
             {/* {tripOption === 1 && (
@@ -311,10 +300,10 @@ export default function ScrollableTabsButtonAuto() {
             <Grid item xs={12} sm={12}>
               <CustomDatePicker
                 type='datetime-local'
-                label='Pickup Date & Time'
+                label={t('Pickup Date & Time')}
                 name='pickupDateTime'
                 errors={errors}
-                errorMessage='Specify the pickup date & time'
+                errorMessage={t('Specify the pickup date & time')}
                 register={register}
               />
             </Grid>
@@ -341,7 +330,7 @@ export default function ScrollableTabsButtonAuto() {
             <Grid item xs={12} sm={6}>
               <>
                 <Typography variant='body2' sx={{ mb: 1 }}>
-                  Passengers
+                  {t('Passengers')}
                 </Typography>
 
                 <Controller
@@ -355,7 +344,7 @@ export default function ScrollableTabsButtonAuto() {
                     <Select
                       {...field}
                       isSearchable={false}
-                      placeholder='Passengers'
+                      placeholder={t('Passengers')}
                       styles={selectStyles}
                       options={[
                         {
@@ -379,18 +368,9 @@ export default function ScrollableTabsButtonAuto() {
                 />
               </>
             </Grid>
-            <Grid
-              item
-              sx={{ marginTop: 4, textAlign: 'right' }}
-              xs={12}
-              sm={6}
-            >
-              <Button
-                variant='contained'
-                color='primary'
-                type='submit'
-              >
-                Start a reseach
+            <Grid item sx={{ marginTop: 4, textAlign: 'right' }} xs={12} sm={6}>
+              <Button variant='contained' color='primary' type='submit'>
+                {t('Start a Research')}
               </Button>
             </Grid>
           </Grid>

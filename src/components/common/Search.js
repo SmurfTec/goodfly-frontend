@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { Box } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
+import { useTranslation } from 'react-i18next';
 // import { useThemeContext } from 'Components/theme';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBar({ search, handleSearchChange }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Box display='flex' flexBasis='35%' style={{ marginRight: '7%' }}>
@@ -47,7 +49,7 @@ export default function SearchBar({ search, handleSearchChange }) {
             aria-invalid='false'
             aria-autocomplete='list'
             aria-controls='NavSearch--results'
-            placeholder='Search on GOODFLYSTORE'
+            placeholder={t('Search on GOODFLYSTORE')}
             type='search'
             value={search}
             onChange={handleSearchChange}

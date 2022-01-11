@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'react-router';
 import { AuthContext } from 'Contexts/AuthContext';
 import { ToursContext } from 'Contexts/ToursContext';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme) => ({
   card: {
@@ -60,6 +61,7 @@ const TripCard = (props) => {
 
   const { user } = useContext(AuthContext);
   const { favouriteTrip, unFavouriteTrip } = useContext(ToursContext);
+  const { t } = useTranslation();
 
   const {
     _id,
@@ -123,7 +125,7 @@ const TripCard = (props) => {
           {title.toUpperCase()}
         </Typography>
         <Typography variant='subtitle2' gutterBottom>
-          Starting From {price} €
+          {t('Starting From')} {price} €
         </Typography>
 
         <Typography variant='subtitle2' style={{ minWidth: 190 }}>
@@ -131,7 +133,7 @@ const TripCard = (props) => {
             ? `from ${new Date(startingDate).toLocaleDateString()} to 
            ${new Date(endingDate).toLocaleDateString()}
             `
-            : 'Open Offer'}
+            : t('Open Offer')}
         </Typography>
         <Typography variant='subtitle2' gutterBottom>
           {startingDate && (
@@ -143,7 +145,7 @@ const TripCard = (props) => {
                   60 /
                   24
               )}
-              {' Days '}
+              {` ${t('days')} `}
             </>
           )}{' '}
           {boardType}
@@ -158,8 +160,7 @@ const TripCard = (props) => {
           }}
           size='small'
         >
-          {' '}
-          Discover{' '}
+          {t('Discover')}
         </Button>
       </div>
 
