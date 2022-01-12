@@ -560,6 +560,9 @@ const AddTrip = () => {
                               isSearchable={false}
                               placeholder={t('Travel Month')}
                               options={travelMonth}
+                              getOptionLabel={(travelMonth) =>
+                                t(travelMonth.label)
+                              }
                             />
                           )}
                         />
