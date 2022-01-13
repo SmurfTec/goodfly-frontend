@@ -2,7 +2,12 @@ const NavbarData = [
   {
     path: '/tours/ethical',
     title: 'Ethical Trips',
-    menuItems: ['organic', 'organized'],
+    menuItems: [
+      'Organized Trips',
+      `Organic And Eco Travel 'wwoof'`,
+      'Train Trips',
+      'Cruises',
+    ],
   },
   {
     path: '/tours/spiritual',

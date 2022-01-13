@@ -46,7 +46,7 @@ const EthicalHome = ({ location }) => {
   // * ------------ *  //
 
   const tripTypes = {
-    options: ['all', 'organic', 'organized'],
+    options: ['all', 'organic', 'organized', 'train', 'cruises'],
     getOptionLabel: (option) => t(option),
   };
 

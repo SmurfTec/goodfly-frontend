@@ -86,13 +86,23 @@ const Navbar = ({ location }) => {
                 }}
                 className={classes.MenuItem}
               >
-                {navItem.menuItems.map((menuItem) => (
+                {navItem.menuItems.map((menuItem, index) => (
                   <Link
                     // * /tours/ethical?type=menuitem
                     key={menuItem}
                     // * /tours/destination/menuitem
                     to={`${navItem.path}${
-                      idx === 3 ? `/${menuItem}` : `?type=${menuItem}`
+                      idx === 3
+                        ? `/${menuItem}`
+                        : idx === 0
+                        ? index === 0
+                          ? `?type=organized`
+                          : index === 1
+                          ? `?type=organic`
+                          : index === 2
+                          ? `?type=trains`
+                          : `?type=cruises`
+                        : `?type=${menuItem}`
                     }`}
                     style={{ textAlign: 'center' }}
                   >
