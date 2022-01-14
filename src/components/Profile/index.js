@@ -30,7 +30,7 @@ const Index = () => {
           variant='h4'
         >
           <PersonIcon />
-          My Profile
+          {t('My Profile')}
         </Typography>
         <Typography
           variant='h5'
@@ -41,7 +41,7 @@ const Index = () => {
             color: theme.palette.common.grey1,
           }}
         >
-          {user?.loyaltyPoints} Points
+          {user?.loyaltyPoints} {t('Points')}
         </Typography>
         <ProfileTabs user={user} />
       </Container>

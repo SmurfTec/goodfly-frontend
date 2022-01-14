@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link, withRouter } from 'react-router-dom';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles({
 
 const TripCard = (props) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   function days_between(date1, date2) {
     // The number of milliseconds in one day
@@ -52,15 +54,17 @@ const TripCard = (props) => {
 
   const content = () => {
     return startingDate && endingDate
-      ? `from ${new Date(startingDate).toLocaleDateString()} to 
+      ? `${t('from')} ${new Date(startingDate).toLocaleDateString()} ${t('to')}
            ${new Date(endingDate).toLocaleDateString()}
             `
-      : `Open Offer`;
+      : t(`Open Offer`);
   };
 
   const betweenDays = () => {
     return startingDate && endingDate
-      ? `${days_between(new Date(endingDate), new Date(startingDate))} days`
+      ? `${days_between(new Date(endingDate), new Date(startingDate))} ${t(
+          'days'
+        )}`
       : '';
   };
 
@@ -134,7 +138,7 @@ const TripCard = (props) => {
           component={Link}
           to={`/tours/details/${_id}`}
         >
-          Find Out More
+          {t('Find Out More')}
         </Button>
       </CardActions>
     </Card>

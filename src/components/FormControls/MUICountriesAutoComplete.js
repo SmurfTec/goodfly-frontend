@@ -3,8 +3,11 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Controller } from 'react-hook-form';
 import { countryCodes } from 'Utils/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function CountriesSelect({ onChange: ignored, control }) {
+  const { t } = useTranslation();
+
   const getOpObj = (option) => {
     let obj;
     if (option.key) option = countryCodes.find((op) => op.label === option.key);
@@ -24,7 +27,11 @@ export default function CountriesSelect({ onChange: ignored, control }) {
           // getOptionLabel={(option) => getOpObj(option)}
           getOptionLabel={(option) => option.label}
           renderInput={(params) => (
-            <TextField {...params} label='Destination' variant='standard' />
+            <TextField
+              {...params}
+              label={t('Destination')}
+              variant='standard'
+            />
           )}
           onChange={(_, data) => field.onChange(data)}
         />

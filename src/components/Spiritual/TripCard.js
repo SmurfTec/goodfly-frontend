@@ -86,10 +86,12 @@ const TripCard = ({ tour, history }) => {
             style={{ minWidth: 190 }}
           >
             {startingDate
-              ? `from ${new Date(startingDate).toLocaleDateString()} to 
+              ? `${t('from')} ${new Date(
+                  startingDate
+                ).toLocaleDateString()} ${t('to')} 
            ${new Date(endingDate).toLocaleDateString()}
             `
-              : 'Open Offer'}
+              : t('Open Offer')}
           </Typography>
           <Typography
             color='textSecondary'
@@ -106,7 +108,7 @@ const TripCard = ({ tour, history }) => {
                     60 /
                     24
                 )}
-                {` ${t('Days')} `}
+                {` ${t('days')} `}
               </>
             )}{' '}
             {boardType}
