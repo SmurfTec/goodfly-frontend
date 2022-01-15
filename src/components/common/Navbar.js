@@ -63,7 +63,6 @@ const Navbar = ({ location }) => {
                     color: '#fa0f0c',
                   }}
                 >
-                  {console.log(`object`, navItem.title)}
                   {t(navItem.title)}
                 </NavLink>
               ) : (

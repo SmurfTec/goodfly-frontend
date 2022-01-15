@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsFilters = React.memo(
-  ({ productCategories, setFilteredProducts, products }) => {
+  ({ productCategories, setFilteredProducts, products, applyPriceSort }) => {
     const [priceFilter, setPriceFilter] = useState([0, 1000]);
 
     const [productSort, setProductSort] = useState(1);
@@ -49,15 +49,20 @@ const ProductsFilters = React.memo(
     const classes = useStyles();
 
     const handlePriceSort = (event) => {
-      let newProducts = products;
       const newValue = event.target.value * 1;
       setProductSort(newValue);
-      // * Sort Price
-      newProducts = newProducts.sort((a, b) =>
-        a.price >= b.price ? newValue : -newValue
-      );
-      setFilteredProducts(newProducts);
+      // console.log(`newValue`, newValue);
+      // // * Sort Price
+      // if (newValue === 1)
+      //   setFilteredProducts((st) => st.sort((a, b) => a.price - b.price));
+      // else setFilteredProducts((st) => st.sort((a, b) => b.price - a.price));
     };
+
+    useEffect(() => {
+      if (!productSort) return;
+
+      applyPriceSort(productSort);
+    }, [productSort]);
 
     const handlePriceCategory = (event) => {
       let newProducts = products;

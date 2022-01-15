@@ -500,14 +500,18 @@ const Index = () => {
             sx={{
               marginTop: 2,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'flex-end',
               alignItems: 'center',
               gap: '50px',
+              paddingRight: '100px',
             }}
           >
             {logos.map((logo) => (
               <Box
-                sx={{ minHeight: '80px', padding: '1rem 0rem 2rem ' }}
+                sx={{
+                  minHeight: '80px',
+                  padding: '1rem 0rem 2rem',
+                }}
                 key={logo._id}
               >
                 <img

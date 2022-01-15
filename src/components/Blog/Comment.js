@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
           <Box className={classes.avatarBox}>
             <Avatar
               alt='Remy Sharp'
-              src={comment.user.photo || commentImg}
+              src={comment.user?.photo || commentImg}
               className={classes.large}
             />
             <Typography

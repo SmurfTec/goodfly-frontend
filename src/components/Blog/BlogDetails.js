@@ -102,8 +102,8 @@ const BlogDetails = ({ match, history, location }) => {
   };
 
   const blogClick = (e) => {
-    const { id } = e.currentTarget.dataset;
-    history.push(`/blogs/${id}`);
+    const { blogid } = e.currentTarget.dataset;
+    history.push(`/blogs/${blogid}`);
   };
 
   return (

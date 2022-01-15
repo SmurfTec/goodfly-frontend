@@ -76,7 +76,7 @@ const PurchaseCollapseItem = (props) => {
       color='primary'
       onClick={toggleCancelOpen}
       fullWidth
-      disabled={daysBetween(new Date(), new Date(purchase.departureDate)) <= 14}
+      disabled={daysBetween(new Date(), new Date(purchase.departureDate)) <= 7}
     >
       {t('I Want To Cancel')}
     </Button>

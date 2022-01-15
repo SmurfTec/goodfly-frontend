@@ -89,6 +89,7 @@ const PersonalInfo = () => {
       ...user,
       dateOfBirth: getMuiDateFormat(user.dateOfBirth),
       passportDateOfIssue: getMuiDateFormat(user.passportDateOfIssue),
+      Purchases: undefined,
     });
   }, [user]);
 

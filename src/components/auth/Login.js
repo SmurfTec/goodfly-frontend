@@ -121,19 +121,34 @@ const Login = ({ location, history }) => {
               GOODFLY
             </Typography>
           </Box>
-          <Box>
-            <FacebookLogin
-              // appId={process.env.REACT_APP_FACEBOOKID}
-              appId={'933403190884273'}
-              autoLoad={false}
-              fields='name,email,picture'
-              // onClick={componentClicked}
-              callback={responseFacebook}
-              icon={<Facebook />}
-              size='small'
-              cssClass='facebookBtn'
-              textButton='Facebook'
-            />
+          <Box
+            fontStyle={{
+              display: 'flex',
+              gap: 20,
+              marginTop: '2rem',
+            }}
+          >
+            <Button
+              variant='contained'
+              color='primary'
+              // onClick={renderProps.onClick}
+              // disabled={renderProps.disabled}
+              startIcon={<Facebook />}
+            >
+              Facebook
+              <FacebookLogin
+                // appId={process.env.REACT_APP_FACEBOOKID}
+                appId={'933403190884273'}
+                autoLoad={false}
+                fields='name,email,picture'
+                // onClick={componentClicked}
+                callback={responseFacebook}
+                icon={<Facebook />}
+                size='small'
+                cssClass='facebookBtn'
+                textButton='Facebook'
+              />
+            </Button>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLECLIENTID}
               buttonText='Google'

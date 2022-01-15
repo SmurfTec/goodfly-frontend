@@ -29,7 +29,7 @@ const ClientBlog = () => {
       try {
         const resData = await makeReq(`/blogs`);
         // console.log(`resData`, resData);
-        setBlogs(resData.blogs);
+        setBlogs(resData.blogs?.filter((el) => el.upload));
       } catch (err) {
         handleCatch(err);
         setBlogs([]);

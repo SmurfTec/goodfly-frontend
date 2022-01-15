@@ -29,6 +29,15 @@ product store and a news blog"
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Leaflet dependency is not required since it is loaded by the plugin -->
+    <script src="http://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="http://unpkg.com/leaflet/dist/leaflet.css"
+    />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -43,5 +52,8 @@ product store and a news blog"
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- JS plugin for the Parcelshop Picker Widget MR using JQuery -->
+    <script src="https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Dialog,
@@ -20,6 +20,8 @@ import { useForm } from 'react-hook-form';
 // import {MapBox1 as MapBox} from './MapBox';
 import { MapBox2 as MapBox } from './MapBox';
 import { useTranslation } from 'react-i18next';
+import $ from 'jquery';
+import useUpdateEffect from 'Hooks/useUpdateEffect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +55,65 @@ const useStyles = makeStyles((theme) => ({
     padding: 15,
   },
 }));
+
+const MondialRelay = () => {
+  useEffect(() => {
+    const jQuery = document.createElement('script');
+    jQuery.src =
+      'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js';
+    jQuery.async = 'true';
+
+    document.body.appendChild(jQuery);
+
+    return () => {
+      document.body.removeChild(jQuery);
+    };
+  });
+
+  useEffect(() => {
+    const scriptMr = document.createElement('script');
+    scriptMr.src =
+      'https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js';
+    scriptMr.async = 'true';
+
+    document.body.appendChild(scriptMr);
+
+    return () => {
+      document.body.removeChild(scriptMr);
+    };
+  });
+
+  const call = () => {
+    try {
+      $('#Zone_Widgeteqdavsfdc').MR_ParcelShopPicker({
+        Target: '#ParcelShopCode',
+        Brand: 'BDTEST  ',
+        Country: 'FR',
+      });
+    } catch (err) {
+      console.log(`err`, err);
+    }
+  };
+
+  (function () {
+    // Parameterized the widget
+    try {
+      call();
+    } catch (err) {
+      console.log(`err`, err);
+    }
+  })();
+
+  return (
+    <div>
+      <Button variant='contained' onClick={call}>
+        Call
+      </Button>
+      <div id='Zone_Widget'></div>
+      <div id='ParcelShopCode'></div>
+    </div>
+  );
+};
 
 const RelayPointDialog = ({ open, closeDialog }) => {
   const classes = useStyles();
@@ -92,38 +153,7 @@ const RelayPointDialog = ({ open, closeDialog }) => {
         />
       </DialogTitle>
       <DialogContent>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={5} className={classes.LeftSection}>
-            <form onSubmit={handleSubmit((data) => submitFormData(data))}>
-              <Box className={classes.postalCodeBox}>
-                <FormControl
-                  error={Boolean(errors.postalCode)}
-                  sx={{ border: '1px solid #ccc' }}
-                >
-                  <input
-                    className={classes.textInput}
-                    type='text'
-                    {...register('postalCode', {
-                      required: true,
-                      maxLength: 10,
-                      minLength: 5,
-                    })}
-                    placeholder={t('Postal Code')}
-                  />
-                  {errors.postalCode && (
-                    <FormHelperText>{t('Postal Code')}</FormHelperText>
-                  )}
-                </FormControl>
-                <Button variant='contained' color='primary' type='submit'>
-                  {t('Validate')}
-                </Button>
-              </Box>
-            </form>
-          </Grid>
-          <Grid item xs={12} sm={7}>
-            <MapBox />
-          </Grid>
-        </Grid>
+        <MondialRelay />
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog} color='primary'>

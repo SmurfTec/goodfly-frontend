@@ -37,6 +37,27 @@ const StoreProducts = ({ products, productCategories, searchVal }) => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  const applyPriceSort = (val) => {
+    if (!filteredProducts) return;
+    console.log(`val`, val);
+    let newProducts = [...products];
+    console.log(`filteredProducts`, filteredProducts);
+    console.log(
+      `((a, b) => a.price - b.price));`,
+
+      filteredProducts.sort((a, b) => {
+        return a.price - b.price;
+      })
+    );
+    if (val === 1)
+      setFilteredProducts((st) =>
+        newProducts.sort((a, b) => a.price - b.price)
+      );
+    else
+      setFilteredProducts((st) =>
+        newProducts.sort((a, b) => b.price - a.price)
+      );
+  };
   // * ------------ *  //
 
   return (
@@ -45,6 +66,7 @@ const StoreProducts = ({ products, productCategories, searchVal }) => {
         productCategories={productCategories}
         setFilteredProducts={setFilteredProducts}
         products={products}
+        applyPriceSort={applyPriceSort}
       />
       <Grid item xs={1} sm={1}></Grid>
       <Grid item xs={6} sm={8}>

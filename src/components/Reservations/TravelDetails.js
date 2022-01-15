@@ -41,7 +41,9 @@ export const TravelDetails = React.memo(
         expectedPrice,
         pointsDiscount,
         couponDiscount,
-        expectedPrice - pointsDiscount - couponDiscount - saleDiscount,
+        parseInt(
+          expectedPrice - pointsDiscount - couponDiscount - saleDiscount
+        ),
         saleDiscount,
       ];
     };
