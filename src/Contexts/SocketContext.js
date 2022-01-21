@@ -70,8 +70,8 @@ export const SocketProvider = (props) => {
 
   const sendNewMessage = (msg, chatId) => {
     console.log(`msg`, msg);
-    socket.emit('newMessage', { ...msg, token });
     console.log(`chatId`, chatId);
+    socket.emit('newMessage', { ...msg, token, chatId });
   };
 
   return (
