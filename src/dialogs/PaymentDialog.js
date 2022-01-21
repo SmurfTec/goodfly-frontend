@@ -63,7 +63,7 @@ export default function PaymentDialog(props) {
       <DialogContent>
         {payment ? (
           <PayPalButton
-            amount={payment.amount}
+            amount={payment.amount?.toFixed(2) * 1}
             options={{
               clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
               disableFunding: 'credit',

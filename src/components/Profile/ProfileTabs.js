@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import SwipeableViews from 'react-swipeable-views';
@@ -12,12 +12,11 @@ import TripsTab from './TripsTabs';
 import PurchasesTab from './PurchasesTab';
 import { StoreContext } from 'Contexts/StoreContext';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // ------------------------ //
 
 const TabPanel = (props) => {
-  const { t } = useTranslation();
-
   const { children, value, index, ...other } = props;
 
   return (
@@ -90,14 +89,30 @@ const ProfileTabs = ({ user }) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    // setValue(newValue);
+    history.push(`?tab=${newValue}`);
   };
 
   const handleChangeIndex = (index) => {
-    setValue(index);
+    // setValue(index);
+    history.push(`?tab=${index}`);
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('tab');
+    console.log(`query`, query);
+
+    if (!query) return;
+
+    if (['0', '1', '2', '3'].includes(query.toLowerCase())) {
+      console.log(`setting tabs`);
+      setValue(parseInt(query));
+    }
+  }, [location.search]);
 
   return (
     <div className={classes.root}>

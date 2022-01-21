@@ -84,7 +84,7 @@ const StepTwo = ({ data, submitForm, defaultStep2Values }) => {
                     key={i}
                     name={`passportNumber-${i + 1}`}
                     label={t('Passport No')}
-                    type='number'
+                    type='text'
                     register={register}
                     errors={errors}
                     errorMessage={`${t('Specify passport no of traveller')} ${

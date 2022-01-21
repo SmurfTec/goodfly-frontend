@@ -129,7 +129,7 @@ export default function PaymentSteppers({ purchase }) {
             <StepLabel
               StepIconComponent={QontoStepIcon}
               StepIconProps={{
-                amount: payment.amount,
+                amount: parseInt(payment.amount),
                 completed: payment.isPaid,
               }}
             >

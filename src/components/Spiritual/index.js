@@ -188,6 +188,12 @@ const SpiritualHome = () => {
       );
   }, [tripType]);
 
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('type');
+    if (!query) return;
+    if (tripTypes.options.includes(query.toLowerCase())) setTripType(query);
+  }, [location.search]);
+
   // ? Filter Menu open
   const filterMenuOpen = (e) => {
     console.log('clicked');
