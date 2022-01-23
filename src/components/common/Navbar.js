@@ -47,6 +47,9 @@ const Navbar = ({ location }) => {
             <Typography
               variant='p'
               color='primary.dark'
+              onClick={() => {
+                console.log('clicked', t(navItem.title));
+              }}
               style={{
                 color: location.pathname.includes(navItem.path) && '#fa0f0c',
               }}
