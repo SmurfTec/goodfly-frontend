@@ -44,11 +44,12 @@ const useStyles = makeStyles((theme) => ({
     },
     cursor: 'pointer',
     '&:hover': {
-      overflowX: 'auto',
+      overflowX: 'hidden',
     },
     '& span': {
       flex: '0 0 auto',
-
+      display: 'flex',
+      alignItems: 'center',
       marginRight: 14,
       // fontSize: '1.35vw',
       fontSize: '1.35vw',

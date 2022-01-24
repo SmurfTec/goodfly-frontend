@@ -115,6 +115,7 @@ const PersonalInfo = () => {
             aria-label='gender'
             name='pronoun'
             value={state.pronoun}
+            id='pronoun'
             onChange={handleChange}
             style={{
               display: 'flex',
@@ -165,7 +166,7 @@ const PersonalInfo = () => {
           name='firstName'
           value={state.firstName}
           onChange={handleChange}
-          id='standard-basic'
+          id='firstName'
           label={t('First Name')}
           variant='standard'
         />
@@ -173,7 +174,7 @@ const PersonalInfo = () => {
           name='lastName'
           value={state.lastName}
           onChange={handleChange}
-          id='standard-basic'
+          id='lastName'
           label={t('Last Name')}
           variant='standard'
         />
@@ -181,7 +182,7 @@ const PersonalInfo = () => {
           name='spouseName'
           value={state.spouseName}
           onChange={handleChange}
-          id='standard-basic'
+          id='spouseName'
           label={t('Spouse Name')}
           variant='standard'
         />
@@ -198,7 +199,7 @@ const PersonalInfo = () => {
           name='email'
           value={state.email}
           onChange={handleChange}
-          id='standard-basic'
+          id='email'
           label={t('Email')}
           variant='standard'
         />{' '}
@@ -206,7 +207,7 @@ const PersonalInfo = () => {
           name='telephoneNumber'
           value={state.telephoneNumber}
           onChange={handleChange}
-          id='standard-basic'
+          id='telephoneNumber'
           label={t('Telephone')}
           variant='standard'
           type='number'
@@ -215,7 +216,7 @@ const PersonalInfo = () => {
           name='telephoneLineNumber'
           value={state.telephoneLineNumber}
           onChange={handleChange}
-          id='standard-basic'
+          id='telephoneLineNumber'
           label={t('Landline Telephone')}
           variant='standard'
           type='number'
@@ -232,7 +233,7 @@ const PersonalInfo = () => {
             name='address'
             value={state.address}
             onChange={handleChange}
-            id='standard-basic'
+            id='address'
             label={t('Address')}
             variant='standard'
             fullWidth
@@ -243,7 +244,7 @@ const PersonalInfo = () => {
             name='additionalAddress'
             value={state.additionalAddress}
             onChange={handleChange}
-            id='standard-basic'
+            id='additionalAddress'
             label={t('Additional Address')}
             variant='standard'
             fullWidth
@@ -263,7 +264,7 @@ const PersonalInfo = () => {
             name='postalCode'
             value={state.postalCode}
             onChange={handleChange}
-            id='standard-basic'
+            id='postalCode'
             label={t('Postal Code')}
             variant='standard'
             type='number'
@@ -272,8 +273,8 @@ const PersonalInfo = () => {
           <TextField
             name='city'
             value={state.city}
+            id='city'
             onChange={handleChange}
-            id='standard-basic'
             label={t('City')}
             variant='standard'
           />
@@ -282,8 +283,8 @@ const PersonalInfo = () => {
           <TextField
             name='country'
             value={state.country}
+            id='country'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Country')}
             variant='standard'
             fullWidth
@@ -302,8 +303,8 @@ const PersonalInfo = () => {
           <TextField
             name='dateOfBirth'
             value={state.dateOfBirth}
+            id='dateOfBirth'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Date Of Birth')}
             variant='standard'
             style={{ marginRight: 50 }}
@@ -312,8 +313,8 @@ const PersonalInfo = () => {
           <TextField
             name='nationality'
             value={state.nationality}
+            id='nationality'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Nationality')}
             variant='standard'
           />
@@ -331,8 +332,8 @@ const PersonalInfo = () => {
           <TextField
             name='passportNumber'
             value={state.passportNumber}
+            id='passportNumber'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Passport Number')}
             variant='standard'
             style={{ marginRight: 50 }}
@@ -340,8 +341,8 @@ const PersonalInfo = () => {
           <TextField
             name='passportDateOfIssue'
             value={state.passportDateOfIssue}
+            id='passportDateOfIssue'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Passport Date of Issue')}
             variant='standard'
             type='date'
@@ -351,8 +352,8 @@ const PersonalInfo = () => {
           <TextField
             name='passportPlaceOfIssue'
             value={state.passportPlaceOfIssue}
+            id='passportPlaceOfIssue'
             onChange={handleChange}
-            id='standard-basic'
             label={t('Passport Place of Issue')}
             variant='standard'
           />
@@ -370,8 +371,8 @@ const PersonalInfo = () => {
           <TextField
             name='facebookProfile'
             value={state.facebookProfile}
+            id='facebookProfile'
             onChange={handleChange}
-            id='standard-basic'
             label='Facebook'
             variant='standard'
           />
@@ -381,8 +382,8 @@ const PersonalInfo = () => {
           <TextField
             name='instagramProfile'
             value={state.instagramProfile}
+            id='instagramProfile'
             onChange={handleChange}
-            id='standard-basic'
             label='Instagram'
             variant='standard'
           />
@@ -392,8 +393,8 @@ const PersonalInfo = () => {
           <TextField
             name='twitterProfile'
             value={state.twitterProfile}
+            id='twitterProfile'
             onChange={handleChange}
-            id='standard-basic'
             label='Twitter'
             variant='standard'
           />
@@ -403,8 +404,8 @@ const PersonalInfo = () => {
           <TextField
             name='snapChatProfile'
             value={state.snapChatProfile}
+            id='snapChatProfile'
             onChange={handleChange}
-            id='standard-basic'
             label='Snapchat'
             variant='standard'
           />

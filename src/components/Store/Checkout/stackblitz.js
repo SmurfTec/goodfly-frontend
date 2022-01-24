@@ -10,9 +10,7 @@ import {
 
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
-import { useForm } from 'react-hook-form';
 // import {MapBox1 as MapBox} from './MapBox';
-import { useTranslation } from 'react-i18next';
 import $ from 'jquery';
 
 const useStyles = makeStyles((theme) => ({
@@ -123,7 +121,7 @@ const RelayPointDialog = ({ open, closeDialog }) => {
       className={classes.root}
     >
       <DialogTitle sx={{ display: 'flex' }}>
-        {t('Choose your relay point')}
+        Choose your relay point
         <Close
           style={{
             marginLeft: 'auto',
@@ -137,10 +135,10 @@ const RelayPointDialog = ({ open, closeDialog }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog} color='primary'>
-          {t('Close')}
+          Close
         </Button>
         <Button color='primary' type='submit'>
-          {t('Modify')}
+          Modify
         </Button>
       </DialogActions>
     </Dialog>

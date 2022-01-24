@@ -4,7 +4,7 @@ import { Typography, Button } from '@material-ui/core';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
-
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import {
   usePopupState,
   bindHover,
@@ -69,7 +69,11 @@ const Navbar = ({ location }) => {
                   {t(navItem.title)}
                 </NavLink>
               ) : (
-                <> {t(navItem.title)}</>
+                <>
+                  {' '}
+                  {t(navItem.title)}
+                  <ArrowDropDownIcon />
+                </>
               )}
             </Typography>
             {navItem.menuItems && (
