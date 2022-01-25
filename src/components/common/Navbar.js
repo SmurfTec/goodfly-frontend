@@ -39,6 +39,7 @@ const Navbar = ({ location }) => {
     variant: 'popover',
     popupId: 'Destinations',
   });
+
   return (
     <nav className={classes.nav}>
       {NavbarData.map((navItem, idx) => {
@@ -51,7 +52,9 @@ const Navbar = ({ location }) => {
                 console.log('clicked', t(navItem.title));
               }}
               style={{
-                color: location.pathname.includes(navItem.path) && '#fa0f0c',
+                color:
+                  location.pathname.includes(navItem.path) &&
+                  '#fa0f0c',
               }}
               // {...{}}
               {...(idx === 0 ? bindHover(ethicalToursMenu) : {})}
@@ -81,7 +84,9 @@ const Navbar = ({ location }) => {
                 {...(idx === 0 ? bindMenu(ethicalToursMenu) : {})}
                 {...(idx === 1 ? bindMenu(spiritualToursMenu) : {})}
                 {...(idx === 2 ? bindMenu(excursionsToursMenu) : {})}
-                {...(idx === 3 ? bindMenu(destinationsToursMenu) : {})}
+                {...(idx === 3
+                  ? bindMenu(destinationsToursMenu)
+                  : {})}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'left',

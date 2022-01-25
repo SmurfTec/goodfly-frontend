@@ -23,6 +23,7 @@ const NavbarData = [
     path: '/tours/destinations',
     title: 'Destinations',
     menuItems: [
+      'all',
       'asia',
       'europe',
       'africa',
