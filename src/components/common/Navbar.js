@@ -102,8 +102,11 @@ const Navbar = ({ location }) => {
                     // * /tours/ethical?type=menuitem
                     key={menuItem}
                     // * /tours/destination/menuitem
+
                     to={`${navItem.path}${
-                      idx === 3
+                      menuItem === 'all'
+                        ? (menuItem = '/')
+                        : idx === 3
                         ? `/${menuItem}`
                         : idx === 0
                         ? index === 0
@@ -118,7 +121,13 @@ const Navbar = ({ location }) => {
                     style={{ textAlign: 'center' }}
                   >
                     <MenuItem>
-                      {t(menuItem).slice(0, 1).toUpperCase()}
+                      {t(
+                        menuItem === '/'
+                          ? (menuItem = 'all')
+                          : menuItem
+                      )
+                        .slice(0, 1)
+                        .toUpperCase()}
                       {t(menuItem).slice(1)}
                       {/* {menuItem.slice(0, 1).toUpperCase()}
                       {menuItem.slice(1)} */}
