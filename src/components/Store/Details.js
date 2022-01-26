@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -36,6 +36,7 @@ import Lightbox from 'react-image-lightbox';
 import UseToggle from 'Hooks/useToggle';
 import v4 from 'uuid/dist/v4';
 import { useTranslation } from 'react-i18next';
+import Index from 'components/Profile';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -251,7 +252,7 @@ const StoreDetails = ({ match }) => {
                   <Grid item xs={12} sm={12}>
                     <Box>
                       <Grid container spacing={2}>
-                        {product.images.slice(1, 4).map((el) => (
+                        {product.images?.slice(1, 4).map((el) => (
                           <Grid item xs={6} sm={3} key={el._id}>
                             <Card
                               sx={{
@@ -280,7 +281,7 @@ const StoreDetails = ({ match }) => {
             <Grid item xs={12} sm={6} sx={{ userSelect: 'none' }}>
               {product ? (
                 product === 404 ? (
-                  <div>404</div>
+                  <Redirect to='/' />
                 ) : (
                   <div>
                     <Typography variant='h3'>{product.name}</Typography>
@@ -297,21 +298,6 @@ const StoreDetails = ({ match }) => {
                     <Typography variant='body1' sx={{ mt: 3 }}>
                       {product.description.slice(0, 238)}
                     </Typography>
-
-                    {/* <Typography variant='subtitle1' sx={{ mt: 3 }}>
-                Quantity
-              </Typography>
-              <Select
-                id='quantity'
-                value={quantity}
-                label='Quantity'
-                onChange={changeQuantity}
-                sx={{ minWidth: 250, mt: 1 }}
-              >
-                <MenuItem value={10}>250g</MenuItem>
-                <MenuItem value={20}>300g</MenuItem>
-                <MenuItem value={30}>500g</MenuItem>
-              </Select> */}
 
                     <Box
                       sx={{
@@ -353,12 +339,102 @@ const StoreDetails = ({ match }) => {
                   </div>
                 )
               ) : (
-                <div className='loader'></div>
+                <div>
+                  <Typography variant='h3'>
+                    <Skeleton variant='text' />
+                  </Typography>
+                  <Typography
+                    variant='h4'
+                    color='text.secondary'
+                    sx={{ mt: 1 }}
+                  >
+                    <Skeleton variant='text' />
+                  </Typography>
+                  <Typography variant='h5' sx={{ mt: 1 }}>
+                    <Skeleton variant='text' />
+                  </Typography>
+                  <Typography variant='body1' sx={{ mt: 3 }}>
+                    <Skeleton variant='text' />
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      mt: 5,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 2,
+                      width: '100%',
+                    }}
+                  >
+                    <Skeleton variant='rect' />
+                  </Box>
+
+                  <Skeleton variant='text' />
+                </div>
               )}
             </Grid>
           </Grid>
         ) : (
-          <div className='loader'></div>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6}>
+              <Skeleton variant='rect' width={'100%'} height={330} />
+
+              <Grid item xs={12} sm={12}>
+                <Box sx={{ mt: 2 }}>
+                  <Grid container spacing={2}>
+                    {Array(4)
+                      .fill()
+                      .map((_, idx) => (
+                        <Grid item xs={6} sm={3} key={Index}>
+                          <Card
+                            sx={{
+                              boxShadow: 'none',
+                              borderRadius: 1,
+                            }}
+                          >
+                            <Skeleton
+                              variant='rect'
+                              width={'100%'}
+                              height={50}
+                            />
+                          </Card>
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item xs={0} sm={6}>
+              <div>
+                <Typography variant='h3'>
+                  <Skeleton variant='text' />
+                </Typography>
+                <Typography variant='h4' color='text.secondary' sx={{ mt: 1 }}>
+                  <Skeleton variant='text' />
+                </Typography>
+                <Typography variant='h5' sx={{ mt: 1 }}>
+                  <Skeleton variant='text' />
+                </Typography>
+                <Typography variant='body1' sx={{ mt: 3 }}>
+                  <Skeleton variant='text' />
+                </Typography>
+
+                <Box
+                  sx={{
+                    mt: 5,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 2,
+                    width: '100%',
+                  }}
+                >
+                  <Skeleton variant='rect' />
+                </Box>
+
+                <Skeleton variant='text' />
+              </div>
+            </Grid>
+          </Grid>
         )}
       </Box>
       <Box sx={{ mt: 13 }}>
@@ -398,7 +474,7 @@ const StoreDetails = ({ match }) => {
                   ))}
                 </>
               ) : (
-                <div className='loader'></div>
+                <Skeleton variant='rect' width={400} height={430} />
               )}
             </Grid>
             {canReview && (
@@ -491,7 +567,7 @@ const StoreDetails = ({ match }) => {
             {Array(8)
               .fill()
               .map(() => (
-                <Skeleton key={v4()} variant='react' height={200} width={200} />
+                <Skeleton key={v4()} variant='rect' height={200} width={200} />
               ))}
           </CarouselLayout>
         )}

@@ -151,6 +151,7 @@ const Checkout = () => {
     console.log('validated step 2', data);
     let newState = {
       deliveryMethod: data.deliveryMethod,
+      relayPoint: data.relayPoint,
       shippingAddress: {
         address: data.address,
         city: data.city,

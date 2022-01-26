@@ -176,6 +176,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
             deliveryMethod={deliveryMethod}
             promoDiscount={promoDiscount || 0}
             usePoints={usePoints}
+            finalStep
           />
         </Grid>
       </Grid>

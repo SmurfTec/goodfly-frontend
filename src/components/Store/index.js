@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 // * ----- MUI STUFF------ //
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Skeleton, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 // * ------------ //
@@ -61,7 +61,17 @@ const Index = () => {
               <ProductsCarousel products={products} classes={classes} />
             )
           ) : (
-            <div className='loader'></div>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={4}>
+                <Skeleton variant='rect' height={300} />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Skeleton variant='rect' height={300} />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Skeleton variant='rect' height={300} />
+              </Grid>
+            </Grid>
           )}
           <Box marginTop={5}></Box>
           <StoreProducts

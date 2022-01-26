@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Dialog,
@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useForm } from 'react-hook-form';
 // import {MapBox1 as MapBox} from './MapBox';
 import { useTranslation } from 'react-i18next';
-import $ from 'jquery';
+import MondialRelay from './MondialRelay';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,68 +48,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MondialRelay = () => {
-  useEffect(() => {
-    const jQuery = document.createElement('script');
-    jQuery.src =
-      'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js';
-    jQuery.async = 'true';
+const RelayPointDialog = ({ open, closeDialog, handleSubmit }) => {
+  const classes = useStyles();
+  const [relayPoint, setRelayPoint] = useState();
 
-    document.body.appendChild(jQuery);
-
-    return () => {
-      document.body.removeChild(jQuery);
-    };
-  });
-
-  useEffect(() => {
-    const scriptMr = document.createElement('script');
-    scriptMr.src =
-      'https://widget.mondialrelay.com/parcelshop-picker/jquery.plugin.mondialrelay.parcelshoppicker.min.js';
-    scriptMr.async = 'true';
-
-    document.body.appendChild(scriptMr);
-
-    return () => {
-      document.body.removeChild(scriptMr);
-    };
-  });
-
-  const call = () => {
-    try {
-      $('#Zone_Widgeteqdavsfdc').MR_ParcelShopPicker({
-        Target: '#ParcelShopCode',
-        Brand: 'BDTEST  ',
-        Country: 'FR',
-      });
-    } catch (err) {
-      console.log(`err`, err);
-    }
+  const handleChange = (data) => {
+    setRelayPoint(data);
   };
 
-  (function () {
-    // Parameterized the widget
-    try {
-      call();
-    } catch (err) {
-      console.log(`err`, err);
-    }
-  })();
-
-  return (
-    <div>
-      <Button variant='contained' onClick={call}>
-        Call
-      </Button>
-      <div id='Zone_Widget'></div>
-      <div id='ParcelShopCode'></div>
-    </div>
-  );
-};
-
-const RelayPointDialog = ({ open, closeDialog }) => {
-  const classes = useStyles();
-
+  const handleModify = () => {
+    handleSubmit(relayPoint);
+  };
   const { t } = useTranslation();
 
   return (
@@ -133,13 +82,18 @@ const RelayPointDialog = ({ open, closeDialog }) => {
         />
       </DialogTitle>
       <DialogContent>
-        <MondialRelay />
+        <MondialRelay handleChange={handleChange} />
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog} color='primary'>
           {t('Close')}
         </Button>
-        <Button color='primary' type='submit'>
+        <Button
+          disabled={!relayPoint}
+          color='primary'
+          onClick={handleModify}
+          type='submit'
+        >
           {t('Modify')}
         </Button>
       </DialogActions>

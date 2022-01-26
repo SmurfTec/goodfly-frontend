@@ -48,7 +48,7 @@ const StoreSubNav = () => {
         component={Link}
         to='/store/cart'
       >
-        <Badge badgeContent={cart.orderItems.length}>
+        <Badge badgeContent={cart.orderItems?.length || 0}>
           <ShoppingCartIcon />
         </Badge>
       </Box>

@@ -31,6 +31,8 @@ const TotalBill = ({
   promoDiscount,
   isSubmitting,
   usePoints,
+  relayPoint,
+  finalStep,
 }) => {
   const deliveryPrice = useMemo(() => {
     let amount = 0;
@@ -142,7 +144,10 @@ const TotalBill = ({
           color='primary'
           sx={{ mt: 3, minHeight: 70, fontSize: 20 }}
           fullWidth
-          disabled={!formName}
+          disabled={
+            !formName ||
+            (deliveryMethod === 'relay-point' && !relayPoint && !finalStep)
+          }
         >
           {t('VALIDATE THE ORDER')}
         </Button>

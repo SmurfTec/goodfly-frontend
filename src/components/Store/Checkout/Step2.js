@@ -41,11 +41,11 @@ const deliveryMethods = [
   },
 ];
 
-const relaypointContent = (handleClick, postalAddress, t) => {
+const relaypointContent = (handleClick, relayPoint, t) => {
   return (
     <Box sx={{ mt: 4, mb: 2, display: 'flex', flexWrap: 'nowrap' }}>
       <Typography variant='subtitle1' sx={{ maxWidth: 250, mx: 1 }}>
-        {postalAddress}
+        {relayPoint?.Adresse1} {relayPoint?.Adresse2} {relayPoint?.CP}{' '}
       </Typography>
       <Button
         variant='contained'
@@ -53,7 +53,7 @@ const relaypointContent = (handleClick, postalAddress, t) => {
         sx={{ minWidth: 90 }}
         onClick={handleClick}
       >
-        {t('Modify')}
+        {t(relayPoint ? 'Modify' : 'Select')}
       </Button>
     </Box>
   );
@@ -136,10 +136,8 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
   const { handleSubmit, control, watch, register, errors } = useForm();
   const [dialog, setDialog] = React.useState(false);
   const [isMapDialogOpen, toggleMapDialog] = useToggle(false);
+  const [relayPoint, setRelayPoint] = useState();
 
-  const [postalAddress, setpostalAddress] = React.useState(
-    'Lyon Librairie la bonne paye 50 rue delabarre 69008'
-  );
   const watchDeliveryMethod = watch('deliveryMethod', deliveryMethods[0].value);
   const watchShippingAddress = watch('shippingAddress');
 
@@ -148,7 +146,10 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
   }, [watchDeliveryMethod]);
 
   const travellersForm = (data) => {
-    validateStep(data);
+    console.log('watchDeliveryMethod', watchDeliveryMethod);
+    if (watchDeliveryMethod === deliveryMethods[0].value) {
+      validateStep({ ...data, relayPoint });
+    } else validateStep(data);
   };
 
   const transDelivery = (m) => {
@@ -156,8 +157,10 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
     let c = m.split(b)[0];
     return `${t(c.trim())} ${b}`;
   };
-  const handleRelayPoint = (relayPoint) => {
-    // console.log(`relayPoint`, relayPoint);
+  const handleRelayPoint = (data) => {
+    console.log(`data`, data);
+    setRelayPoint(data);
+
     toggleMapDialog();
   };
 
@@ -238,30 +241,32 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
                               <>
                                 {relaypointContent(
                                   toggleMapDialog,
-                                  postalAddress,
+                                  relayPoint,
                                   t
                                 )}
                                 <Divider sx={{ my: 2, width: '100%' }} />
                               </>
                             )}
-                          {watchDeliveryMethod === singleOption.value && (
-                            // watchDeliveryMethod !==
-                            //   deliveryMethods[2].value && (
-                            <Box sx={{ mt: 2 }}>
-                              {addressContent(
-                                control,
-                                watchShippingAddress,
-                                {
-                                  register,
-                                  errors,
-                                },
-                                t
-                              )}
-                            </Box>
-                          )}
-                          {i < deliveryMethods.length - 1 && (
-                            <Divider sx={{ my: 3, width: '100%' }} />
-                          )}
+                          {watchDeliveryMethod === singleOption.value &&
+                            watchDeliveryMethod ===
+                              deliveryMethods[1].value && (
+                              <>
+                                <Box sx={{ mt: 2 }}>
+                                  {addressContent(
+                                    control,
+                                    watchShippingAddress,
+                                    {
+                                      register,
+                                      errors,
+                                    },
+                                    t
+                                  )}
+                                </Box>
+                                {i < deliveryMethods.length - 1 && (
+                                  <Divider sx={{ my: 3, width: '100%' }} />
+                                )}
+                              </>
+                            )}
                         </React.Fragment>
                       );
                     })}
@@ -276,6 +281,7 @@ const Step2 = ({ validateStep, cart, changeDeliveryMethod }) => {
             formName='formDelivery'
             cart={cart}
             deliveryMethod={watchDeliveryMethod}
+            relayPoint={relayPoint}
           />
         </Grid>
       </Grid>
