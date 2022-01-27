@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-// // // * Development URLs
+// * Development URLs
 // const API_BASE_URL = `http://localhost:7000/api`;
 // const API_BASE_ORIGIN = `http://localhost:7000`;
 // const API_BASE_URL = `https://c9c6-119-73-118-95.ngrok.io/api`;

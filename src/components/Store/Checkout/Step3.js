@@ -106,7 +106,7 @@ const Step3 = ({ validateStep, cart, deliveryMethod, loyaltyPoints }) => {
                 defaultValue={values[0]}
                 render={({ field }) => (
                   <RadioGroup {...field} row>
-                    <BankTransferOption value={values[1]} />
+                    {/* <BankTransferOption value={values[1]} /> */}
                     <PaypalOption value={values[2]} />
                     {/* <LoyaltyPointsOption value={values[3]} /> */}
 
