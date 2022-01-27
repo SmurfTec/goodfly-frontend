@@ -160,7 +160,7 @@ const StoreDetails = ({ match }) => {
         handleCatch(err);
       }
     })();
-    setImages(product.images.map((el) => el.image));
+    setImages(product.images?.map((el) => el.image) || []);
   }, [product]);
 
   const handleAddToCart = () => {
@@ -466,10 +466,10 @@ const StoreDetails = ({ match }) => {
               {product ? (
                 <>
                   <Typography variant='subtitle1' sx={{ mt: 5, mb: 8 }}>
-                    {product.reviews.length || t('No')}{' '}
+                    {product.reviews?.length || t('No')}{' '}
                     {t('reviews for this product')}
                   </Typography>
-                  {product.reviews.map((review) => (
+                  {product.reviews?.map((review) => (
                     <CommentsTab {...review} />
                   ))}
                 </>
