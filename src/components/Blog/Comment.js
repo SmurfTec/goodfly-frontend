@@ -25,7 +25,7 @@ const Comment = ({ comment }) => {
               color='text.secondary'
               sx={{ mt: 1 }}
             >
-              NewDesign
+              {comment.user?.fullName}
             </Typography>
           </Box>
         </Grid>

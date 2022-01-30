@@ -2,14 +2,10 @@ import React from 'react';
 
 // * ---- MUI Stuff ----- * //
 import {
-  Box,
-  Container,
   Typography,
   Grid,
   Button,
-  TextField,
   Card,
-  CardActionArea,
   CardMedia,
   CardContent,
 } from '@material-ui/core';

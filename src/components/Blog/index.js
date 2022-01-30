@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Container, Card, Typography, Grid } from '@material-ui/core';
+import { Container, Card, Typography, Grid, Skeleton } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Box } from '@material-ui/system';
 
@@ -84,7 +84,14 @@ const ClientBlog = () => {
                 <Typography variant='h5'>{t('No Blogs Available')}</Typography>
               )
             ) : (
-              <div className='loader'></div>
+              Array(5)
+                .fill()
+                .map((_, idx) => (
+                  <Grid key={idx} item xs={12} sm={idx === 3 ? 8 : 4}>
+                    {' '}
+                    <Skeleton height={330} />
+                  </Grid>
+                ))
             )}
           </Grid>
         </Box>
@@ -112,7 +119,14 @@ const ClientBlog = () => {
                 <Typography variant='h5'>{t('No Blogs Available')}</Typography>
               )
             ) : (
-              <div className='loader'></div>
+              Array(5)
+                .fill()
+                .map((_, idx) => (
+                  <Grid key={idx} item xs={12} sm={idx === 3 ? 8 : 4}>
+                    {' '}
+                    <Skeleton height={330} />
+                  </Grid>
+                ))
             )}
           </Grid>
           {blogs?.length > 0 && (

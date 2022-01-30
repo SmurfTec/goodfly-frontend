@@ -24,6 +24,7 @@ import Page from 'components/common/Page';
 import { AuthContext } from 'Contexts/AuthContext';
 import parse from 'html-react-parser';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const BlogDetails = ({ match, history, location }) => {
   const { t } = useTranslation();
@@ -90,12 +91,12 @@ const BlogDetails = ({ match, history, location }) => {
         },
         'POST'
       );
-      const newComment = resData.comment;
 
-      setBlog((st) => ({
-        ...st,
-        comments: [...st.comments, newComment],
-      }));
+      toast.info('Your Comment will be shown once validated by our Goodfly Te');
+      // setBlog((st) => ({
+      //   ...st,
+      //   comments: [...st.comments, newComment],
+      // }));
 
       reset();
     } catch (err) {}
