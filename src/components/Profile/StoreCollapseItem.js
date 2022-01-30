@@ -43,7 +43,11 @@ const StoreCollapseItem = ({ order }) => {
       >
         <Box className={classes.box}>
           <Typography variant='h5'>
-            {order.orderItems.slice(0, 3).map((el) => `${el.product.name}  `)}
+            {order.orderItems
+              .slice(0, 3)
+              .map(
+                (el) => `${el.product ? el.product.name : 'Product Deleted'}  `
+              )}
           </Typography>
           <IconButton
             disableRipple
@@ -83,7 +87,9 @@ const StoreCollapseItem = ({ order }) => {
               }}
             >
               {/* <Box sx={{}}> */}
-              <span>{item.product.name}</span>
+              <span>
+                {item.product ? item.product.name : 'Product Deleted'}
+              </span>
               <span>{item.quantity}</span>
               <span>{item.subTotal / item.quantity}€</span>
               <span>{item.subTotal}€</span>

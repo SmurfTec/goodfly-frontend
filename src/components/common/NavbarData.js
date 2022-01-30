@@ -37,10 +37,6 @@ const NavbarData = [
     title: 'Ticketing',
   },
   {
-    path: '/hotels',
-    title: 'Hotels & Accommodations',
-  },
-  {
     path: '/tours/flash-sales',
     title: 'Flash Sales',
   },

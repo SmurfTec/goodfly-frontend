@@ -270,7 +270,7 @@ const Index = () => {
                   <Typography variant='h3' align='center' sx={{ mb: 2 }}>
                     {`${t('hajj').toUpperCase()} 2021`}
                   </Typography>
-                  <Typography variant='subtitle1'>
+                  <Typography variant='subtitle1' fontSize='15px'>
                     {t('Discover all of our offers for the 2021 pilgrimage.')}
                     <br />
                     {t(
