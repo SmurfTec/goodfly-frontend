@@ -38,9 +38,24 @@ const Comment = ({ comment }) => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} sx={{ mt: 1 }}>
-          <Typography variant='subtitl2' color='text.primary' sx={{ mt: 3 }}>
+          <Typography color='text.primary' sx={{ mt: 3 }}>
             {comment.text}
           </Typography>
+          {comment.reply && (
+            <Typography
+              variant='body2'
+              color='text.primary'
+              sx={{
+                mt: 3,
+                borderLeft: '2px solid #ccc',
+                marginLeft: '1rem',
+                fontStyle: 'italic',
+                paddingLeft: '1rem',
+              }}
+            >
+              {comment.reply}
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Paper>

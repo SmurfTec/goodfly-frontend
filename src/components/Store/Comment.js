@@ -6,7 +6,7 @@ import styles from 'Styles/Comment';
 const Comment = (props) => {
   const classes = styles();
   console.log(props);
-  const { visitor, createdAt, comment, rating } = props;
+  const { visitor, createdAt, comment, rating, reply } = props;
 
   return (
     <Paper
@@ -56,6 +56,21 @@ const Comment = (props) => {
           <Typography variant='body1' color='text.primary' sx={{ mt: 3 }}>
             {comment}
           </Typography>
+          {reply && (
+            <Typography
+              variant='body2'
+              color='text.primary'
+              sx={{
+                mt: 3,
+                borderLeft: '2px solid #ccc',
+                marginLeft: '1rem',
+                fontStyle: 'italic',
+                paddingLeft: '1rem',
+              }}
+            >
+              {reply}
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Paper>

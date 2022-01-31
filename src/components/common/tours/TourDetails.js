@@ -461,6 +461,21 @@ const TourDetails = ({ match, history, location }) => {
                     >
                       {review.review}
                     </Typography>
+                    {review.reply && (
+                      <Typography
+                        variant='body2'
+                        color='text.primary'
+                        sx={{
+                          mt: 3,
+                          borderLeft: '2px solid #ccc',
+                          marginLeft: '1rem',
+                          fontStyle: 'italic',
+                          paddingLeft: '1rem',
+                        }}
+                      >
+                        {review.reply}
+                      </Typography>
+                    )}
                   </Box>
                 ))}
               </Grid>
