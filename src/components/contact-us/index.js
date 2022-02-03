@@ -112,8 +112,10 @@ const Index = () => {
   const [state, resetState, handleTxtChange] = UseInput(initialState);
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await makeReq(`/contact-us`, { body: state }, 'POST');
+    toast.success('Response Sent Successfully');
     resetState();
   };
 

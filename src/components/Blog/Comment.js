@@ -17,7 +17,12 @@ const Comment = ({ comment }) => {
           <Box className={classes.avatarBox}>
             <Avatar
               alt='Remy Sharp'
-              src={comment.user?.photo || commentImg}
+              src={
+                comment.user?.photo ||
+                `https://ui-avatars.com/api/?rounded=true&name=${comment?.user?.fullName
+                  .split(' ')
+                  .join('+')}`
+              }
               className={classes.large}
             />
             <Typography
