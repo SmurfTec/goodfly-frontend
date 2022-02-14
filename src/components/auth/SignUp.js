@@ -30,6 +30,13 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (state.password.length < 8)
+      return toast.error('Password Must NOT be less than 8 characters');
+    if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/.test(state.password))
+      return toast.error(
+        'Password Must Contain 1 uppercase,1 lowercase and a special Character'
+      );
+
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/signup`, {
         ...state,
