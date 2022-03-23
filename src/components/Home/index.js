@@ -500,7 +500,7 @@ const Index = () => {
             sx={{
               marginTop: 2,
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
               alignItems: 'center',
               gap: '50px',
               paddingRight: '100px',
